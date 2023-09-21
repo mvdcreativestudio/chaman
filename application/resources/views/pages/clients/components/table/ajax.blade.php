@@ -6,15 +6,21 @@
         <a href="/clients/{{ $client->client_id ?? '' }}">{{ str_limit($client->client_company_name, 35) }}</a>
     </td>
     <td class="clients_col_account_owner" id="clients_col_account_owner_{{ $client->client_id }}">
-        <img src="{{ getUsersAvatar($client->avatar_directory, $client->avatar_filename) }}" alt="user"
-            class="img-circle avatar-xsmall">
+
+        {{-- IMAGEN DEL USUARIO --}}
+        {{-- <img src="{{ getUsersAvatar($client->avatar_directory, $client->avatar_filename) }}" alt="user"
+            class="img-circle avatar-xsmall"> --}}
+
         <span>{{ $client->first_name ?? '---' }}</span>
+        <span>{{ $client->last_name ?? '---' }}</span>
     </td>
-    @if(config('visibility.modules.projects'))
+
+    {{-- MOSTRAR PROYECTOS EN LA TABLA --}}
+    {{-- @if(config('visibility.modules.projects'))
     <td class="clients_col_projects" id="clients_col_projects_{{ $client->client_id }}">
         {{ $client->count_projects_all ?? '0' }}
     </td>
-    @endif
+    @endif --}}
     <td class="clients_col_invoices" id="clients_col_invoices_{{ $client->client_id }}">
         {{ runtimeMoneyFormat($client->sum_invoices_all) }}</td>
     <td class="clients_col_tags" id="clients_col_tags_{{ $client->client_id }}">
