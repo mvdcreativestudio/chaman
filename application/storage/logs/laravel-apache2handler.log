@@ -66,3 +66,10 @@
 #62 C:\\laragon\\www\\Chaman\\index.php(92): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
 #63 {main}
 "} 
+[2023-09-21 14:47:34] production.ERROR: the requested check is invalid {"process":"[permissions][lead]","0":"5d9461f","function":"check","file":"LeadPermissions.php","line":57,"path":"C:\\laragon\\www\\application\\app\\Permissions\\LeadPermissions.php","check":"particiate"} 
+[2023-09-21 14:47:44] production.ERROR: the requested check is invalid {"process":"[permissions][lead]","0":"8d963fe","function":"check","file":"LeadPermissions.php","line":57,"path":"C:\\laragon\\www\\application\\app\\Permissions\\LeadPermissions.php","check":"particiate"} 
+[2023-09-21 14:47:45] production.ERROR: the requested check is invalid {"process":"[permissions][lead]","0":"2cc6bcc","function":"check","file":"LeadPermissions.php","line":57,"path":"C:\\laragon\\www\\application\\app\\Permissions\\LeadPermissions.php","check":"particiate"} 
+[2023-09-21 15:40:46] production.ERROR: the requested check is invalid {"process":"[permissions][lead]","0":"2b6ec95","function":"check","file":"LeadPermissions.php","line":57,"path":"C:\\laragon\\www\\application\\app\\Permissions\\LeadPermissions.php","check":"particiate"} 
+[2023-09-21 15:40:55] production.ERROR: the requested check is invalid {"process":"[permissions][lead]","0":"172ca8b","function":"check","file":"LeadPermissions.php","line":57,"path":"C:\\laragon\\www\\application\\app\\Permissions\\LeadPermissions.php","check":"particiate"} 
+[2023-09-21 15:40:57] production.ERROR: the requested check is invalid {"process":"[permissions][lead]","0":"21dab8a","function":"check","file":"LeadPermissions.php","line":57,"path":"C:\\laragon\\www\\application\\app\\Permissions\\LeadPermissions.php","check":"particiate"} 
+[2023-09-21 15:40:58] production.ERROR: the requested check is invalid {"process":"[permissions][lead]","0":"524bc26","function":"check","file":"LeadPermissions.php","line":57,"path":"C:\\laragon\\www\\application\\app\\Permissions\\LeadPermissions.php","check":"particiate"} 
