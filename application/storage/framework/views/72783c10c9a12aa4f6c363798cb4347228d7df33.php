@@ -6,15 +6,14 @@
             <div class="d-flex p-10 no-block">
                 <span class="align-slef-center">
                     <h2 class="m-b-0"><?php echo e(runtimeMoneyFormat($payload['payments']['today'])); ?></h2>
-                    <h6 class="text-muted m-b-0"><?php echo e(cleanLang(__('lang.payments'))); ?> -
-                        <?php echo e(cleanLang(__('lang.today'))); ?></h6>
+                    <h6 class="text-muted m-b-0">Ingresos Hoy</h6>
                 </span>
-                <div class="align-self-center display-6 ml-auto"><i class="text-success icon-Credit-Card2"></i>
+                <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i>
                 </div>
             </div>
         </div>
         <div class="progress">
-            <div class="progress-bar bg-success w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+            <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
                 aria-valuemax="100"></div>
         </div>
     </div>

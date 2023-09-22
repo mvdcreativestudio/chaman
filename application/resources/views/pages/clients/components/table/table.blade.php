@@ -20,14 +20,16 @@
                             <a class="js-ajax-ux-request js-list-sorting" id="sort_contact" href="javascript:void(0)"
                                 data-url="{{ urlResource('/clients?action=sort&orderby=contact&sortorder=asc') }}">{{ cleanLang(__('lang.account_owner')) }}<span
                                     class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a></th>
-                        @if(config('visibility.modules.projects'))
+
+                        {{-- MOSTRAR PROYECTOS EN LA TABLA --}}
+                        {{-- @if(config('visibility.modules.projects'))
                         <th class="clients_col_projects">
                             <a class="js-ajax-ux-request js-list-sorting" id="sort_count_projects"
                                 href="javascript:void(0)"
                                 data-url="{{ urlResource('/clients?action=sort&orderby=count_projects&sortorder=asc') }}">{{ cleanLang(__('lang.projects')) }}<span
                                     class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
                         </th>
-                        @endif
+                        @endif --}}
                         <th class="clients_col_invoices">
                             <a class="js-ajax-ux-request js-list-sorting" id="sort_sum_invoices"
                                 href="javascript:void(0)"
