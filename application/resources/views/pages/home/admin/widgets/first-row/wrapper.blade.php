@@ -5,6 +5,12 @@
     <!--PAYMENTS THIS MONTH-->
     @include('pages.home.admin.widgets.first-row.payments-this-month')
 
+    <!-- PAYMENTS THIS YEAR-->
+    @include('pages.home.admin.widgets.first-row.payments-this-year')
+
+    <!-- PAYMENTS ALWAYS-->
+    @include('pages.home.admin.widgets.first-row.payments-total')
+
     <!--INVOICES DUE-->
     @include('pages.home.admin.widgets.first-row.invoices-due')
 

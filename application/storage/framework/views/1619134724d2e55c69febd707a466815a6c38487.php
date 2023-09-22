@@ -5,6 +5,12 @@
     <!--PAYMENTS THIS MONTH-->
     <?php echo $__env->make('pages.home.admin.widgets.first-row.payments-this-month', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
+    <!-- PAYMENTS THIS YEAR-->
+    <?php echo $__env->make('pages.home.admin.widgets.first-row.payments-this-year', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+    <!-- PAYMENTS ALWAYS-->
+    <?php echo $__env->make('pages.home.admin.widgets.first-row.payments-total', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
     <!--INVOICES DUE-->
     <?php echo $__env->make('pages.home.admin.widgets.first-row.invoices-due', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 

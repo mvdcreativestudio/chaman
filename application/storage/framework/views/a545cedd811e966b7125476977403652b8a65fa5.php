@@ -5,7 +5,7 @@
             <div class="d-flex p-10 no-block">
                 <span class="align-slef-center">
                     <h2 class="m-b-0"><?php echo e(runtimeMoneyFormat($payload['payments']['this_month'])); ?></h2>
-                    <h6 class="text-muted m-b-0"><?php echo e(cleanLang(__('lang.payments'))); ?> - <?php echo e(cleanLang(__('lang.month'))); ?></h6>
+                    <h6 class="text-muted m-b-0">Ingresos Este Mes</h6>
                 </span>
                 <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i></div>
             </div>
