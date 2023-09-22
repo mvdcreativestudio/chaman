@@ -5,7 +5,7 @@
             <div class="d-flex p-10 no-block">
                 <span class="align-slef-center">
                     <h2 class="m-b-0">{{ runtimeMoneyFormat($payload['invoices']['overdue']) }}</h2>
-                    <h6 class="text-muted m-b-0">{{ cleanLang(__('lang.invoices')) }} - {{ cleanLang(__('lang.overdue')) }}</h6>
+                    <h6 class="text-muted m-b-0">Facturas Vencidas</h6>
                 </span>
                 <div class="align-self-center display-6 ml-auto"><i class="text-danger icon-Coins-2"></i></div>
             </div>
