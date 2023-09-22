@@ -251,6 +251,11 @@ class InvoiceRepository {
 
         }
 
+        // Filtrar por bill_creatorid
+        if (request()->filled('filter_my_invoices')) {
+            $invoices->where('bill_creatorid', request('filter_my_invoices'));
+        }
+
         //sorting
         if (in_array(request('sortorder'), array('desc', 'asc')) && request('orderby') != '') {
             //direct column name
