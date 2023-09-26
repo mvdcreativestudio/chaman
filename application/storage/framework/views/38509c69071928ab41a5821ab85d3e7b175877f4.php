@@ -37,11 +37,14 @@
         <a href="/clients/<?php echo e($invoice->bill_clientid); ?>"><?php echo e(str_limit($invoice->client_company_name ?? '---', 12)); ?></a>
     </td>
     <?php endif; ?>
+
     <?php if(config('visibility.invoices_col_project')): ?>
     <td class="invoices_col_project" id="invoices_col_project_<?php echo e($invoice->bill_invoiceid); ?>">
-        <a href="/projects/<?php echo e($invoice->bill_projectid); ?>"><?php echo e(str_limit($invoice->project_title ?? '---', 12)); ?></a>
+        <?php echo e($invoice->creator->first_name); ?> <?php echo e($invoice->creator->last_name); ?>
+
     </td>
     <?php endif; ?>
+
 
     <td class="invoices_col_amount" id="invoices_col_amount_<?php echo e($invoice->bill_invoiceid); ?>">
         <?php echo e(runtimeMoneyFormat($invoice->bill_final_amount)); ?></td>

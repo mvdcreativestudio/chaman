@@ -3,6 +3,7 @@
 <div class="container-fluid">
 
     <!--admin dashboard-->
+    
     <?php if(auth()->user()->is_team): ?>
     <?php if(auth()->user()->is_admin): ?>
     <?php echo $__env->make('pages.home.admin.wrapper', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -20,4 +21,8 @@
 </div>
 <!--main content -->
 <?php $__env->stopSection(); ?>
+
+
+
+
 <?php echo $__env->make('layout.wrapper', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\application\resources\views/pages/home/home.blade.php ENDPATH**/ ?>

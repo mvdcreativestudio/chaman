@@ -31,10 +31,13 @@
                                 href="javascript:void(0)"
                                 data-url="<?php echo e(urlResource('/invoices?action=sort&orderby=client&sortorder=asc')); ?>"><?php echo e(cleanLang(__('lang.company_name'))); ?><span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a></th>
                         <?php endif; ?>
+
+                        
+
                         <?php if(config('visibility.invoices_col_project')): ?>
                         <th class="invoices_col_project"><a class="js-ajax-ux-request js-list-sorting" id="sort_project"
                                 href="javascript:void(0)"
-                                data-url="<?php echo e(urlResource('/invoices?action=sort&orderby=project&sortorder=asc')); ?>"><?php echo e(cleanLang(__('lang.project'))); ?><span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
+                                data-url="<?php echo e(urlResource('/invoices?action=sort&orderby=project&sortorder=asc')); ?>">Franquicia<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
                         </th>
                         <?php endif; ?>
 
