@@ -1,5 +1,8 @@
 <?php
 
+Route::get("/datacenter", "datacenter@index");
+
+
 //TESTING [DEV]
 Route::get("test", "Test@index");
 Route::post("test", "Test@index");

@@ -25,8 +25,9 @@ class Invoice extends Model {
      *         - the Invoice belongs to one Creator (user)
      */
     public function creator() {
-        return $this->belongsTo('App\Models\User', 'bill_creatorid', 'id');
+        return $this->belongsTo('App\Models\User', 'bill_creatorid', 'creatorid');
     }
+    
 
     /**
      * relatioship business rules:

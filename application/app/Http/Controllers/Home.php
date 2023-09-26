@@ -310,6 +310,11 @@ class Home extends Controller {
             'period' => 'this_year',
         ]);
 
+        //[income][last_year]
+        $payload['income'] = $this->statsrepo->sumYearlyIncome([
+            'period'=> 'last_year'
+        ]);
+
         //[expense][yearly]
         $payload['expenses'] = $this->statsrepo->sumYearlyExpenses([
             'period' => 'this_year',

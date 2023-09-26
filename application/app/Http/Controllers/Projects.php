@@ -195,6 +195,7 @@ class Projects extends Controller {
             'destroy',
         ]);
 
+
         //only needed for the [action] methods
         $this->middleware('projectsMiddlewareBulkEdit')->only([
             'changeCategoryUpdate',
