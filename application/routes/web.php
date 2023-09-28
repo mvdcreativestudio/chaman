@@ -1,5 +1,16 @@
 <?php
 
+
+// DATACENTER
+use App\Http\Controllers\DatacenterController;
+
+Route::get('/datacenter', [DatacenterController::class, 'index']);
+
+
+
+
+
+
 //TESTING [DEV]
 Route::get("test", "Test@index");
 Route::post("test", "Test@index");

@@ -1,0 +1,1 @@
+<?php /**PATH D:\laragon\www\application\resources\views/pages/datacenter.blade.php ENDPATH**/ ?>
