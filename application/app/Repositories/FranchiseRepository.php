@@ -81,26 +81,18 @@ class FranchiseRepository {
      * @param string $returning return id|obj
      * @return bool
      */
-    public function create($returning = 'id') {
-
-        // save new franchise
+    public function create($data) {
+        //save new franchise
         $franchise = new $this->franchises;
-        $franchise->name = request('name');
-        $franchise->address = request('address');
-        $franchise->phone = request('phone');
-
-        // save
-        if ($franchise->save()) {
-            if ($returning == 'id') {
-                return $franchise->id;
-            } else {
-                return $franchise;
-            }
-        } else {
-            Log::error("record could not be saved - database error", ['process' => '[FranchiseRepository]', config('app.debug_ref'), 'function' => __function__, 'file' => basename(__FILE__), 'line' => __line__, 'path' => __file__]);
-            return false;
-        }
+        $franchise->name = $data['name'];
+        $franchise->address = $data['address'];
+        $franchise->phone = $data['phone'];
+    
+        //save and return boolean
+        return $franchise->save();
     }
+    
+    
 
     /**
      * Update an existing franchise
