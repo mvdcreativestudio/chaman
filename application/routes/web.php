@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Franchise;
+
 //TESTING [DEV]
 Route::get("test", "Test@index");
 Route::post("test", "Test@index");
@@ -1102,3 +1104,12 @@ Route::resource('cs/affiliates/earnings', 'CS_Affiliates\Earnings');
 
 //AFFILATE PROFIT
 Route::get("/cs/affiliate/my/earnings", "CS_Affiliates\Profit@index");
+
+// SUMERIA - Franquicias
+Route::group(['prefix' => 'franchise'], function () {
+    Route::any("/search", "Franchise@getAll"); // Para obtener todas las franquicias
+    Route::get("/{id}", "Franchise@get"); // Para obtener una sola franquicia por ID
+    Route::post("/create", "Franchise@create"); // Para crear una nueva franquicia
+    Route::put("/update/{id}", "Franchise@update"); // Para actualizar una franquicia por ID
+});
+Route::resource('franchise', 'FranchiseController')->except(['create', 'edit', 'update']); // Rutas de recurso estándar de CRUD, excluyendo 'create', 'edit' y 'update' porque ya los hemos definido.
