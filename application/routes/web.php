@@ -1112,4 +1112,5 @@ Route::group(['prefix' => 'franchise'], function () {
     Route::post("/create", "Franchise@create"); // Para crear una nueva franquicia
     Route::put("/update/{id}", "Franchise@update"); // Para actualizar una franquicia por ID
 });
-Route::resource('franchise', 'FranchiseController')->except(['create', 'edit', 'update']); // Rutas de recurso estándar de CRUD, excluyendo 'create', 'edit' y 'update' porque ya los hemos definido.
+Route::get('/franchises', 'Franchise@index')->middleware('franchiseAccess');
+
