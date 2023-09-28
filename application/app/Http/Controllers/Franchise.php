@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\FranchiseRepository;
 use Illuminate\Http\Request;
 
-class FranchiseController extends Controller {
+class Franchise extends Controller {
 
     protected $franchiseRepo;
 
@@ -52,5 +52,10 @@ class FranchiseController extends Controller {
         } else {
             return response()->json(['status' => 'error', 'message' => 'Failed to update franchise'], 500);
         }
+    }
+
+    public function index()
+    {
+        return view('pages/franchises/index');
     }
 }
