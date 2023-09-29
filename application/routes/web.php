@@ -1110,9 +1110,9 @@ Route::group(['prefix' => 'franchise'], function () {
     Route::any("/search", "Franchise@getAll"); // Para obtener todas las franquicias
     Route::get("/{id}", "Franchise@get"); // Para obtener una sola franquicia por ID
     Route::post("/create", "Franchise@create"); // Para crear una nueva franquicia
-    Route::put("/update/{id}", "Franchise@update"); // Para actualizar una franquicia por ID
-    Route::delete('/destroy/{id}', 'Franchise@destroy'); // Para eliminar una franquicia
-
+    Route::post("/update/{id}", "Franchise@update"); // Para actualizar una franquicia por ID
+    Route::get("/toggle/{id}", "Franchise@toggleDisable"); // Para actualizar is_disabled de una franquicia por ID
 });
+
 Route::get('/franchises', 'Franchise@index')->middleware('franchiseAccess');
 

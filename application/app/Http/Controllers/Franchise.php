@@ -4,17 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Repositories\FranchiseRepository;
 use App\Http\Responses\Franchise\CreateResponse;
+use App\Http\Responses\Franchise\UpdateResponse;
+use App\Http\Responses\Franchise\ToggleResponse;
 use Illuminate\Http\Request;
 
 class Franchise extends Controller {
 
     protected $franchiseRepo;
-
-    public function index()
-    {
-        $franchises = $this->franchiseRepo->getAll();
-        return view('pages/franchises/index', ['franchises' => $franchises]);
-    }
 
     public function __construct(FranchiseRepository $franchiseRepo) {
         $this->franchiseRepo = $franchiseRepo;
@@ -53,32 +49,29 @@ class Franchise extends Controller {
         }
     }
     
-
-    public function update($id, Request $request) {
+    public function update($id) {
         $franchise = $this->franchiseRepo->update($id);
+    
         if ($franchise) {
-            return response()->json(['status' => 'success', 'data' => $franchise], 200);
+            return new UpdateResponse(['franchise' => $franchise]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Failed to update franchise'], 500);
         }
+    }    
+
+    public function index()
+    {
+        $franchises = $this->franchiseRepo->getAll();
+        return view('pages/franchises/index', ['franchises' => $franchises]);
     }
 
-    public function destroy($id) {
-        try {
-            $franchise = $this->franchiseRepo->get($id);
-            
-            if(!$franchise) {
-                return response()->json(['status' => 'error', 'message' => 'Franchise not found'], 404);
-            }
-    
-            $franchise->delete();
-    
-            return response()->json(['status' => 'success', 'message' => 'Franchise deleted successfully'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => 'Failed to delete franchise'], 500);
+    public function toggleDisable($id) {
+        $franchise = $this->franchiseRepo->toggleDisableStatus($id);
+
+        if ($franchise) {
+            return new ToggleResponse(['franchise' => $franchise]);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Failed to toggle franchise status'], 500);
         }
-    }
-    
-
-
+    }    
 }
