@@ -5,7 +5,7 @@
     <div class="title">{{ $page['no_results_message'] ?? '' }}</div>
     @else
     <!--generic-->
-    <div class="title">Ooops - No records were found</div>
+    <div class="title">{{ cleanLang(__('lang.no_results_found')) }}</div>
     @endif 
     @if (isset($page['no_results_sub_message']) && $page['no_results_sub_message'])
     <!--sepcified-->
