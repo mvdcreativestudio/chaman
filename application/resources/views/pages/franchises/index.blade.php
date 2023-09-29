@@ -22,7 +22,7 @@
         <div class="mt-5">
             <h2>Registro de Nueva Franquicia</h2>
                 <form action="/franchise/create" method="post">
-                    @csrf <!-- Token de seguridad para formularios en Laravel -->
+                    @csrf
                     <div class="form-group">
                         <label for="name">Nombre:</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Introduce el nombre" required>

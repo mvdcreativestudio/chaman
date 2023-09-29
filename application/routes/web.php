@@ -1111,6 +1111,8 @@ Route::group(['prefix' => 'franchise'], function () {
     Route::get("/{id}", "Franchise@get"); // Para obtener una sola franquicia por ID
     Route::post("/create", "Franchise@create"); // Para crear una nueva franquicia
     Route::put("/update/{id}", "Franchise@update"); // Para actualizar una franquicia por ID
+    Route::delete('/destroy/{id}', 'Franchise@destroy'); // Para eliminar una franquicia
+
 });
 Route::get('/franchises', 'Franchise@index')->middleware('franchiseAccess');
 

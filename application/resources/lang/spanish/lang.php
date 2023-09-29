@@ -374,6 +374,7 @@ return [
 'delete_credit_note' => "Eliminar nota de crédito",
 'delete_estimate' => "Eliminar estimación",
 'delete_file' => "Borrar archivo",
+'delete_franchise' => "Eliminar Franquicia",
 'delete_invoice' => "Eliminar factura",
 'delete_item' => "Eliminar elemento",
 'delete_lead_source' => "Eliminar fuente de leads",
