@@ -13,6 +13,7 @@ class Franchise extends Model
         'name',
         'address',
         'phone',
+        'is_disabled'
     ];
 }
 
