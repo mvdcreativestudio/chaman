@@ -49,7 +49,7 @@
                                 <td>{{ $franchise->phone }}</td>
                                 <td>
                                     @if ($franchise->is_disabled)
-                                        <span class="text-danger">Deshabilitada</span>
+                                        <span class="text-danger">Inactiva</span>
                                     @else
                                         <span class="text-success">Activa</span>
                                     @endif
@@ -92,15 +92,3 @@
 <!--main content -->
 @endsection
 
-<style>
-    #list-page-actions-container {
-        display: flex;
-    }
-    #list-page-actions-container .alert {
-        width: 97%;
-    }
-    #list-page-actions-container #list-page-actions {
-        width: 3%;
-        margin-left: auto;
-    }
-</style>
