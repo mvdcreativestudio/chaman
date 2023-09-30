@@ -25,6 +25,44 @@
                 <!--home-->
                 <?php endif; ?>
 
+                <!--datacenter[done]-->
+                <?php if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
+                config('visibility.modules.users')])): ?>
+                <li data-modular-id="main_menu_team_clients"
+                    class="sidenav-menu-item <?php echo e($page['mainmenu_customers'] ?? ''); ?>">
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
+                        <i class="ti-menu-alt"></i>
+                        <span class="hide-menu">Datacenter
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        
+                        <li class="sidenav-submenu <?php echo e($page['submenu_customers'] ?? ''); ?>" id="submenu_clients">
+                            <a href="/datacenter"
+                                class="<?php echo e($page['submenu_customers'] ?? ''); ?>">Inicio</a>
+                        </li>
+                        
+                        
+                        <li class="sidenav-submenu <?php echo e($page['submenu_contacts'] ?? ''); ?>" id="submenu_contacts">
+                            <a href="/users"
+                                class="<?php echo e($page['submenu_contacts'] ?? ''); ?>">E-commerce</a>
+                        </li>
+
+                        <li class="sidenav-submenu <?php echo e($page['submenu_contacts'] ?? ''); ?>" id="submenu_contacts">
+                            <a href="/users"
+                                class="<?php echo e($page['submenu_contacts'] ?? ''); ?>">Venta Física</a>
+                        </li>
+
+                        <li class="sidenav-submenu <?php echo e($page['submenu_contacts'] ?? ''); ?>" id="submenu_contacts">
+                            <a href="/users"
+                                class="<?php echo e($page['submenu_contacts'] ?? ''); ?>">Stock</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <!--datacenter-->
+
 
                 <!--users[done]-->
                 <?php if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
@@ -104,6 +142,8 @@
                 </li>
                 <?php endif; ?>
                 <!--tasks-->
+
+                
 
                 <!--leads[done]-->
                 <?php if(config('visibility.modules.leads')): ?>
