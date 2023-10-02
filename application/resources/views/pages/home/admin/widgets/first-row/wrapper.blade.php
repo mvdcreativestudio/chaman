@@ -1,3 +1,8 @@
+<div class="">
+     <!--GOALS-->
+     @include('pages.home.admin.widgets.first-row.goals')
+</div>
+
 <div class="row">
     <!--PAYMENTS TODAY-->
     @include('pages.home.admin.widgets.first-row.payments-today')
