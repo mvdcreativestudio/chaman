@@ -29,7 +29,11 @@ class User extends Authenticatable {
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 
+        'email', 
+        'password', 
+        'is_franchised',
+        'franchise_id',
     ];
 
     /**
@@ -311,4 +315,7 @@ class User extends Authenticatable {
         });
     }
 
+    public function franchise() {
+        return $this->belongsTo('App\Models\Franchise', 'franchise_id', 'id');
+    }
 }

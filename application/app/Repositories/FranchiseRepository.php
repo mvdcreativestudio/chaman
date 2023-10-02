@@ -25,9 +25,15 @@ class FranchiseRepository {
      * @return Collection
      */
     public function getAll() {
-        return $this->franchises->all();
+        return $this->franchises->with('users')->get();
     }
 
+    public function getAllActive() {
+        return $this->franchises
+            ->with('users')
+            ->where('is_disabled', '=', false)
+            ->get();
+    }
 
     /**
      * Obtengo una Franquicia específica de la Base de Datos

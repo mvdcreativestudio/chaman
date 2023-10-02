@@ -2060,6 +2060,7 @@ return [
 'filter_has_been_applied' => "se ha aplicado un filtro",
 'filtered_results' => "Resultados filtrados",
 'clear_filter' => "Filtro claro",
-
+'is_franchised' => "¿Es franquiciado?",
+'franchise' => "Franquicia",
 
 ];

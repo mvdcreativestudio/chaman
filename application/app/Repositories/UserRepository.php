@@ -287,6 +287,10 @@ class UserRepository {
         if (request('type') == 'team') {
             $user->phone = request('phone');
             $user->position = request('position');
+            $user->is_franchised = (request('isFranchisedSwitch') == 'on') ? true : false;
+            if($user->is_franchised) {
+                $user->franchise_id = request('franchise_id');
+            }
         }
 
         //client specific details
@@ -724,6 +728,7 @@ class UserRepository {
         //with roles
         $query->with([
             'role',
+            'franchise'
         ]);
 
         //get the users

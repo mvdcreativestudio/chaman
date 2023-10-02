@@ -26,6 +26,13 @@
                                 data-url="{{ urlResource('/team?action=sort&orderby=email&sortorder=asc') }}">{{ cleanLang(__('lang.email')) }}<span
                                     class="sorting-icons"><i class="ti-arrows-vertical"></i></span>
                         </th>
+                        <th class="team_col_franchise">
+                            <a class="js-ajax-ux-request js-list-sorting" id="sort_franchise" href="javascript:void(0)"
+                            data-url="{{ urlResource('/team?action=sort&orderby=franchise&sortorder=asc') }}">
+                                {{ cleanLang(__('lang.franchise')) }}
+                                <span class="sorting-icons"><i class="ti-arrows-vertical"></i></span>
+                            </a>
+                        </th>
                         <th class="team_col_phone"><a class="js-ajax-ux-request js-list-sorting" id="sort_phone"
                                 href="javascript:void(0)"
                                 data-url="{{ urlResource('/team?action=sort&orderby=phone&sortorder=asc') }}">{{ cleanLang(__('lang.phone')) }}<span
@@ -66,3 +73,46 @@
         </div>
     </div>
 </div>
+<script>
+
+    function toggleFranchiseDropdown() {
+        let isFranchisedSwitch = document.getElementById('isFranchisedSwitch');
+        let franchiseDropdownContainer = document.getElementById('franchiseDropdown');
+        if (isFranchisedSwitch.checked) {
+            franchiseDropdownContainer.style.display = 'flex';
+        } else {
+            franchiseDropdownContainer.style.display = 'none';
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Selecciona el modal por su ID
+        var teamModal = document.getElementById('teamModal');
+        
+        // Asegúrate de que el modal existe antes de agregarle un listener
+        if (teamModal) {
+            // Agregar el listener al evento 'show.bs.modal'
+            teamModal.addEventListener('show.bs.modal', function() {
+                // Lógica para agregar las franquicias
+                const button = document.querySelector('.btn-add-circle');
+                const franchises = JSON.parse(button.getAttribute('data-franchises'));
+                const franchiseDropdown = document.getElementById('franchise_id');
+
+                // Limpia las opciones actuales
+                franchiseDropdown.innerHTML = '<option></option>';
+
+                // Agrega las franquicias al select
+                franchises.forEach(function(franchise) {
+                    var option = document.createElement('option');
+                    option.value = franchise.id;
+                    option.textContent = franchise.name;
+                    franchiseDropdown.appendChild(option);
+                });
+            });
+            
+            // Manually trigger the modal show event to ensure it works even when DOM is fully loaded.
+            var evt = new Event('show.bs.modal');
+            teamModal.dispatchEvent(evt);
+        }
+    });
+</script>

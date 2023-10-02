@@ -1,10 +1,9 @@
 @extends('layout.wrapper') @section('content')
 <!-- main content -->
 <div class="container-fluid">
-
     <!--page heading-->
     <div class="row page-titles">
-
+        
         <!-- Page Title & Bread Crumbs -->
         @include('misc.heading-crumbs')
         <!--Page Title & Bread Crumbs -->
