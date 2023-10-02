@@ -10664,15 +10664,7 @@ textarea {
 .progress-bar {
   opacity: 0.6; }
 
-.progress {
-  display: -ms-flexbox;
-  display: flex;
-  height: auto;
-  overflow: hidden;
-  line-height: 0;
-  font-size: .75rem;
-  background-color: #e9ecef;
-  border-radius: .25rem; }
+
   .progress.dynamic-list {
     position: absolute;
     bottom: 20px;

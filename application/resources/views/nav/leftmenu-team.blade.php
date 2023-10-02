@@ -64,7 +64,7 @@
                         <li class="sidenav-submenu {{ $page['submenu_templates'] ?? '' }}"
                             id="submenu_project_templates">
                             <a href="{{ _url('/franchises') }}"
-                                class="{{ $page['submenu_templates'] ?? '' }}">Ver Todas</a>
+                                class="{{ $page['submenu_templates'] ?? '' }}">Franquicias</a>
                         </li>
                     </ul>
                 </li>

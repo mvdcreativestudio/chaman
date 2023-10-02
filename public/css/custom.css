@@ -11,79 +11,71 @@
     font-weight: 400!important;
 }
 
-/* SWITCHES */ 
 
-.switch-container {
+/** NOTIFICACIÓN FRANCHISES **/
+
+#list-page-actions-container {
     display: flex;
-    align-items: center; /* Centrar verticalmente */
-    gap: 10px; /* Espacio entre el switch y el texto */
+}
+#list-page-actions-container .alert {
+    width: 97%;
+}
+#list-page-actions-container #list-page-actions {
+    width: 3%;
+    margin-left: auto;
 }
 
-.switch-label {
-    vertical-align: middle; /* Alinear verticalmente al centro */
+/** PROGRESS BAR **/
+
+.progress2 {
+    display: -ms-flexbox;
+    display: flex;
+    height: auto;
+    overflow: hidden;
+    line-height: 0;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem; }
+
+.progress {
+    height: 0.8rem;
 }
 
-/* The switch - the box around the slider */
-.switch {
+/** SCROLLEABLE OBJETIVOS DASHBOARD **/
+
+.parent-container {
     position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 19px;
+    
 }
 
-/* Hide default HTML checkbox */
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+.scrollable-container {
+    overflow-x: hidden;
+    white-space: nowrap;
+    padding-bottom: 1rem;  /* Para espacio si aparece un scrollbar */
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
-/* The slider */
-.slider {
+.arrow {
+    font-size: 30px;
     position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+    right: 0px;
+    padding-left: 10px;
+    top: 50%;
+    transform: translateY(-100%);
+    z-index: 2;
+    opacity: 1;
+    pointer-events: none;
+    font-weight: bolder;
+    color: gray;
+    animation: tintinear 1.5s infinite;
 }
 
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 13px;
-    width: 13px;
-    left: 1px;
-    bottom: 3px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+@keyframes tintinear {
+    0%, 100% {
+        color: lightgray;  /* gris claro al inicio y al final */
+    }
+    50% {
+        color: gray;  /* gris oscuro en el punto medio */
+    }
 }
-
-input:checked + .slider {
-    background-color: #2196F3;
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.rounded {
-    border-radius: 10px!important;
-}
-
-.slider.rounded:before {
-    border-radius: 50%;
-}
-
-/* END SWITCHES */ 
