@@ -21,6 +21,7 @@ use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Repositories\FranchiseRepository;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -37,6 +38,11 @@ class Team extends Controller {
     protected $userrepo;
 
     /**
+     * Respositorio de Franquicias.
+    */
+    protected $franchiseRepo;
+
+    /**
      * The projectrepo repository instance.
      */
     protected $projectrepo;
@@ -44,7 +50,8 @@ class Team extends Controller {
     public function __construct(
         RoleRepository $roles,
         UserRepository $userrepo,
-        ProjectRepository $projectrepo) {
+        ProjectRepository $projectrepo,
+        FranchiseRepository $franchiseRepo) {
 
         //parent
         parent::__construct();
@@ -73,6 +80,7 @@ class Team extends Controller {
         $this->roles = $roles;
         $this->userrepo = $userrepo;
         $this->projectrepo = $projectrepo;
+        $this->franchiseRepo = $franchiseRepo;
     }
 
     /**
@@ -87,11 +95,15 @@ class Team extends Controller {
             'status' => 'active',
         ]);
         $users = $this->userrepo->search();
+        
+        // Obtengo todas las franquicias
+        $franchises = $this->franchiseRepo->getAllActive();
 
         //reponse payload
         $payload = [
             'page' => $this->pageSettings('team'),
             'users' => $users,
+            'franchises' => $franchises,
         ];
 
         //show views
@@ -155,6 +167,7 @@ class Team extends Controller {
 
         //save
         $password = str_random(9);
+        
         if (!$userid = $this->userrepo->create(bcrypt($password))) {
             abort(409);
         }
@@ -260,7 +273,10 @@ class Team extends Controller {
             ],
             'role_id' => 'nullable|exists:roles,role_id',
             'password' => 'nullable|confirmed|min:5',
+            'isFranchisedSwitch' => 'nullable|in:on',
+            'franchise_id' => 'nullable|exists:franchises,id'
         ], $messages);
+
 
         //validation errors
         if ($validator->fails()) {
@@ -437,5 +453,37 @@ class Team extends Controller {
 
         //return
         return $page;
+    }
+
+    /**
+     * Desassociate a team member from a franchise.
+     * @param int $id team member id
+     * @return \Illuminate\Http\Response
+     */
+    public function removeFranchiseAssociation($id) {
+
+        //get the user
+        $user = $this->userrepo->get($id);
+
+        //check permissions
+        if (!runtimeTeamPermissionEdit($user)) {
+            abort(403);
+        }
+
+        //update the user
+        if (!$this->userrepo->removeFranchise($id)) {
+            abort(409);
+        }
+
+        //get updated user
+        $users = $this->userrepo->search($id);
+
+        //response payload
+        $payload = [
+            'users' => $users,
+        ];
+
+        //generate a response
+        return new UpdateResponse($payload);
     }
 }

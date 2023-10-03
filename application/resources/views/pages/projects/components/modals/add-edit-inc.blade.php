@@ -11,6 +11,7 @@
         @endif
 
         <!--client<>-->
+        
         @if(config('visibility.project_modal_client_fields'))
         <div class="client-selector">
 

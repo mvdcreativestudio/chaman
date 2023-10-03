@@ -19,6 +19,9 @@
     <td class="team_col_email">
         {{ runtimeCheckBlank($team->email) }}
     </td>
+    <td class="team_col_franchise">
+        {{ $team->franchise->name ?? 'N/A' }}
+    </td>
     <td class="team_col_phone">
         {{ runtimeCheckBlank($team->phone) }}
     </td>

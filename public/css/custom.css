@@ -10,3 +10,72 @@
 * {
     font-weight: 400!important;
 }
+
+
+/** NOTIFICACIÓN FRANCHISES **/
+
+#list-page-actions-container {
+    display: flex;
+}
+#list-page-actions-container .alert {
+    width: 97%;
+}
+#list-page-actions-container #list-page-actions {
+    width: 3%;
+    margin-left: auto;
+}
+
+/** PROGRESS BAR **/
+
+.progress2 {
+    display: -ms-flexbox;
+    display: flex;
+    height: auto;
+    overflow: hidden;
+    line-height: 0;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem; }
+
+.progress {
+    height: 0.8rem;
+}
+
+/** SCROLLEABLE OBJETIVOS DASHBOARD **/
+
+.parent-container {
+    position: relative;
+    
+}
+
+.scrollable-container {
+    overflow-x: hidden;
+    white-space: nowrap;
+    padding-bottom: 1rem;  /* Para espacio si aparece un scrollbar */
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.arrow {
+    font-size: 30px;
+    position: absolute;
+    right: 0px;
+    padding-left: 10px;
+    top: 50%;
+    transform: translateY(-100%);
+    z-index: 2;
+    opacity: 1;
+    pointer-events: none;
+    font-weight: bolder;
+    color: gray;
+    animation: tintinear 1.5s infinite;
+}
+
+@keyframes tintinear {
+    0%, 100% {
+        color: lightgray;  /* gris claro al inicio y al final */
+    }
+    50% {
+        color: gray;  /* gris oscuro en el punto medio */
+    }
+}

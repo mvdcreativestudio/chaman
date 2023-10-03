@@ -231,7 +231,7 @@ class Invoices extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function index(ProjectRepository $projectrepo, CategoryRepository $categoryrepo) {
+    public function index(ProjectRepository $projectrepo, CategoryRepository $categoryrepo, Request $request) {
 
         //default
         $projects = [];
@@ -364,6 +364,16 @@ class Invoices extends Controller {
      */
     public function show($id) {
 
+        if (auth()->user()->role->role_invoices_scope != 'global') {
+            // Obtener el invoice
+            $invoice = \App\Models\Invoice::find($id);
+            
+            // Si el invoice no existe o el usuario no es el creador, abortar
+            if (!$invoice || $invoice->bill_creatorid != auth()->user()->creatorid) {
+                abort(403, 'Permission Denied');
+            }
+        }
+
         //get invoice object payload
         if (!$payload = $this->invoicegenerator->generate($id)) {
             abort(409, __('lang.error_request_could_not_be_completed'));
@@ -407,6 +417,16 @@ class Invoices extends Controller {
      */
     public function saveInvoice(InvoiceSave $request, $id) {
 
+        if (auth()->user()->role->role_invoices_scope != 'global') {
+            // Obtener el invoice
+            $invoice = \App\Models\Invoice::find($id);
+            
+            // Si el invoice no existe o el usuario no es el creador, abortar
+            if (!$invoice || $invoice->bill_creatorid != auth()->user()->creatorid) {
+                abort(403, 'Permission Denied');
+            }
+        }
+
         //get the invoice
         $invoices = $this->invoicerepo->search($id);
         $invoice = $invoices->first();
@@ -441,7 +461,6 @@ class Invoices extends Controller {
      * @return array
      */
     private function updateInvoiceTax($bill_invoiceid = '') {
-
         //delete current invoice taxes
         \App\Models\Tax::Where('taxresource_type', 'invoice')
             ->where('taxresource_id', $bill_invoiceid)
@@ -560,6 +579,16 @@ class Invoices extends Controller {
      */
     public function resendInvoice($id) {
 
+        if (auth()->user()->role->role_invoices_scope != 'global') {
+            // Obtener el invoice
+            $invoice = \App\Models\Invoice::find($id);
+            
+            // Si el invoice no existe o el usuario no es el creador, abortar
+            if (!$invoice || $invoice->bill_creatorid != auth()->user()->creatorid) {
+                abort(403, 'Permission Denied');
+            }
+        }
+
         //generate the invoice
         if (!$payload = $this->invoicegenerator->generate($id)) {
             abort(409, __('lang.error_loading_item'));
@@ -596,6 +625,16 @@ class Invoices extends Controller {
      */
     public function edit(CategoryRepository $categoryrepo, $id) {
 
+        if (auth()->user()->role->role_invoices_scope != 'global') {
+            // Obtener el invoice
+            $invoice = \App\Models\Invoice::find($id);
+            
+            // Si el invoice no existe o el usuario no es el creador, abortar
+            if (!$invoice || $invoice->bill_creatorid != auth()->user()->creatorid) {
+                abort(403, 'Permission Denied');
+            }
+        }
+
         //get the project
         $invoice = $this->invoicerepo->search($id);
 
@@ -631,6 +670,18 @@ class Invoices extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update($id) {
+
+
+        if (auth()->user()->role->role_invoices_scope != 'global') {
+            // Obtener el invoice
+            $invoice = \App\Models\Invoice::find($id);
+            
+            // Si el invoice no existe o el usuario no es el creador, abortar
+            if (!$invoice || $invoice->bill_creatorid != auth()->user()->creatorid) {
+                abort(403, 'Permission Denied');
+            }
+        }
+
         //custom error messages
         $messages = [];
 

@@ -104,6 +104,7 @@ class RoleRepository {
         $role->role_assign_tasks = (request('role_assign_tasks') == 'yes') ? 'yes' : 'no';
         $role->role_tasks_scope = (request('role_tasks_scope') == 'on') ? 'global' : 'own';
         $role->role_projects_scope = (request('role_projects_scope') == 'on') ? 'global' : 'own';
+        $role->role_invoices_scope = (request('role_invoices_scope') == 'on') ? 'global' : 'own';
         $role->role_leads_scope = (request('role_leads_scope') == 'on') ? 'global' : 'own';
         $role->role_expenses_scope = (request('role_expenses_scope') == 'on') ? 'global' : 'own';
         $role->role_timesheets_scope = (request('role_timesheets_scope') == 'on') ? 'global' : 'own';
@@ -163,6 +164,7 @@ class RoleRepository {
         $role->role_assign_tasks = (request('role_assign_tasks') == 'yes') ? 'yes' : 'no';
         $role->role_tasks_scope = (request('role_tasks_scope') == 'on') ? 'global' : 'own';
         $role->role_projects_scope = (request('role_projects_scope') == 'on') ? 'global' : 'own';
+        $role->role_invoices_scope = (request('role_invoices_scope') == 'on') ? 'global' : 'own';
         $role->role_leads_scope = (request('role_leads_scope') == 'on') ? 'global' : 'own';
         $role->role_expenses_scope = (request('role_expenses_scope') == 'on') ? 'global' : 'own';
         $role->role_timesheets_scope = (request('role_timesheets_scope') == 'on') ? 'global' : 'own';

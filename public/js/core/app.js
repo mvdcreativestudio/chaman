@@ -1358,6 +1358,7 @@ function NXHomeAdmin() {
         });
     }
 
+    
 
 
     //income vs expenses

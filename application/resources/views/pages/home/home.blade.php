@@ -3,6 +3,14 @@
 <div class="container-fluid">
 
     <!--admin dashboard-->
+    {{-- <!-- Toggle Switch para mostrar/ocultar datos -->
+    <div class="switch-container">
+        <label class="switch">
+            <input type="checkbox" id="toggle-data" checked>
+            <span class="slider rounded"></span>
+        </label>
+        <label for="toggle-data" class="switch-label">Gráfica Ingresos vs Gastos</label>
+    </div> --}}
     @if(auth()->user()->is_team)
     @if(auth()->user()->is_admin)
     @include('pages.home.admin.wrapper')
@@ -20,3 +28,21 @@
 </div>
 <!--main content -->
 @endsection
+
+
+
+{{-- SCRIPT PARA SWITCHES DE ELEMENTOS <script>
+    $(document).ready(function () {
+        // Manejar el cambio de estado del switch
+        $("#toggle-data").change(function () {
+            var isChecked = this.checked;
+            
+            // Lógica para mostrar u ocultar los datos en wrapper.blade.php
+            if (isChecked) {
+                $(".element-content").slideDown(); // Mostrar todos los datos
+            } else {
+                $(".element-content").slideUp(); // Ocultar todos los datos
+            }
+        });
+    });
+</script> --}}

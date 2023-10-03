@@ -36,11 +36,13 @@
         <a href="/clients/{{ $invoice->bill_clientid }}">{{ str_limit($invoice->client_company_name ?? '---', 12) }}</a>
     </td>
     @endif
+
     @if(config('visibility.invoices_col_project'))
     <td class="invoices_col_project" id="invoices_col_project_{{ $invoice->bill_invoiceid }}">
-        <a href="/projects/{{ $invoice->bill_projectid }}">{{ str_limit($invoice->project_title ?? '---', 12) }}</a>
+        {{ $invoice->creator->first_name }} {{ $invoice->creator->last_name }}
     </td>
     @endif
+
 
     <td class="invoices_col_amount" id="invoices_col_amount_{{ $invoice->bill_invoiceid }}">
         {{ runtimeMoneyFormat($invoice->bill_final_amount) }}</td>

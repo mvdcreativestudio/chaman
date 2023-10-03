@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="{{ auth()->user()->type ?? '' }} {{ config('visibility.page_rendering') }}">
 
-<!--CRM - GROWCRM.IO-->
 @include('layout.header')
 
 <body id="main-body"

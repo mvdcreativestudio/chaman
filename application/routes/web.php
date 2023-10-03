@@ -11,6 +11,8 @@ Route::get('/datacenter', [DatacenterController::class, 'index']);
 
 
 
+use App\Http\Controllers\Franchise;
+
 //TESTING [DEV]
 Route::get("test", "Test@index");
 Route::post("test", "Test@index");
@@ -1113,3 +1115,5 @@ Route::resource('cs/affiliates/earnings', 'CS_Affiliates\Earnings');
 
 //AFFILATE PROFIT
 Route::get("/cs/affiliate/my/earnings", "CS_Affiliates\Profit@index");
+
+
