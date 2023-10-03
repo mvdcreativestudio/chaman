@@ -8,6 +8,14 @@
 <!-- main content -->
 <div class="container-fluid">
 
+
+    <div class="row page-titles">
+            
+            <!-- Page Title & Bread Crumbs -->
+            @include('misc.heading-crumbs')
+            <!--Page Title & Bread Crumbs -->
+    </div>
+
     <div class="text-right {{ $page['list_page_actions_size'] ?? '' }} {{ $page['list_page_container_class'] ?? '' }}"
         id="list-page-actions-container"
         >
@@ -127,6 +135,10 @@
     #list-page-actions-container #list-page-actions {
         width: 3%;
         margin-left: auto;
+    }
+
+    div#franchises-table-wrapper * {
+        font-size: 14px;
     }
 </style>
 

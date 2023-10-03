@@ -57,12 +57,16 @@ class Franchise extends Controller {
         } else {
             return response()->json(['status' => 'error', 'message' => 'Failed to update franchise'], 500);
         }
-    }    
+}    
 
     public function index()
     {
         $franchises = $this->franchiseRepo->getAll();
-        return view('pages/franchises/index', ['franchises' => $franchises]);
+        $page = array(
+            'heading' => "Franquicias",
+            'crumbs' => ['Franquicias']
+        );
+        return view('pages/franchises/index', ['franchises' => $franchises, 'page' => $page]);
     }
 
     public function toggleDisable($id) {
