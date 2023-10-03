@@ -15,5 +15,9 @@ class Franchise extends Model
         'phone',
         'is_disabled'
     ];
+
+    public function users() {
+        return $this->hasMany('App\Models\User', 'franchise_id', 'id');
+    }
 }
 

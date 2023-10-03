@@ -1116,14 +1116,4 @@ Route::resource('cs/affiliates/earnings', 'CS_Affiliates\Earnings');
 //AFFILATE PROFIT
 Route::get("/cs/affiliate/my/earnings", "CS_Affiliates\Profit@index");
 
-// SUMERIA - Franquicias
-Route::group(['prefix' => 'franchise'], function () {
-    Route::any("/search", "Franchise@getAll"); // Para obtener todas las franquicias
-    Route::get("/{id}", "Franchise@get"); // Para obtener una sola franquicia por ID
-    Route::post("/create", "Franchise@create"); // Para crear una nueva franquicia
-    Route::post("/update/{id}", "Franchise@update"); // Para actualizar una franquicia por ID
-    Route::get("/toggle/{id}", "Franchise@toggleDisable"); // Para actualizar is_disabled de una franquicia por ID
-});
-
-Route::get('/franchises', 'Franchise@index')->middleware('franchiseAccess');
 

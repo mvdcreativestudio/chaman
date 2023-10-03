@@ -15,7 +15,7 @@
 <script src="public/js/core/app.js?v={{ config('system.versioning') }}"></script>
 
 <!--CUSTOM JS--> 
-<script src="public/js/core/custom.js?v={{ config('system.versioning') }}"></script>
+<script src="public/js/core/custom.js"></script> <!-- Le eliminé el v= porque no cargaba -->
 
 <!--BILLING-->
 <script src="public/js/core/billing.js?v={{ config('system.versioning') }}"></script>
