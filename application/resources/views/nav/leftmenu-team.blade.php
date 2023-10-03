@@ -43,17 +43,17 @@
                         
                         
                         <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/users"
+                            <a href="/ecommerce"
                                 class="{{ $page['submenu_contacts'] ?? '' }}">E-commerce</a>
                         </li>
 
                         <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/users"
+                            <a href="/ventafisica"
                                 class="{{ $page['submenu_contacts'] ?? '' }}">Venta Física</a>
                         </li>
 
                         <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/users"
+                            <a href="/stock"
                                 class="{{ $page['submenu_contacts'] ?? '' }}">Stock</a>
                         </li>
                         
