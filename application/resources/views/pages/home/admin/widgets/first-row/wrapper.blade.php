@@ -10,4 +10,7 @@
 
     <!--INVOICES OVERDUE-->
     @include('pages.home.admin.widgets.first-row.invoices-overdue')
+
+    <!--FACTURAS POR VENCER-->
+    @include('pages.home.admin.widgets.first-row.facturas-por-vencer')
 </div>

@@ -1,6 +1,6 @@
 <?php
 
-/**----------------------------------------------------------------------------------------------------------------
- * [GROWCRM - CUSTOM ROUTES]
- * Place your custom routes or overides in this file. This file is not updated with Grow CRM updates
- * ---------------------------------------------------------------------------------------------------------------*/
+// DATACENTER
+use App\Http\Controllers\DatacenterController;
+
+Route::get('/datacenter', [DatacenterController::class, 'index']);

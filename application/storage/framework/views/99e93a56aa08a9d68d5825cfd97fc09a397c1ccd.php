@@ -10,4 +10,7 @@
 
     <!--INVOICES OVERDUE-->
     <?php echo $__env->make('pages.home.admin.widgets.first-row.invoices-overdue', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+    <!--FACTURAS POR VENCER-->
+    <?php echo $__env->make('pages.home.admin.widgets.first-row.facturas-por-vencer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </div><?php /**PATH D:\laragon\www\application\resources\views/pages/home/admin/widgets/first-row/wrapper.blade.php ENDPATH**/ ?>
