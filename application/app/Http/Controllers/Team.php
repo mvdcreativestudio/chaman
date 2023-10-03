@@ -273,7 +273,10 @@ class Team extends Controller {
             ],
             'role_id' => 'nullable|exists:roles,role_id',
             'password' => 'nullable|confirmed|min:5',
+            'isFranchisedSwitch' => 'nullable|in:on',
+            'franchise_id' => 'nullable|exists:franchises,id'
         ], $messages);
+
 
         //validation errors
         if ($validator->fails()) {
@@ -450,5 +453,37 @@ class Team extends Controller {
 
         //return
         return $page;
+    }
+
+    /**
+     * Desassociate a team member from a franchise.
+     * @param int $id team member id
+     * @return \Illuminate\Http\Response
+     */
+    public function removeFranchiseAssociation($id) {
+
+        //get the user
+        $user = $this->userrepo->get($id);
+
+        //check permissions
+        if (!runtimeTeamPermissionEdit($user)) {
+            abort(403);
+        }
+
+        //update the user
+        if (!$this->userrepo->removeFranchise($id)) {
+            abort(409);
+        }
+
+        //get updated user
+        $users = $this->userrepo->search($id);
+
+        //response payload
+        $payload = [
+            'users' => $users,
+        ];
+
+        //generate a response
+        return new UpdateResponse($payload);
     }
 }

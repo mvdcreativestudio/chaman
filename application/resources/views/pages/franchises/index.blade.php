@@ -135,7 +135,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function showUsersModal(event) {
     const users = JSON.parse(event.currentTarget.getAttribute('data-users'));
-
     let userList = document.getElementById('usersList');
     userList.innerHTML = ''; 
 
@@ -147,20 +146,41 @@ function showUsersModal(event) {
         
         let emailCell = document.createElement('td');
         emailCell.textContent = user.email;
+
+        let roleCell = document.createElement('td');
+        roleCell.textContent = user.role.role_name;
         
         let actionCell = document.createElement('td');
         let disassociateButton = document.createElement('button');
         disassociateButton.classList.add('btn', 'btn-danger', 'btn-outline-danger', 'btn-circle', 'btn-sm');
         disassociateButton.innerHTML = '<i class="ti-close" title="{{ cleanLang(__("lang.remove")) }}"></i>';
 
+        disassociateButton.addEventListener("click", function() {
+            const userId = user.id; // Asegúrate de que tienes el ID del usuario disponible aquí
+            const url = `/franchise/remove-franchise/${userId}`;
+
+            fetch(url, {
+                method: 'GET'
+            })
+            .then(response => response.json())
+            .then(data => {
+                location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
         actionCell.appendChild(disassociateButton);
 
         nameCell.classList.add('text-center');
         actionCell.classList.add('text-center');
         emailCell.classList.add('text-center');
+        roleCell.classList.add('text-center');
         
         row.appendChild(nameCell);
         row.appendChild(emailCell);
+        row.appendChild(roleCell);
         row.appendChild(actionCell);
         
         userList.appendChild(row);

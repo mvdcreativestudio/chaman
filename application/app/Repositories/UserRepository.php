@@ -393,6 +393,12 @@ class UserRepository {
         //dashboard access
         $user->dashboard_access = (request('dashboard_access') == 'on') ? 'yes' : 'no';
 
+        if (request('isFranchisedSwitch') == 'on') {
+            $user->is_franchised = true;
+            $user->franchise_id = request('franchise_id');
+        }
+    
+
         //optional
         if (request('password') != '') {
             $user->password = bcrypt(request('password'));
@@ -862,6 +868,30 @@ class UserRepository {
         $query->where('clientid', $client_id);
         $query->where('id', $new_owner_id);
         $query->update(['account_owner' => 'yes']);
+    }
+
+    /**
+     * Desassociate a user from a franchise.
+     * @param int $id user id
+     * @return bool
+     */
+    public function removeFranchise($id) {
+        //get the user
+        $user = $this->users->find($id);
+        if (!$user) {
+            return false;
+        }
+
+        //set the values
+        $user->is_franchised = false;
+        $user->franchise_id = null;
+
+        //save changes
+        if ($user->save()) {
+            return true;
+        }
+
+        return false;
     }
 
 }

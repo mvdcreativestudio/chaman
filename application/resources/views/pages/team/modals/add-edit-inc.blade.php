@@ -73,7 +73,6 @@
         </div>
         <!--[team][admin] user role-->
         @endif
-
         <!--is_franchised switch-->
         <div class="spacer row">
             <div class="col-sm-8">
@@ -82,7 +81,7 @@
             <div class="col-sm-12 col-lg-4 text-right">
                 <div class="switch text-right">
                     <label>
-                        <input type="checkbox" class="js-switch-toggle-hidden-content" id="isFranchisedSwitch" name="isFranchisedSwitch" onchange="toggleFranchiseDropdown();">
+                        <input {{ (isset($user) && $user->is_franchised == true) ? 'checked' : '' }} type="checkbox" class="js-switch-toggle-hidden-content" id="isFranchisedSwitch" name="isFranchisedSwitch">
                         <span class="lever switch-col-light-blue" style="margin-left: auto;"></span>
                     </label>
                 </div>
@@ -201,3 +200,28 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        loadFranchisesToDropdown();
+
+        // Compruebo el estado inicial del switch
+        if ($('#isFranchisedSwitch').prop('checked')) {
+            $('#franchiseDropdown').show();
+        }
+
+        // Muestro u oculto el dropdown cuando se cambie el estado del switch
+        $('#isFranchisedSwitch').change(function() {
+            if ($(this).prop('checked')) {
+                $('#franchiseDropdown').show();
+            } else {
+                $('#franchiseDropdown').hide();
+            }
+        });
+
+        // Verifico si el usuario tiene un franchise_id definido y seleccionar la opción correspondiente
+        @if(isset($user) && $user->franchise_id)
+            $('#franchise_id option[value="{{ $user->franchise_id }}"]').prop('selected', true);
+        @endif
+    });
+</script>

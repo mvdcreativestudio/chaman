@@ -1,9 +1,9 @@
 <div class="modal" id="usersModal" tabindex="-1" role="dialog" aria-labelledby="usersModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+    <div class="modal-dialog" role="document" style="display: flex; width: auto;">
+        <div class="modal-content" style="display: flex; width: auto;">
             <div class="modal-header">
                 <h5 class="modal-title" id="usersModalLabel">Lista de Usuarios</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -13,6 +13,7 @@
                         <tr>
                             <th class="text-center">Nombre</th>
                             <th class="text-center">Email</th>
+                            <th class="text-center">Rol</th>
                             <th class="text-center">Acción</th>
                         </tr>
                     </thead>
@@ -22,7 +23,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

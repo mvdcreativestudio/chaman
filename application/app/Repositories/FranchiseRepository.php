@@ -25,7 +25,7 @@ class FranchiseRepository {
      * @return Collection
      */
     public function getAll() {
-        return $this->franchises->with('users')->get();
+        return $this->franchises->with(['users', 'users.role'])->get();
     }
 
     public function getAllActive() {
