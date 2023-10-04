@@ -19,5 +19,10 @@ class Franchise extends Model
     public function users() {
         return $this->hasMany('App\Models\User', 'franchise_id', 'id');
     }
+
+    public function objectives()
+    {
+    return $this->hasMany(Objective::class, 'user_id');
+    }
 }
 

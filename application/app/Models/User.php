@@ -278,6 +278,12 @@ class User extends Authenticatable {
         }
     }
 
+    public function objectives()
+    {
+        return $this->hasMany(Objective::class, 'user_id');
+    }
+    
+
     /**
      * check if the user has any permissions to add content, so that we can display the red add button in top nav
      * @return bool

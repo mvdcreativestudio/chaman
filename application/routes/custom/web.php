@@ -17,3 +17,7 @@ Route::group(['prefix' => 'franchise'], function () {
 });
 
 Route::get('/franchises', 'Franchise@index')->middleware('franchiseAccess');
+
+// SUMERIA - Objetivos
+
+Route::get('/objectives', 'Objectives@index');
