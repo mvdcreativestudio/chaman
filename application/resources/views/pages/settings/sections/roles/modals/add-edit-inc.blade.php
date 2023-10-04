@@ -333,7 +333,8 @@
                             <div class="form-group form-group-checkbox row m-0 w-98">
                                 <div class="col-12 text-center p-t-5">
                                     <input type="checkbox" id="role_invoices_scope" name="role_invoices_scope"
-                                        class="filled-in chk-col-light-blue" disabled checked="checked">
+                                        class="filled-in chk-col-light-blue" 
+                                        {{ runtimePrechecked($role->role_invoices_scope ?? '') }}>
                                     <label for="role_invoices_scope" data-toggle="tooltip"
                                         title="{{ cleanLang(__('lang.can_only_be_set_as_global')) }}"></label>
                                 </div>

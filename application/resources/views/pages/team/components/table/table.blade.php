@@ -26,6 +26,13 @@
                                 data-url="{{ urlResource('/team?action=sort&orderby=email&sortorder=asc') }}">{{ cleanLang(__('lang.email')) }}<span
                                     class="sorting-icons"><i class="ti-arrows-vertical"></i></span>
                         </th>
+                        <th class="team_col_franchise">
+                            <a class="js-ajax-ux-request js-list-sorting" id="sort_franchise" href="javascript:void(0)"
+                            data-url="{{ urlResource('/team?action=sort&orderby=franchise&sortorder=asc') }}">
+                                {{ cleanLang(__('lang.franchise')) }}
+                                <span class="sorting-icons"><i class="ti-arrows-vertical"></i></span>
+                            </a>
+                        </th>
                         <th class="team_col_phone"><a class="js-ajax-ux-request js-list-sorting" id="sort_phone"
                                 href="javascript:void(0)"
                                 data-url="{{ urlResource('/team?action=sort&orderby=phone&sortorder=asc') }}">{{ cleanLang(__('lang.phone')) }}<span

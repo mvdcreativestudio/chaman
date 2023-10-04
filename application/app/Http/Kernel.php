@@ -339,6 +339,8 @@ class Kernel extends HttpKernel {
         'contractTemplatesMiddlewareEdit' => \App\Http\Middleware\Templates\Contracts\Edit::class,
         'contractTemplatesMiddlewareCreate' => \App\Http\Middleware\Templates\Contracts\Create::class,
         'contractTemplatesMiddlewareDestroy' => \App\Http\Middleware\Templates\Contracts\Destroy::class,
-
+        
+        // [Sumeria] - [Franquicias]
+        'franchiseAccess' => \App\Http\Middleware\Franchise\FranchiseAccess::class,
     ];
 }

@@ -282,7 +282,16 @@ class Home extends Controller {
                 'start_date' => \Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => \Carbon\Carbon::now()->lastOfMonth()->format('Y-m-d'),
             ]),
+            'this_year' => $this->statsrepo->sumCountPayments([
+                'type' => 'sum',
+                'start_date' => \Carbon\Carbon::now()->startOfYear()->format('Y-m-d'),
+                'end_date' => \Carbon\Carbon::now()->endOfYear()->format('Y-m-d'),
+            ]),
+            'total' => $this->statsrepo->sumCountPayments([
+                'type' => 'sum',
+            ]),
         ];
+
 
         //[invoices]
         $payload['invoices'] = [
@@ -299,6 +308,11 @@ class Home extends Controller {
         //[income][yearly]
         $payload['income'] = $this->statsrepo->sumYearlyIncome([
             'period' => 'this_year',
+        ]);
+
+        //[income][last_year]
+        $payload['income'] = $this->statsrepo->sumYearlyIncome([
+            'period'=> 'last_year'
         ]);
 
         //[expense][yearly]
@@ -361,6 +375,18 @@ class Home extends Controller {
         //filter payments - this month
         $payload['filter_payment_month_start'] = \Carbon\Carbon::now()->startOfMonth()->format('Y-m-d');
         $payload['filter_payment_month_end'] = \Carbon\Carbon::now()->lastOfMonth()->format('Y-m-d');
+
+        $payload['filter_payment_this_year'] = [
+            'start_date' => \Carbon\Carbon::now()->startOfYear()->format('Y-m-d'),
+            'end_date' => \Carbon\Carbon::now()->endOfYear()->format('Y-m-d'),
+        ];
+
+        $payload['filter_payment_total'] = [
+            'start_date' => null,  // Deja la fecha de inicio como null para obtener todos los registros históricamente.
+            'end_date' => null,    // Deja la fecha de finalización como null para obtener todos los registros históricamente.
+        ];
+        
+
 
         //return payload
         return $payload;

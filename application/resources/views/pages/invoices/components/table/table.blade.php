@@ -31,10 +31,13 @@
                                 href="javascript:void(0)"
                                 data-url="{{ urlResource('/invoices?action=sort&orderby=client&sortorder=asc') }}">{{ cleanLang(__('lang.company_name')) }}<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a></th>
                         @endif
+
+                        {{-- MOSTRAR FRANQUICIA EN LA TABLA --}}
+
                         @if(config('visibility.invoices_col_project'))
                         <th class="invoices_col_project"><a class="js-ajax-ux-request js-list-sorting" id="sort_project"
                                 href="javascript:void(0)"
-                                data-url="{{ urlResource('/invoices?action=sort&orderby=project&sortorder=asc') }}">{{ cleanLang(__('lang.project')) }}<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
+                                data-url="{{ urlResource('/invoices?action=sort&orderby=project&sortorder=asc') }}">Franquicia<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
                         </th>
                         @endif
 
