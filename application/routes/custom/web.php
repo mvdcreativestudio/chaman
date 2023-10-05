@@ -20,4 +20,14 @@ Route::get('/franchises', 'Franchise@index')->middleware('franchiseAccess');
 
 // SUMERIA - Objetivos
 
-Route::get('/objectives', 'Objectives@index');
+Route::group(['prefix' => 'objective'], function () {
+    Route::any("/search", "Objective@getAll"); // Para obtener todos los objetivos
+    Route::get("/{id}", "Objective@get"); // Para obtener un solo objetivo por ID
+    Route::post("/create", "Objective@create"); // Para crear un nuevo objetivo
+    Route::post("/update/{id}", "Objective@update"); // Para actualizar un objetivo por ID
+    Route::get("/remove-objective/{id}", "Team@removeObjectiveAssociation"); // Remueve la asosiacion de un Team Member con un objetivo
+    Route::get("/destroy/{id}", "Objective@destroy"); // Para eliminar un objetivo por ID
+
+});
+
+Route::get('/objectives', 'Objective@index');
