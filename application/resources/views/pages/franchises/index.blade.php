@@ -150,54 +150,58 @@ function showUsersModal(event) {
     let userList = document.getElementById('usersList');
     userList.innerHTML = ''; 
 
-    users.forEach(function(user) {
-        let row = document.createElement('tr');
-        
-        let nameCell = document.createElement('td');
-        nameCell.textContent = user.first_name;
-        
-        let emailCell = document.createElement('td');
-        emailCell.textContent = user.email;
+    try {
+        users.forEach(function(user) {
+            let row = document.createElement('tr');
+            
+            let nameCell = document.createElement('td');
+            nameCell.textContent = user.first_name;
+            
+            let emailCell = document.createElement('td');
+            emailCell.textContent = user.email;
 
-        let roleCell = document.createElement('td');
-        roleCell.textContent = user.role.role_name;
-        
-        let actionCell = document.createElement('td');
-        let disassociateButton = document.createElement('button');
-        disassociateButton.classList.add('btn', 'btn-danger', 'btn-outline-danger', 'btn-circle', 'btn-sm');
-        disassociateButton.innerHTML = '<i class="ti-close" title="{{ cleanLang(__("lang.remove")) }}"></i>';
+            let roleCell = document.createElement('td');
+            roleCell.textContent = user.role?.role_name;
+            
+            let actionCell = document.createElement('td');
+            let disassociateButton = document.createElement('button');
+            disassociateButton.classList.add('btn', 'btn-danger', 'btn-outline-danger', 'btn-circle', 'btn-sm');
+            disassociateButton.innerHTML = '<i class="ti-close" title="{{ cleanLang(__("lang.remove")) }}"></i>';
 
-        disassociateButton.addEventListener("click", function() {
-            const userId = user.id; // Asegúrate de que tienes el ID del usuario disponible aquí
-            const url = `/franchise/remove-franchise/${userId}`;
+            disassociateButton.addEventListener("click", function() {
+                const userId = user.id; // Asegúrate de que tienes el ID del usuario disponible aquí
+                const url = `/franchise/remove-franchise/${userId}`;
 
-            fetch(url, {
-                method: 'GET'
-            })
-            .then(response => response.json())
-            .then(data => {
-                location.reload();
-            })
-            .catch(error => {
-                console.error('Error:', error);
+                fetch(url, {
+                    method: 'GET'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             });
+
+            actionCell.appendChild(disassociateButton);
+
+            nameCell.classList.add('text-center');
+            actionCell.classList.add('text-center');
+            emailCell.classList.add('text-center');
+            roleCell.classList.add('text-center');
+            
+            row.appendChild(nameCell);
+            row.appendChild(emailCell);
+            row.appendChild(roleCell);
+            row.appendChild(actionCell);
+            
+            userList.appendChild(row);
         });
-
-        actionCell.appendChild(disassociateButton);
-
-        nameCell.classList.add('text-center');
-        actionCell.classList.add('text-center');
-        emailCell.classList.add('text-center');
-        roleCell.classList.add('text-center');
-        
-        row.appendChild(nameCell);
-        row.appendChild(emailCell);
-        row.appendChild(roleCell);
-        row.appendChild(actionCell);
-        
-        userList.appendChild(row);
-    });
-
+    } catch (e) {
+        console.log(e)
+    }
+    
     $('#usersModal').modal('show');
 }
 
