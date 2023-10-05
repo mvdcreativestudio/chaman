@@ -63,84 +63,7 @@
                 <!--datacenter-->
 
 
-                <!--CRM VENTAS-->
-                @if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
-                config('visibility.modules.users')]))
-                <li data-modular-id="main_menu_team_clients"
-                    class="sidenav-menu-item {{ $page['mainmenu_customers'] ?? '' }}">
-                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
-                        <i class="ti-wallet"></i>
-                        <span class="hide-menu">CRM Ventas
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        
-                        <li class="sidenav-submenu {{ $page['submenu_customers'] ?? '' }}" id="submenu_clients">
-                            <a href="/datacenter"
-                                class="{{ $page['submenu_customers'] ?? '' }}">1</a>
-                        </li>
-                        
-                        
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/ecommerce"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">2</a>
-                        </li>
-
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/ventafisica"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">3</a>
-                        </li>
-
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/stock"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">4</a>
-                        </li>
-                        
-                    </ul>
-                </li>
-                @endif
-                <!--CRM VENTAS-->
-
-                <!--CRM SOCIAL-->
-                @if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
-                config('visibility.modules.users')]))
-                <li data-modular-id="main_menu_team_clients"
-                    class="sidenav-menu-item {{ $page['mainmenu_customers'] ?? '' }}">
-                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
-                        <i class="sl-icon-bubbles"></i>
-                        <span class="hide-menu">CRM Social
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        
-                        <li class="sidenav-submenu {{ $page['submenu_customers'] ?? '' }}" id="submenu_clients">
-                            <a href="/datacenter"
-                                class="{{ $page['submenu_customers'] ?? '' }}">1</a>
-                        </li>
-                        
-                        
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/ecommerce"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">2</a>
-                        </li>
-
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/ventafisica"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">3</a>
-                        </li>
-
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/stock"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">4</a>
-                        </li>
-                        
-                    </ul>
-                </li>
-                @endif
-                <!--CRM SOCIAL-->
-
-                
-                <!--users[done]
+                <!--users[done]-->
                 @if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
                 config('visibility.modules.users')]))
                 <li data-modular-id="main_menu_team_clients"
@@ -168,7 +91,7 @@
                 @endif
                 <!--customers-->
 
-                <!--FRANCHISES HARDCODEADO
+                <!--FRANCHISES HARDCODEADO-->
                 <li data-modular-id="main_menu_team_projects"
                 class="sidenav-menu-item {{ $page['mainmenu_projects'] ?? '' }}">
                 <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
@@ -184,7 +107,7 @@
                     </ul>
                 </li>
 
-                <!--projects[done]
+                <!--projects[done]-->
                 @if(config('visibility.modules.projects'))
                 <li data-modular-id="main_menu_team_projects"
                     class="sidenav-menu-item {{ $page['mainmenu_projects'] ?? '' }}">
@@ -218,7 +141,7 @@
                 <!--projects-->
 
 
-                <!--tasks[done]
+                <!--tasks[done]-->
                 @if(config('visibility.modules.tasks'))
                 <li data-modular-id="main_menu_team_tasks"
                     class="sidenav-menu-item {{ $page['mainmenu_tasks'] ?? '' }} menu-tooltip menu-with-tooltip"
@@ -234,7 +157,7 @@
 
                 
 
-                <!--leads[done]
+                <!--leads[done]-->
                 @if(config('visibility.modules.leads'))
                 <li data-modular-id="main_menu_team_leads"
                     class="sidenav-menu-item {{ $page['mainmenu_leads'] ?? '' }} menu-tooltip menu-with-tooltip"
@@ -248,7 +171,7 @@
                 @endif
                 <!--leads-->
 
-                <!--sales
+                <!--sales-->
                 @if(runtimeGroupMenuVibility([config('visibility.modules.invoices'),
                 config('visibility.modules.payments'), config('visibility.modules.estimates'),
                 config('visibility.modules.products'), config('visibility.modules.expenses'),
@@ -304,12 +227,12 @@
                 <!--billing-->
 
 
-                <!--proposals [multiple]
+                <!--proposals [multiple]-->
                 @if(config('visibility.modules.proposals') && auth()->user()->role->role_templates_proposals > 0)
-                <!--multipl menu--
+                <!--multipl menu---->
                 <li data-modular-id="main_menu_team_proposals"
                     class="sidenav-menu-item {{ $page['mainmenu_proposals'] ?? '' }}">
-                    <!--multiple menu--
+                    <!--multiple menu---->
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="ti-bookmark-alt"></i>
                         <span class="hide-menu">{{ cleanLang(__('lang.proposals')) }}
@@ -330,7 +253,7 @@
                 @endif
                 <!--proposals-->
 
-                <!--proposals [single]--
+                <!--proposals [single]---->
                 @if(config('visibility.modules.proposals') && auth()->user()->role->role_templates_proposals == 0)
                 <li data-modular-id="main_menu_team_proposals"
                     class="sidenav-menu-item {{ $page['mainmenu_proposals'] ?? '' }} menu-tooltip menu-with-tooltip"
@@ -344,12 +267,12 @@
                 @endif
 
 
-                <!--contracts [multiple]--
+                <!--contracts [multiple]-->
                 @if(config('visibility.modules.contracts') && auth()->user()->role->role_templates_contracts > 0)
-                <!--multipl menu--
+                <!--multipl menu-->
                 <li data-modular-id="main_menu_team_contracts"
                     class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}">
-                    <!--multiple menu--
+                    <!--multiple menu-->
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="ti-write"></i>
                         <span class="hide-menu">{{ cleanLang(__('lang.contracts')) }}
@@ -370,7 +293,7 @@
                 @endif
                 <!--contracts-->
 
-                <!--contracts [single]--
+                <!--contracts [single]-->
                 @if(config('visibility.modules.contracts') && auth()->user()->role->role_templates_contracts == 0)
                 <li data-modular-id="main_menu_team_contracts"
                     class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }} menu-tooltip menu-with-tooltip"
@@ -384,7 +307,7 @@
                 @endif
 
 
-                <!--affiliates--
+                <!--affiliates-->
                 @if(auth()->user()->is_admin && config('settings.custom_modules.cs_affiliate'))
                 <li class="sidenav-menu-item {{ $page['mainmenu_cs_affiliates'] ?? '' }}">
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
@@ -414,7 +337,7 @@
                 <!--affiliates-->
 
 
-                <!--messaging--
+                <!--messaging-->
                 @if(config('visibility.modules.messages'))
                 <li data-modular-id="main_menu_team_messages"
                     class="sidenav-menu-item {{ $page['mainmenu_messages'] ?? '' }} menu-tooltip menu-with-tooltip"
@@ -427,10 +350,10 @@
                 </li>
                 @endif
 
-                <!--[MODULES] - dynamic menu--
+                <!--[MODULES] - dynamic menu-->
                 {!! config('module_menus.main_menu_team') !!}
 
-                <!--spaces--
+                <!--spaces-->
                 @if(config('visibility.modules.spaces'))
                 <li data-modular-id="main_menu_team_spaces hidden"
                     class="sidenav-menu-item {{ $page['mainmenu_spaces'] ?? '' }}">
@@ -462,7 +385,7 @@
                 <!--spaces-->
 
 
-                <!--tickets--
+                <!--tickets-->
                 @if(config('visibility.modules.tickets'))
                 <li class="sidenav-menu-item {{ $page['mainmenu_tickets'] ?? '' }} menu-tooltip menu-with-tooltip"
                     title="{{ cleanLang(__('lang.tickets')) }}">
@@ -476,7 +399,7 @@
                 <!--tickets-->
 
 
-                <!--knowledgebase--
+                <!--knowledgebase-->
                 @if(config('visibility.modules.knowledgebase'))
                 <li data-modular-id="main_menu_team_knowledgebase"
                     class="sidenav-menu-item {{ $page['mainmenu_kb'] ?? '' }} menu-tooltip menu-with-tooltip"
@@ -490,6 +413,8 @@
                 </li>
                 @endif
                 <!--knowledgebase-->
+                
+                
 
                 <!--other-->
                 @if(auth()->user()->is_team)
