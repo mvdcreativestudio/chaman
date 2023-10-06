@@ -7,6 +7,7 @@
                 <th class="roles_col_users">{{ cleanLang(__('lang.active_users')) }}</th>
                 <th class="roles_col_type">{{ cleanLang(__('lang.type')) }}</th>
                 <th class="roles_col_status">{{ cleanLang(__('lang.status')) }}</th>
+                <th class="roles_col_franchise_admin">Es administrador de franquicias ?</th>
                 <th class="roles_col_action"><a href="javascript:void(0)">{{ cleanLang(__('lang.action')) }}</a></th>
             </tr>
         </thead>

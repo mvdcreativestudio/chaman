@@ -870,6 +870,7 @@ Route::group(['prefix' => 'settings/roles'], function () {
     Route::put("/", "Settings\Roles@update")->middleware(['demoModeCheck']);
     Route::get("/{id}/homepage", "Settings\Roles@editHomePage")->where('id', '[0-9]+');
     Route::put("/{id}/homepage", "Settings\Roles@updateHomePage")->middleware(['demoModeCheck']);
+    Route::post("/set-as-franchise-admin/{id}", "Settings\Roles@setAsFranchiseAdmin");
 });
 Route::resource('settings/roles', 'Settings\Roles');
 Route::post("/settings/roles", "Settings\Roles@Store")->middleware(['demoModeCheck']);

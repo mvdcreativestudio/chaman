@@ -369,5 +369,15 @@ class Roles extends Controller {
 
         return $page;
     }
+    /**
+     * Setea un rol como administrador de franquicias
+     *
+     * @param int $id Role ID
+     * @return \Illuminate\Http\Response
+     */
+    public function setAsFranchiseAdmin($id) {
+        $this->rolesrepo->toggleFranchiseAdmin($id);
+        return redirect()->back()->with('success', __('lang.role_updated_successfully'));
+    }
 
 }
