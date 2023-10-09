@@ -79,3 +79,95 @@
         color: gray;  /* gris oscuro en el punto medio */
     }
 }
+
+/** CARD PORCENTAJE **/
+
+.general-app-widget, .general-app-widget * {
+    box-sizing: border-box;
+    }
+.general-app-widget {
+   background: var(--primary-dark, #007b55);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+   flex-shrink: 0;
+    position: relative;
+    box-shadow: var(--shadows-dark-card-box-shadow, 0px 12px 24px -4px rgba(0, 0, 0, 0.12), 0px 0px 2px 0px rgba(0, 0, 0, 0.20));
+    overflow: hidden;
+   }
+
+.chart-sparkline {
+   flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    position: relative;
+   }
+
+.layer {
+   border-radius: 50%;
+    border-style: solid;
+    border-color: var(--transparent-grey-16, rgba(145, 158, 171, 0.16));
+    border-width: 4px;
+    width: 60.8px;
+    height: 60.8px;
+    position: absolute;
+    left: 1.6px;
+   top: 1.6px;
+   }
+
+.layer2 {
+   position: absolute;
+    left: 1.6px;
+   top: 1.6px;
+    overflow: visible;
+   }
+
+.number-percent-rand {
+   color: var(--common-white, #ffffff);
+    text-align: center;
+    font: var(--subtitle-2, 600 14px/22px 'Public Sans', sans-serif);
+    position: absolute;
+    left: 4.8px;
+   top: calc(50% - 11px);
+    width: 54.4px;
+   }
+
+.text {
+   display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: center;
+    flex: 1;
+    position: relative;
+   }
+
+.number-long-rand {
+   color: var(--common-white, #ffffff);
+    text-align: left;
+    font: var(--h-4, 700 24px/36px 'Public Sans', sans-serif);
+    position: relative;
+   }
+
+.conversion {
+   color: var(--common-white, #ffffff);
+    text-align: left;
+    font: var(--subtitle-2, 600 14px/22px 'Public Sans', sans-serif);
+    opacity: 0.7200000286102295;
+    position: relative;
+   }
+
+.icon {
+   opacity: 0.11999999731779099;
+    flex-shrink: 0;
+    position: absolute;
+    right: -40px;
+   top: calc(50% - 60px);
+    overflow: visible;
+   }
+
