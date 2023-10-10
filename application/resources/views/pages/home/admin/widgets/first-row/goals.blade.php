@@ -5,15 +5,16 @@
             <!-- Tarjeta 1 -->
             <div class="col-lg-4 col-md-4 col-6 cursor-pointer pl-0">
                 <div class="card">
-                    <div class="card-body p-l-15 p-r-15">
+            <div class="col-lg-4 col-md-4 col-6 cursor-pointer pr-0">
                         <div class="d-flex p-10 no-block">
                             <span class="align-slef-center">
                                 <h4 class="m-b-0">Objetivo 1</h4>
+                                <p class="objective text-muted">Descripción del objetivo</p>
                                 <h6 class="text-muted m-b-0">38%</h6>
                             </span>
                         </div>
                     </div>
-                    <div class="progress">
+                    <div class="progress2">
                         <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 38%" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
@@ -21,47 +22,50 @@
             <!-- Tarjeta 2 -->
             <div class="col-lg-4 col-md-4 col-6 cursor-pointer">
                 <div class="card">
-                    <div class="card-body p-l-15 p-r-15">
+            <div class="col-lg-4 col-md-4 col-6 cursor-pointer pr-0">
                         <div class="d-flex p-10 no-block">
                             <span class="align-slef-center">
                                 <h4 class="m-b-0">Objetivo 2</h4>
+                                <p class="objective text-muted">Descripción del objetivo</p>
                                 <h6 class="text-muted m-b-0">25%</h6>
                             </span>
                         </div>
                     </div>
-                    <div class="progress">
+                    <div class="progress2">
                         <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
             </div>
             <!-- Tarjeta 3 -->
-            <div class="col-lg-4 col-md-4 col-6 cursor-pointer pr-0">
+            <div class="col-lg-4 col-md-4 col-6 cursor-pointer">
                 <div class="card">
-                    <div class="card-body p-l-15 p-r-0">
+            <div class="col-lg-4 col-md-4 col-6 cursor-pointer pr-0">
                         <div class="d-flex p-10 no-block">
                             <span class="align-slef-center">
                                 <h4 class="m-b-0">Objetivo 3</h4>
-                                <h6 class="text-muted m-b-0">79%</h6>
+                                <p class="objective text-muted">Descripción del objetivo</p>
+                                <h6 class="text-muted m-b-0">50%</h6>
                             </span>
                         </div>
                     </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 79%" aria-valuenow="79" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress2">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
             </div>
             <!-- Tarjeta 4 -->
             <div class="col-lg-4 col-md-4 col-6 cursor-pointer">
                 <div class="card">
-                    <div class="card-body p-l-15 p-r-15">
+            <div class="col-lg-4 col-md-4 col-6 cursor-pointer pr-0">
                         <div class="d-flex p-10 no-block">
                             <span class="align-slef-center">
                                 <h4 class="m-b-0">Objetivo 4</h4>
+                                <p class="objective text-muted">Descripción del objetivo</p>
                                 <h6 class="text-muted m-b-0">50%</h6>
                             </span>
                         </div>
                     </div>
-                    <div class="progress">
+                    <div class="progress2">
                         <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
@@ -69,32 +73,34 @@
             <!-- Tarjeta 5 -->
             <div class="col-lg-4 col-md-4 col-6 cursor-pointer">
                 <div class="card">
-                    <div class="card-body p-l-15 p-r-15">
+            <div class="col-lg-4 col-md-4 col-6 cursor-pointer pr-0">
                         <div class="d-flex p-10 no-block">
                             <span class="align-slef-center">
                                 <h4 class="m-b-0">Objetivo 5</h4>
+                                <p class="objective text-muted">Descripción del objetivo</p>
                                 <h6 class="text-muted m-b-0">50%</h6>
                             </span>
                         </div>
                     </div>
-                    <div class="progress">
+                    <div class="progress2">
                         <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
             </div>
             <!-- Tarjeta 6 -->
-            <div class="col-lg-4 col-md-4 col-6 cursor-pointer pr-0">
+            <div class="col-lg-4 col-md-4 col-6 cursor-pointer">
                 <div class="card">
-                    <div class="card-body p-l-15 p-r-0">
+            <div class="col-lg-4 col-md-4 col-6 cursor-pointer pr-0">
                         <div class="d-flex p-10 no-block">
                             <span class="align-slef-center">
                                 <h4 class="m-b-0">Objetivo 6</h4>
+                                <p class="objective text-muted">Descripción del objetivo</p>
                                 <h6 class="text-muted m-b-0">50%</h6>
                             </span>
                         </div>
                     </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 95%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress2">
+                        <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
             </div>

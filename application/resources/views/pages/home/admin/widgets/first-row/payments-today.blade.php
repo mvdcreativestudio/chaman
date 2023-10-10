@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <div class="progress2">
+        <div class="progress">
             <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
                 aria-valuemax="100"></div>
         </div>
