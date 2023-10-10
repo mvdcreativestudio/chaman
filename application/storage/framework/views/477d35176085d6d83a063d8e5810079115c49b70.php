@@ -37,25 +37,30 @@
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         
-                        <li class="sidenav-submenu <?php echo e($page['submenu_customers'] ?? ''); ?>" id="submenu_clients">
-                            <a href="/datacenter"
-                                class="<?php echo e($page['submenu_customers'] ?? ''); ?>">Inicio</a>
+                    <li data-modular-id="main_menu_team_clients"
+                       class="sidenav-menu-item <?php echo e($page['mainmenu_customers'] ?? ''); ?>">
+                            <a href="/datacenter">
+                               <i class="ti-home"></i>
+                                  <span>Inicio</span>
+                            </a>
                         </li>
                         
                         
-                        <li class="sidenav-submenu <?php echo e($page['submenu_contacts'] ?? ''); ?>" id="submenu_contacts">
-                            <a href="/ecommerce"
-                                class="<?php echo e($page['submenu_contacts'] ?? ''); ?>">E-commerce</a>
+                        <li data-modular-id="main_menu_team_clients"
+                       class="sidenav-menu-item <?php echo e($page['mainmenu_customers'] ?? ''); ?>">
+                            <a href="/ventas-dat">
+                               <i class="icon-Coin"></i>
+                                  <span>Ventas</span>
+                            </a>
                         </li>
 
-                        <li class="sidenav-submenu <?php echo e($page['submenu_contacts'] ?? ''); ?>" id="submenu_contacts">
-                            <a href="/ventafisica"
-                                class="<?php echo e($page['submenu_contacts'] ?? ''); ?>">Venta Física</a>
-                        </li>
-
-                        <li class="sidenav-submenu <?php echo e($page['submenu_contacts'] ?? ''); ?>" id="submenu_contacts">
-                            <a href="/stock"
-                                class="<?php echo e($page['submenu_contacts'] ?? ''); ?>">Stock</a>
+                    
+                        <li data-modular-id="main_menu_team_clients"
+                       class="sidenav-menu-item <?php echo e($page['mainmenu_customers'] ?? ''); ?>">
+                            <a href="/stock">
+                               <i class="ti-package"></i>
+                                  <span>Stock</span>
+                            </a>
                         </li>
                         
                     </ul>
@@ -76,26 +81,96 @@
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         
-                        <li class="sidenav-submenu <?php echo e($page['submenu_customers'] ?? ''); ?>" id="submenu_clients">
-                            <a href="/datacenter"
-                                class="<?php echo e($page['submenu_customers'] ?? ''); ?>">1</a>
+
+                        <!--HOME CRM VENTAS HARDCODEADO-->
+                        <li data-modular-id="main_menu_team_clients"
+                       class="sidenav-menu-item <?php echo e($page['mainmenu_customers'] ?? ''); ?>">
+                            <a href="/crmventas">
+                               <i class="ti-home"></i>
+                                  <span>Incio</span>
+                            </a>
                         </li>
                         
                         
-                        <li class="sidenav-submenu <?php echo e($page['submenu_contacts'] ?? ''); ?>" id="submenu_contacts">
-                            <a href="/ecommerce"
-                                class="<?php echo e($page['submenu_contacts'] ?? ''); ?>">2</a>
+                        <!--CLIENTES HARDCODEADO-->
+                        <li data-modular-id="main_menu_team_clients"
+                       class="sidenav-menu-item <?php echo e($page['mainmenu_customers'] ?? ''); ?>">
+                            <a href="/clients">
+                               <i class="sl-icon-people"></i>
+                                  <span>Clientes</span>
+                            </a>
                         </li>
 
-                        <li class="sidenav-submenu <?php echo e($page['submenu_contacts'] ?? ''); ?>" id="submenu_contacts">
-                            <a href="/ventafisica"
-                                class="<?php echo e($page['submenu_contacts'] ?? ''); ?>">3</a>
+                        
+                        <!--LEADS HARDCODEADO-->
+                        <?php if(config('visibility.modules.leads')): ?>
+                        <li data-modular-id="main_menu_team_leads"
+                        class="sidenav-menu-item <?php echo e($page['mainmenu_leads'] ?? ''); ?> menu-tooltip menu-with-tooltip"
+                        title="<?php echo e(cleanLang(__('lang.leads'))); ?>">
+                            <a class="waves-effect waves-dark" href="/leads" aria-expanded="false" target="_self">
+                               <i class="sl-icon-call-in"></i>
+                                  <span class="hide-menu">Leads</span>
+                            </a>
                         </li>
+                        <?php endif; ?>
+                        
+                        <!--FRANCHISES HARDCODEADO-->
+                        <li data-modular-id="main_menu_team_projects"
+                        class="sidenav-menu-item <?php echo e($page['mainmenu_projects'] ?? ''); ?>">
+                            <a href="<?php echo e(_url('/franchises')); ?>">
+                               <i class="ti-layout-grid2"></i>
+                                  <span>Franquicia</span>
+                            </a>
+                        </li>
+                        
 
-                        <li class="sidenav-submenu <?php echo e($page['submenu_contacts'] ?? ''); ?>" id="submenu_contacts">
-                            <a href="/stock"
-                                class="<?php echo e($page['submenu_contacts'] ?? ''); ?>">4</a>
+                        <!--VENTAS HARDCODEADO-->
+                        <li data-modular-id="main_menu_team_billing"
+                    class="sidenav-menu-item <?php echo e($page['mainmenu_sales'] ?? ''); ?>">
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
+                        <i class="icon-Coin"></i>
+                        <span class="hide-menu">Ventas</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <?php if(config('visibility.modules.invoices')): ?>
+                        <li class="sidenav-submenu <?php echo e($page['submenu_invoices'] ?? ''); ?>" id="submenu_invoices">
+                            <a href="/invoices"
+                                class=" <?php echo e($page['submenu_invoices'] ?? ''); ?>"><?php echo e(cleanLang(__('lang.invoices'))); ?></a>
                         </li>
+                        <?php endif; ?>
+                        <?php if(config('visibility.modules.payments')): ?>
+                        <li class="sidenav-submenu <?php echo e($page['submenu_payments'] ?? ''); ?>" id="submenu_payments">
+                            <a href="/payments"
+                                class=" <?php echo e($page['submenu_payments'] ?? ''); ?>"><?php echo e(cleanLang(__('lang.payments'))); ?></a>
+                        </li>
+                        <?php endif; ?>
+                        <?php if(config('visibility.modules.estimates')): ?>
+                        <li class="sidenav-submenu <?php echo e($page['submenu_estimates'] ?? ''); ?>" id="submenu_estimates">
+                            <a href="/estimates"
+                                class=" <?php echo e($page['submenu_estimates'] ?? ''); ?>"><?php echo e(cleanLang(__('lang.estimates'))); ?></a>
+                        </li>
+                        <?php endif; ?>
+                        <?php if(config('visibility.modules.subscriptions')): ?>
+                        <li class="sidenav-submenu <?php echo e($page['submenu_subscriptions'] ?? ''); ?>"
+                            id="submenu_subscriptions">
+                            <a href="/subscriptions"
+                                class=" <?php echo e($page['submenu_subscriptions'] ?? ''); ?>"><?php echo e(cleanLang(__('lang.subscriptions'))); ?></a>
+                        </li>
+                        <?php endif; ?>
+                        <?php if(config('visibility.modules.products')): ?>
+                        <li class="sidenav-submenu <?php echo e($page['submenu_products'] ?? ''); ?>" id="submenu_products">
+                            <a href="/products"
+                                class=" <?php echo e($page['submenu_products'] ?? ''); ?>"><?php echo e(cleanLang(__('lang.products'))); ?></a>
+                        </li>
+                        <?php endif; ?>
+                        <?php if(config('visibility.modules.expenses')): ?>
+                        <li class="sidenav-submenu <?php echo e($page['submenu_expenses'] ?? ''); ?>" id="submenu_expenses">
+                            <a href="/expenses"
+                                class=" <?php echo e($page['submenu_expenses'] ?? ''); ?>"><?php echo e(cleanLang(__('lang.expenses'))); ?></a>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
                         
                     </ul>
                 </li>
@@ -141,7 +216,7 @@
                 <!--CRM SOCIAL-->
 
                 
-                <!--users[done]
+                <!--users[done]--
                 <?php if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
                 config('visibility.modules.users')])): ?>
                 <li data-modular-id="main_menu_team_clients"
@@ -170,23 +245,10 @@
                 <?php endif; ?>
                 <!--customers-->
 
-                <!--FRANCHISES HARDCODEADO
-                <li data-modular-id="main_menu_team_projects"
-                class="sidenav-menu-item <?php echo e($page['mainmenu_projects'] ?? ''); ?>">
-                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
-                    <i class="ti-layout-grid2"></i>
-                    <span class="hide-menu">Franquicias</span>
-                </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li class="sidenav-submenu <?php echo e($page['submenu_templates'] ?? ''); ?>"
-                            id="submenu_project_templates">
-                            <a href="<?php echo e(_url('/franchises')); ?>"
-                                class="<?php echo e($page['submenu_templates'] ?? ''); ?>">Franquicias</a>
-                        </li>
-                    </ul>
-                </li>
+                
+                
 
-                <!--projects[done]
+                <!--projects[done]-->
                 <?php if(config('visibility.modules.projects')): ?>
                 <li data-modular-id="main_menu_team_projects"
                     class="sidenav-menu-item <?php echo e($page['mainmenu_projects'] ?? ''); ?>">
@@ -221,7 +283,7 @@
                 <!--projects-->
 
 
-                <!--tasks[done]
+                <!--tasks[done]-->
                 <?php if(config('visibility.modules.tasks')): ?>
                 <li data-modular-id="main_menu_team_tasks"
                     class="sidenav-menu-item <?php echo e($page['mainmenu_tasks'] ?? ''); ?> menu-tooltip menu-with-tooltip"
@@ -238,7 +300,7 @@
 
                 
 
-                <!--leads[done]
+                <!--leads[done]-->
                 <?php if(config('visibility.modules.leads')): ?>
                 <li data-modular-id="main_menu_team_leads"
                     class="sidenav-menu-item <?php echo e($page['mainmenu_leads'] ?? ''); ?> menu-tooltip menu-with-tooltip"
@@ -253,7 +315,7 @@
                 <?php endif; ?>
                 <!--leads-->
 
-                <!--sales
+                <!--sales--
                 <?php if(runtimeGroupMenuVibility([config('visibility.modules.invoices'),
                 config('visibility.modules.payments'), config('visibility.modules.estimates'),
                 config('visibility.modules.products'), config('visibility.modules.expenses'),
@@ -310,12 +372,12 @@
                 <!--billing-->
 
 
-                <!--proposals [multiple]
+                <!--proposals [multiple]-->
                 <?php if(config('visibility.modules.proposals') && auth()->user()->role->role_templates_proposals > 0): ?>
-                <!--multipl menu--
+                <!--multipl menu-->
                 <li data-modular-id="main_menu_team_proposals"
                     class="sidenav-menu-item <?php echo e($page['mainmenu_proposals'] ?? ''); ?>">
-                    <!--multiple menu--
+                    <!--multiple menu-->
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="ti-bookmark-alt"></i>
                         <span class="hide-menu"><?php echo e(cleanLang(__('lang.proposals'))); ?>
@@ -337,7 +399,7 @@
                 <?php endif; ?>
                 <!--proposals-->
 
-                <!--proposals [single]--
+                <!--proposals [single]-->
                 <?php if(config('visibility.modules.proposals') && auth()->user()->role->role_templates_proposals == 0): ?>
                 <li data-modular-id="main_menu_team_proposals"
                     class="sidenav-menu-item <?php echo e($page['mainmenu_proposals'] ?? ''); ?> menu-tooltip menu-with-tooltip"
@@ -352,12 +414,12 @@
                 <?php endif; ?>
 
 
-                <!--contracts [multiple]--
+                <!--contracts [multiple]-->
                 <?php if(config('visibility.modules.contracts') && auth()->user()->role->role_templates_contracts > 0): ?>
-                <!--multipl menu--
+                <!--multipl menu-->
                 <li data-modular-id="main_menu_team_contracts"
                     class="sidenav-menu-item <?php echo e($page['mainmenu_contracts'] ?? ''); ?>">
-                    <!--multiple menu--
+                    <!--multiple menu-->
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="ti-write"></i>
                         <span class="hide-menu"><?php echo e(cleanLang(__('lang.contracts'))); ?>
@@ -379,7 +441,7 @@
                 <?php endif; ?>
                 <!--contracts-->
 
-                <!--contracts [single]--
+                <!--contracts [single]-->
                 <?php if(config('visibility.modules.contracts') && auth()->user()->role->role_templates_contracts == 0): ?>
                 <li data-modular-id="main_menu_team_contracts"
                     class="sidenav-menu-item <?php echo e($page['mainmenu_contracts'] ?? ''); ?> menu-tooltip menu-with-tooltip"
@@ -394,7 +456,7 @@
                 <?php endif; ?>
 
 
-                <!--affiliates--
+                <!--affiliates-->
                 <?php if(auth()->user()->is_admin && config('settings.custom_modules.cs_affiliate')): ?>
                 <li class="sidenav-menu-item <?php echo e($page['mainmenu_cs_affiliates'] ?? ''); ?>">
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
@@ -424,7 +486,7 @@
                 <!--affiliates-->
 
 
-                <!--messaging--
+                <!--messaging-->
                 <?php if(config('visibility.modules.messages')): ?>
                 <li data-modular-id="main_menu_team_messages"
                     class="sidenav-menu-item <?php echo e($page['mainmenu_messages'] ?? ''); ?> menu-tooltip menu-with-tooltip"
@@ -438,11 +500,11 @@
                 </li>
                 <?php endif; ?>
 
-                <!--[MODULES] - dynamic menu--
+                <!--[MODULES] - dynamic menu-->
                 <?php echo config('module_menus.main_menu_team'); ?>
 
 
-                <!--spaces--
+                <!--spaces-->
                 <?php if(config('visibility.modules.spaces')): ?>
                 <li data-modular-id="main_menu_team_spaces hidden"
                     class="sidenav-menu-item <?php echo e($page['mainmenu_spaces'] ?? ''); ?>">
@@ -476,7 +538,7 @@
                 <!--spaces-->
 
 
-                <!--tickets--
+                <!--tickets-->
                 <?php if(config('visibility.modules.tickets')): ?>
                 <li class="sidenav-menu-item <?php echo e($page['mainmenu_tickets'] ?? ''); ?> menu-tooltip menu-with-tooltip"
                     title="<?php echo e(cleanLang(__('lang.tickets'))); ?>">
@@ -491,7 +553,7 @@
                 <!--tickets-->
 
 
-                <!--knowledgebase--
+                <!--knowledgebase-->
                 <?php if(config('visibility.modules.knowledgebase')): ?>
                 <li data-modular-id="main_menu_team_knowledgebase"
                     class="sidenav-menu-item <?php echo e($page['mainmenu_kb'] ?? ''); ?> menu-tooltip menu-with-tooltip"
