@@ -35,7 +35,7 @@
             </div>
 
             <!--PROGRESS-->
-            <div class="projects_col_progress progress m-t-4" data-toggle="tooltip"
+            <div class="projects_col_progress progress2 m-t-4" data-toggle="tooltip"
                 title="{{ $project->project_progress }}%">
                 @if($project->project_progress == 100)
                 <div class="progress-bar bg-success w-100 h-px-4 font-11 font-weight-500" data-toggle="tooltip"
