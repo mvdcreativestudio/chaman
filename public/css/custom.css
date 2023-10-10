@@ -29,7 +29,7 @@
 .progress2 {
     display: -ms-flexbox;
     display: flex;
-    height: auto;
+    height: 0.8rem;
     overflow: hidden;
     line-height: 0;
     font-size: .75rem;
@@ -37,7 +37,7 @@
     border-radius: .25rem; }
 
 .progress {
-    height: 0.8rem;
+    height: auto;
 }
 
 /** SCROLLEABLE OBJETIVOS DASHBOARD **/
@@ -170,3 +170,9 @@
     overflow: visible;
    }
 
+
+   /** OBJETIVOS DASHBOARD **/
+
+   .objective {
+    font-size: .8em;
+   }
