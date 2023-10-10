@@ -291,7 +291,7 @@ return [
 'converted_by' => "Convertido por",
 'converted' => "Convertido",
 'costs_estimate' => "Costos estimados",
-'count' => "Contar",
+'count' => "Cantidad",
 'country' => "País",
 'create_a_new_account' => "Crea una cuenta nueva",
 'create_a_reminder' => "Crea un recordatorio",
