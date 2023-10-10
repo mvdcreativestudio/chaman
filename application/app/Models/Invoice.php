@@ -98,5 +98,13 @@ class Invoice extends Model {
         return $this->morphMany('App\Models\Tax', 'taxresource');
     }
 
+    public function franchise() {
+        return $this->belongsTo('App\Models\Franchise');
+    }
+    
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }    
+
 
 }

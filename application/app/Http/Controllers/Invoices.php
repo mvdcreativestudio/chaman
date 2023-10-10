@@ -139,6 +139,10 @@ class Invoices extends Controller {
             'redirect',
         ]);
 
+        $this->middleware('userRoleCheck')->only([
+            'index',
+        ]);
+
         $this->middleware('invoicesMiddlewareIndex')->only([
             'index',
             'update',

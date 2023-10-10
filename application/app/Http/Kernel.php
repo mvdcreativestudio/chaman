@@ -342,5 +342,6 @@ class Kernel extends HttpKernel {
         
         // [Sumeria] - [Franquicias]
         'franchiseAccess' => \App\Http\Middleware\Franchise\FranchiseAccess::class,
+        'userRoleCheck' => \App\Http\Middleware\Team\UserRoleCheck::class,
     ];
 }

@@ -22,7 +22,12 @@ class Franchise extends Model
 
     public function objectives()
     {
-    return $this->hasMany(Objective::class, 'user_id');
+        return $this->hasMany(Objective::class, 'user_id');
     }
+
+    public function invoices() {
+        return $this->hasMany('App\Models\Invoice');
+    }
+    
 }
 

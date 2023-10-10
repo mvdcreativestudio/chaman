@@ -39,7 +39,6 @@ class InvoiceRepository {
      * @return object invoice collection
      */
     public function search($id = '', $data = array()) {
-
         $invoices = $this->invoices->newQuery();
 
         //joins
@@ -251,9 +250,21 @@ class InvoiceRepository {
 
         }
 
-        // Filtrar por bill_creatorid
-        if (request()->filled('filter_my_invoices')) {
-            $invoices->where('bill_creatorid', request('filter_my_invoices'));
+        if (request()->input('user_role_type')) {
+            switch (request()->input('user_role_type')) {
+                case 'admin_role':
+                    // Para admin_role, incluye la info de usuario y franquicia
+                    $invoices->with(['user', 'franchise']);
+                    break;
+                case 'franchise_admin_role':
+                    // Carga la información del usuario
+                    $invoices->where('invoices.franchise_id', auth()->user()->franchise_id)->with('user');
+                    break;
+                case 'common_role':
+                    // No carga información adicional
+                    $invoices->where('user_id', auth()->id());
+                    break;
+            }
         }
 
         //sorting
@@ -354,6 +365,9 @@ class InvoiceRepository {
         $invoice->bill_due_date = request('bill_due_date');
         $invoice->bill_terms = request('bill_terms');
         $invoice->bill_notes = request('bill_notes');
+
+        $invoice->user_id = auth()->id();
+        $invoice->franchise_id = auth()->user()->franchise_id;
 
         //save and return id
         if ($invoice->save()) {

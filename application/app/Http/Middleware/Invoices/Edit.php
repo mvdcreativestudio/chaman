@@ -45,7 +45,6 @@ class Edit {
         //permission: does user have permission edit invoices
         if (auth()->user()->is_team) {
             if (auth()->user()->role->role_invoices >= 2) {
-
                 return $next($request);
             }
         }
