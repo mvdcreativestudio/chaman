@@ -1,11 +1,12 @@
 <div class="row">
 
-    <!--FAMILIAS VENTAS-->
-    @include('pages.datacenter.third-row.familias-ventas')
+    <!--NPS-->
+    @include('pages.datacenter.third-row.nps')
 
+    <!--VENTAS TEMPORAL-->
+    @include('pages.datacenter.third-row.ventas-temporal')
 
-    <!--VPS-->
-    @include('pages.datacenter.third-row.vps')
-
+    <!--GMV-->
+    @include('pages.datacenter.third-row.gmv')
 
 </div>

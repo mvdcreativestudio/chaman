@@ -6,6 +6,8 @@
 
 <?php echo $__env->make('pages.datacenter.second-row.wrapper', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
+<div> <br> </div>
+
 <?php echo $__env->make('pages.datacenter.third-row.wrapper', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 </div>

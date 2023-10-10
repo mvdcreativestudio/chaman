@@ -1,14 +1,14 @@
 <div class="row">
-    <!--VENTAS SUCURSAL UNO-->
-    @include('pages.datacenter.first-row.sucursal-uno')
+    <!--CANTIDAD DE ORDENES-->
+    @include('pages.datacenter.first-row.cantidad-de-ordenes')
 
-    <!--VENTAS SUCURSAL DOS-->
-    @include('pages.datacenter.first-row.sucursal-dos')
+    <!--ARPU-->
+    @include('pages.datacenter.first-row.arpu')
 
-    <!--VENTAS SUCURSAL TRES-->
-    @include('pages.datacenter.first-row.sucursal-tres')
+    <!--CREDITO EN LA CALLE-->
+    @include('pages.datacenter.first-row.credito-en-la-calle')
 
-    <!--VENTAS SUCURSAL CUATRO  -->
-    @include('pages.datacenter.first-row.sucursal-cuatro')
+    <!--CLV-->
+    @include('pages.datacenter.first-row.clv')
 
 </div>

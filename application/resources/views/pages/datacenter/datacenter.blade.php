@@ -6,6 +6,8 @@
 
 @include('pages.datacenter.second-row.wrapper')
 
+<div> <br> </div>
+
 @include('pages.datacenter.third-row.wrapper')
 
 </div>

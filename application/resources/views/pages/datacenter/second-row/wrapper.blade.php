@@ -1,11 +1,16 @@
 <div class="row">
 
-    <!--TOTAL VENTAS-->
-    @include('pages.datacenter.second-row.total-ventas')
+    <!--TICKET MEDIO-->
+    @include('pages.datacenter.second-row.ticket-medio')
 
+    <!--ROI-->
+    @include('pages.datacenter.second-row.roi')
 
-    <!--GMV-->
-    @include('pages.datacenter.second-row.gmv')
+    <!--CAC-->
+    @include('pages.datacenter.second-row.cac')
+
+    <!--CUENTAS INACTIVAS-->
+    @include('pages.datacenter.second-row.cuentas-inactivas')
 
 
 </div>

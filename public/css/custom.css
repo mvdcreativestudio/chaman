@@ -84,10 +84,11 @@
 .general-app-widget, .general-app-widget * {
     box-sizing: border-box;
     }
-.general-app-widget {
+  .general-app-widget {
    background: var(--primary-dark, #007b55);
     border-radius: 16px;
     padding: 24px;
+    padding-bottom: 50px;
     display: flex;
     flex-direction: row;
     gap: 24px;
@@ -99,15 +100,15 @@
     box-shadow: var(--shadows-dark-card-box-shadow, 0px 12px 24px -4px rgba(0, 0, 0, 0.12), 0px 0px 2px 0px rgba(0, 0, 0, 0.20));
     overflow: hidden;
    }
-
-.chart-sparkline {
+  
+  .chart-sparkline {
    flex-shrink: 0;
     width: 64px;
     height: 64px;
     position: relative;
    }
-
-.layer {
+  
+  .layer {
    border-radius: 50%;
     border-style: solid;
     border-color: var(--transparent-grey-16, rgba(145, 158, 171, 0.16));
@@ -118,15 +119,15 @@
     left: 1.6px;
    top: 1.6px;
    }
-
-.layer2 {
+  
+  .layer2 {
    position: absolute;
     left: 1.6px;
    top: 1.6px;
     overflow: visible;
    }
-
-.number-percent-rand {
+  
+  .number-percent-rand {
    color: var(--common-white, #ffffff);
     text-align: center;
     font: var(--subtitle-2, 600 14px/22px 'Public Sans', sans-serif);
@@ -135,8 +136,8 @@
    top: calc(50% - 11px);
     width: 54.4px;
    }
-
-.text {
+  
+  .text {
    display: flex;
     flex-direction: column;
     gap: 0px;
@@ -145,23 +146,23 @@
     flex: 1;
     position: relative;
    }
-
-.number-long-rand {
+  
+  .number-long-rand {
    color: var(--common-white, #ffffff);
     text-align: left;
     font: var(--h-4, 700 24px/36px 'Public Sans', sans-serif);
     position: relative;
    }
-
-.conversion {
+  
+  .conversion {
    color: var(--common-white, #ffffff);
     text-align: left;
     font: var(--subtitle-2, 600 14px/22px 'Public Sans', sans-serif);
     opacity: 0.7200000286102295;
     position: relative;
    }
-
-.icon {
+  
+  .icon {
    opacity: 0.11999999731779099;
     flex-shrink: 0;
     position: absolute;
