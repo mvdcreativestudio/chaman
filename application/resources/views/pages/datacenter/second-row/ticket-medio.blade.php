@@ -14,7 +14,7 @@
   	</div>
   	<div class="text" >
     		<div class="number-long-rand" >
-24,975 </div>
+$1.298 </div>
     		<div class="conversion" >
 Ticket Medio </div>
   	</div>

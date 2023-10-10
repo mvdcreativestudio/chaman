@@ -14,7 +14,7 @@
   	</div>
   	<div class="text" >
     		<div class="number-long-rand" >
-870,250 </div>
+3.5 </div>
     		<div class="conversion" >
 ROI </div>
   	</div>

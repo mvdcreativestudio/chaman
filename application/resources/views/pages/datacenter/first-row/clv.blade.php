@@ -9,7 +9,7 @@
                 <div class="align-self-center display-6 ml-auto"><i class="text-warning icon-Coin"></i></div>
             </div>
         </div>
-        <div class="progress2">
+        <div class="progress">
             <div class="progress-bar bg-warning w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
                 aria-valuemax="100"></div>
         </div>

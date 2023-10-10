@@ -14,7 +14,7 @@
   	</div>
   	<div class="text" >
     		<div class="number-long-rand" >
-1,499 </div>
+$1,499 </div>
     		<div class="conversion" >
 CAC </div>
   	</div>
