@@ -210,7 +210,6 @@ class Team extends Controller {
 
         //process reponse
         return new StoreResponse($payload);
-
     }
 
     /**
@@ -360,6 +359,10 @@ class Team extends Controller {
 
         //update delete date
         $user->deleted = now();
+
+        $user->is_franchised = false;
+
+        $user->franchise_id = null;
 
         //save user
         $user->save();

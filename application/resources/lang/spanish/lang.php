@@ -2062,5 +2062,6 @@ return [
 'clear_filter' => "Filtro claro",
 'is_franchised' => "¿Es franquiciado?",
 'franchise' => "Franquicia",
-
+'set_as_non_franchise_admin' => 'Desmarcar como administrador de franquicias',
+'set_as_franchise_admin' => 'Marcar como administrador de franquicias'
 ];
