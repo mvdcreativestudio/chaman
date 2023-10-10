@@ -324,4 +324,8 @@ class User extends Authenticatable {
     public function franchise() {
         return $this->belongsTo('App\Models\Franchise', 'franchise_id', 'id');
     }
+
+    public function invoices() {
+        return $this->hasMany('App\Models\Invoice');
+    }    
 }
