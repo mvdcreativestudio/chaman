@@ -70,7 +70,9 @@
 
     </td>
     @if(request()->input('user_role_type') == 'admin_role')
-        <td class="invoices_col_franchise">{{ $invoice->franchise->name }}</td>
+        <td class="invoices_col_franchise">
+            {{ $invoice->franchise->name ?? '-' }}
+        </td>
     @endif
     @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role')
         <td class="invoices_col_user">{{ $invoice->user->first_name }} ({{ $invoice->user->email }})</td>
