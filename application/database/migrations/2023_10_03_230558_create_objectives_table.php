@@ -16,15 +16,20 @@ class CreateObjectivesTable extends Migration
         Schema::create('objectives', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('description')->nullable()->default('-');
             $table->enum('module', ['leads', 'invoices', 'payments', 'clients', 'expenses']);
             $table->unsignedInteger('target_value');
             $table->integer('user_id')->nullable();
             $table->unsignedBigInteger('franchise_id')->nullable();
+            $table->integer('progress')->default(0);
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
-    
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
-            $table->foreign('franchise_id')->references('id')->on('franchises')->onDelete('set null');
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('franchise_id')->references('id')->on('franchises')->onDelete('cascade');
+            
         });
     }
 
