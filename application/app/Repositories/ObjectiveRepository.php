@@ -29,6 +29,14 @@ class ObjectiveRepository {
         return $this->objectives->get();
     }
 
+    /**
+     * Obtener objetivos activos primero y luego inactivos para dashboard
+     * @return Collection
+     */
+    public function getActiveInactive() {
+        return $this->objectives->orderBy('status', 'asc')->get();
+    }
+
 
     /**
      * Obtengo una Objetivo específico de la Base de Datos
@@ -80,6 +88,7 @@ class ObjectiveRepository {
         // Carga el nuevo Objetivo
         $objective = new $this->objectives;
         $objective->name = $data['name'];
+        $objective->description = $data['description'];
         $objective->module = $data['module'];
         $objective->target_value = $data['target_value'];
         $objective->user_id = $data['user_id'];

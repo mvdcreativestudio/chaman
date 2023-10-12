@@ -17,6 +17,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="description">Descripción:</label>
+                        <input type="text" class="form-control" id="description" name="description" placeholder="Describe el objetivo" required>
+                    </div>
+
+                    <div class="form-group">
                         <label for="module">Módulo:</label>
                         <select class="form-control" id="module" name="module">
                             <option value="leads">Leads</option>

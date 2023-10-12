@@ -277,7 +277,7 @@ class Home extends Controller {
 
         //[objectives]
 
-        $objectives = $this->objectiverepo->getAll();
+        $objectives = $this->objectiverepo->getActiveInactive();
         $payload['objectives'] = $objectives;
 
 
