@@ -1,10 +1,7 @@
 <div class="row">
 
-    <!--NPS-->
-    @include('pages.datacenter.third-row.nps')
-
-    <!--VENTAS TEMPORAL-->
-    @include('pages.datacenter.third-row.ventas-temporal')
+    <!--GMV GRAFICA-->
+    @include('pages.datacenter.third-row.gmv-graphic')
 
     <!--GMV-->
     @include('pages.datacenter.third-row.gmv')
