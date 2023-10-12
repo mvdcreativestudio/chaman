@@ -176,3 +176,23 @@
    .objective {
     font-size: .8em;
    }
+
+   .objective-status {
+    font-size: .7em;
+        
+    }
+
+    .card-container {
+        display: flex;
+        align-items: stretch;  /* Hace que las tarjetas se estiren para ocupar el mismo alto */
+        flex-wrap: wrap;  /* Permite que las tarjetas envuelvan a la siguiente línea si hay muchas de ellas */
+    }
+    
+    .card {
+        display: flex;
+        flex-direction: column;  /* Establece la dirección principal como columna */
+    }
+    
+    .card-body {
+        flex: 1;  /* Ocupa todo el espacio disponible */
+    }
