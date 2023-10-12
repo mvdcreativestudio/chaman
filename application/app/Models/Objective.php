@@ -19,5 +19,10 @@ class Objective extends Model
         return $this->belongsTo(Franchise::class, 'franchise_id');
     }
 
+    public function leads()
+    {
+        return $this->hasMany(Lead::class);
+    }
+
 
 }

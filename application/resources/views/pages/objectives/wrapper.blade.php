@@ -44,8 +44,7 @@
                                 <th>Nombre</th>
                                 <th>Tipo</th>
                                 <th>Objetivo</th>
-                                <th>Usuario</th>
-                                <th>Franquicia</th>
+                                <th>Asignado a</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -56,8 +55,18 @@
                                 <td>{{ $objective->name }}</td>
                                 <td>{{ $objective->module }}</td>
                                 <td>{{ $objective->target_value }}</td>
-                                <td>{{ $objective->user ? $objective->user->first_name . ' ' . $objective->user->last_name : '-' }}</td>
-                                <td>{{ $objective->franchise ? $objective->franchise->name : '-' }}</td>
+                                <td>
+                                    @if ($objective->user)
+                                        {{ $objective->user->first_name . ' ' . $objective->user->last_name }}
+                                        @if ($objective->franchise)
+                                            ({{ $objective->franchise->name }})
+                                        @endif
+                                    @elseif ($objective->franchise)
+                                        {{ $objective->franchise->name }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                                 <td>
                                     <!--action buttons-->
                                     <span class="list-table-action dropdown font-size-inherit">

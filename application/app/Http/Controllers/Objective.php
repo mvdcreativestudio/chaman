@@ -80,7 +80,6 @@ class Objective extends Controller {
     }    
 
 
-
     public function destroy($id) {
         // Chequea si el objetivo existe
         $objective = $this->objectiveRepo->get($id);
@@ -99,6 +98,63 @@ class Objective extends Controller {
             return response()->json(['status' => 'error', 'message' => 'Objetivo no encontrado'], 404);
         }
     }
+
+
+
+
+    // PROGRESO DE OBJETIVOS
+
+    // LEADS
+
+    public function calculateLeadsProgress($objectiveId)
+    {
+    $objective = $this->objectiveRepo->get($objectiveId);
+
+    if (!$objective) {
+        return response()->json(['status' => 'error', 'message' => 'Objective not found'], 404);
+    }
+
+    // Obtener el rango de fechas del objetivo
+    $startDate = $objective->start_date;
+    $endDate = $objective->end_date;
+
+    // Obtener la cantidad de leads generados en el rango de fechas del objetivo
+    $leadsInObjectiveRange = $objective->leads()
+        ->whereBetween('created_at', [$startDate, $endDate])
+        ->count();
+
+    // Calcular el progreso
+    $progress = ($leadsInObjectiveRange / $objective->target_value) * 100;
+
+    return response()->json(['status' => 'success', 'progress' => $progress], 200);
+    }
+
+    
+
+    public function updateObjectiveStatus($objectiveId)
+    {
+    $objective = $this->objectiveRepo->get($objectiveId);
+
+    if (!$objective) {
+        return response()->json(['status' => 'error', 'message' => 'Objective not found'], 404);
+    }
+
+    // Obtener la cantidad actual de leads generados en el mes actual
+    $currentMonthLeads = $objective->leads()
+        ->whereMonth('created_at', now()->month)
+        ->count();
+
+    // Calcular el progreso
+    $progress = ($currentMonthLeads / $objective->target_value) * 100;
+
+    // Actualizar el estado del objetivo
+    $objective->status = $progress > 100 ? 'completed' : 'active';
+    $objective->save();
+
+    return response()->json(['status' => 'success', 'message' => 'Objective status updated'], 200);
+    }
+
+
     
     
 }

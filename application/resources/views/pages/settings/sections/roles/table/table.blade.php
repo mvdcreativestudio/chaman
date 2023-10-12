@@ -3,13 +3,13 @@
     <table id="demo-foo-addrow" class="table m-t-0 m-b-0 table-hover no-wrap contact-list" data-page-size="10">
         <thead>
             <tr>
-                <th class="roles_col_name">{{ cleanLang(__('lang.name')) }}</th>
-                <th class="roles_col_users">{{ cleanLang(__('lang.active_users')) }}</th>
-                <th class="roles_col_type">{{ cleanLang(__('lang.type')) }}</th>
-                <th class="roles_col_status">{{ cleanLang(__('lang.status')) }}</th>
-                <th class="roles_col_franchise">Es un rol de franquicia?</th>
-                <th class="roles_col_franchise_admin">Es administrador de franquicias ?</th>
-                <th class="roles_col_action"><a href="javascript:void(0)">{{ cleanLang(__('lang.action')) }}</a></th>
+                <th class="roles_col_name text-center">{{ cleanLang(__('lang.name')) }}</th>
+                <th class="roles_col_users text-center">{{ cleanLang(__('lang.active_users')) }}</th>
+                <th class="roles_col_type text-center">{{ cleanLang(__('lang.type')) }}</th>
+                <th class="roles_col_status text-center">{{ cleanLang(__('lang.status')) }}</th>
+                <th class="roles_col_franchise text-center">Vinculable a Franquicia</th>
+                <th class="roles_col_franchise_admin text-center">Administrador de Franquicia</th>
+                <th class="roles_col_action text-center"><a href="javascript:void(0)">{{ cleanLang(__('lang.action')) }}</a></th>
             </tr>
         </thead>
         <tbody id="roles-td-container">
@@ -32,15 +32,6 @@
     <!--nothing found-->
     @include('notifications.no-results-found')
     <!--nothing found-->
-    @endif
-
-    @if(config('system.settings_type') == 'standalone')
-    <!--[standalone] - settings documentation help-->
-    <div>
-        <a href="https://growcrm.io/documentation" target="_blank" class="btn btn-sm btn-info help-documentation"><i
-                class="ti-info-alt"></i>
-            {{ cleanLang(__('lang.help_documentation')) }}</a>
-    </div>
     @endif
 
 </div>

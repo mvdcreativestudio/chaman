@@ -1,7 +1,7 @@
 @foreach($roles as $role)
 <!--each row-->
 <tr id="role_{{ $role->role_id }}">
-    <td class="roles_col_name">
+    <td class="roles_col_name text-center">
         {{ $role->role_name }}
         <!--default-->
         @if($role->role_system == 'yes')
@@ -9,34 +9,34 @@
             title="{{ cleanLang(__('lang.system_default')) }}"></span>
         @endif
     </td>
-    <td class="roles_col_users">
+    <td class="roles_col_users text-center">
         {{ $role->count_users }}
     </td>
-    <td class="roles_col_type">
+    <td class="roles_col_type text-center">
         {{ $role->role_type }}
     </td>
-    <td class="roles_col_status">
+    <td class="roles_col_status text-center">
         @if($role->role_system == 'yes')
         <span class="label label-outline-default">{{ cleanLang(__('lang.default')) }}</span>
         @else
         ---
         @endif
     </td>
-    <td class="roles_col_franchise_status">
+    <td class="roles_col_franchise_status text-center">
         @if($role->franchise_role)
-            <span class="label label-success">Si</span>
+            <span class="label col-2 text-center label-success">Si</span>
         @else
-            <span class="label label-danger">No</span>
+            <span class="label col-2 text-center label-danger">No</span>
         @endif
     </td>
-    <td class="roles_col_franchise_admin_status">
+    <td class="roles_col_franchise_admin_status text-center">
         @if($role->franchise_admin_role)
-            <span class="label label-success">Si</span>
+            <span class="label col-2 text-center label-success">Si</span>
         @else
-            <span class="label label-danger">No</span>
+            <span class="label col-2 text-center label-danger">No</span>
         @endif
     </td>
-    <td class="roles_col_action actions_column">
+    <td class="roles_col_action actions_column text-center">
         <!--action button-->
         <span class="list-table-action dropdown font-size-inherit">
             @if($role->role_id != 1)
