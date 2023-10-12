@@ -139,10 +139,6 @@ class Invoices extends Controller {
             'redirect',
         ]);
 
-        $this->middleware('userRoleCheck')->only([
-            'index',
-        ]);
-
         $this->middleware('invoicesMiddlewareIndex')->only([
             'index',
             'update',
@@ -236,7 +232,6 @@ class Invoices extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(ProjectRepository $projectrepo, CategoryRepository $categoryrepo, Request $request) {
-
         //default
         $projects = [];
 
@@ -367,17 +362,32 @@ class Invoices extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-
-        if (auth()->user()->role->role_invoices_scope != 'global') {
-            // Obtener el invoice
-            $invoice = \App\Models\Invoice::find($id);
-            
-            // Si el invoice no existe o el usuario no es el creador, abortar
-            if (!$invoice || $invoice->bill_creatorid != auth()->user()->creatorid) {
-                abort(403, 'Permission Denied');
-            }
+        
+        $invoice = \App\Models\Invoice::find($id);
+        
+        // Si el invoice no existe
+        if (!$invoice) {
+            abort(403, 'Permiso denegado');
         }
-
+        
+        switch (request()->input('user_role_type')) {
+            case 'admin_role':
+                // Para admin_role, incluye la info de usuario y franquicia
+                break;
+            case 'franchise_admin_role':
+                // Carga la información del usuario
+                if ($invoice->franchise_id != auth()->user()->franchise_id) {
+                    abort(403, 'Permission Denied');
+                }            
+                break;
+            case 'common_role':
+                // No carga información adicional
+                if ($invoice->user_id != auth()->user()->id) {
+                    abort(403, 'Permission Denied');
+                }
+                break;
+        }
+        
         //get invoice object payload
         if (!$payload = $this->invoicegenerator->generate($id)) {
             abort(409, __('lang.error_request_could_not_be_completed'));

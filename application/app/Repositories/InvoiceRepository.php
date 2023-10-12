@@ -250,21 +250,19 @@ class InvoiceRepository {
 
         }
 
-        if (request()->input('user_role_type')) {
-            switch (request()->input('user_role_type')) {
-                case 'admin_role':
-                    // Para admin_role, incluye la info de usuario y franquicia
-                    $invoices->with(['user', 'franchise']);
-                    break;
-                case 'franchise_admin_role':
-                    // Carga la información del usuario
-                    $invoices->where('invoices.franchise_id', auth()->user()->franchise_id)->with('user');
-                    break;
-                case 'common_role':
-                    // No carga información adicional
-                    $invoices->where('user_id', auth()->id());
-                    break;
-            }
+        switch (request()->input('user_role_type')) {
+            case 'admin_role':
+                // Para admin_role, incluye la info de usuario y franquicia
+                $invoices->with(['user', 'franchise']);
+                break;
+            case 'franchise_admin_role':
+                // Carga la información del usuario
+                $invoices->where('invoices.franchise_id', auth()->user()->franchise_id)->with('user');
+                break;
+            case 'common_role':
+                // No carga información adicional
+                $invoices->where('user_id', auth()->id());
+                break;
         }
 
         //sorting
