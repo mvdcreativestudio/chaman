@@ -209,5 +209,23 @@ class RoleRepository {
             // Establecemos el rol específico a franchise_admin_role = true.
             $role->update(['franchise_admin_role' => true]);
         }
-    }    
+    }
+
+    
+    /**
+     * Marcar/desmarcar un rol como rol de franquicia.
+     *
+     * @param int $id Role ID
+     * @return bool
+     */
+    public function toggleFranchiseRole($id) {
+        $role = \App\Models\Role::find($id);
+        
+        if (!$role) {
+            return false;
+        }
+
+        $role->update(['franchise_role' => !$role->franchise_role]);
+        return true;
+    }
 }

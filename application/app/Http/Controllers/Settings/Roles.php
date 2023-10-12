@@ -380,4 +380,14 @@ class Roles extends Controller {
         return redirect()->back()->with('success', __('lang.role_updated_successfully'));
     }
 
+    /**
+     * Marcar un rol como rol de franquicia.
+     *
+     * @param int $id Role ID
+     * @return \Illuminate\Http\Response
+     */
+    public function setFranchiseRole($id) {
+        $this->rolesrepo->toggleFranchiseRole($id);
+        return redirect()->back()->with('success', __('lang.role_updated_successfully'));
+    }
 }

@@ -54,6 +54,7 @@ class Kernel extends HttpKernel {
 
             //[MODULES] [growcrm] [modules main menus]
             \App\Http\Middleware\Modules\Menus::class,
+            \App\Http\Middleware\Team\UserRoleCheck::class,
         ],
 
         'api' => [

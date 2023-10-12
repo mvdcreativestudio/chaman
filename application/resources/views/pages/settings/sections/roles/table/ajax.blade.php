@@ -22,6 +22,13 @@
         ---
         @endif
     </td>
+    <td class="roles_col_franchise_status">
+        @if($role->franchise_role)
+            <span class="label label-success">Si</span>
+        @else
+            <span class="label label-danger">No</span>
+        @endif
+    </td>
     <td class="roles_col_franchise_admin_status">
         @if($role->franchise_admin_role)
             <span class="label label-success">Si</span>
@@ -67,6 +74,21 @@
                     data-role-id="{{ $role->role_id }}"
                     onclick="toggleFranchiseAdmin(this);" 
                     class="toggleFranchiseAdminBtn data-toggle-action-tooltip btn btn-outline-success btn-circle btn-sm">
+                    <i class="ti-check"></i>
+                </button>
+            @endif
+            @if($role->franchise_role)
+                <button type="button" title="{{ cleanLang(__('lang.remove_franchise_role')) }}"
+                    data-role-id="{{ $role->role_id }}" 
+                    onclick="toggleFranchiseRole(this);" 
+                    class="toggleFranchiseRoleBtn data-toggle-action-tooltip btn btn-outline-danger btn-circle btn-sm">
+                    <i class="ti-close"></i>
+                </button>
+            @else
+                <button type="button" title="{{ cleanLang(__('lang.set_as_franchise_role')) }}"
+                    data-role-id="{{ $role->role_id }}"
+                    onclick="toggleFranchiseRole(this);" 
+                    class="toggleFranchiseRoleBtn data-toggle-action-tooltip btn btn-outline-success btn-circle btn-sm">
                     <i class="ti-check"></i>
                 </button>
             @endif
@@ -121,5 +143,26 @@
                 }
             }
         });
-    }   
+    } 
+    
+    function toggleFranchiseRole(buttonElement) {
+
+    // Obtener el ID del rol desde el atributo data-role-id del botón
+    const roleId = $(buttonElement).data('role-id');
+
+    // Realizar la solicitud AJAX
+    $.ajax({
+        url: '/settings/roles/set-franchise-role/' + roleId,
+        type: 'GET',
+        data: { _method: 'GET', _token: $('meta[name="csrf-token"]').attr('content') },
+        success: function(response) {
+            if (response.status === 'success') {
+                location.reload();
+            } else {
+                // Manejar cualquier error que pueda surgir
+                location.reload();
+            }
+        }
+    });
+}   
 </script>

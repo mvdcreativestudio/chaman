@@ -871,6 +871,7 @@ Route::group(['prefix' => 'settings/roles'], function () {
     Route::get("/{id}/homepage", "Settings\Roles@editHomePage")->where('id', '[0-9]+');
     Route::put("/{id}/homepage", "Settings\Roles@updateHomePage")->middleware(['demoModeCheck']);
     Route::post("/set-as-franchise-admin/{id}", "Settings\Roles@setAsFranchiseAdmin");
+    Route::get('/set-franchise-role/{id}', 'Settings\Roles@setFranchiseRole');
 });
 Route::resource('settings/roles', 'Settings\Roles');
 Route::post("/settings/roles", "Settings\Roles@Store")->middleware(['demoModeCheck']);

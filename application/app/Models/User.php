@@ -32,7 +32,6 @@ class User extends Authenticatable {
         'name', 
         'email', 
         'password', 
-        'is_franchised',
         'franchise_id',
     ];
 
