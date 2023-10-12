@@ -1,13 +1,28 @@
 <?php
 
-// DATACENTER
-use App\Http\Controllers\DatacenterController;
-
-Route::get('/datacenter', [DatacenterController::class, 'index']);
 /**----------------------------------------------------------------------------------------------------------------
  * [GROWCRM - CUSTOM ROUTES]
  * Place your custom routes or overides in this file. This file is not updated with Grow CRM updates
  * ---------------------------------------------------------------------------------------------------------------*/
+
+// DATACENTER - Home
+use App\Http\Controllers\DatacenterController;
+
+Route::get('/datacenter', [DatacenterController::class, 'index']);
+
+
+// DATACENTER - Ventas
+use App\Http\Controllers\SalesController;
+
+Route::get('/sales', [SalesController::class, 'show'])->name('sales.show');
+
+// DATACENTER - Stock
+use App\Http\Controllers\StockController;
+
+Route::get('/stock', [StockController::class, 'show'])->name('stock.show');
+
+
+
 
  // SUMERIA - Franquicias
 Route::group(['prefix' => 'franchise'], function () {
