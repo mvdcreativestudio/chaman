@@ -15,6 +15,7 @@ use App\Repositories\LeadRepository;
 use App\Repositories\ProjectRepository;
 use App\Repositories\StatsRepository;
 use App\Repositories\TaskRepository;
+use App\Repositories\ObjectiveRepository;
 
 class Home extends Controller {
 
@@ -26,6 +27,7 @@ class Home extends Controller {
     protected $projectrepo;
     protected $taskrepo;
     protected $leadrepo;
+    protected $objectiverepo;
 
     public function __construct(
         StatsRepository $statsrepo,
@@ -33,7 +35,8 @@ class Home extends Controller {
         EventTrackingRepository $trackingrepo,
         ProjectRepository $projectrepo,
         TaskRepository $taskrepo,
-        LeadRepository $leadrepo
+        LeadRepository $leadrepo,
+        ObjectiveRepository $objectiverepo
     ) {
 
         //parent
@@ -45,6 +48,7 @@ class Home extends Controller {
         $this->projectrepo = $projectrepo;
         $this->taskrepo = $taskrepo;
         $this->leadrepo = $leadrepo;
+        $this->objectiverepo = $objectiverepo;
 
         //authenticated
         $this->middleware('auth');
@@ -270,6 +274,12 @@ class Home extends Controller {
 
         //payload
         $payload = [];
+
+        //[objectives]
+
+        $objectives = $this->objectiverepo->getActiveInactive();
+        $payload['objectives'] = $objectives;
+
 
         //[payments]
         $payload['payments'] = [

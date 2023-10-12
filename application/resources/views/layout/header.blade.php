@@ -194,4 +194,6 @@
 
     <!--DYANMIC TRUSTED CONTENT - No sanitizing required] for this trusted content (Admin Custom HTML & JS header code)-->
     {!! config('system.settings_theme_head') !!}
+
+
 </head>

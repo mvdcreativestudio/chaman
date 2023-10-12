@@ -10,6 +10,7 @@
 namespace App\Repositories;
 
 use App\Models\Objective;
+use Carbon\Carbon;
 use Log;
 
 class ObjectiveRepository {
@@ -26,6 +27,14 @@ class ObjectiveRepository {
      */
     public function getAll() {
         return $this->objectives->get();
+    }
+
+    /**
+     * Obtener objetivos activos primero y luego inactivos para dashboard
+     * @return Collection
+     */
+    public function getActiveInactive() {
+        return $this->objectives->orderBy('status', 'asc')->get();
     }
 
 
@@ -79,15 +88,30 @@ class ObjectiveRepository {
         // Carga el nuevo Objetivo
         $objective = new $this->objectives;
         $objective->name = $data['name'];
+        $objective->description = $data['description'];
         $objective->module = $data['module'];
         $objective->target_value = $data['target_value'];
         $objective->user_id = $data['user_id'];
         $objective->franchise_id = $data['franchise_id'];
-
-        
+    
+        // Descomponemos el rango de fechas en fechas individuales
+        $date_range = explode(' - ', $data['date_range']);
+        $objective->start_date = Carbon::createFromFormat('m/d/Y', $date_range[0]);
+        $objective->end_date = Carbon::createFromFormat('m/d/Y', $date_range[1]);
+    
+        // Calcula el estado (active o inactive) en función de la fecha actual
+        $today = now();
+    
+        if ($today >= $objective->start_date && $today <= $objective->end_date) {
+            $objective->status = 'active';
+        } else {
+            $objective->status = 'inactive';
+        }
+    
         // Guarda y retorna un booleano
         return $objective->save();
     }
+    
     
     /**
      * Actualiza una Objetivo existente

@@ -17,8 +17,8 @@ class Objective extends Controller {
         // $this->middleware('objectiveAccess');
     }
 
-    public function getAll(ObjectiveRepository $objectiveRepo) {
-        $objectives = $objectiveRepo->getAll();
+    public function getAll() {
+        $objectives = $this->objectiveRepo->getAll();
         return response()->json(['data' => $objectives], 200);
     }
 
@@ -53,11 +53,11 @@ class Objective extends Controller {
         $objective = $this->objectiveRepo->update($id);
     
         if ($objective) {
-            return new UpdateResponse(['objective' => $franchise]);
+            return new UpdateResponse(['objective' => $objective]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Failed to update objective'], 500);
         }
-}    
+    }
 
     public function index()
     {
