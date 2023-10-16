@@ -10,6 +10,10 @@
 
 @include('pages.datacenter.third-row.wrapper')
 
+@include('pages.datacenter.fourth-row.wrapper')
+
+
+
 </div>
 
 

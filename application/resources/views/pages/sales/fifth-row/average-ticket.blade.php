@@ -6,12 +6,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex m-b-30">
-                    <h5 class="card-title m-b-0 align-self-center">Ticket Medio</h5>
+                <h5 class="card-title m-b-0 align-self-center list-inline font-12 label label-info label-rounded">Ticket Medio</h5>
                     <div class="ml-auto align-self-center">
-                        <ul class="list-inline font-12">
-                            <li><span class="label label-success label-rounded"><i class="fa fa-circle">Usuario 1</i></span></li>
-                            <li><span class="label label-info label-rounded"><i class="fa fa-circle text-info"></i>Usuario 2</span></li>
-                        </ul>
+                        
                     </div>
                 </div>
                 <div id="chart"></div>
