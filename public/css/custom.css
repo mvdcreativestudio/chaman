@@ -12,6 +12,7 @@
 }
 
 
+
 /** NOTIFICACIÓN FRANCHISES **/
 
 #list-page-actions-container {
@@ -221,7 +222,7 @@
     margin-top: 40px;
    }
 
-.item {
+.item-dual {
    border-style: dashed;
     border-color: var(--components-divider, rgba(145, 158, 171, 0.24));
     border-width: 0px 1px 0px 0px;
@@ -242,7 +243,7 @@
     position: relative;
    }
 
-.layer {
+.layer-dual {
    border-radius: 50%;
     border-style: solid;
     border-color: var(--transparent-grey-16, rgba(145, 158, 171, 0.16));
@@ -254,7 +255,7 @@
    top: 2px;
    }
 
-.layer2 {
+.layer2-dual {
    position: absolute;
     left: 2px;
    top: 2px;
@@ -271,7 +272,7 @@
     width: 56px;
    }
 
-.text {
+.text-dual {
    display: flex;
     flex-direction: column;
     gap: 4px;
@@ -573,4 +574,8 @@
 
 /** ROLES DE USUARIO **/
 
+/** GRÁFICAS **/
 
+.c3-legend-item-hidden {
+    opacity: 0.6;
+}
