@@ -24,13 +24,23 @@
                     <div class="form-group">
                         <label for="module">Módulo:</label>
                         <select class="form-control" id="module" name="module">
+                            <option value="" selected disabled>Seleccione un módulo</option>
                             <option value="leads">Leads</option>
-                            <option value="invoices">Invoices</option>
-                            <option value="payments">Payments</option>
-                            <option value="clients">Clients</option>
-                            <option value="expenses">Expenses</option>
+                            <option value="invoices">Facturas</option>
+                            <option value="payments">Pagos</option>
+                            <option value="clients">Clientes</option>
+                            <option value="expenses">Gastos</option>
                         </select>
                     </div>
+
+                    <div class="form-group" id="leads_options_dropdown" style="display: none;">
+                        <label for="leads_option">Opción de Leads:</label>
+                        <select class="form-control" id="leads_option" name="leads_option">
+                            <option value="created">Leads Creados</option>
+                            <option value="converted">Leads Convertidos</option>
+                        </select>
+                    </div>
+                    
 
                     <div class="form-group">
                         <label for="target_value">Valor Objetivo:</label>
@@ -162,5 +172,17 @@ function loadUsers() {
         $('#user_id').html(options);
     });
 }
+
+</script>
+
+<script>
+    // Listener para el cambio en el desplegable "Módulo"
+    $('#module').change(function() {
+        if ($(this).val() === "leads") {
+            $('#leads_options_dropdown').show();
+        } else {
+            $('#leads_options_dropdown').hide();
+        }
+    });
 
 </script>

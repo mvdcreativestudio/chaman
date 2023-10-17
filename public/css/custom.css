@@ -196,6 +196,8 @@
     .card-body {
         flex: 1;  /* Ocupa todo el espacio disponible */
     }
+
+    
    /** TARJETAS DUALES **/
 
    .general-booking-check-in, .general-booking-check-in * {
@@ -439,13 +441,6 @@
      position: relative;
     }
 
- .label {
-    color: var(--text-light-disabled, #919eab);
-     text-align: right;
-     font: var(--caption, 400 12px/18px 'Public Sans', sans-serif);
-     position: relative;
-    }
-
  .space {
     flex-shrink: 0;
      width: 24px;
@@ -559,12 +554,7 @@
      position: relative;
     }
 
- .label2 {
-    color: var(--text-light-disabled, #919eab);
-     text-align: center;
-     font: var(--caption, 400 12px/18px 'Public Sans', sans-serif);
-     position: relative;
-    }
+
 
  .chart-bar {
     display: flex;
@@ -580,5 +570,7 @@
      transform: translate(0px, -248px);
      overflow: visible;
     }
+
+/** ROLES DE USUARIO **/
 
 

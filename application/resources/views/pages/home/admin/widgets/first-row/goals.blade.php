@@ -54,6 +54,46 @@
     <!-- Flecha -->
     <i class="ti-angle-double-right arrow"></i>
 </div>
+<div class="text-right">
+    <form method="post" action="{{ url('/update-progress-for-all-objectives') }}">
+        @csrf
+        <button class="btn btn-primary mt-0" type="submit">Recargar Progreso</button>
+    </form>
+</div>
+
+
+<div id="alert-container" class="alert-container"></div>
+
+
+<div id="chart"></div>
+
+
+
+
+
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://unpkg.com/c3@0.7.20/c3.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Datos de ejemplo (puedes reemplazarlos con tus propios datos)
+        
+        var chart = c3.generate({
+    data: {
+        columns: [
+            ['data1', 300, 350, 300, 0, 0, 0],
+            ['data2', 130, 100, 140, 200, 150, 50]
+        ],
+        types: {
+            data1: 'area',
+            data2: 'area-spline'
+        }
+    }
+});
+
+
+    });
+</script>
 
 
 

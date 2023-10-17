@@ -40,13 +40,15 @@ Route::get('/franchises', 'Franchise@index')->middleware('franchiseAccess');
 // SUMERIA - Objetivos
 
 Route::group(['prefix' => 'objective'], function () {
-    Route::any("/search", "Objective@getAll"); // Para obtener todos los objetivos
-    Route::get("/{id}", "Objective@get"); // Para obtener un solo objetivo por ID
-    Route::post("/create", "Objective@create"); // Para crear un nuevo objetivo
-    Route::post("/update/{id}", "Objective@update"); // Para actualizar un objetivo por ID
+    Route::any("/search", "ObjectiveController@getAll"); // Para obtener todos los objetivos
+    Route::get("/{id}", "ObjectiveController@get"); // Para obtener un solo objetivo por ID
+    Route::post("/create", "ObjectiveController@create"); // Para crear un nuevo objetivo
+    Route::post("/update/{id}", "ObjectiveController@update"); // Para actualizar un objetivo por ID
     Route::get("/remove-objective/{id}", "Team@removeObjectiveAssociation"); // Remueve la asosiacion de un Team Member con un objetivo
-    Route::get("/destroy/{id}", "Objective@destroy"); // Para eliminar un objetivo por ID
+    Route::get("/destroy/{id}", "ObjectiveController@destroy"); // Para eliminar un objetivo por ID
 
 });
 
-Route::get('/objectives', 'Objective@index');
+Route::post('/update-progress-for-all-objectives', 'ObjectiveController@updateProgressForAllObjectives'); // Ruta para recargar objetivos hasta que esté el Cron
+
+Route::get('/objectives', 'ObjectiveController@index');
