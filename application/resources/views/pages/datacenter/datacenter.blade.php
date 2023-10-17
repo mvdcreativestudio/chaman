@@ -12,7 +12,7 @@
         @include('pages.datacenter.third-row.wrapper')
         
     </div>        
-@include('pages.datacenter.fourth-row.wrapper')
+
 
 
 
