@@ -72,13 +72,13 @@ $(document).ready(function(){
     // FUNCIONES MODAL FRANCHISE
 
     // FUNCION GENERICA QUE HACE QUE CADA VEZ QUE UNO HAGA SUBMIT A UN FORM DENTRO DE UN MODAL commonModalForm, ACTUALICE LA PAGINA (QUEDA TESTEAR SI ROMPE ALGO)
-    var form = document.getElementById('commonModalForm');
+    //var form = document.getElementById('commonModalForm');
 
-    form.addEventListener('submit', function() {
-        setTimeout(function() {
-            location.reload();
-        }, 500);
-    });
+    //form.addEventListener('submit', function() {
+    //    setTimeout(function() {
+    //        location.reload();
+    //    }, 500);
+    //});
     // FUNCION GENERICA QUE HACE QUE CADA VEZ QUE UNO HAGA SUBMIT A UN FORM DENTRO DE UN MODAL commonModalForm, ACTUALICE LA PAGINA (QUEDA TESTEAR SI ROMPE ALGO)
 });
 

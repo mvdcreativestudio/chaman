@@ -63,4 +63,8 @@ class Payment extends Model {
         return runtimeInvoiceIdFormat($this->payment_invoiceid);
     }
 
+    public function franchise()
+    {
+        return $this->belongsTo(\App\Models\Franchise::class, 'franchise_id');
+    }
 }
