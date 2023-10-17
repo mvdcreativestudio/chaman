@@ -5,7 +5,6 @@
 .label { 
     font-size: 100%;
     font-weight: 400;
-    color: white!important;
 }
 
 * {
@@ -442,12 +441,6 @@
      position: relative;
     }
 
- .label {
-     text-align: right;
-     font: var(--caption, 400 12px/18px 'Public Sans', sans-serif);
-     position: relative;
-    }
-
  .space {
     flex-shrink: 0;
      width: 24px;
@@ -561,16 +554,7 @@
      position: relative;
     }
 
- .label2 {
-     text-align: center;
-     font: var(--caption, 400 12px/18px 'Public Sans', sans-serif);
-     position: relative;
-    }
 
-    .label-default {
-      background-color: gray;
-      color: white;
-    }
 
  .chart-bar {
     display: flex;
@@ -588,6 +572,5 @@
     }
 
 /** ROLES DE USUARIO **/
-
 
 
