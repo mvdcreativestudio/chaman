@@ -6,33 +6,66 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex m-b-30">
-                    <h5 class="card-title m-b-0 align-self-center list-inline font-12 label label-info label-rounded">Carritos Abandonados</h5>
+                    <h5 class="card-title m-b-0 align-self-center list-inline font-12 label label-info label-rounded">GMV</h5>
                     <div class="ml-auto align-self-center">
                         
                     </div>
                 </div>
                 <div id="chart"></div>
  <!-- Script para renderizar el gráfico -->
+ 
  <script>
-     document.addEventListener('DOMContentLoaded', function () {
-         // Datos de ejemplo (puedes reemplazarlos con tus propios datos)
-         var chartData = {
-             columns: [
-                 ['E-Commerce', 30, 200, 100, 400, 150, 250],
-                 ['Fisica', 50, 20, 10, 40, 15, 25]
-             ],
-             type: 'bar'
-         };
-         // Configuración del gráfico
-         var chartConfig = {
-             bindto: '#chart', // ID del contenedor del gráfico
-             data: chartData
-             // Puedes personalizar más opciones según la documentación de C3: https://c3js.org/gettingstarted.html
-         };
-         // Renderizar el gráfico
-         var chart = c3.generate(chartConfig);
-     });
- </script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Generar fechas del 1/10 al 31/12
+        var months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre'];
+
+        // Generar datos aleatorios para GMV E-Commerce y GMV Físico (entre 3,000,000 y 6,000,000)
+        var randomGMVECommerce = [];
+        var randomGMVFisico = [];
+        var randomGMVTotal = [];
+
+        for (var j = 0; j < 10; j++) {
+            var gmvECommerce = Math.floor(Math.random() * (6000000 - 3000000 + 1)) + 3000000;
+            var gmvFisico = Math.floor(Math.random() * (6000000 - 3000000 + 1)) + 3000000;
+            randomGMVECommerce.push(gmvECommerce);
+            randomGMVFisico.push(gmvFisico);
+            randomGMVTotal.push(gmvECommerce + gmvFisico);
+        }
+
+        var chartData = {
+            x: 'x',
+            columns: [
+                ['x'].concat(months),
+                ['E-Commerce'].concat(randomGMVECommerce),
+                ['Física'].concat(randomGMVFisico),
+                ['GMV'].concat(randomGMVTotal)
+            ],
+            types: {
+                'E-Commerce': 'area',
+                'Física': 'area',
+                'Anual': 'area-spline'
+            },
+            groups: [['E-Commerce', 'Física']]
+        };
+
+        var chartConfig = {
+            bindto: '#chart',
+            data: chartData,
+            axis: {
+                x: {
+                    type: 'category'
+                },
+                y: {
+                    tick: {
+                        format: d3.format("$,")
+                    }
+                }
+            }
+        };
+
+        var chart = c3.generate(chartConfig);
+    });
+</script>
                 
             </div>
         </div>

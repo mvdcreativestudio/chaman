@@ -6,9 +6,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex m-b-30 no-block">
-                    <h5 class="card-title m-b-0 align-self-center list-inline font-12 label label-info label-rounded">ROAS por Campaña</h5>
+                    <h5 class="card-title m-b-0 align-self-center list-inline font-12 label label-info label-rounded">ROAS / Campaña</h5>
                     <div class="ml-auto">
-                        {{ cleanLang(__('lang.this_year')) }}
+                        Campaña 1
                     </div>
                 </div>
                 <div id="chart-roas"></div>
