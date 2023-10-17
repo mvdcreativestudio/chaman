@@ -33,7 +33,7 @@ class UserRoleCheck {
             elseif (auth()->user()->role->franchise_admin_role) {
                 $request->merge(['user_role_type' => 'franchise_admin_role']);
             } 
-            // Si ninguna de las condiciones se cumple, es un rol común
+            // Si ninguna de las condiciones se cumple, es un rol común 
             else {
                 $request->merge(['user_role_type' => 'common_role']);
             }
@@ -43,4 +43,3 @@ class UserRoleCheck {
         return $next($request);
     }
 }
-

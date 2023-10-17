@@ -167,6 +167,18 @@ class PaymentRepository {
             }
         }
 
+        switch (request()->input('user_role_type')) {
+            case 'admin_role':
+                $payments->with(['creator', 'franchise']);
+                break;
+            case 'franchise_admin_role':
+                $payments->where('payments.franchise_id', auth()->user()->franchise_id)->with('creator');
+                break;
+            case 'common_role':
+                $payments->where('payment_creatorid', auth()->id());
+                break;
+        }
+
         //sorting
         if (in_array(request('sortorder'), array('desc', 'asc')) && request('orderby') != '') {
             //direct column name
@@ -235,11 +247,13 @@ class PaymentRepository {
         $payment->payment_invoiceid = request('payment_invoiceid');
         $payment->payment_clientid = request('payment_clientid');
         $payment->payment_projectid = request('payment_projectid');
-        $payment->payment_creatorid = request('payment_creatorid');
+        $payment->payment_creatorid = auth()->id();
         $payment->payment_amount = request('payment_amount');
         $payment->payment_transaction_id = request('payment_transaction_id');
         $payment->payment_gateway = request('payment_gateway');
         $payment->payment_notes = request('payment_notes');
+        $payment->franchise_id = auth()->user()->franchise_id;
+
 
         //save and return id
         if ($payment->save()) {

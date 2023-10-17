@@ -25,7 +25,7 @@ class Invoice extends Model {
      *         - the Invoice belongs to one Creator (user)
      */
     public function creator() {
-        return $this->belongsTo('App\Models\User', 'bill_creatorid', 'creatorid');
+        return $this->belongsTo('App\Models\User', 'bill_creatorid', 'id');
     }
     
 
@@ -101,10 +101,4 @@ class Invoice extends Model {
     public function franchise() {
         return $this->belongsTo('App\Models\Franchise');
     }
-    
-    public function user() {
-        return $this->belongsTo('App\Models\User');
-    }    
-
-
 }

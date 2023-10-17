@@ -47,6 +47,14 @@
         {{ $payment->payment_gateway }}
     </td>
     @endif
+    @if(request()->input('user_role_type') == 'admin_role')
+        <td class="invoices_col_franchise">
+            {{ $payment->franchise->name ?? '-' }}
+        </td>
+    @endif
+    @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role')
+        <td class="invoices_col_user">{{ $payment->creator->first_name }} {{ $payment->creator->last_name ?? '-' }} ({{ $payment->creator->email }})</td>
+    @endif
     @if(config('visibility.payments_col_action'))
     <td class="payments_col_action actions_column" id="payments_col_action_{{ $payment->payment_id }}">
         <!--action button-->
