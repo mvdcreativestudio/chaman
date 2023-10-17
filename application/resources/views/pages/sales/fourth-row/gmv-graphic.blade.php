@@ -6,14 +6,13 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex m-b-30">
-                    <h5 class="card-title m-b-0 align-self-center list-inline font-12 label label-info label-rounded">GMV</h5>
+                <h5 class="card-title m-b-0 align-self-center list-inline font-12 label label-info label-rounded">GMV</h5>
                     <div class="ml-auto align-self-center">
                         
                     </div>
                 </div>
-                <div id="chart"></div>
+                <div id="chart-gmv"></div>
  <!-- Script para renderizar el gráfico -->
- 
  <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Generar fechas del 1/10 al 31/12
@@ -49,7 +48,7 @@
         };
 
         var chartConfig = {
-            bindto: '#chart',
+            bindto: '#chart-gmv',
             data: chartData,
             axis: {
                 x: {

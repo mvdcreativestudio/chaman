@@ -10,13 +10,13 @@
       			<path d="M0.599609 30.9996C0.599609 47.7891 14.2102 61.3996 30.9996 61.3996C47.7891 61.3996 61.3996 47.7891 61.3996 30.9996C61.3996 14.2102 47.7891 0.599609 30.9996 0.599609" stroke="#5BE584" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
     		</svg>
     		<div class="number-percent-rand" >
-98.2% </div>
+89.2% </div>
   	</div>
   	<div class="text" >
     		<div class="number-long-rand" >
-$12.498 </div>
+1,499 </div>
     		<div class="conversion" >
-Ticket Medio </div>
+CAC </div>
   	</div>
   	<svg class="icon" width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
     		<g opacity="0.12">

@@ -1,7 +1,8 @@
 @extends('layout.wrapper') @section('content')
 
 <!-- action button -->
-@include('pages.objectives.modals.add-edit-inc')
+@include('pages.objectives.modals.add-new-objective')
+@include('pages.objectives.modals.edit-objective')
 <!-- action button -->
 
 <!-- main content -->
@@ -44,8 +45,7 @@
                                 <th>Nombre</th>
                                 <th>Tipo</th>
                                 <th>Objetivo</th>
-                                <th>Usuario</th>
-                                <th>Franquicia</th>
+                                <th>Asignado a</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -56,8 +56,18 @@
                                 <td>{{ $objective->name }}</td>
                                 <td>{{ $objective->module }}</td>
                                 <td>{{ $objective->target_value }}</td>
-                                <td>{{ $objective->user ? $objective->user->first_name . ' ' . $objective->user->last_name : '-' }}</td>
-                                <td>{{ $objective->franchise ? $objective->franchise->name : '-' }}</td>
+                                <td>
+                                    @if ($objective->user)
+                                        {{ $objective->user->first_name . ' ' . $objective->user->last_name }}
+                                        @if ($objective->franchise)
+                                            ({{ $objective->franchise->name }})
+                                        @endif
+                                    @elseif ($objective->franchise)
+                                        {{ $objective->franchise->name }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                                 <td>
                                     <!--action buttons-->
                                     <span class="list-table-action dropdown font-size-inherit">
@@ -70,8 +80,10 @@
                                         data-module="{{ $objective->module }}" 
                                         data-target_value="{{ $objective->target_value }}"
                                         data-user="{{ $objective->user }}"
-                                        data-franchise="{{ $objective->franchise }}">
-                                            <i class="sl-icon-note"></i>
+                                        data-franchise="{{ $objective->franchise }}"
+                                        data-toggle="modal" 
+                                        data-target="#editObjectiveModal">
+                                        <i class="sl-icon-note"></i>
                                         </a>
                                         <!-- Status button -->
                                             <a href="{{ url('/objective/destroy/'.$objective->id) }}" class="btn btn-outline-danger btn-circle btn-sm">
@@ -178,4 +190,31 @@ let userCounts = document.querySelectorAll('.objective-users-count');
 userCounts.forEach(link => link.addEventListener('click', showUsersModal));
 
 });
+</script>
+
+<script>
+    $(document).ready(function() {
+    // Listener para el clic en el botón de edición
+    $('.edit-objective-button').on('click', function() {
+        // Obtén los datos del botón
+        var id = $(this).data('id');
+        var name = $(this).data('name');
+        var module = $(this).data('module');
+        var targetValue = $(this).data('target_value');
+        var user = $(this).data('user');
+        var franchise = $(this).data('franchise');
+
+        // Llena los campos del modal de edición
+        $('#editObjectiveModal #id').val(id);
+        $('#editObjectiveModal #name').val(name);
+        $('#editObjectiveModal #module').val(module);
+        $('#editObjectiveModal #target_value').val(targetValue);
+        $('#editObjectiveModal #user').val(user);
+        $('#editObjectiveModal #franchise').val(franchise);
+
+        // Abre el modal de edición
+        $('#editObjectiveModal').modal('show');
+    });
+});
+
 </script>

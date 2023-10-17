@@ -12,6 +12,7 @@
 }
 
 
+
 /** NOTIFICACIÓN FRANCHISES **/
 
 #list-page-actions-container {
@@ -196,6 +197,8 @@
     .card-body {
         flex: 1;  /* Ocupa todo el espacio disponible */
     }
+
+    
    /** TARJETAS DUALES **/
 
    .general-booking-check-in, .general-booking-check-in * {
@@ -219,7 +222,7 @@
     margin-top: 40px;
    }
 
-.item {
+.item-dual {
    border-style: dashed;
     border-color: var(--components-divider, rgba(145, 158, 171, 0.24));
     border-width: 0px 1px 0px 0px;
@@ -240,7 +243,7 @@
     position: relative;
    }
 
-.layer {
+.layer-dual {
    border-radius: 50%;
     border-style: solid;
     border-color: var(--transparent-grey-16, rgba(145, 158, 171, 0.16));
@@ -252,7 +255,7 @@
    top: 2px;
    }
 
-.layer2 {
+.layer2-dual {
    position: absolute;
     left: 2px;
    top: 2px;
@@ -269,7 +272,7 @@
     width: 56px;
    }
 
-.text {
+.text-dual {
    display: flex;
     flex-direction: column;
     gap: 4px;
@@ -439,13 +442,6 @@
      position: relative;
     }
 
- .label {
-    color: var(--text-light-disabled, #919eab);
-     text-align: right;
-     font: var(--caption, 400 12px/18px 'Public Sans', sans-serif);
-     position: relative;
-    }
-
  .space {
     flex-shrink: 0;
      width: 24px;
@@ -559,12 +555,7 @@
      position: relative;
     }
 
- .label2 {
-    color: var(--text-light-disabled, #919eab);
-     text-align: center;
-     font: var(--caption, 400 12px/18px 'Public Sans', sans-serif);
-     position: relative;
-    }
+
 
  .chart-bar {
     display: flex;
@@ -581,4 +572,10 @@
      overflow: visible;
     }
 
+/** ROLES DE USUARIO **/
 
+/** GRÁFICAS **/
+
+.c3-legend-item-hidden {
+    opacity: 0.6;
+}
