@@ -255,6 +255,22 @@ class Payments extends Controller {
             abort(409, __('lang.payment_not_found'));
         }
 
+        switch (request()->input('user_role_type')) {
+            case 'admin_role':
+                // No restrictions for admin
+                break;
+            case 'franchise_admin_role':
+                if ($payment->franchise_id != auth()->user()->franchise_id) {
+                    abort(403, 'Permission Denied');
+                }
+                break;
+            case 'common_role':
+                if ($payment->payment_creatorid != auth()->user()->id) {
+                    abort(403, 'Permission Denied');
+                }
+                break;
+        }    
+
         //reponse payload
         $payload = [
             'payment' => $payment,

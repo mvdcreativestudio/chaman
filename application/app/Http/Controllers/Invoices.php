@@ -382,7 +382,7 @@ class Invoices extends Controller {
                 break;
             case 'common_role':
                 // No carga información adicional
-                if ($invoice->user_id != auth()->user()->id) {
+                if ($invoice->bill_creatorid != auth()->user()->id) {
                     abort(403, 'Permission Denied');
                 }
                 break;

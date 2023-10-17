@@ -75,7 +75,7 @@
         </td>
     @endif
     @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role')
-        <td class="invoices_col_user">{{ $invoice->user->first_name }} ({{ $invoice->user->email }})</td>
+        <td class="invoices_col_user">{{ $invoice->creator->first_name }} {{ $invoice->creator->last_name }} ({{ $invoice->creator->email }})</td>
     @endif
     <td class="invoices_col_action actions_column" id="invoices_col_action_{{ $invoice->bill_invoiceid }}">
         <!--action button-->
