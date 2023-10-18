@@ -63,4 +63,8 @@ class Expense extends Model {
         return $this->belongsTo('App\Models\Project', 'expense_projectid', 'project_id');
     }
 
+    public function franchise() {
+        return $this->belongsTo('App\Models\Franchise');
+    }
+
 }

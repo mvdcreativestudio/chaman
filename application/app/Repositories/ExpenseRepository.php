@@ -175,6 +175,21 @@ class ExpenseRepository {
 
         }
 
+        switch (request()->input('user_role_type')) {
+            case 'admin_role':
+                // Para admin_role, incluye la info de usuario y franquicia
+                $expenses->with(['creator', 'franchise']);
+                break;
+            case 'franchise_admin_role':
+                // Carga la información del usuario
+                $expenses->where('expenses.franchise_id', auth()->user()->franchise_id)->with('creator');
+                break;
+            case 'common_role':
+                // No carga información adicional
+                $expenses->where('expense_creatorid', auth()->id());
+                break;
+        }
+
         //sorting
         if (in_array(request('sortorder'), array('desc', 'asc')) && request('orderby') != '') {
             //direct column name
@@ -237,12 +252,13 @@ class ExpenseRepository {
         //data
         $expense->expense_date = request('expense_date');
         $expense->expense_clientid = request('expense_clientid');
-        $expense->expense_creatorid = (is_numeric(request('expense_creatorid'))) ? request('expense_creatorid') : auth()->id();
+        $expense->expense_creatorid = auth()->id();
         $expense->expense_projectid = request('expense_projectid');
         $expense->expense_categoryid = request('expense_categoryid');
         $expense->expense_amount = request('expense_amount');
         $expense->expense_description = request('expense_description');
         $expense->expense_billable = (request('expense_billable') == 'on') ? 'billable' : 'not_billable';
+        $expense->franchise_id = auth()->user()->franchise_id;
 
         //save and return id
         if ($expense->save()) {

@@ -267,6 +267,24 @@ class Expenses extends Controller {
         $expenses = $this->expenserepo->search($id);
         $expense = $expenses->first();
 
+        switch (request()->input('user_role_type')) {
+            case 'admin_role':
+                // Para admin_role, incluye la info de usuario y franquicia
+                break;
+            case 'franchise_admin_role':
+                // Carga la información del usuario
+                if ($expense->franchise_id != auth()->user()->franchise_id) {
+                    abort(403, 'Permission Denied');
+                }            
+                break;
+            case 'common_role':
+                // No carga información adicional
+                if ($expense->expense_creatorid != auth()->user()->id) {
+                    abort(403, 'Permission Denied');
+                }
+                break;
+        }
+
         //get attachment
         $attachments = \App\Models\Attachment::Where('attachmentresource_id', $id)
             ->Where('attachmentresource_type', 'expense')
