@@ -54,13 +54,57 @@
     <!-- Flecha -->
     <i class="ti-angle-double-right arrow"></i>
 </div>
-
+<div class="text-right">
+    <form method="post" action="{{ url('/update-progress-for-all-objectives') }}">
+        @csrf
+        <button class="btn btn-primary mt-0" type="submit">Recargar Progreso</button>
+    </form>
+</div>
 
 
 <div id="alert-container" class="alert-container"></div>
 
 
-<div id="chart"></div>
+
+
+
+{{-- <div class="col-12">
+    <div class="row">
+        <div class="col-12 d-flex scrollable-container">
+            @foreach($payload['objectives'] as $objective)
+            <!-- Tarjeta Dinámica -->
+            <div class="col-lg-4 col-md-4 col-6 cursor-pointer">
+                <div class="card">
+                    <div class="col-lg-4 col-md-4 col-6 cursor-pointer pr-0">
+                        <div class="d-flex p-10 no-block justify-content-between">
+                            <span class="align-slef-center">
+                                <h4 class="m-b-0">{{ $objective->name }}</h4>
+                                <p class="objective text-muted p-0 mb-1">{{ $objective->description }}</p>
+                                <h6 class="text-muted m-b-0">{{ $objective->progress }}%</h6>
+                            </span>
+                            <span class="align-slef-center">
+                                <p>Estado: {{ $objective->status }}</p>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="progress2">
+                        <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: {{ $objective->progress }}%" aria-valuenow="{{ $objective->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+    <!-- Flecha -->
+    <i class="ti-angle-double-right arrow"></i>
+</div> --}}
+
+
+
+<!-- Invoice - Due-->
+
+
+
 
 
 
