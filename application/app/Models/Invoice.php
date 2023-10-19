@@ -25,7 +25,7 @@ class Invoice extends Model {
      *         - the Invoice belongs to one Creator (user)
      */
     public function creator() {
-        return $this->belongsTo('App\Models\User', 'bill_creatorid', 'creatorid');
+        return $this->belongsTo('App\Models\User', 'bill_creatorid', 'id');
     }
     
 
@@ -98,5 +98,7 @@ class Invoice extends Model {
         return $this->morphMany('App\Models\Tax', 'taxresource');
     }
 
-
+    public function franchise() {
+        return $this->belongsTo('App\Models\Franchise');
+    }
 }

@@ -16,12 +16,14 @@
     <!-- PAYMENTS ALWAYS-->
     @include('pages.home.admin.widgets.first-row.payments-total')
 
+    <!--FACTURAS POR VENCER-->
+    @include('pages.home.admin.widgets.first-row.invoices-current')
+
     <!--INVOICES DUE-->
     @include('pages.home.admin.widgets.first-row.invoices-due')
 
     <!--INVOICES OVERDUE-->
     @include('pages.home.admin.widgets.first-row.invoices-overdue')
 
-    <!--FACTURAS POR VENCER-->
-    @include('pages.home.admin.widgets.first-row.facturas-por-vencer')
+
 </div>

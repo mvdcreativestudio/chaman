@@ -210,7 +210,6 @@ class Team extends Controller {
 
         //process reponse
         return new StoreResponse($payload);
-
     }
 
     /**
@@ -273,7 +272,6 @@ class Team extends Controller {
             ],
             'role_id' => 'nullable|exists:roles,role_id',
             'password' => 'nullable|confirmed|min:5',
-            'isFranchisedSwitch' => 'nullable|in:on',
             'franchise_id' => 'nullable|exists:franchises,id'
         ], $messages);
 
@@ -360,6 +358,8 @@ class Team extends Controller {
 
         //update delete date
         $user->deleted = now();
+
+        $user->franchise_id = null;
 
         //save user
         $user->save();

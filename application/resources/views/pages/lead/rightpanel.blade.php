@@ -109,17 +109,31 @@
         </div>
 
         <!--email-->
-        <div class="x-element"><i class="mdi mdi-email"></i> <span>{{ cleanLang(__('lang.email')) }}: </span>
+        <div class="x-element">
+            <i class="mdi mdi-email"></i> 
+            <span>{{ cleanLang(__('lang.email')) }}: </span>
             @if($lead->permission_edit_lead)
-            <span class="x-highlight x-editable js-card-settings-button-static" data-container=".card-modal" id="card-lead-email" tabindex="0"
-                data-popover-content="card-lead-email-popover" data-value="{{ $lead->lead_email }}"
-                data-title="{{ cleanLang(__('lang.email')) }}">{{ $lead->lead_email ?? '---' }}</span>
+                @php
+                    $truncatedEmail = strlen($lead->lead_email) > 25 ? substr($lead->lead_email, 0, 25) . '...' : $lead->lead_email;
+                @endphp
+                <span class="x-highlight x-editable js-card-settings-button-static" 
+                    data-container=".card-modal" 
+                    id="card-lead-email" 
+                    tabindex="0"
+                    data-popover-content="card-lead-email-popover" 
+                    data-value="{{ $lead->lead_email }}"
+                    data-title="{{ cleanLang(__('lang.email')) }}">
+                    {{ $truncatedEmail ?? '---' }}
+                </span>
             @else
-            <span class="x-highlight">{{ $lead->lead_email ?? '---' }}</span>
+                <span class="x-highlight">
+                    {{ strlen($lead->lead_email) > 25 ? substr($lead->lead_email, 0, 25) . '...' : $lead->lead_email ?? '---' }}
+                </span>
             @endif
         </div>
 
-        <!--Source-->
+
+        {{-- <!--Source-->
         <div class="x-element" id="card-lead-source"><i class="mdi mdi-magnify-plus"></i>
             <span>{{ cleanLang(__('lang.source')) }}:
             </span>
@@ -130,7 +144,7 @@
             @else
             <span class="x-highlight">{{ $lead->lead_source ?? '---' }}</span>
             @endif
-        </div>
+        </div> --}}
 
 
         <!--reminder-->

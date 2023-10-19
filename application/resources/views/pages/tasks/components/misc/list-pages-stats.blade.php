@@ -11,7 +11,7 @@
                 </div>
 
             </div>
-            <div class="progress dynamic-list">
+            <div class="progress2 dynamic-list">
                 <div class="progress-bar {{ $stat['color'] ?? '' }} h-px-4 w-100" id="stats-widget-percentage-1"
                     role="progressbar"
                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>

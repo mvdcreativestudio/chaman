@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex m-b-30">
-                <h5 class="card-title m-b-0 align-self-center list-inline font-12 label label-info label-rounded">Tasa de Rotación</h5>
+                <h5 class="card-title m-b-0 align-self-center list-inline font-18 label label-info label-rounded">Tasa de Rotación</h5>
                     
                 </div>
                 <div id="chart"></div>

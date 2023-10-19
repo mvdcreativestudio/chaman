@@ -1,32 +1,6 @@
 "use strict";
 
 $(document).ready(function(){
-    $('.confirm-action-danger').on('click', function(e){
-        e.preventDefault();
-
-        let url = $(this).data('url');
-        let ajaxType = 'POST'; // Seteamos directamente a POST
-
-        if(confirm($(this).data('confirm-text'))) {
-            $.ajax({
-                url: url,
-                type: ajaxType,
-                data: { _method: 'DELETE', _token: $('meta[name="csrf-token"]').attr('content') }, // Añadimos el _method DELETE y el token CSRF
-                success: function(response) {
-                    if(response.status == 'success') {
-                        alert('Franchise deleted successfully!');
-                        // Aquí podrías, por ejemplo, eliminar la fila de la tabla correspondiente al registro eliminado.
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function(error) {
-                    alert('Error deleting franchise!');
-                }
-            });
-        }
-    });
-
     // FUNCIONES MODAL TEAM MEMBER
     $(document).on('change', '#isFranchisedSwitch', function() {
         let isFranchisedSwitch = $('#isFranchisedSwitch');
@@ -73,7 +47,7 @@ $(document).ready(function(){
         $('#phone').val(phone);
 
         setModalToEditMode();
-
+        
         $('#franchiseModal').modal('show');
     });
 
@@ -84,7 +58,6 @@ $(document).ready(function(){
     $('#franchiseModal .btn-close').on('click', function() {
         $('#franchiseModal').modal('hide');
     });
-
 
     function setModalToAddMode() {
         $('#franchiseModalLabel').text($('#franchiseModalLabel').data('add-title'));
@@ -97,4 +70,16 @@ $(document).ready(function(){
         $('#franchiseModalActionButton').text($('#franchiseModalActionButton').data('edit-text'));
     }
     // FUNCIONES MODAL FRANCHISE
+
+    // FUNCION GENERICA QUE HACE QUE CADA VEZ QUE UNO HAGA SUBMIT A UN FORM DENTRO DE UN MODAL commonModalForm, ACTUALICE LA PAGINA (QUEDA TESTEAR SI ROMPE ALGO)
+    //var form = document.getElementById('commonModalForm');
+
+    //form.addEventListener('submit', function() {
+    //    setTimeout(function() {
+    //        location.reload();
+    //    }, 500);
+    //});
+    // FUNCION GENERICA QUE HACE QUE CADA VEZ QUE UNO HAGA SUBMIT A UN FORM DENTRO DE UN MODAL commonModalForm, ACTUALICE LA PAGINA (QUEDA TESTEAR SI ROMPE ALGO)
 });
+
+

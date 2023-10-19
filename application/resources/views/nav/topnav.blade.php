@@ -431,6 +431,14 @@
                                         <h4 id="topnav_dropdown_full_name">{{ auth()->user()->first_name }}
                                             {{ auth()->user()->last_name }}</h4>
                                         <p class="text-muted" id="topnav_dropdown_email">{{ auth()->user()->email }}</p>
+                                        <p class="text-muted">Franquicia: 
+                                            <?php 
+                                                $franchise = auth()->user()->franchise;
+                                        
+                                                // Verificar si la franquicia existe antes de intentar acceder a su nombre
+                                                echo $franchise ? $franchise->name : '-';
+                                            ?>
+                                        </p>                                      
                                         <a href="javascript:void(0)"
                                             class="btn btn-rounded btn-danger btn-sm edit-add-modal-button js-ajax-ux-request reset-target-modal-form"
                                             data-toggle="modal" data-target="#commonModal"

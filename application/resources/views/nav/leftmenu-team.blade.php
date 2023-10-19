@@ -103,6 +103,22 @@
                     </ul>
                 </li>
 
+                <!--FRANCHISES HARDCODEADO-->
+                <li data-modular-id="main_menu_team_projects"
+                class="sidenav-menu-item {{ $page['mainmenu_projects'] ?? '' }}">
+                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
+                    <i class="ti-check"></i>
+                    <span class="hide-menu">Objetivos</span>
+                </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li class="sidenav-submenu {{ $page['submenu_templates'] ?? '' }}"
+                            id="submenu_project_templates">
+                            <a href="{{ _url('/objectives') }}"
+                                class="{{ $page['submenu_templates'] ?? '' }}">Objetivos</a>
+                        </li>
+                    </ul>
+                </li>
+
                 <!--projects[done]-->
                 @if(config('visibility.modules.projects'))
                 <li data-modular-id="main_menu_team_projects"

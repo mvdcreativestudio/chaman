@@ -37,7 +37,7 @@
             <!--delete-->
             @if(runtimeTeamPermissionDelete($team))
             <button type="button" title="{{ cleanLang(__('lang.delete')) }}"
-                class="data-toggle-action-tooltip btn btn-outline-danger btn-circle btn-sm confirm-action-danger"
+                class="data-toggle-action-tooltip btn btn-outline-danger btn-circle btn-sm confirm-action-danger btn-delete-team"
                 data-confirm-title="{{ cleanLang(__('lang.delete_user')) }}"
                 data-confirm-text="{{ cleanLang(__('lang.are_you_sure')) }}" data-ajax-type="DELETE"
                 data-url="{{ url('/') }}/team/{{ $team->id ?? '' }}">

@@ -32,7 +32,6 @@ class User extends Authenticatable {
         'name', 
         'email', 
         'password', 
-        'is_franchised',
         'franchise_id',
     ];
 
@@ -278,6 +277,12 @@ class User extends Authenticatable {
         }
     }
 
+    public function objectives()
+    {
+        return $this->hasMany(Objective::class, 'user_id');
+    }
+    
+
     /**
      * check if the user has any permissions to add content, so that we can display the red add button in top nav
      * @return bool
@@ -317,5 +322,14 @@ class User extends Authenticatable {
 
     public function franchise() {
         return $this->belongsTo('App\Models\Franchise', 'franchise_id', 'id');
+    }
+
+    public function invoices() {
+        return $this->hasMany('App\Models\Invoice');
+    }
+    
+    public function payments()
+    {
+        return $this->hasMany('App\Models\Payment');
     }
 }

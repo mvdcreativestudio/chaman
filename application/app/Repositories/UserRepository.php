@@ -287,10 +287,15 @@ class UserRepository {
         if (request('type') == 'team') {
             $user->phone = request('phone');
             $user->position = request('position');
-            $user->is_franchised = (request('isFranchisedSwitch') == 'on') ? true : false;
-            if($user->is_franchised) {
+            // Obtiene el role seleccionado
+            $role = \App\Models\Role::find(request('role_id'));
+
+            // Verifica si el role tiene franchise_role en true y si se ha enviado un franchise_id
+            if ($role && $role->franchise_role && request()->filled('franchise_id')) {
                 $user->franchise_id = request('franchise_id');
-            }
+            } else {
+                $user->franchise_id = null;
+            }   
         }
 
         //client specific details
@@ -392,11 +397,16 @@ class UserRepository {
 
         //dashboard access
         $user->dashboard_access = (request('dashboard_access') == 'on') ? 'yes' : 'no';
+        
+        // Obtiene el role seleccionado
+        $role = \App\Models\Role::find(request('role_id'));
 
-        if (request('isFranchisedSwitch') == 'on') {
-            $user->is_franchised = true;
+        // Verifica si el role tiene franchise_role en true y si se ha enviado un franchise_id
+        if ($role && $role->franchise_role && request()->filled('franchise_id')) {
             $user->franchise_id = request('franchise_id');
-        }
+        } else {
+            $user->franchise_id = null;
+        }        
     
 
         //optional
@@ -883,7 +893,6 @@ class UserRepository {
         }
 
         //set the values
-        $user->is_franchised = false;
         $user->franchise_id = null;
 
         //save changes

@@ -32,15 +32,6 @@
                                 data-url="{{ urlResource('/invoices?action=sort&orderby=client&sortorder=asc') }}">{{ cleanLang(__('lang.company_name')) }}<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a></th>
                         @endif
 
-                        {{-- MOSTRAR FRANQUICIA EN LA TABLA --}}
-
-                        @if(config('visibility.invoices_col_project'))
-                        <th class="invoices_col_project"><a class="js-ajax-ux-request js-list-sorting" id="sort_project"
-                                href="javascript:void(0)"
-                                data-url="{{ urlResource('/invoices?action=sort&orderby=project&sortorder=asc') }}">Franquicia<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
-                        </th>
-                        @endif
-
                         <th class="invoices_col_amount"><a class="js-ajax-ux-request js-list-sorting"
                                 id="sort_bill_final_amount" href="javascript:void(0)"
                                 data-url="{{ urlResource('/invoices?action=sort&orderby=bill_final_amount&sortorder=asc') }}">{{ cleanLang(__('lang.amount')) }}<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
@@ -59,6 +50,12 @@
                                 id="sort_bill_status" href="javascript:void(0)"
                                 data-url="{{ urlResource('/invoices?action=sort&orderby=bill_status&sortorder=asc') }}">{{ cleanLang(__('lang.status')) }}<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
                         </th>
+                        @if(request()->input('user_role_type') == 'admin_role')
+                            <th class="invoices_col_franchise">Franquicia</th>
+                        @endif
+                        @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role')
+                            <th class="invoices_col_user">Usuario</th>
+                        @endif
                         <th class="invoices_col_action"><a href="javascript:void(0)">{{ cleanLang(__('lang.action')) }}</a></th>
                     </tr>
                 </thead>

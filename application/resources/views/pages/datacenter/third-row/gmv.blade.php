@@ -3,15 +3,18 @@
 
 
 <div class="col-lg-4 col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex m-b-30 no-block">
-                    <h5 class="card-title m-b-0 align-self-center list-inline font-12 label label-info label-rounded">GMV</h5>
-                    <div class="ml-auto">
-                        {{ cleanLang(__('lang.this_year')) }}
-                    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex m-b-30 no-block">
+                <h5 class="card-title m-b-0 align-self-center list-inline font-18 label label-info label-rounded">GMV</h5>
+                <div class="ml-auto">
+                    {{ cleanLang(__('lang.this_year')) }}
                 </div>
-                <div id="chart1"></div>
+            </div>
+            <div id="chart1"></div>
+        </div>
+    </div>
+</div>
  <!-- Script para renderizar el gráfico -->
  <script>
      document.addEventListener('DOMContentLoaded', function () {
@@ -34,6 +37,4 @@
      });
  </script>
                 
-            </div>
-        </div>
-    </div>
+

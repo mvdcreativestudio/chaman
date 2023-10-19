@@ -19,5 +19,20 @@ class Franchise extends Model
     public function users() {
         return $this->hasMany('App\Models\User', 'franchise_id', 'id');
     }
+
+    public function objectives()
+    {
+        return $this->hasMany(Objective::class, 'user_id');
+    }
+
+    public function invoices() {
+        return $this->hasMany('App\Models\Invoice');
+    }
+    
+    public function payments()
+    {
+        return $this->hasMany(\App\Models\Payment::class, 'franchise_id');
+    }
+    
 }
 

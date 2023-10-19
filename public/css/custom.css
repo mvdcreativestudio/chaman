@@ -22,7 +22,6 @@
     width: 97%;
 }
 #list-page-actions-container #list-page-actions {
-    width: 3%;
     margin-left: auto;
 }
 
@@ -31,7 +30,7 @@
 .progress2 {
     display: -ms-flexbox;
     display: flex;
-    height: auto;
+    height: 0.8rem;
     overflow: hidden;
     line-height: 0;
     font-size: .75rem;
@@ -39,7 +38,7 @@
     border-radius: .25rem; }
 
 .progress {
-    height: 0.8rem;
+    height: auto;
 }
 
 /** SCROLLEABLE OBJETIVOS DASHBOARD **/
@@ -90,7 +89,6 @@
    background: var(--primary-dark, #007b55);
     border-radius: 16px;
     padding: 24px;
-    padding-bottom: 50px;
     display: flex;
     flex-direction: row;
     gap: 24px;
@@ -173,6 +171,34 @@
     overflow: visible;
    }
 
+
+   /** OBJETIVOS DASHBOARD **/
+
+   .objective {
+    font-size: .8em;
+   }
+
+   .objective-status {
+    font-size: .7em;
+        
+    }
+
+    .card-container {
+        display: flex;
+        align-items: stretch;  /* Hace que las tarjetas se estiren para ocupar el mismo alto */
+        flex-wrap: wrap;  /* Permite que las tarjetas envuelvan a la siguiente línea si hay muchas de ellas */
+    }
+    
+    .card {
+        display: flex;
+        flex-direction: column;  /* Establece la dirección principal como columna */
+    }
+    
+    .card-body {
+        flex: 1;  /* Ocupa todo el espacio disponible */
+    }
+
+    
    /** TARJETAS DUALES **/
 
    .general-booking-check-in, .general-booking-check-in * {
@@ -312,3 +338,271 @@
     position: relative;
    }
 
+/** GRAFICA CONVERSION **/
+
+.general-analytics-conversion-rates, .general-analytics-conversion-rates * {
+     box-sizing: border-box;
+     }
+.general-analytics-conversion-rates {
+    background: var(--background-light-paper, #ffffff);
+     border-radius: 16px;
+     display: flex;
+     flex-direction: column;
+     gap: 0px;
+     align-items: center;
+     justify-content: flex-start;
+     flex-shrink: 0;
+     width: 712px;
+     position: relative;
+     box-shadow: var(--shadows-light-card-box-shadow, 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20));
+     overflow: hidden;
+    }
+
+ .card-header {
+    padding: 24px 16px 24px 24px;
+     display: flex;
+     flex-direction: row;
+     gap: 16px;
+     align-items: flex-start;
+     justify-content: flex-start;
+     align-self: stretch;
+    flex-shrink: 0;
+     position: relative;
+    }
+
+ .text {
+    display: flex;
+     flex-direction: column;
+     gap: 4px;
+     align-items: flex-start;
+     justify-content: flex-start;
+     flex: 1;
+     position: relative;
+     overflow: hidden;
+    }
+
+ .title {
+    color: var(--text-light-primary, #212b36);
+     text-align: left;
+     font: var(--h-6, 700 18px/28px 'Public Sans', sans-serif);
+     position: relative;
+     align-self: stretch;
+    }
+
+ .subtitle {
+    color: var(--text-light-secondary, #637381);
+     text-align: left;
+     font: var(--body-2, 400 14px/22px 'Public Sans', sans-serif);
+     position: relative;
+     align-self: stretch;
+     height: 22px;
+    }
+
+ .chart {
+    padding: 24px;
+     display: flex;
+     flex-direction: column;
+     gap: 0px;
+     align-items: center;
+     justify-content: flex-start;
+     align-self: stretch;
+    flex-shrink: 0;
+     position: relative;
+    }
+
+ .chart-grid {
+    display: flex;
+     flex-direction: row;
+     gap: 20px;
+     align-items: flex-start;
+     justify-content: flex-start;
+     align-self: stretch;
+    flex-shrink: 0;
+     position: relative;
+    }
+
+ .y {
+    display: flex;
+     flex-direction: column;
+     gap: 41px;
+     align-items: flex-end;
+     justify-content: flex-start;
+     flex-shrink: 0;
+     height: 258px;
+     position: relative;
+    }
+
+ .y-5 {
+    display: flex;
+     flex-direction: column;
+     gap: 0px;
+     align-items: flex-end;
+     justify-content: flex-start;
+     flex-shrink: 0;
+     position: relative;
+    }
+
+ .space {
+    flex-shrink: 0;
+     width: 24px;
+     height: 1px;
+     position: relative;
+    }
+
+ .y-4 {
+    display: flex;
+     flex-direction: column;
+     gap: 0px;
+     align-items: flex-end;
+     justify-content: flex-start;
+     flex-shrink: 0;
+     position: relative;
+    }
+
+ .y-3 {
+    display: flex;
+     flex-direction: column;
+     gap: 0px;
+     align-items: flex-end;
+     justify-content: flex-start;
+     flex-shrink: 0;
+     position: relative;
+    }
+
+ .y-2 {
+    display: flex;
+     flex-direction: column;
+     gap: 0px;
+     align-items: flex-end;
+     justify-content: flex-start;
+     flex-shrink: 0;
+     position: relative;
+    }
+
+ .y-1 {
+    display: flex;
+     flex-direction: column;
+     gap: 0px;
+     align-items: flex-end;
+     justify-content: flex-start;
+     flex-shrink: 0;
+     position: relative;
+    }
+
+ .stack {
+    display: flex;
+     flex-direction: column;
+     gap: 12px;
+     align-items: flex-start;
+     justify-content: center;
+     flex: 1;
+     position: relative;
+    }
+
+ .lines {
+    display: flex;
+     flex-direction: column;
+     gap: 42px;
+     align-items: flex-start;
+     justify-content: flex-start;
+     align-self: stretch;
+    flex-shrink: 0;
+     position: relative;
+    }
+
+ .divider {
+    align-self: stretch;
+    flex-shrink: 0;
+     position: relative;
+     overflow: visible;
+    }
+
+ .divider2 {
+    align-self: stretch;
+    flex-shrink: 0;
+     position: relative;
+     overflow: visible;
+    }
+
+ .divider3 {
+    align-self: stretch;
+    flex-shrink: 0;
+     position: relative;
+     overflow: visible;
+    }
+
+ .divider4 {
+    align-self: stretch;
+    flex-shrink: 0;
+     position: relative;
+     overflow: visible;
+    }
+
+ .divider5 {
+    align-self: stretch;
+    flex-shrink: 0;
+     position: relative;
+     overflow: visible;
+    }
+
+ .x {
+    display: flex;
+     flex-direction: row;
+     align-items: center;
+     justify-content: space-between;
+     align-self: stretch;
+    flex-shrink: 0;
+     position: relative;
+    }
+
+
+
+ .chart-bar {
+    display: flex;
+     flex-direction: column;
+     gap: 52px;
+     align-items: flex-start;
+     justify-content: flex-start;
+     flex-shrink: 0;
+     position: absolute;
+     right: 71px;
+     left: 121px;
+    top: 272px;
+     transform: translate(0px, -248px);
+     overflow: visible;
+    }
+
+/** ROLES DE USUARIO **/
+
+/** GRÁFICAS **/
+
+.c3-legend-item-hidden {
+    opacity: 0.6;
+}
+
+
+/** ESTRELLAS **/
+
+.rating-star {
+    position: relative;
+    background: #fff;
+    padding: 25px 27px 35px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+}  
+
+.rating-star header{
+   margin-bottom: 20px;
+}
+
+.rating-star .stars {
+   display: flex;
+   gap: 25px;
+   }
+
+.stars i {
+   color: #e6e6e6;
+   font-size: 35px;
+   cursor: pointer;
+   
+}
+ 

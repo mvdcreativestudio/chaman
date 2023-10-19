@@ -78,11 +78,6 @@ class Index {
         //admin user permission
         if (auth()->user()->is_team) {
             if (auth()->user()->role->role_invoices >= 1) {
-    
-                if (auth()->user()->role->role_invoices_scope != 'global') {
-                    request()->merge(['filter_my_invoices' => auth()->user()->creatorid]);
-                }
-
                 return $next($request);
             }
         }
