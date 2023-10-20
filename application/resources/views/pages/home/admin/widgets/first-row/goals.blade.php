@@ -8,6 +8,7 @@
                     <div class="card-body p-l-15 p-r-15 pb-0">
                         <div class="d-flex p-10 no-block">
                             <span class="align-slef-center">
+                                @if($objective->objective_type == 'numeric')
                                 <h4 class="m-b-0">{{ $objective->name }}</h4>
                                 <p class="objective text-muted p-0 mb-1 mr-4">{{ $objective->description }}</p>
                                 <h4 class="m-b-0 mt-2">{{ $objective->progress }}%</h4>
@@ -21,7 +22,21 @@
                                     @else
                                     -
                                     @endif
-                                
+                                @else($objective->objective_type == 'alert')
+                                <h4 class="m-b-0">{{ $objective->name }}</h4>
+                                <p class="objective text-muted p-0 mb-1 mr-4">Límite: ${{ $objective->target_value }}</p>
+                                <h4 class="m-b-0 mt-2">{{ $objective->progress }}%</h4>
+                                <p class="objective-status m-0 p-0 m-b-0 m-t-5 text-wrap">Asignado a:
+                                    @if($objective->user_id != null && $objective->franchise_id != null)
+                                    {{ $objective->user->first_name }} {{ $objective->user->last_name }}  ({{ $objective->franchise->name }})
+                                    @elseif($objective->user_id != null)
+                                    {{ $objective->user->first_name }} {{ $objective->user->last_name }}
+                                    @elseif($objective->franchise_id != null)
+                                    {{ $objective->franchise->name }}
+                                    @else
+                                    -
+                                    @endif
+                                @endif
                                 </p>
                             </span>
                             <div class="align-self-start ml-auto">
@@ -33,6 +48,7 @@
                             </div>
                         </div>
                     </div>
+                    @if($objective->objective_type == 'numeric')
                     <div class="progress2">
                         <div class="progress-bar progress-bar-striped 
                             {{ $objective->progress < 25 ? 'bg-danger' : 
@@ -45,7 +61,22 @@
                             aria-valuemin="0" 
                             aria-valuemax="100">
                         </div>
-                    </div>                   
+                    </div>  
+                    @else
+                    <div class="progress2">
+                        <div class="progress-bar progress-bar-striped 
+                            {{ $objective->progress < 25 ? 'bg-success' : 
+                               ($objective->progress > 25 && $objective->progress <= 50 ? 'bg-info' : 
+                               ($objective->progress > 50 && $objective->progress <= 75 ? 'bg-warning' : 
+                               ($objective->progress > 75 ? 'bg-danger' : ''))) }}"
+                            role="progressbar" 
+                            style="width: {{ $objective->progress }}%" 
+                            aria-valuenow="{{ $objective->progress }}" 
+                            aria-valuemin="0" 
+                            aria-valuemax="100">
+                        </div>
+                    </div>     
+                    @endif    
                 </div>
             </div>
             @endforeach
@@ -53,12 +84,6 @@
     </div>
     <!-- Flecha -->
     <i class="ti-angle-double-right arrow"></i>
-</div>
-<div class="text-right">
-    <form method="post" action="{{ url('/update-progress-for-all-objectives') }}">
-        @csrf
-        <button class="btn btn-primary mt-0" type="submit">Recargar Progreso</button>
-    </form>
 </div>
 
 

@@ -24,5 +24,14 @@ class Objective extends Model
         return $this->hasMany(Lead::class);
     }
 
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
+    
 }

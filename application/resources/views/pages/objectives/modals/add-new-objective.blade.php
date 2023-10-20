@@ -26,19 +26,15 @@
                         <select class="form-control" id="module" name="module">
                             <option value="" selected disabled>Seleccione un módulo</option>
                             <option value="leads">Leads</option>
-                            <option value="invoices">Facturas</option>
-                            <option value="payments">Pagos</option>
+                            <option value="sales">Ventas</option>
                             <option value="clients">Clientes</option>
                             <option value="expenses">Gastos</option>
                         </select>
                     </div>
-
-                    <div class="form-group" id="leads_options_dropdown" style="display: none;">
-                        <label for="leads_option">Opción de Leads:</label>
-                        <select class="form-control" id="leads_option" name="leads_option">
-                            <option value="created">Leads Creados</option>
-                            <option value="converted">Leads Convertidos</option>
-                        </select>
+                    
+                    <div class="form-group" id="module_target_dropdown" style="display: none;">
+                        <label for="module_target">Opción:</label>
+                        <select class="form-control" id="module_target" name="module_target"></select>
                     </div>
                     
                     
@@ -176,50 +172,72 @@ function loadUsers() {
 
 </script>
 
+
 <script>
     $(document).ready(function() {
-        // Listener para el cambio en el desplegable "Módulo"
+
         $('#module').change(function() {
-            toggleLeadsOptions();
+            updateModuleTargetOptions();
+            setModuleTargetValue();
         });
 
-        // Listener para el cambio en el desplegable "Opción de Leads"
-        $('#leads_option').change(function() {
-            updateModuleTarget();
-        });
+        function updateModuleTargetOptions() {
+            const moduleValue = $('#module').val();
+            let options = '';
 
-        // Función para mostrar u ocultar las opciones de leads
-        function toggleLeadsOptions() {
-            if ($('#module').val() === "leads") {
-                $('#leads_options_dropdown').show();
-                updateModuleTarget(); // Llama a esta función al mostrar las opciones de leads
+            if (moduleValue === "leads") {
+                options = `
+                    <option value="leads_created">Leads Creados</option>
+                    <option value="leads_converted">Leads Convertidos</option>
+                `;
+            } else if (moduleValue === "sales") {
+                options = `
+                    <option value="sales_created">Ventas Creadas</option>
+                    <option value="sales_converted">Ventas Convertidas</option>
+                `;
+            } else if (moduleValue === "expenses") {
+                options = `
+                    <option value="reduce_expenses">Reducir Gastos</option>
+                `;
             } else {
-                $('#leads_options_dropdown').hide();
-                $('#module_target').val(null); // Establece el valor en null cuando no es "leads"
+                $('#module_target_dropdown').hide();
+                return;
             }
+
+            $('#module_target').html(options);
+            $('#module_target_dropdown').show();
         }
 
-        // Función para actualizar "module_target" según "leads_option"
-        function updateModuleTarget() {
-            if ($('#module').val() === "leads") {
-                if ($('#leads_option').val() === "created") {
-                    $('#module_target').val("leads_created");
-                } else if ($('#leads_option').val() === "converted") {
-                    $('#module_target').val("leads_converted");
+        function setModuleTargetValue() {
+            const moduleValue = $('#module').val();
+            const targetValue = $('#module_target').val();
+            
+            if (moduleValue === "leads") {
+                if (["leads_created", "leads_converted"].includes(targetValue)) {
+                    $('#module_target').val(targetValue);
+                } else {
+                    $('#module_target').val(null);
+                }
+            } else if (moduleValue === "sales") {
+                if (["sales_created", "sales_converted"].includes(targetValue)) {
+                    $('#module_target').val(targetValue);
+                } else {
+                    $('#module_target').val(null);
+                }
+            } else if (moduleValue === "expenses") {
+                if (["reduce_expenses"].includes(targetValue)) {
+                    $('#module_target').val(targetValue);
+                } else {
+                    $('#module_target').val(null);
                 }
             } else {
-                $('#module_target').val(null); // Establece el valor en null cuando no es "leads"
+                $('#module_target').val(null);
             }
-            
-            // Agregar un console.log para depuración
-            console.log("Valor de module_target:", $('#module_target').val());
         }
 
-        // Llama a la función de inicio
-        toggleLeadsOptions();
-        
     });
 </script>
+
 
 
 
