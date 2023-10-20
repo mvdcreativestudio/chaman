@@ -41,6 +41,7 @@
                         </select>
                     </div>
                     
+                    
 
                     <div class="form-group">
                         <label for="target_value">Valor Objetivo:</label>
@@ -176,13 +177,51 @@ function loadUsers() {
 </script>
 
 <script>
-    // Listener para el cambio en el desplegable "Módulo"
-    $('#module').change(function() {
-        if ($(this).val() === "leads") {
-            $('#leads_options_dropdown').show();
-        } else {
-            $('#leads_options_dropdown').hide();
-        }
-    });
+    $(document).ready(function() {
+        // Listener para el cambio en el desplegable "Módulo"
+        $('#module').change(function() {
+            toggleLeadsOptions();
+        });
 
+        // Listener para el cambio en el desplegable "Opción de Leads"
+        $('#leads_option').change(function() {
+            updateModuleTarget();
+        });
+
+        // Función para mostrar u ocultar las opciones de leads
+        function toggleLeadsOptions() {
+            if ($('#module').val() === "leads") {
+                $('#leads_options_dropdown').show();
+                updateModuleTarget(); // Llama a esta función al mostrar las opciones de leads
+            } else {
+                $('#leads_options_dropdown').hide();
+                $('#module_target').val(null); // Establece el valor en null cuando no es "leads"
+            }
+        }
+
+        // Función para actualizar "module_target" según "leads_option"
+        function updateModuleTarget() {
+            if ($('#module').val() === "leads") {
+                if ($('#leads_option').val() === "created") {
+                    $('#module_target').val("leads_created");
+                } else if ($('#leads_option').val() === "converted") {
+                    $('#module_target').val("leads_converted");
+                }
+            } else {
+                $('#module_target').val(null); // Establece el valor en null cuando no es "leads"
+            }
+            
+            // Agregar un console.log para depuración
+            console.log("Valor de module_target:", $('#module_target').val());
+        }
+
+        // Llama a la función de inicio
+        toggleLeadsOptions();
+        
+    });
 </script>
+
+
+
+
+
