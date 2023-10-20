@@ -186,7 +186,8 @@ class ExpenseRepository {
                 break;
             case 'common_role':
                 // No carga información adicional
-                $expenses->where('expense_creatorid', auth()->id());
+                $expenses->where('expenses.expense_creatorid', auth()->id())
+                         ->where('expenses.franchise_id', auth()->user()->franchise_id);
                 break;
         }
 

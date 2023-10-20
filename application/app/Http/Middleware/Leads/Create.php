@@ -51,7 +51,7 @@ class Create {
     private function fronteEnd() {
 
         //assigning a lead and setting its manager
-        if (auth()->user()->role->role_assign_leads == 'yes') {
+        if (request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role') {
             config(['visibility.lead_modal_assign_fields' => true]);
         } else {
             //assign only to current user and also make manager

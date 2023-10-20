@@ -34,6 +34,14 @@
             <span class="x-highlight">{{ $lead->lead_firstname }} {{ $lead->lead_lastname }}</span>
             @endif
         </div>
+        @if(request()->input('user_role_type') == 'admin_role')
+            <div class="x-element" id="card-lead-element-container-name">
+                <i class="ti-layout-grid2"></i> <span>{{ cleanLang(__('lang.franchise')) }}: </span>
+                <span class="x-highlight js-card-settings-button-static" data-container=".card-modal" id="card-lead-value" tabindex="0"
+                data-popover-content="card-lead-value-popover" data-value="{{ $lead->franchise->name }}"
+                data-title="{{ cleanLang(__('lang.franchise')) }}">{{ $lead->franchise->name }}</span>
+            </div>
+        @endif
         <!--value-->
         <div class="x-element"><i class="mdi mdi-cash-multiple"></i> <span>{{ cleanLang(__('lang.value')) }}: </span>
             @if($lead->permission_edit_lead)

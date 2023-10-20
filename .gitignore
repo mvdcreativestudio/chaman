@@ -6,3 +6,5 @@ application/storage/logs
 application/storage/framework
 application/storage/logs
 application/storage/framework
+storage/temp
+storage/avatars

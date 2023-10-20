@@ -153,4 +153,12 @@ class Lead extends Model {
         return $this->morphMany('App\Models\Reminder', 'reminderresource');
     }
 
+    /**
+     * Un lead pertenece a una franquicia.
+     */
+    public function franchise()
+    {
+        return $this->belongsTo('App\Models\Franchise', 'franchise_id', 'id');
+    }
+
 }
