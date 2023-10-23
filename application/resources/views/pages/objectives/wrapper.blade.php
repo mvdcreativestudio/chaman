@@ -54,8 +54,26 @@
                             <tr>
                                 <td>{{ $objective->id }}</td>
                                 <td>{{ $objective->name }}</td>
-                                <td>{{ $objective->module }}</td>
-                                <td>{{ $objective->target_value }}</td>
+                                <td>
+                                    @if($objective->module == 'leads')
+                                        Leads
+                                    @elseif($objective->module == 'sales')
+                                        Facturación
+                                    @elseif($objective->module == 'clients')
+                                        Clientes
+                                    @elseif($objective->module == 'expenses')
+                                        Gastos
+                                    @else 
+                                        -
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($objective->module_target == 'sales_created' || $objective->module_target == 'sales_converted' || $objective->module_target == 'reduce_expenses')
+                                    ${{ number_format($objective->target_value, 0, ',', '.') }}
+                                    @else
+                                        {{ $objective->target_value}}
+                                    @endif
+                                </td>
                                 <td>
                                     @if ($objective->user)
                                         {{ $objective->user->first_name . ' ' . $objective->user->last_name }}

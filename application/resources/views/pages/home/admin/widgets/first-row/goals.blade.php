@@ -3,7 +3,7 @@
         <div class="col-12 d-flex scrollable-container ">
             @foreach($payload['objectives'] as $objective)
             <!-- Tarjeta Dinámica -->
-            <div class="col-lg-3 col-md-6 click-url cursor-pointer" data-url="{{ url('invoices/search?ref=list&filter_bill_status[]=due') }}">
+            <div class="col-lg-3 col-md-6 click-url cursor-pointer" data-url="{{ _url('/objectives') }}">
                 <div class="card">
                     <div class="card-body p-l-15 p-r-15 pb-0">
                         <div class="d-flex p-10 no-block">
@@ -79,8 +79,10 @@
                     @endif    
                 </div>
             </div>
-            @endforeach
+            
+            @endforeach            
         </div>
+        
     </div>
     <!-- Flecha -->
     <i class="ti-angle-double-right arrow"></i>
@@ -90,7 +92,17 @@
 <div id="alert-container" class="alert-container"></div>
 
 
+<script>
+    let maxHeight = 0;
 
+$('.card').each(function() {
+   if ($(this).height() > maxHeight) { 
+      maxHeight = $(this).height(); 
+   }
+});
+
+$('.card').height(maxHeight);
+</script>
 
 
 {{-- <div class="col-12">

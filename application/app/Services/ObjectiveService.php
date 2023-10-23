@@ -59,9 +59,10 @@ class ObjectiveService {
             ->count();
 
         // Calcular el progreso
-        $progress = ($leadsInObjectiveRange / $objective->target_value) * 100;
+        $progress = round(($leadsInObjectiveRange / $objective->target_value) * 100);
 
-        return $progress;
+        return min($progress, 100);
+
     }
 
     private function calculateConvertedLeadsProgress(Objective $objective)
@@ -77,9 +78,10 @@ class ObjectiveService {
             ->count();
 
         // Calcular el progreso
-        $progress = ($leadsInObjectiveRange / $objective->target_value) * 100;
+        $progress = round(($leadsInObjectiveRange / $objective->target_value) * 100);
 
-        return $progress;
+        return min($progress, 100);
+
     }
 
 
@@ -98,9 +100,9 @@ class ObjectiveService {
             ->count();
 
         // Calcular el progreso
-        $progress = ($salesInObjectiveRange / $objective->target_value) * 100;
+        $progress = round(($salesInObjectiveRange / $objective->target_value) * 100);
 
-        return $progress;
+        return min($progress, 100);
     }
 
     private function calculateConvertedSalesProgress(Objective $objective)
@@ -116,9 +118,9 @@ class ObjectiveService {
             ->count();
 
         // Calcular el progreso
-        $progress = ($salesInObjectiveRange / $objective->target_value) * 100;
+        $progress = round(($salesInObjectiveRange / $objective->target_value) * 100);
 
-        return $progress;
+        return min($progress, 100);
     }
 
     // GASTOS
