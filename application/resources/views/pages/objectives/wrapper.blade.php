@@ -210,6 +210,7 @@ userCounts.forEach(link => link.addEventListener('click', showUsersModal));
 });
 </script>
 
+
 <script>
     $(document).ready(function() {
     // Listener para el clic en el botón de edición
@@ -236,3 +237,8 @@ userCounts.forEach(link => link.addEventListener('click', showUsersModal));
 });
 
 </script>
+
+
+
+
+

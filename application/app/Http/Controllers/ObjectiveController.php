@@ -104,6 +104,19 @@ class ObjectiveController extends Controller {
     }
 
 
+    public function show($id) {
+        $objective = $this->objectiveRepo->get($id);
+        if ($objective) {
+            $objectives = $this->objectiveRepo->getAll();
+            $page = array(
+                'heading' => "Objetivos",
+                'crumbs' => ['Objetivo']
+            );
+            return view('pages/objectives/modals/objective', ['objective' => $objective, 'page' => $page]);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Objective not found'], 404);
+        }
+    }
 
 
     
