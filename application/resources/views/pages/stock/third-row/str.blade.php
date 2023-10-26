@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-body">
             <div class="d-flex m-b-30 justify-content-between">
-                <h5 class="card-title m-b-0 align-self-center list-inline font-18 label label-info label-rounded">STR</h5>
+                <h5 class="card-title m-b-0 align-self-center pb-4">STR</h5>
                 <div class="align-self-center">
                     <select id="sucursal-select" class="form-control d-inline-block" style="width: auto;">
                         <option value="1">Hoy</option>

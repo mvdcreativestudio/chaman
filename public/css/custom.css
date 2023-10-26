@@ -2,6 +2,10 @@
     font-size: 13px;
 }
 
+/* .fix-header .top-navbar .navbar-top-right {
+   align-items: center;
+} */
+
 .label { 
     font-size: 100%;
     font-weight: 400;
@@ -634,7 +638,7 @@
    margin-top: 8px;
    color: #555;
 }
-=======
+
 
 /** Ratings**/
 

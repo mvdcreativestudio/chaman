@@ -8,7 +8,7 @@
 
 @include('pages.sales.third-row.wrapper')
 
-<div> <br> </div>
+
 
 @include('pages.sales.fourth-row.wrapper')
 
@@ -17,11 +17,6 @@
 @include('pages.sales.sixth-row.wrapper')
 
 </div>
-
-
-
-
-    
 
       
 <!--main content -->

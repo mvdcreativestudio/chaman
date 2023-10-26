@@ -1,6 +1,6 @@
-@extends('layout.wrapper')
+@extends('layout.wrapper') @section('content')
 
-@section('content')
+
     <!-- Action buttons modals -->
     @include('pages.objectives.modals.add-new-objective')
     <!-- Action buttons modals -->
@@ -123,11 +123,6 @@
 @endsection
 
 
-<style>
-    div#objectives-table-wrapper * {
-        font-size: 14px;
-    }
-</style>
 
 
 

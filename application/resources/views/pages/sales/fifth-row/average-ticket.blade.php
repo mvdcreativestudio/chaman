@@ -3,24 +3,6 @@
 
 
 <div class="col-lg-8  col-md-12 element-content">
-
-        <div class="card">
-            <div class="card-body">
-            <div class="d-flex m-b-30 justify-content-between">
-            <h5 class="card-title m-b-0 align-self-center list-inline font-18 label label-info label-rounded">Ticket Medio</h5>
-                <div class="align-self-center">
-                    <h6 class="card-title m-b-0 d-inline-block mr-2">Sucursal:</h6>
-                    <select id="sucursal-select" class="form-control d-inline-block" style="width: auto;">
-                        <option value="1">Sucursal 1</option>
-                        <option value="2">Sucursal 2</option>
-                        <option value="3">Sucursal 3</option>
-                        <option value="4">Sucursal 4</option>
-                        <option value="5">Sucursal 5</option>
-                    </select>
-                </div>
-            </div>
-                <div id="chart"></div>
-
     <div class="card">
         <div class="card-body">
             <div class="d-flex m-b-30">
@@ -34,7 +16,6 @@
         </div>
     </div>
 </div>
-
  <!-- Script para renderizar el gráfico -->
  <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -128,17 +128,6 @@
 @endsection
 
 <style>
-    #list-page-actions-container {
-        display: flex;
-    }
-    #list-page-actions-container .alert {
-        width: 97%;
-    }
-    #list-page-actions-container #list-page-actions {
-        width: 3%;
-        margin-left: auto;
-    }
-
     div#franchises-table-wrapper * {
         font-size: 14px;
     }
