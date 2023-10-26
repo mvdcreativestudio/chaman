@@ -1,6 +1,6 @@
 <div class="row">
 
-    <!--GMV GRAFICA-->
+    <!--NPS-->
     @include('pages.datacenter.fourth-row.nps')
 
 

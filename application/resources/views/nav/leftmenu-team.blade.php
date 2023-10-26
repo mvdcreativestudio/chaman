@@ -25,10 +25,8 @@
                 @endif
 
                 <!--datacenter[done]-->
-                @if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
-                config('visibility.modules.users')]))
-                <li data-modular-id="main_menu_team_clients"
-                    class="sidenav-menu-item {{ $page['mainmenu_customers'] ?? '' }}">
+                    <li data-modular-id="main_menu_team_contracts"
+                    class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}"">
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="ti-menu-alt"></i>
                         <span class="hide-menu">Datacenter
@@ -36,26 +34,26 @@
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         
-                        <li class="sidenav-submenu {{ $page['submenu_customers'] ?? '' }}" id="submenu_clients">
+                        <li class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}" id="submenu_contracts">
                             <a href="/datacenter"
                                 class="{{ $page['submenu_customers'] ?? '' }}">Inicio</a>
                         </li>
                         
                         
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
+                        <li class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}" id="submenu_contracts">
                             <a href="/sales"
                                 class="{{ $page['submenu_contacts'] ?? '' }}">Ventas</a>
                         </li>
 
                         
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
+                        <li class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}" id="submenu_contracts">
                             <a href="/stock"
                                 class="{{ $page['submenu_contacts'] ?? '' }}">Stock</a>
                         </li>
                         
                     </ul>
                 </li>
-                @endif
+                
                 <!--datacenter-->
 
 

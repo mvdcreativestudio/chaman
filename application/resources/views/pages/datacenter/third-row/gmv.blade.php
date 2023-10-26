@@ -5,10 +5,16 @@
 <div class="col-lg-4 col-md-12">
     <div class="card">
         <div class="card-body">
-            <div class="d-flex m-b-30 no-block">
-                <h5 class="card-title m-b-0 align-self-center list-inline font-12 label label-info label-rounded">GMV</h5>
-                <div class="ml-auto">
-                    {{ cleanLang(__('lang.this_year')) }}
+            <div class="d-flex m-b-30 justify-content-between">
+                <h5 class="card-title m-b-0 align-self-center list-inline font-18 label label-info label-rounded">GMV</h5>
+                <div class="align-self-center">
+                    <select id="sucursal-select" class="form-control d-inline-block" style="width: auto;">
+                        <option value="1">Hoy</option>
+                        <option value="2">Semanal</option>
+                        <option value="3">Mensual</option>
+                        <option value="4">Anual</option>
+                        <option value="5">Personalizado</option>
+                    </select>
                 </div>
             </div>
             <div id="chart1"></div>
