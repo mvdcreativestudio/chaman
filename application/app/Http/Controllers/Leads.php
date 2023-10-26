@@ -579,7 +579,6 @@ class Leads extends Controller {
          * ----------------------------------------------*/
         foreach ($assigned_users as $assigned_user_id) {
             if ($assigned_user = \App\Models\User::Where('id', $assigned_user_id)->first()) {
-
                 $data = [
                     'event_creatorid' => auth()->id(),
                     'event_item' => 'assigned',

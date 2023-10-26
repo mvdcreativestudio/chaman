@@ -108,14 +108,6 @@
                         href="#projects_ajaxtab" role="tab">{{ cleanLang(__('lang.expenses')) }}</a>
                     @endif
                     <!--[timesheets]-->
-                    @if(config('settings.project_permissions_view_timesheets'))
-                    <a class="dropdown-item   js-dynamic-url js-ajax-ux-request {{ $page['tabmenu_timesheets'] ?? '' }}"
-                        data-toggle="tab" data-loading-class="loading-tabs"
-                        data-loading-target="embed-content-container"
-                        data-dynamic-url="{{ _url('/projects') }}/{{ $project->project_id }}/timesheets"
-                        data-url="{{ url('/timesheets') }}?source=ext&timesheetresource_id={{ $project->project_id }}&timesheetresource_type=project"
-                        href="#projects_ajaxtab" role="tab">{{ cleanLang(__('lang.timesheets')) }}</a>
-                    @endif
                 </div>
             </li>
             @endif
@@ -137,12 +129,13 @@
 
                     <!--tickets-->
                     @if(config('settings.project_permissions_view_tickets'))
-                    <a class="dropdown-item tabs-menu-item   js-dynamic-url js-ajax-ux-request {{ $page['tabmenu_tickets'] ?? '' }}"
+                    <!--<a class="dropdown-item tabs-menu-item   js-dynamic-url js-ajax-ux-request {{ $page['tabmenu_tickets'] ?? '' }}"
                         id="tabs-menu-tickets" data-toggle="tab" data-loading-class="loading-tabs"
                         data-loading-target="embed-content-container"
                         data-dynamic-url="{{ _url('/projects') }}/{{ $project->project_id }}/tickets"
                         data-url="{{ url('/tickets') }}?source=ext&ticketresource_type=project&ticketresource_id={{ $project->project_id }}"
                         href="#projects_ajaxtab" role="tab">{{ cleanLang(__('lang.tickets')) }}</a>
+                    -->
                     @endif
 
                     <!--notes-->

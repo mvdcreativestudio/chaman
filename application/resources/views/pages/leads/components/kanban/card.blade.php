@@ -99,6 +99,15 @@
         <span class="wordwrap"><strong>{{ cleanLang(__('lang.telephone')) }}:</strong>
             {{ $lead->lead_phone ?? '---' }}</span>
         @endif
+        <!-- Franquicia (solo para admin_role) -->
+        @if(request()->input('user_role_type') == 'admin_role')
+        <span class="wordwrap"><strong>{{ cleanLang(__('lang.franchise')) }}:</strong>
+            {{ $lead->franchise->name ?? '---' }}</span>
+        @endif
+        
+        <span class="wordwrap"><strong>{{ cleanLang(__('lang.created_by')) }}:</strong>
+            {{ $lead->creator->first_name }} {{ $lead->creator->last_name }}</span>
+
         <!--date created-->
         @if(config('system.settings_leads_kanban_date_created') == 'show')
         <span><strong>{{ cleanLang(__('lang.created')) }}:</strong> {{ runtimeDate($lead->lead_created) }}</span>
