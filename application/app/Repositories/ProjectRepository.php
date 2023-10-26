@@ -305,6 +305,28 @@ class ProjectRepository {
 
         }
 
+        switch (request()->input('user_role_type')) {
+            case 'admin_role':
+                // Para admin_role, no hay restricciones adicionales
+                break;
+            case 'franchise_admin_role':
+                // Solo muestra proyectos de su franquicia
+                $projects->where('projects.franchise_id', auth()->user()->franchise_id);
+                break;
+            case 'common_role':
+                // Muestra proyectos que el usuario ha creado, le fueron asignados o es el project manager, todos dentro de la misma franquicia
+                $projects->where(function ($query) {
+                    $query->where('projects.project_creatorid', auth()->id())
+                        ->orWhereHas('assigned', function ($q) {
+                            $q->where('projects_assigned.projectsassigned_userid', auth()->id());
+                        })
+                        ->orWhereHas('managers', function ($q) {
+                            $q->where('projects_manager.projectsmanager_userid', auth()->id());
+                        });
+                })->where('projects.franchise_id', auth()->user()->franchise_id);
+                break;
+        }     
+
         //sorting
         if (in_array(request('sortorder'), array('desc', 'asc')) && request('orderby') != '') {
             //direct column name
@@ -395,6 +417,9 @@ class ProjectRepository {
         $project->clientperm_tasks_create = (request('clientperm_tasks_create') == 'on') ? 'yes' : 'no';
         $project->clientperm_timesheets_view = (request('clientperm_timesheets_view') == 'on') ? 'yes' : 'no';
         $project->assignedperm_tasks_collaborate = (request('assignedperm_tasks_collaborate') == 'on') ? 'yes' : 'no';
+
+        // Franquicia
+        $project->franchise_id = auth()->user()->franchise_id;
 
         //save and return id
         if ($project->save()) {

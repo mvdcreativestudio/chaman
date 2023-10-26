@@ -175,7 +175,8 @@ class PaymentRepository {
                 $payments->where('payments.franchise_id', auth()->user()->franchise_id)->with('creator');
                 break;
             case 'common_role':
-                $payments->where('payment_creatorid', auth()->id());
+                $payments->where('payments.payment_creatorid', auth()->id())
+                         ->where('payments.franchise_id', auth()->user()->franchise_id);
                 break;
         }
 

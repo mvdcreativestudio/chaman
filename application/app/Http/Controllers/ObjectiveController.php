@@ -104,154 +104,24 @@ class ObjectiveController extends Controller {
     }
 
 
-
-
-    // PROGRESO DE OBJETIVOS
-
-    private function calculateProgressForObjective(Objective $objective)
-    {
-        // Lógica específica para cada tipo de objetivo (leads, payments, invoices, clients)
-        switch ($objective->module) {
-            case 'leads':
-                switch ($objective->module_target) {
-                    case 'leads_created':
-                        return $this->calculateCreatedLeadsProgress($objective);
-                        break;
-                    case 'leads_converted':
-                        return $this->calculateConvertedLeadsProgress($objective);
-                        break;
-                    default:
-                        return 0; // Valor predeterminado para leads cuando no se conoce el module_target
-                }
-                break;
-            case 'clients':
-                switch ($objective->module_target) {
-                    case 'total_clients':
-                        return $this->calculateTotalClientsProgress($objective);
-                        break;
-                    case 'new_clients':
-                        return $this->calculateNewClientsProgress($objective);
-                        break;
-                }
-            default:
-                return 0; // Valor predeterminado para otros módulos, ajustar según sea necesario
-        }
-    }
-    
-
-    // LEADS
-
-    private function calculateCreatedLeadsProgress(Objective $objective)
-    {
-        // Lógica específica para calcular el progreso para objetivos de leads
-        $startDate = $objective->start_date;
-        $endDate = $objective->end_date;
-
-        // Obtener la cantidad de leads generados en el rango de fechas del objetivo
-        $leadsInObjectiveRange = DB::table('leads')
-            ->whereBetween('lead_created', [$startDate, $endDate])
-            ->count();
-
-        // Calcular el progreso
-        $progress = ($leadsInObjectiveRange / $objective->target_value) * 100;
-
-        return $progress;
-    }
-
-    private function calculateConvertedLeadsProgress(Objective $objective)
-    {
-        // Lógica específica para calcular el progreso para objetivos de leads convertidos
-        $startDate = $objective->start_date;
-        $endDate = $objective->end_date;
-
-        // Obtener la cantidad de leads convertidos en el rango de fechas del objetivo
-        $leadsInObjectiveRange = DB::table('leads')
-            ->whereBetween('lead_created', [$startDate, $endDate])
-            ->where('lead_status', 2)
-            ->count();
-
-        // Calcular el progreso
-        $progress = ($leadsInObjectiveRange / $objective->target_value) * 100;
-
-        return $progress;
-    }
-
-
-
-    // CLIENTES
-
-    private function calculateTotalClientsProgress(Objective $objective)
-    {
-        // Lógica específica para calcular el progreso para objetivos de clientes totales
-        $startDate = $objective->start_date;
-        $endDate = $objective->end_date;
-
-        // Obtener la cantidad de clientes creados en el rango de fechas del objetivo
-        $clientsInObjectiveRange = DB::table('clients')
-            ->whereBetween('client_created', [$startDate, $endDate])
-            ->count();
-
-        // Calcular el progreso
-        $progress = ($clientsInObjectiveRange / $objective->target_value) * 100;
-
-        return $progress;
-    }
-
-    private function calculateNewClientsProgress(Objective $objective)
-    {
-        // Lógica específica para calcular el progreso para objetivos de nuevos clientes
-        $startDate = $objective->start_date;
-        $endDate = $objective->end_date;
-
-        // Obtener la cantidad de clientes creados en el rango de fechas del objetivo
-        $clientsInObjectiveRange = DB::table('clients')
-            ->whereBetween('client_created', [$startDate, $endDate])
-            ->count();
-
-        // Calcular el progreso
-        $progress = ($clientsInObjectiveRange / $objective->target_value) * 100;
-
-        return $progress;
-    }
-
-
-
-
-    // CALCULAR MANUALMENTE EL PROGRESO CON BOTÓN
-
-    public function updateProgressForAllObjectives()
-    {
-        // Obtener todos los objetivos
-        $objectives = Objective::all();
-
-        foreach ($objectives as $objective) {
-            // Calcular el progreso
-            $progress = $this->calculateProgressForObjective($objective);
-
-            // Actualizar el progreso y estado del objetivo
-            $objective->progress = $progress;
-            $objective->status = $this->calculateStatusForObjective($objective);
-            $objective->save();
-        }
-
-        return new ReloadResponse(['status' => 'success', 'message' => 'Progress updated for all objectives']);
-    }
-
-    
-    // Lógica para determinar el estado del objetivo (active o inactive)
-
-
-    private function calculateStatusForObjective(Objective $objective)
-    {
-
-        $today = now();
-
-        if ($today >= $objective->start_date && $today <= $objective->end_date) {
-            return 'active';
+    public function show($id) {
+        $objective = $this->objectiveRepo->get($id);
+        if ($objective) {
+            $objectives = $this->objectiveRepo->getAll();
+            $page = array(
+                'heading' => "Objetivos",
+                'crumbs' => ['Objetivo']
+            );
+            return view('pages/objectives/modals/objective', ['objective' => $objective, 'page' => $page]);
         } else {
-            return 'inactive';
+            return response()->json(['status' => 'error', 'message' => 'Objective not found'], 404);
         }
     }
+
+    
+    
+
+
     
 }
     

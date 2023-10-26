@@ -26,19 +26,15 @@
                         <select class="form-control" id="module" name="module">
                             <option value="" selected disabled>Seleccione un módulo</option>
                             <option value="leads">Leads</option>
-                            <option value="invoices">Facturas</option>
-                            <option value="payments">Pagos</option>
+                            <option value="sales">Ventas</option>
                             <option value="clients">Clientes</option>
                             <option value="expenses">Gastos</option>
                         </select>
                     </div>
-
-                    <div class="form-group" id="leads_options_dropdown" style="display: none;">
-                        <label for="leads_option">Opción de Leads:</label>
-                        <select class="form-control" id="leads_option" name="leads_option">
-                            <option value="created">Leads Creados</option>
-                            <option value="converted">Leads Convertidos</option>
-                        </select>
+                    
+                    <div class="form-group" id="module_target_dropdown" style="display: none;">
+                        <label for="module_target">Opción:</label>
+                        <select class="form-control" id="module_target" name="module_target"></select>
                     </div>
                     
                     
@@ -79,7 +75,7 @@
 
                     <div class="form-group">
                         <label for="date_range">Selecciona el Rango de Fechas:</label>
-                        <input type="text" class="form-control datepicker" id="date_range" name="date_range" placeholder="Selecciona el rango de fechas" required>
+                        <input type="text" class="form-control datepicker" id="date_range" name="date_range" autocomplete="off" placeholder="Selecciona el rango de fechas" required>
                     </div>
                     
 
@@ -94,35 +90,33 @@
 </div>
 
 
-    <!-- Date Ranger Picker -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<!-- Date Ranger Picker -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#date_range').daterangepicker({
-                autoUpdateInput: false,
-                locale: {
-                    applyLabel: "Aplicar",  // Aquí está el cambio
-                    cancelLabel: 'Limpiar'
-                }
-            });
-
-            $('#date_range').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-            });
-
-            $('#date_range').on('cancel.daterangepicker', function(ev, picker) {
-                $(this).val('');
-            });
+<script>
+    $(document).ready(function() {
+        $('#date_range').daterangepicker({
+            autoUpdateInput: false,
+            autoApply: true,
+            drops: 'up',
+            locale: {
+                applyLabel: "Aplicar",  // Aquí está el cambio
+                cancelLabel: 'Limpiar'
+            }
         });
-    </script>
+        $('#date_range').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('m/d/Y') + ' - ' + picker.endDate.format('m/d/Y'));
+        });
+        $('#date_range').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+    });
+</script>
 
-    <!-- Fin Date Ranger Picker -->
-
-    <!-- Seleccionar Objetivo -->
+<!-- Fin Date Ranger Picker -->
+<!-- Seleccionar Objetivo -->
 
 <script>
     $(document).ready(function() {
@@ -176,50 +170,112 @@ function loadUsers() {
 
 </script>
 
+
 <script>
     $(document).ready(function() {
-        // Listener para el cambio en el desplegable "Módulo"
+
         $('#module').change(function() {
-            toggleLeadsOptions();
+            updateModuleTargetOptions();
+            setModuleTargetValue();
         });
 
-        // Listener para el cambio en el desplegable "Opción de Leads"
-        $('#leads_option').change(function() {
-            updateModuleTarget();
-        });
+        function updateModuleTargetOptions() {
+            const moduleValue = $('#module').val();
+            let options = '';
 
-        // Función para mostrar u ocultar las opciones de leads
-        function toggleLeadsOptions() {
-            if ($('#module').val() === "leads") {
-                $('#leads_options_dropdown').show();
-                updateModuleTarget(); // Llama a esta función al mostrar las opciones de leads
+            if (moduleValue === "leads") {
+                options = `
+                    <option value="leads_created">Leads Creados</option>
+                    <option value="leads_converted">Leads Convertidos</option>
+                `;
+            } else if (moduleValue === "sales") {
+                options = `
+                    <option value="sales_created">Ventas Creadas</option>
+                    <option value="sales_converted">Ventas Convertidas</option>
+                `;
+            } else if (moduleValue === "expenses") {
+                options = `
+                    <option value="reduce_expenses">Reducir Gastos</option>
+                `;
             } else {
-                $('#leads_options_dropdown').hide();
-                $('#module_target').val(null); // Establece el valor en null cuando no es "leads"
+                $('#module_target_dropdown').hide();
+                return;
             }
+
+            $('#module_target').html(options);
+            $('#module_target_dropdown').show();
         }
 
-        // Función para actualizar "module_target" según "leads_option"
-        function updateModuleTarget() {
-            if ($('#module').val() === "leads") {
-                if ($('#leads_option').val() === "created") {
-                    $('#module_target').val("leads_created");
-                } else if ($('#leads_option').val() === "converted") {
-                    $('#module_target').val("leads_converted");
+        function setModuleTargetValue() {
+            const moduleValue = $('#module').val();
+            const targetValue = $('#module_target').val();
+            
+            if (moduleValue === "leads") {
+                if (["leads_created", "leads_converted"].includes(targetValue)) {
+                    $('#module_target').val(targetValue);
+                } else {
+                    $('#module_target').val(null);
+                }
+            } else if (moduleValue === "sales") {
+                if (["sales_created", "sales_converted"].includes(targetValue)) {
+                    $('#module_target').val(targetValue);
+                } else {
+                    $('#module_target').val(null);
+                }
+            } else if (moduleValue === "expenses") {
+                if (["reduce_expenses"].includes(targetValue)) {
+                    $('#module_target').val(targetValue);
+                } else {
+                    $('#module_target').val(null);
                 }
             } else {
-                $('#module_target').val(null); // Establece el valor en null cuando no es "leads"
+                $('#module_target').val(null);
             }
-            
-            // Agregar un console.log para depuración
-            console.log("Valor de module_target:", $('#module_target').val());
         }
 
-        // Llama a la función de inicio
-        toggleLeadsOptions();
-        
     });
 </script>
+
+{{-- <script>
+    $(document).ready(function() {
+    
+    // Listener para el envío del formulario
+    $('#objectiveForm').on('submit', function(e) {
+        e.preventDefault(); // Evita el envío normal del formulario
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                // Suponiendo que tu respuesta tenga un campo 'status' para verificar si la operación fue exitosa
+                if (response.status === 'success') {
+                    NX.notification({
+                        message: 'Usuario agregado con éxito',
+                        type: 'success'
+                    });
+                } else {
+                    // Aquí puedes manejar otros tipos de respuestas, como errores
+                    NX.notification({
+                        message: 'Hubo un error al agregar el usuario',
+                        type: 'warning'
+                    });
+                }
+            },
+            error: function() {
+                // Este bloque se ejecutará si hay un error en la solicitud AJAX en sí (por ejemplo, problemas de red)
+                NX.notification({
+                    message: 'Error de conexión. Intente nuevamente.',
+                    type: 'warning'
+                });
+            }
+        });
+    });
+    
+});
+
+</script> --}}
+
 
 
 

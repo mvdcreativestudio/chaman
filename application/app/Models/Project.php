@@ -205,4 +205,8 @@ class Project extends Model {
         return $this->hasMany('App\Models\Ticket', 'ticket_projectid', 'project_id');
     }
 
+    public function franchise()
+    {
+        return $this->belongsTo(Franchise::class);
+    }
 }

@@ -16,6 +16,7 @@ use App\Repositories\ProjectRepository;
 use App\Repositories\StatsRepository;
 use App\Repositories\TaskRepository;
 use App\Repositories\ObjectiveRepository;
+use App\Services\ObjectiveService;
 
 class Home extends Controller {
 
@@ -28,6 +29,8 @@ class Home extends Controller {
     protected $taskrepo;
     protected $leadrepo;
     protected $objectiverepo;
+    protected $objectiveService;
+
 
     public function __construct(
         StatsRepository $statsrepo,
@@ -36,7 +39,8 @@ class Home extends Controller {
         ProjectRepository $projectrepo,
         TaskRepository $taskrepo,
         LeadRepository $leadrepo,
-        ObjectiveRepository $objectiverepo
+        ObjectiveRepository $objectiverepo,
+        ObjectiveService $objectiveService
     ) {
 
         //parent
@@ -49,6 +53,7 @@ class Home extends Controller {
         $this->taskrepo = $taskrepo;
         $this->leadrepo = $leadrepo;
         $this->objectiverepo = $objectiverepo;
+        $this->objectiveService = $objectiveService;
 
         //authenticated
         $this->middleware('auth');
@@ -396,6 +401,15 @@ class Home extends Controller {
             'end_date' => null,    // Deja la fecha de finalización como null para obtener todos los registros históricamente.
         ];
         
+        foreach ($payload['objectives'] as $objective) {
+            // Calcular el progreso
+            $progress = $this->objectiveService->calculateProgressForObjective($objective);
+    
+            // Actualizar el progreso y estado del objetivo
+            $objective->progress = $progress;
+            $objective->status = $this->objectiveService->calculateStatusForObjective($objective);
+            $objective->save();
+        }
 
 
         //return payload

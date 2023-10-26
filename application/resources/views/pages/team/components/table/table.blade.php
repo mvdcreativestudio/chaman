@@ -9,11 +9,11 @@
                                 id="sort_first_name" href="javascript:void(0)"
                                 data-url="{{ urlResource('/team?action=sort&orderby=first_name&sortorder=asc') }}">{{ cleanLang(__('lang.first_name')) }}<span
                                     class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a></th>
-                        <th class="team_col_position"><a class="js-ajax-ux-request js-list-sorting" id="sort_position"
+                        {{-- <th class="team_col_position"><a class="js-ajax-ux-request js-list-sorting" id="sort_position"
                                 href="javascript:void(0)"
                                 data-url="{{ urlResource('/team?action=sort&orderby=position&sortorder=asc') }}">{{ cleanLang(__('lang.position')) }}<span
                                     class="sorting-icons"><i class="ti-arrows-vertical"></i></span>
-                        </th>
+                        </th> --}}
                         @if(config('visibility.action_super_user'))
                         <th class="team_col_role"><a class="js-ajax-ux-request js-list-sorting" id="sort_role_id"
                                 href="javascript:void(0)"

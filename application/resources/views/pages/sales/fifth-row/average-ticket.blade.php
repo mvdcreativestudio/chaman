@@ -3,6 +3,7 @@
 
 
 <div class="col-lg-8  col-md-12 element-content">
+
         <div class="card">
             <div class="card-body">
             <div class="d-flex m-b-30 justify-content-between">
@@ -19,6 +20,21 @@
                 </div>
             </div>
                 <div id="chart"></div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex m-b-30">
+                <h5 class="card-title m-b-0 align-self-center">Ticket Medio</h5>
+                <div class="ml-auto align-self-center">
+                    
+                </div>
+            </div>
+            <div id="chart"></div>
+                            
+        </div>
+    </div>
+</div>
+
  <!-- Script para renderizar el gráfico -->
  <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -39,12 +55,21 @@
         // Configuración del gráfico
         var chartConfig = {
             bindto: '#chart', // ID del contenedor del gráfico
+            color: {
+                pattern: ['#006C9C', '#003768'] // Colores de las líneas del gráfico
+            },
+            bar: {
+                width: {
+                    ratio: 0.6 // Configura el ancho de las barras
+                }
+            },
             data: chartData,
             axis: {
                 x: {
-                    type: 'category' // Configura el eje x como una categoría
+                    type: 'category'
                 }
             }
+
             // Puedes personalizar más opciones según la documentación de C3: https://c3js.org/gettingstarted.html
         };
 
@@ -53,10 +78,7 @@
     });
 
  </script>
-                
-            </div>
-        </div>
-    </div>
+
 
 
     <!--[DYNAMIC INLINE SCRIPT] - Backend Variables to Javascript Variables-->
