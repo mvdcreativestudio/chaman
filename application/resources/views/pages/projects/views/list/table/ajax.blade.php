@@ -94,6 +94,14 @@
             title="@lang('lang.archived')"><i class="ti-archive"></i></span>
         @endif
     </td>
+    @if(request()->input('user_role_type') == 'admin_role')
+        <td class="projects_col_franchise">
+            {{ $project->franchise->name ?? '-' }}
+        </td>
+    @endif
+    @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role')
+        <td class="projects_col_user">{{ $project->creator->full_name }} ({{ $project->creator->email }})</td>
+    @endif
     @if(config('visibility.projects_col_actions'))
     <td class="projects_col_action actions_column">
         <!--action button-->
@@ -133,17 +141,17 @@
                 data-toggle="tooltip" title="{{ cleanLang(__('lang.actions_not_available')) }}"><i
                     class="sl-icon-note"></i></span>
             @endif
-            @if(auth()->user()->role->role_assign_projects == 'yes')
-            <button type="button" title="{{ cleanLang(__('lang.assigned_users')) }}"
-                class="btn btn-outline-warning btn-circle btn-sm edit-add-modal-button js-ajax-ux-request reset-target-modal-form data-toggle-action-tooltip"
-                data-toggle="modal" data-target="#commonModal"
-                data-url="{{ urlResource('/projects/'.$project->project_id.'/assigned') }}"
-                data-loading-target="commonModalBody" data-modal-title="{{ cleanLang(__('lang.assigned_users')) }}"
-                data-action-url="{{ urlResource('/projects/'.$project->project_id.'/assigned') }}"
-                data-action-method="PUT" data-modal-size="modal-sm" data-action-ajax-class="ajax-request"
-                data-action-ajax-class="" data-action-ajax-loading-target="projects-td-container">
-                <i class="sl-icon-people"></i>
-            </button>
+            @if(in_array(request()->input('user_role_type'), ['admin_role', 'franchise_admin_role']))
+                <button type="button" title="{{ cleanLang(__('lang.assigned_users')) }}"
+                    class="btn btn-outline-warning btn-circle btn-sm edit-add-modal-button js-ajax-ux-request reset-target-modal-form data-toggle-action-tooltip"
+                    data-toggle="modal" data-target="#commonModal"
+                    data-url="{{ urlResource('/projects/'.$project->project_id.'/assigned') }}"
+                    data-loading-target="commonModalBody" data-modal-title="{{ cleanLang(__('lang.assigned_users')) }}"
+                    data-action-url="{{ urlResource('/projects/'.$project->project_id.'/assigned') }}"
+                    data-action-method="PUT" data-modal-size="modal-sm" data-action-ajax-class="ajax-request"
+                    data-action-ajax-class="" data-action-ajax-loading-target="projects-td-container">
+                    <i class="sl-icon-people"></i>
+                </button>
             @endif
             @endif
             <!--view-->

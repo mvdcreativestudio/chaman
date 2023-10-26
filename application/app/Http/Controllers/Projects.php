@@ -1261,7 +1261,7 @@ class Projects extends Controller {
     public function assignedUsers($id) {
 
         //permission
-        if (auth()->user()->role->role_assign_projects != 'yes') {
+        if (!in_array(request()->input('user_role_type'), ['admin_role', 'franchise_admin_role'])) {
             abort(403);
         }
 

@@ -39,5 +39,9 @@ class Franchise extends Model
         return $this->hasMany('App\Models\Lead', 'franchise_id', 'id');
     }
     
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
 

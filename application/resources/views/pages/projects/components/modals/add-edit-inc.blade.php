@@ -268,7 +268,7 @@
 
 
             <!--assigned team members<>-->
-            @if(config('visibility.project_modal_assign_fields'))
+            @if(in_array(request('user_role_type'), ['admin_role', 'franchise_admin_role']))
             <div class="form-group row">
                 <label
                     class="col-sm-12 col-lg-3 text-left control-label col-form-label">{{ cleanLang(__('lang.assigned')) }}</label>
@@ -287,7 +287,16 @@
                         @endif
                         <!--/#array of assigned-->
                         <!--users list-->
-                        @foreach(config('system.team_members') as $user)
+                        @php 
+                            $users_to_show = config('system.team_members');
+                            
+                            if (request()->input('user_role_type') == 'franchise_admin_role') {
+                                $users_to_show = $users_to_show->filter(function ($user) {
+                                    return $user->franchise_id == auth()->user()->franchise_id;
+                                });
+                            }
+                        @endphp
+                        @foreach($users_to_show as $user)
                         <option value="{{ $user->id }}"
                             {{ runtimePreselectedInArray($user->id ?? '', $assigned ?? []) }}>{{
                             $user->full_name }}</option>
@@ -301,7 +310,7 @@
             <!--/#assigned team members-->
 
             <!--project manager<>-->
-            @if(config('visibility.project_modal_assign_fields'))
+            @if(in_array(request('user_role_type'), ['admin_role', 'franchise_admin_role']))
             <div class="form-group row">
                 <label
                     class="col-sm-12 col-lg-3 text-left control-label col-form-label">{{ cleanLang(__('lang.manager')) }}
@@ -318,7 +327,16 @@
                         @endif
                         <!--/#array of assigned-->
                         <!--users list-->
-                        @foreach(config('system.team_members') as $user)
+                        @php 
+                        $users_to_show = config('system.team_members');
+                        
+                        if (request()->input('user_role_type') == 'franchise_admin_role') {
+                            $users_to_show = $users_to_show->filter(function ($user) {
+                                return $user->franchise_id == auth()->user()->franchise_id;
+                            });
+                        }
+                        @endphp
+                        @foreach($users_to_show as $user)
                         <option></option>
                         <option value="{{ $user->id }}"
                             {{ runtimePreselectedInArray($user->id ?? '', $manager ?? []) }}>{{
