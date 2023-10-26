@@ -90,15 +90,7 @@ class ObjectiveRepository {
         $objective->name = $data['name'];
         $objective->description = $data['description'];
         $objective->module = $data['module'];
-        
-        // Obtener el valor de "leads_option" que seleccionó el usuario
-        $leadsOption = $data['leads_option'];
-        // Luego, asignar el valor de "module_target" en función de "leads_option"
-        if ($leadsOption === "created") {
-            $data['module_target'] = "leads_created";
-        } else if ($leadsOption === "converted") {
-            $data['module_target'] = "leads_converted";
-        }
+        $objective->module_target = $data['module_target'];
         $objective->target_value = $data['target_value'];
         $objective->user_id = $data['user_id'];
         $objective->franchise_id = $data['franchise_id'];

@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <form action="/franchise/create" method="post" id="franchiseForm">
-                    @csrf <!-- Token de seguridad para formularios en Laravel -->
+                    @csrf 
                     <div class="form-group row">
                         <label for="name" class="col-sm-12 col-lg-3 text-left control-label col-form-label">Nombre:</label>
                         <div class="col-sm-12 col-lg-9">

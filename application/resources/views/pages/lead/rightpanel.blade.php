@@ -10,6 +10,7 @@
         <span class="x-assigned-user x-assign-new js-card-settings-button-static card-lead-assigned text-info" data-container=".card-modal" 
             tabindex="0" data-popover-content="card-lead-team" data-title="{{ cleanLang(__('lang.assign_users')) }}"><i
                 class="mdi mdi-plus"></i></span>
+
     </div>
 
     <!----------settings----------->
@@ -133,7 +134,7 @@
         </div>
 
 
-        {{-- <!--Source-->
+        <!--Source-->
         <div class="x-element" id="card-lead-source"><i class="mdi mdi-magnify-plus"></i>
             <span>{{ cleanLang(__('lang.source')) }}:
             </span>
@@ -144,7 +145,7 @@
             @else
             <span class="x-highlight">{{ $lead->lead_source ?? '---' }}</span>
             @endif
-        </div> --}}
+        </div>
 
 
         <!--reminder-->
