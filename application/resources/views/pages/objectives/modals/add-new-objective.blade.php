@@ -75,7 +75,7 @@
 
                     <div class="form-group">
                         <label for="date_range">Selecciona el Rango de Fechas:</label>
-                        <input type="text" class="form-control datepicker" id="date_range" name="date_range" placeholder="Selecciona el rango de fechas" required>
+                        <input type="text" class="form-control datepicker" id="date_range" name="date_range" autocomplete="off" placeholder="Selecciona el rango de fechas" required>
                     </div>
                     
 
@@ -90,35 +90,33 @@
 </div>
 
 
-    <!-- Date Ranger Picker -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<!-- Date Ranger Picker -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#date_range').daterangepicker({
-                autoUpdateInput: false,
-                locale: {
-                    applyLabel: "Aplicar",  // Aquí está el cambio
-                    cancelLabel: 'Limpiar'
-                }
-            });
-
-            $('#date_range').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-            });
-
-            $('#date_range').on('cancel.daterangepicker', function(ev, picker) {
-                $(this).val('');
-            });
+<script>
+    $(document).ready(function() {
+        $('#date_range').daterangepicker({
+            autoUpdateInput: false,
+            autoApply: true,
+            drops: 'up',
+            locale: {
+                applyLabel: "Aplicar",  // Aquí está el cambio
+                cancelLabel: 'Limpiar'
+            }
         });
-    </script>
+        $('#date_range').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('m/d/Y') + ' - ' + picker.endDate.format('m/d/Y'));
+        });
+        $('#date_range').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+    });
+</script>
 
-    <!-- Fin Date Ranger Picker -->
-
-    <!-- Seleccionar Objetivo -->
+<!-- Fin Date Ranger Picker -->
+<!-- Seleccionar Objetivo -->
 
 <script>
     $(document).ready(function() {
@@ -237,6 +235,46 @@ function loadUsers() {
 
     });
 </script>
+
+{{-- <script>
+    $(document).ready(function() {
+    
+    // Listener para el envío del formulario
+    $('#objectiveForm').on('submit', function(e) {
+        e.preventDefault(); // Evita el envío normal del formulario
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                // Suponiendo que tu respuesta tenga un campo 'status' para verificar si la operación fue exitosa
+                if (response.status === 'success') {
+                    NX.notification({
+                        message: 'Usuario agregado con éxito',
+                        type: 'success'
+                    });
+                } else {
+                    // Aquí puedes manejar otros tipos de respuestas, como errores
+                    NX.notification({
+                        message: 'Hubo un error al agregar el usuario',
+                        type: 'warning'
+                    });
+                }
+            },
+            error: function() {
+                // Este bloque se ejecutará si hay un error en la solicitud AJAX en sí (por ejemplo, problemas de red)
+                NX.notification({
+                    message: 'Error de conexión. Intente nuevamente.',
+                    type: 'warning'
+                });
+            }
+        });
+    });
+    
+});
+
+</script> --}}
 
 
 

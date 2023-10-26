@@ -10,6 +10,7 @@ class DatacenterController extends Controller
     {
         // Puedes agregar lógica aquí si es necesario
         return view('pages.datacenter.datacenter');
+
     }
 }
 

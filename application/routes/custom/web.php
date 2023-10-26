@@ -52,3 +52,4 @@ Route::group(['prefix' => 'objective'], function () {
 Route::post('/update-progress-for-all-objectives', 'ObjectiveController@updateProgressForAllObjectives'); // Ruta para recargar objetivos hasta que esté el Cron
 Route::get('/objectives', 'ObjectiveController@index');
 Route::get('/objectives/{id}', 'ObjectiveController@show');
+Route::get('/objective/edit/{id}', 'ObjectiveController@showEditModal');
