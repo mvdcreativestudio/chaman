@@ -54,36 +54,33 @@ class LeadAssignedRepository {
     public function add($lead_id = '', $user_id = '') {
 
         $list = [];
-
+    
         //validations
         if (!is_numeric($lead_id)) {
             return $list;
         }
 
-        //add only to the specified user
-        if (is_numeric($user_id)) {
-            $assigned = new $this->assigned;
-            $assigned->leadsassigned_leadid = $lead_id;
-            $assigned->leadsassigned_userid = $user_id;
-            $assigned->save();
-            $list[] = $user_id;
-            //return array of users
-            return $list;
-        }
-
-        //add each user in the post request
-        if (request()->filled('assigned')) {
-            foreach (request('assigned') as $user) {
+        $user_role_type = request()->input('user_role_type');
+        if ($user_role_type == 'admin_role' || $user_role_type == 'franchise_admin_role') {
+            if (request()->filled('assigned')) {
+                foreach (request('assigned') as $user) {
+                    $assigned = new $this->assigned;
+                    $assigned->leadsassigned_leadid = $lead_id;
+                    $assigned->leadsassigned_userid = $user;
+                    $assigned->save();
+                    $list[] = $user;
+                }
+            }
+        } else {
+            if (is_numeric($user_id)) {
                 $assigned = new $this->assigned;
                 $assigned->leadsassigned_leadid = $lead_id;
-                $assigned->leadsassigned_userid = $user;
+                $assigned->leadsassigned_userid = $user_id;
                 $assigned->save();
-                $list[] = $user;
+                $list[] = $user_id;
             }
-            //return array of users
-            return $list;
         }
-
+    
         //return array of users
         return $list;
     }

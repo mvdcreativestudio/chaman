@@ -33,6 +33,15 @@ class Franchise extends Model
     {
         return $this->hasMany(\App\Models\Payment::class, 'franchise_id');
     }
+
+    public function leads()
+    {
+        return $this->hasMany('App\Models\Lead', 'franchise_id', 'id');
+    }
     
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
 

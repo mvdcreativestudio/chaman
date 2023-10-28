@@ -1,10 +1,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js"></script>
+
 <div class="col-lg-8 col-md-12 element-content">
     <div class="card">
         <div class="card-body">
             <div class="d-flex m-b-30 justify-content-between">
-            <h5 class="card-title m-b-0 align-self-center list-inline font-18 label label-info label-rounded">GMV</h5>
+
+                <h5 class="card-title m-b-0 align-self-center">GMV</h5>
+
                 <div class="align-self-center">
                     <h6 class="card-title m-b-0 d-inline-block mr-2">Sucursal:</h6>
                     <select id="sucursal-select" class="form-control d-inline-block" style="width: auto;">
@@ -20,6 +23,8 @@
         </div>
     </div>
 </div>
+
+
  <!-- Script para renderizar el gráfico -->
  <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -160,7 +160,7 @@ class SettingsRepository {
         $settings->settings_projects_clientperm_tasks_collaborate = (request('settings_projects_clientperm_tasks_collaborate') == 'on') ? 'yes' : 'no';
         $settings->settings_projects_clientperm_tasks_create = (request('settings_projects_clientperm_tasks_create') == 'on') ? 'yes' : 'no';
         $settings->settings_projects_clientperm_timesheets_view = (request('settings_projects_clientperm_timesheets_view') == 'on') ? 'yes' : 'no';
-        $settings->settings_projects_clientperm_assigned_view = (request('settings_projects_clientperm_assigned_view') == 'on') ? 'yes' : 'no';
+        $settings->settings_projects_clientperm_assigned_view = in_array(request('user_role_type'), ['admin_role', 'franchise_admin_role']) ? 'yes' : 'no';
         $settings->settings_projects_clientperm_expenses_view = (request('settings_projects_clientperm_expenses_view') == 'on') ? 'yes' : 'no';
 
         //save
@@ -184,7 +184,7 @@ class SettingsRepository {
         }
 
         //general
-        $settings->settings_projects_assignedperm_tasks_collaborate = (request('settings_projects_assignedperm_tasks_collaborate') == 'on') ? 'yes' : 'no';
+        $settings->settings_projects_assignedperm_tasks_collaborate = in_array(request('user_role_type'), ['admin_role', 'franchise_admin_role']) ? 'yes' : 'no';
         $settings->settings_projects_permissions_basis = (request('settings_projects_permissions_basis') == 'user_roles') ? 'user_roles' : 'category_based';
 
         //save
@@ -520,7 +520,7 @@ class SettingsRepository {
         }
 
         //update
-        $settings->settings_projects_assignedperm_milestone_manage = (request('settings_projects_assignedperm_milestone_manage') == 'on') ? 'yes' : 'no';
+        $settings->settings_projects_assignedperm_milestone_manage = in_array(request('user_role_type'), ['admin_role', 'franchise_admin_role']) ? 'yes' : 'no';
 
         //save
         if ($settings->save()) {

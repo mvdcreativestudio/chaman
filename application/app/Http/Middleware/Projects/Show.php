@@ -61,6 +61,28 @@ class Show {
             abort(404);
         }
 
+        switch (request()->input('user_role_type')) {
+            case 'common_role':
+                $hasAccess = $this->projectmodel::where('project_id', $project->project_id)
+                    ->where(function ($query) {
+                        $query->where('project_creatorid', auth()->id())
+                            ->orWhereHas('assigned', function ($q) {
+                                $q->where('projectsassigned_userid', auth()->id());
+                            })
+                            ->orWhereHas('managers', function ($q) {
+                                $q->where('projectsmanager_userid', auth()->id());
+                            });
+                    })->where('franchise_id', auth()->user()->franchise_id)
+                    ->exists();
+        
+                if (!$hasAccess) {
+                    Log::error("permission denied", ['process' => '[permissions][projects][show]', 'ref' => config('app.debug_ref'), 'function' => __function__, 'file' => basename(__FILE__), 'line' => __line__, 'path' => __file__, 'project id' => $project->project_id ?? '']);
+                    abort(403, 'Permission Denied.');
+                }
+                break;
+        }
+        
+
         //friendly format
         $projects = $this->projectrepo->search($project_id);
         $project = $projects->first();
@@ -92,18 +114,19 @@ class Show {
         //all users
         if ($this->projectpermissions->check('view', $project)) {
             config([
-                'settings.project_permissions_view_tasks' => $this->projectpermissions->check('tasks-view', $project),
-                'settings.project_permissions_view_milestones' => $this->projectpermissions->check('milestones-view', $project),
-                'settings.project_permissions_view_files' => $this->projectpermissions->check('files-view', $project),
-                'settings.project_permissions_view_comments' => $this->projectpermissions->check('comments-view', $project),
-                'settings.project_permissions_view_timesheets' => $this->projectpermissions->check('timesheets-view', $project),
-                'settings.project_permissions_view_invoices' => $this->projectpermissions->check('invoices-view', $project),
-                'settings.project_permissions_view_payments' => $this->projectpermissions->check('payments-view', $project),
-                'settings.project_permissions_view_expenses' => $this->projectpermissions->check('expenses-view', $project),
-                'settings.project_permissions_view_tickets' => $this->projectpermissions->check('tickets-view', $project),
-                'settings.project_permissions_view_notes' => $this->projectpermissions->check('notes-view', $project),
+                'settings.project_permissions_view_tasks' => true,
+                'settings.project_permissions_view_milestones' => true,
+                'settings.project_permissions_view_files' => true,
+                'settings.project_permissions_view_comments' => true,
+                'settings.project_permissions_view_timesheets' => true,
+                'settings.project_permissions_view_invoices' => true,
+                'settings.project_permissions_view_payments' => true,
+                'settings.project_permissions_view_expenses' => true,
+                'settings.project_permissions_view_tickets' => true,
+                'settings.project_permissions_view_notes' => true,
             ]);
         }
+        
 
         //team permissions
         if (auth()->user()->is_team) {

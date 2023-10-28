@@ -467,14 +467,14 @@
                                     {{ cleanLang(__('lang.update_my_profile')) }}</a>
                             </li>
 
-                            <!--my timesheets-->
+                            {{-- <!--my timesheets-->
                             @if(auth()->user()->is_team && auth()->user()->role->role_timesheets >= 1)
                             <li>
                                 <a href="{{ url('/timesheets/my') }}">
                                     <i class="ti-timer p-r-4"></i>
                                     {{ cleanLang(__('lang.my_time_sheets')) }}</a>
                             </li>
-                            @endif
+                            @endif --}}
 
                             @if(auth()->user()->is_client_owner)
                             <!--edit company profile-->
@@ -520,7 +520,7 @@
                                     {{ cleanLang(__('lang.notification_settings')) }}</a>
                             </li>
 
-                            <!--update theme-->
+                            {{-- <!--update theme-->
                             <li>
                                 <a href="javascript:void(0)" id="topnavUpdatePasswordButton"
                                     class="edit-add-modal-button js-ajax-ux-request reset-target-modal-form"
@@ -534,7 +534,7 @@
                                     data-action-ajax-loading-target="commonModalBody">
                                     <i class="ti-image p-r-4"></i>
                                     {{ cleanLang(__('lang.change_theme')) }}</a>
-                            </li>
+                            </li> --}}
 
                             <!--update password-->
                             <li>

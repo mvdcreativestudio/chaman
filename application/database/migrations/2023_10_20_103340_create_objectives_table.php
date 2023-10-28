@@ -17,7 +17,7 @@ class CreateObjectivesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable()->default('-');
-            $table->enum('module', ['leads', 'invoices', 'payments', 'clients', 'expenses']);
+            $table->enum('module', ['leads', 'sales', 'payments', 'clients', 'expenses']);
             $table->unsignedInteger('target_value');
             $table->integer('user_id')->nullable();
             $table->unsignedBigInteger('franchise_id')->nullable();

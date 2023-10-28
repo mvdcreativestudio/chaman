@@ -253,7 +253,7 @@ class InvoiceRepository {
         switch (request()->input('user_role_type')) {
             case 'admin_role':
                 // Para admin_role, incluye la info de usuario y franquicia
-                $invoices->with(['creator', 'franchise']);
+                $invoices->with(['creator']);
                 break;
             case 'franchise_admin_role':
                 // Carga la información del usuario
@@ -261,9 +261,10 @@ class InvoiceRepository {
                 break;
             case 'common_role':
                 // No carga información adicional
-                $invoices->where('bill_creatorid', auth()->id());
+                $invoices->where('invoices.bill_creatorid', auth()->id())
+                         ->where('invoices.franchise_id', auth()->user()->franchise_id);
                 break;
-        }
+        }  
 
         //sorting
         if (in_array(request('sortorder'), array('desc', 'asc')) && request('orderby') != '') {

@@ -165,21 +165,6 @@ class LeadRepository {
                 $leads->whereIn('lead_status', request('filter_lead_status'));
             }
 
-            //filter assigned
-            if (is_array(request('filter_assigned')) && !empty(array_filter(request('filter_assigned')))) {
-                $leads->whereHas('assigned', function ($query) {
-                    $query->whereIn('leadsassigned_userid', request('filter_assigned'));
-                });
-            }
-
-            //filter my leads (using the actions button)
-            if (request()->filled('filter_my_leads')) {
-                //leads assigned to me
-                $leads->whereHas('assigned', function ($query) {
-                    $query->whereIn('leadsassigned_userid', [auth()->id()]);
-                });
-            }
-
             //filter: tags
             if (is_array(request('filter_tags')) && !empty(array_filter(request('filter_tags')))) {
                 $leads->whereHas('tags', function ($query) {
@@ -235,6 +220,25 @@ class LeadRepository {
             });
 
         }
+
+        switch (request()->input('user_role_type')) {
+            case 'admin_role':
+                // Para admin_role, no hay restricciones adicionales
+                break;
+            case 'franchise_admin_role':
+                // Solo muestra leads de su franquicia
+                $leads->where('leads.franchise_id', auth()->user()->franchise_id);
+                break;
+            case 'common_role':
+                // Muestra leads que el usuario ha creado o que le fueron asignados, ambos dentro de la misma franquicia
+                $leads->where(function ($query) {
+                    $query->where('leads.lead_creatorid', auth()->id())
+                            ->orWhereHas('assigned', function ($q) {
+                                $q->where('leads_assigned.leadsassigned_userid', auth()->id());
+                            });
+                })->where('leads.franchise_id', auth()->user()->franchise_id);
+                break;
+        }       
 
         //sorting
         if (in_array(request('sortorder'), array('desc', 'asc')) && request('orderby') != '') {
@@ -316,6 +320,7 @@ class LeadRepository {
         $lead->lead_status = request('lead_status');
         $lead->lead_position = $position;
         $lead->lead_categoryid = request('lead_categoryid');
+        $lead->franchise_id = auth()->user()->franchise_id;
 
         //save and return id
         if ($lead->save()) {

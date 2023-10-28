@@ -5,8 +5,9 @@
 <div class="col-lg-4 col-md-12">
         <div class="card">
             <div class="card-body">
+
             <div class="d-flex m-b-30 justify-content-between">
-                <h5 class="card-title m-b-0 align-self-center list-inline font-18 label label-info label-rounded">Carritos Abandonados</h5>
+                <h5 class="card-title m-b-0 align-self-center">Carritos Abandonados</h5>
                 <div class="align-self-center">
                     <select id="sucursal-select" class="form-control d-inline-block" style="width: auto;">
                         <option value="1">Anual</option>
@@ -17,8 +18,8 @@
                     </select>
                 </div>
             </div>
-                </div>
-                <div id="chart-carrito-abandonado"></div>
+
+            <div id="chart-carrito-abandonado"></div>
  <!-- Script para renderizar el gráfico -->
  <script>
     document.addEventListener('DOMContentLoaded', function () {

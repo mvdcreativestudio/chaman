@@ -63,6 +63,12 @@
                                 data-url="{{ urlResource('/expenses?action=sort&orderby=expense_billing_status&sortorder=asc') }}">{{ cleanLang(__('lang.status')) }}<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
                         </th>
                         @endif
+                        @if(request()->input('user_role_type') == 'admin_role')
+                            <th class="invoices_col_franchise">Franquicia</th>
+                        @endif
+                        @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role')
+                            <th class="invoices_col_user">Usuario</th>
+                        @endif
                         @if(config('visibility.expenses_col_action'))
                         <th class="expenses_col_action"><a href="javascript:void(0)">{{ cleanLang(__('lang.action')) }}</a></th>
                         @endif
