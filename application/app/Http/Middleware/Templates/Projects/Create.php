@@ -28,7 +28,7 @@ class Create {
         $this->fronteEnd();
 
         //permission: does user have permission create projects
-        if (auth()->user()->role->role_templates_projects >= 2) {
+        if (request('user_role_type') == 'franchise_admin_role' || request('user_role_type') == 'admin_role' || request('user_role_type') == 'common_role') {
             return $next($request);
         }
 

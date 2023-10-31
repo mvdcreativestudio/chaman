@@ -58,14 +58,12 @@ class Index {
         ]);
 
         //permissions -adding
-        if (auth()->user()->role->role_templates_projects >= 2) {
-            config([
-                //visibility
-                'visibility.list_page_actions_add_button' => true,
-                'visibility.action_buttons_edit' => true,
-                'visibility.projects_col_checkboxes' => true,
-            ]);
-        }
+        config([
+            //visibility
+            'visibility.list_page_actions_add_button' => true,
+            'visibility.action_buttons_edit' => true,
+            'visibility.projects_col_checkboxes' => true,
+        ]);
 
         //permissions -deleting
         if (auth()->user()->role->role_templates_projects >= 3) {

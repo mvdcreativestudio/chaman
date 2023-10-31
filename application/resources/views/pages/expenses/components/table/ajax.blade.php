@@ -85,7 +85,11 @@
         </td>
     @endif
     @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role')
-        <td class="invoices_col_user">{{ $expense->creator->first_name }} {{ $expense->creator->last_name }} ({{ $expense->creator->email }})</td>
+        <td class="invoices_col_user">
+            <img src="{{ getUsersAvatar($expense->avatar_directory, $expense->avatar_filename) }}" alt="user"
+            class="img-circle avatar-xsmall">
+            {{ $expense->creator->full_name ?? '---' }} ({{ $expense->creator->email }})
+        </td>
     @endif
     @if(config('visibility.expenses_col_action'))
     <td class="expenses_col_action actions_column" id="expenses_col_action_{{ $expense->expense_id }}">

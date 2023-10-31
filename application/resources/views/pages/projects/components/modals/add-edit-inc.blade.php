@@ -418,10 +418,6 @@
         </div>
 
         <div class="hidden" id="edit_project_setings">
-
-
-
-
             <!--PROJECT BILLING-->
             @if(auth()->user()->role->role_projects_billing == 2)
             <!--project options-->
