@@ -25,9 +25,33 @@ class ObjectiveRepository {
      * Obtengo todos los Objetivos de la base de datos
      * @return Collection
      */
-    public function getAll() {
-        return $this->objectives->get();
-    }
+    /**
+     * Obtengo todos los Objetivos de la base de datos
+     * @return Collection
+     */
+
+     public function getAll() {
+        // Initialize the query
+        $objectives = $this->objectives->newQuery();
+    
+        switch (request()->input('user_role_type')) {
+            case 'admin_role':
+                break;
+            case 'franchise_admin_role':
+                //Solo muestra objetivos de su franquicia
+                $objectives->where('objectives.franchise_id', auth()->user()->franchise_id);
+                break;
+            case 'common_role':
+                // Solo muestra objetivos del usuario
+                $objectives->where('objectives.user_id', auth()->id());
+                break;
+
+        }
+
+        return $objectives->get();
+     }
+    
+
 
     /**
      * Obtener objetivos activos primero y luego inactivos para dashboard
@@ -97,8 +121,8 @@ class ObjectiveRepository {
     
         // Descomponemos el rango de fechas en fechas individuales
         $date_range = explode(' - ', $data['date_range']);
-        $objective->start_date = Carbon::createFromFormat('m/d/Y', $date_range[0]);
-        $objective->end_date = Carbon::createFromFormat('m/d/Y', $date_range[1]);
+        $objective->start_date = Carbon::createFromFormat('Y-m-d', $date_range[0]);
+        $objective->end_date = Carbon::createFromFormat('Y-m-d', $date_range[1]);
     
         // Calcula el estado (active o inactive) en función de la fecha actual
         $today = now();
