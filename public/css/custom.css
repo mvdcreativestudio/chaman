@@ -684,3 +684,8 @@
    }
 
 
+ /** MODALES **/ 
+
+   .modal-dialog {
+    max-width: 900px;
+}

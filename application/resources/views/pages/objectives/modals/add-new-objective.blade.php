@@ -107,7 +107,7 @@
             }
         });
         $('#date_range').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('m/d/Y') + ' - ' + picker.endDate.format('m/d/Y'));
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
         });
         $('#date_range').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');

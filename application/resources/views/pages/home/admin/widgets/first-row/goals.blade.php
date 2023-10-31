@@ -43,7 +43,7 @@
                                 @if($objective->status == 'active')
                                     <p class="objective-status text-success">Activo</p>
                                 @elseif($objective->status == 'inactive')
-                                    <p class="objective-status text-warning">Vencido</p>
+                                    <p class="objective-status text-warning">Inactivo</p>
                                 @endif                               
                             </div>
                         </div>
