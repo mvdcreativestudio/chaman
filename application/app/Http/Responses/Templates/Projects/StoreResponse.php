@@ -34,7 +34,7 @@ class StoreResponse implements Responsable {
         //redirect to project page
         if (request('show_after_adding') == 'on') {
 
-            $jsondata['redirect_url'] = url("templates/projects/$id");
+            $jsondata['redirect_url'] = url("templates/projects/");
 
         } else {
 

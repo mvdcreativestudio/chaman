@@ -105,16 +105,29 @@ class ObjectiveController extends Controller {
 
 
     public function show($id) {
-        $objective = $this->objectiveRepo->get($id);
-        if ($objective) {
-            $objectives = $this->objectiveRepo->getAll();
-            $page = array(
-                'heading' => "Objetivos",
-                'crumbs' => ['Objetivo']
-            );
-            return view('pages/objectives/modals/objective', ['objective' => $objective, 'page' => $page]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Objective not found'], 404);
+        $objective = \App\Models\Objective::find($id);
+
+         // Si el objective no existe
+         if (!$objective) {
+            abort(403, 'Permiso denegado');
+        }
+
+        switch (request()->input('user_role_type')) {
+            case 'admin_role':
+                // Para admin_role, incluye la info de usuario y franquicia
+                break;
+            case 'franchise_admin_role':
+                // Carga la información del usuario
+                if ($objective->franchise_id != auth()->user()->franchise_id) {
+                    abort(403, 'Permission Denied');
+                }            
+                break;
+            case 'common_role':
+                // No carga información adicional
+                if ($objective->bill_creatorid != auth()->user()->id) {
+                    abort(403, 'Permission Denied');
+                }
+                break;
         }
     }
 

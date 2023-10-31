@@ -516,6 +516,8 @@ class ProjectRepository {
         $project->clientperm_expenses_view = (request('clientperm_expenses_view') == 'on') ? 'yes' : 'no';
         $project->assignedperm_tasks_collaborate = (request('assignedperm_tasks_collaborate') == 'on') ? 'yes' : 'no';
 
+        $project->franchise_id = auth()->user()->franchise_id;
+
         //save and return id
         if ($project->save()) {
             //apply custom fields data
