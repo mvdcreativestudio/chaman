@@ -588,6 +588,7 @@
 /** ESTRELLAS **/
 
 .rating-star {
+    width: 1642px;
     position: relative;
     background: #fff;
     padding: 25px 27px 35px;
@@ -613,7 +614,7 @@
 /** COMENTARIOS ESTRELLAS **/
 
 .comment-box {
-   width: 1642px;
+   width: auto;
    margin: 20px auto;
    background-color: #fff;
    padding: 15px;
