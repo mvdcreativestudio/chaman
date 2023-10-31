@@ -184,6 +184,7 @@ class ProjectPermissions {
             if (auth()->user()->role_id == 1) {
                 return true;
             }
+            
             //project templates
             if ($project->project_type == 'template' && auth()->user()->role->role_templates_projects >= 2) {
                 return true;
@@ -560,10 +561,11 @@ class ProjectPermissions {
                     return true;
                 }
                 //assigned
-                if ($assigned_users->contains(auth()->id()) && auth()->user()->role->role_tasks > 1) {
+                if ($project->project_creatorid == auth()->id()) {
                     return true;
                 }
             }
+
             //client on project that is enabled to add tasks
             if (auth()->user()->is_client) {
                 if ($project->client->client_id == auth()->user()->clientid && $project->clientperm_tasks_create == 'yes') {
@@ -607,24 +609,23 @@ class ProjectPermissions {
 
             //team
             if (auth()->user()->is_team) {
-                if (auth()->user()->role->role_tasks >= 1) {
-                    //global
-                    if (auth()->user()->role->role_tasks_scope == 'global') {
-                        return true;
-                    }
-                    //managers
-                    if ($project_managers->contains(auth()->id())) {
-                        return true;
-                    }
-                    //assigned
-                    if ($assigned_users->contains(auth()->id())) {
-                        return true;
-                    }
-                    //creator
-                    if ($project->project_creatorid == auth()->id()) {
-                        return true;
-                    }
+                //global
+                if (auth()->user()->role->role_tasks_scope == 'global') {
+                    return true;
                 }
+                //managers
+                if ($project_managers->contains(auth()->id())) {
+                    return true;
+                }
+                //assigned
+                if ($assigned_users->contains(auth()->id())) {
+                    return true;
+                }
+                //creator
+                if ($project->project_creatorid == auth()->id()) {
+                    return true;
+                }
+                
             }
 
             //client user with permission to view project milestones (on own projects)

@@ -15,8 +15,15 @@
                             id="sort_category" href="javascript:void(0)"
                             data-url="{{ urlResource('/templates/projects?action=sort&orderby=category&sortorder=asc') }}">{{ cleanLang(__('lang.category')) }}</a>
                     </th>
+                        @if (request('user_role_type') == 'admin_role' || request('user_role_type') == 'franchise_admin_role')
                         <th class="projects_col_createby"><a
                                 href="javascript:void(0)">{{ cleanLang(__('lang.created_by')) }}</a></th>
+                        @endif
+                        @if (request('user_role_type') == 'admin_role')
+                        <th class="projects_col_franchise">
+                            {{ cleanLang(__('lang.franchise')) }}</th>
+                        </th>
+                        @endif
                         <th class="projects_col_action w-px-99"><a
                                 href="javascript:void(0)">{{ cleanLang(__('lang.action')) }}</a></th>
                     </tr>
