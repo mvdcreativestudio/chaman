@@ -11,6 +11,10 @@
             <!-- Page Title & Bread Crumbs -->
             @include('misc.heading-crumbs')
             <!-- Page Title & Bread Crumbs -->
+
+            <!-- action buttons -->
+            @include('pages.objectives.misc.list-page-actions')
+             <!-- action buttons -->
         </div>
 
         <div class="text-right {{ $page['list_page_actions_size'] ?? '' }} {{ $page['list_page_container_class'] ?? '' }}" id="list-page-actions-container">
@@ -22,12 +26,7 @@
                 <!-- Success message -->
             @endif
 
-            <div id="list-page-actions">
-                <!-- Add new objective button -->
-                <button type="button" class="btn btn-danger btn-add-circle edit-add-modal-button js-ajax-ux-request {{ $page['add_button_classes'] ?? '' }}" data-toggle="modal" data-target="#objectiveModal">
-                    <i class="ti-plus"></i>
-                </button>
-            </div>
+        
         </div>
 
         <div class="mt-5">
