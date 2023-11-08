@@ -150,7 +150,7 @@ class ObjectiveService {
     public function calculateStatusForObjective(Objective $objective)
     {
 
-        $today = now();
+        $today = today();
 
         if ($today >= $objective->start_date && $today <= $objective->end_date) {
             return 'active';

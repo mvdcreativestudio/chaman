@@ -38,6 +38,11 @@
                                     @endif
                                 @endif
                                 </p>
+                                <p class="objective-status mt-1 mb-0">
+                                    {{ \Carbon\Carbon::parse($objective->start_date)->format('d/m/y') }}
+                                    al
+                                    {{ \Carbon\Carbon::parse($objective->end_date)->format('d/m/y') }}
+                                </p>
                             </span>
                             <div class="align-self-start ml-auto">
                                 @if($objective->status == 'active')

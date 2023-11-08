@@ -690,3 +690,9 @@
    .modal-dialog {
     max-width: 900px;
 }
+
+/** FORM CONTROLS **/
+
+.form-control {
+   border-color: gray;
+}

@@ -1,4 +1,4 @@
-    <!----------Assigned----------->
+    {{-- <!----------Assigned----------->
     <div class="x-section">
         <div class="x-title">
             <h6>{{ cleanLang(__('lang.assigned_users')) }}</h6>
@@ -11,7 +11,7 @@
             tabindex="0" data-popover-content="card-lead-team" data-title="{{ cleanLang(__('lang.assign_users')) }}"><i
                 class="mdi mdi-plus"></i></span>
 
-    </div>
+    </div> --}}
 
     <!----------settings----------->
     <div class="x-section">
@@ -36,12 +36,12 @@
             @endif
         </div>
         @if(request()->input('user_role_type') == 'admin_role')
-            <div class="x-element" id="card-lead-element-container-name">
-                <i class="ti-layout-grid2"></i> <span>{{ cleanLang(__('lang.franchise')) }}: </span>
-                <span class="x-highlight js-card-settings-button-static" data-container=".card-modal" id="card-lead-value" tabindex="0"
-                data-popover-content="card-lead-value-popover" data-value="{{ $lead->franchise->name }}"
-                data-title="{{ cleanLang(__('lang.franchise')) }}">{{ $lead->franchise->name }}</span>
-            </div>
+        <div class="x-element" id="card-lead-element-container-franchise">
+            <i class="ti-layout-grid2"></i> <span>{{ cleanLang(__('lang.franchise')) }}: </span>
+            <span class="x-highlight js-card-settings-button-static" data-container=".card-modal" id="card-lead-franchise-name" tabindex="0"
+            data-popover-content="card-lead-franchise-name-popover" data-value="{{ $lead->franchise->name }}"
+            data-title="{{ cleanLang(__('lang.franchise')) }}">{{ $lead->franchise->name }}</span>
+        </div>
         @endif
         <!--value-->
         <div class="x-element"><i class="mdi mdi-cash-multiple"></i> <span>{{ cleanLang(__('lang.value')) }}: </span>
@@ -293,6 +293,7 @@
         </div>
     </div>
 
+
     <!--lead - value -->
     <div class="hidden" id="card-lead-value-popover">
         <div class="form-group row m-b-10">
@@ -421,7 +422,7 @@
         @endif
     </div>
 
-
+{{-- 
     <!--assign user-->
     <div class="hidden" id="card-lead-team">
         <div class="card-assigned-popover-content">
@@ -445,4 +446,4 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> --}}

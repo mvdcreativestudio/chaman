@@ -14,7 +14,49 @@
             <div class="r-panel-body">
 
 
-                <!--assigned-->
+                <!--creator (santix)-->
+                <div class="filter-block">
+                    <div class="title">
+                        Creado Por
+                    </div>
+                    <div class="fields">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Asegúrate de que la lista de usuarios (creadores) esté disponible para la vista -->
+                                <select name="filter_creator" id="filter_creator" class="form-control form-control-sm select2-basic select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true">
+                                    @foreach(config('system.team_members') as $user)
+                                    <option value="{{ $user->id }}">{{ $user->full_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!--nombre del cliente-->
+                <div class="filter-block">
+                    <div class="title">
+                        Cliente
+                    </div>
+                    <div class="fields">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Asegúrate de que la lista de usuarios (creadores) esté disponible para la vista -->
+                                <select name="filter_creator" id="filter_creator" class="form-control form-control-sm select2-basic select2-multiselect2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true">
+                                    @foreach(config('system.team_members') as $user)
+                                    <option value="{{ $user->id }}">{{ $user->full_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                {{-- <!--assigned-->
                 @if(config('visibility.filter_panel_assigned'))
                 <div class="filter-block">
                     <div class="title">
@@ -35,7 +77,7 @@
                     </div>
                 </div>
                 @endif
-                <!--assigned-->
+                <!--assigned--> --}}
 
                 <!--lead status-->
                 <div class="filter-block">
@@ -70,13 +112,13 @@
                             <div class="col-md-6">
                                 <input type="text" name="filter_lead_created_start"
                                     class="form-control form-control-sm pickadate" autocomplete="off"
-                                    placeholder="Start">
+                                    placeholder="Inicio">
                                 <input class="mysql-date" type="hidden" id="filter_lead_created_start"
                                     name="filter_lead_created_start" value="">
                             </div>
                             <div class="col-md-6">
                                 <input type="text" name="filter_lead_created_end"
-                                    class="form-control form-control-sm pickadate" placeholder="End">
+                                    class="form-control form-control-sm pickadate" placeholder="Fin">
                                 <input class="mysql-date" type="hidden" id="filter_lead_created_end"
                                     name="filter_lead_created_end" value="">
                             </div>
@@ -95,13 +137,13 @@
                             <div class="col-md-6">
                                 <input type="text" name="filter_lead_last_contacted_start"
                                     class="form-control form-control-sm pickadate" autocomplete="off"
-                                    placeholder="Start">
+                                    placeholder="Inicio">
                                 <input class="mysql-date" type="hidden" id="filter_lead_last_contacted_start"
                                     name="filter_lead_last_contacted_start" value="">
                             </div>
                             <div class="col-md-6">
                                 <input type="text" name="filter_lead_last_contacted_end"
-                                    class="form-control form-control-sm pickadate" autocomplete="off" placeholder="End">
+                                    class="form-control form-control-sm pickadate" autocomplete="off" placeholder="Fin">
                                 <input class="mysql-date" type="hidden" id="filter_lead_last_contacted_end"
                                     name="filter_lead_last_contacted_end" value="">
                             </div>
