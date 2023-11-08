@@ -43,7 +43,7 @@
                         
                         
                         <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}" id="submenu_contracts">
-                            <a href="/ventas"
+                            <a href="/sales"
                                 class="{{ $page['submenu_contracts'] ?? '' }}">Ventas</a>
                         </li>
 

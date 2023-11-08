@@ -50,8 +50,8 @@
                                     @foreach($objectives as $objective)
                                         <!-- Objective row -->
                                         <tr>
-                                            <td>{{ $objective->id }}</td>
-                                            <td>{{ $objective->name }}</td>
+                                            <td>{{ $objective->id }}</td>                                            
+                                            <td><a href="/objective-detail">{{ $objective->name }}</a></td>
                                             <td>
                                                 <!-- Module type -->
                                                 @if($objective->module == 'leads') Leads

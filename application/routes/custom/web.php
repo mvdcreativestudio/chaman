@@ -46,6 +46,7 @@ Route::group(['prefix' => 'objective'], function () {
     Route::post("/update/{id}", "ObjectiveController@update"); // Para actualizar un objetivo por ID
     Route::get("/remove-objective/{id}", "Team@removeObjectiveAssociation"); // Remueve la asosiacion de un Team Member con un objetivo
     Route::get("/destroy/{id}", "ObjectiveController@destroy"); // Para eliminar un objetivo por ID
+    
 
 });
 
@@ -53,3 +54,14 @@ Route::post('/update-progress-for-all-objectives', 'ObjectiveController@updatePr
 Route::get('/objectives', 'ObjectiveController@index');
 Route::get('/objectives/{id}', 'ObjectiveController@show');
 Route::get('/objective/edit/{id}', 'ObjectiveController@showEditModal');
+
+//SUMERIA - Detalles Objetivos - Provisorio
+
+use App\Http\Controllers\ObjectiveDetailController;
+
+Route::get('/objective-detail', [ObjectiveDetailController::class, 'show'])->name('objective-detail');
+
+
+
+
+
