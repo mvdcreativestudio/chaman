@@ -1,12 +1,16 @@
 @extends('layout.wrapper') @section('content')
 <!-- main content -->
-<div id="js-trigger-home-admin-wrapper">
+<div class="container-fluid">
 
-@include('pages.stock.first-row.wrapper')
+     <div id="js-trigger-home-admin-wrapper">
 
-@include('pages.stock.second-row.wrapper')
+     @include('pages.stock.first-row.wrapper')
 
-@include('pages.stock.third-row.wrapper')
+     @include('pages.stock.second-row.wrapper')
+
+     @include('pages.stock.third-row.wrapper')
+
+    </div>
 
 </div>
 

@@ -691,8 +691,38 @@
     max-width: 900px;
 }
 
+
+
+/** OBJETIVO **/
+
+.objective-detail {
+   .card {
+      width: 300px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+      text-align: center;
+  }
+  
+  img {
+      max-width: 100%;
+      height: auto;
+  }
+  
+  h1 {
+      font-size: 24px;
+      margin: 10px 0;
+  }
+  
+  p {
+      font-size: 16px;
+      margin: 5px 0;
+  }
+  
+
 /** FORM CONTROLS **/
 
 .form-control {
    border-color: gray;
+
 }

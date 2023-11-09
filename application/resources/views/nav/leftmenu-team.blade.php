@@ -27,8 +27,8 @@
                 <!--datacenter[done]-->
                 @if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
                 config('visibility.modules.users')]))
-                <li data-modular-id="main_menu_team_clients"
-                    class="sidenav-menu-item {{ $page['mainmenu_customers'] ?? '' }}">
+                <li data-modular-id="main_menu_team_contracts"
+                    class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}">
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="ti-menu-alt"></i>
                         <span class="hide-menu">Datacenter
@@ -36,21 +36,21 @@
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         
-                        <li class="sidenav-submenu {{ $page['submenu_customers'] ?? '' }}" id="submenu_clients">
+                        <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}" id="submenu_contracts">
                             <a href="/datacenter"
-                                class="{{ $page['submenu_customers'] ?? '' }}">Inicio</a>
+                                class="{{ $page['submenu_contracts'] ?? '' }}">Inicio</a>
                         </li>
                         
                         
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
+                        <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}" id="submenu_contracts">
                             <a href="/sales"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">Ventas</a>
+                                class="{{ $page['submenu_contracts'] ?? '' }}">Ventas</a>
                         </li>
 
                         
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
+                        <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}" id="submenu_contracts">
                             <a href="/stock"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">Stock</a>
+                                class="{{ $page['submenu_contracts'] ?? '' }}">Stock</a>
                         </li>
                         
                     </ul>
@@ -88,33 +88,33 @@
                 <!--customers-->
 
                 <!--FRANCHISES HARDCODEADO-->
-                <li data-modular-id="main_menu_team_projects"
-                class="sidenav-menu-item {{ $page['mainmenu_projects'] ?? '' }}">
+                <li data-modular-id="main_menu_team_contracts"
+                class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}">
                 <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                     <i class="ti-layout-grid2"></i>
                     <span class="hide-menu">Franquicias</span>
                 </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li class="sidenav-submenu {{ $page['submenu_templates'] ?? '' }}"
-                            id="submenu_project_templates">
+                        <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}"
+                            id="submenu_project_contracts">
                             <a href="{{ _url('/franchises') }}"
-                                class="{{ $page['submenu_templates'] ?? '' }}">Franquicias</a>
+                                class="{{ $page['submenu_contracts'] ?? '' }}">Franquicias</a>
                         </li>
                     </ul>
                 </li>
 
                 <!--FRANCHISES HARDCODEADO-->
-                <li data-modular-id="main_menu_team_projects"
-                class="sidenav-menu-item {{ $page['mainmenu_projects'] ?? '' }}">
+                <li data-modular-id="main_menu_team_contracts"
+                class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}">
                 <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                     <i class="ti-check"></i>
                     <span class="hide-menu">Objetivos</span>
                 </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li class="sidenav-submenu {{ $page['submenu_templates'] ?? '' }}"
-                            id="submenu_project_templates">
+                        <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}"
+                            id="submenu_project_contracts">
                             <a href="{{ _url('/objectives') }}"
-                                class="{{ $page['submenu_templates'] ?? '' }}">Objetivos</a>
+                                class="{{ $page['submenu_contracts'] ?? '' }}">Objetivos</a>
                         </li>
                     </ul>
                 </li>

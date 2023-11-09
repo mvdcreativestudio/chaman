@@ -1114,7 +1114,7 @@ return [
     'report' => "Report",
     'reports' => "Reports",
     'request_could_not_be_completed' => "Request could not be completed",
-    'request_has_been_completed' => "Request has been completed",
+    'request_has_been_completed' => "La solicitud ha sido completada",
     'request_is_invalid' => "Request is invalid",
     'required_data_is_missing' => "Required data is missing",
     'required_leads_stage' => "Required - System Lead Stage",

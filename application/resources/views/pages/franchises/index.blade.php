@@ -6,22 +6,7 @@
 <!-- action button -->
 
 <!-- main content -->
-<div class="text-right {{ $page['list_page_actions_size'] ?? '' }} {{ $page['list_page_container_class'] ?? '' }}"
-        id="list-page-actions-container"
-        >
-        @if(session('success'))
-        <div class="alert alert-success text-left">
-            {{ session('success') }}
-        </div>
-        @endif
-        <div id="list-page-actions">
-            <button type="button"
-                class="btn btn-danger btn-add-circle edit-add-modal-button js-ajax-ux-request reset-target-modal-form {{ $page['add_button_classes'] ?? '' }}"
-                data-toggle="modal" data-target="#franchiseModal">
-                <i class="ti-plus"></i>
-            </button>
-        </div>
-    </div>
+
 
 <div class="container-fluid">
 
@@ -31,6 +16,10 @@
             <!-- Page Title & Bread Crumbs -->
             @include('misc.heading-crumbs')
             <!--Page Title & Bread Crumbs -->
+
+             <!-- action buttons -->
+            @include('pages.franchises.misc.list-page-actions')
+             <!-- action buttons -->
 
     </div>
 
