@@ -692,6 +692,7 @@
 }
 
 
+
 /** OBJETIVO **/
 
 .objective-detail {
@@ -718,4 +719,10 @@
       margin: 5px 0;
   }
   
+
+/** FORM CONTROLS **/
+
+.form-control {
+   border-color: gray;
+
 }

@@ -122,10 +122,10 @@ class ObjectiveRepository {
         // Descomponemos el rango de fechas en fechas individuales
         $date_range = explode(' - ', $data['date_range']);
         $objective->start_date = Carbon::createFromFormat('Y-m-d', $date_range[0]);
-        $objective->end_date = Carbon::createFromFormat('Y-m-d', $date_range[1]);
+        $objective->end_date = Carbon::createFromFormat('Y-m-d', $date_range[1])->endOfDay();
     
         // Calcula el estado (active o inactive) en función de la fecha actual
-        $today = now();
+        $today = today();
     
         if ($today >= $objective->start_date && $today <= $objective->end_date) {
             $objective->status = 'active';
@@ -134,6 +134,7 @@ class ObjectiveRepository {
         }
     
         // Guarda y retorna un booleano
+
         return $objective->save();
     }
     
