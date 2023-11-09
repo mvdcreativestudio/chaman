@@ -178,6 +178,14 @@ class Home extends Controller {
         //payload
         $payload = [];
 
+        //[leads]
+        $payload['leads'] = [
+            'total' => $this->statsrepo->countLeads([
+                'type' => 'count',
+                'created_by' => auth()->id(),
+            ]),
+        ];
+
         //[projects][all]
         $payload['projects'] = [
             'pending' => $this->statsrepo->countProjects([
