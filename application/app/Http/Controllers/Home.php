@@ -285,6 +285,29 @@ class Home extends Controller {
         $objectives = $this->objectiverepo->getActiveInactive();
         $payload['objectives'] = $objectives;
 
+        //[leads]
+
+        $leads = $this->statsrepo;
+        $payload['leads'] = [
+            'total' => $leads->countLeads([
+                'type' => 'count',
+            ]),
+            'this_week' => $leads->countLeads([
+                'type' => 'count',
+                'created_start' => \Carbon\Carbon::now()->startOfWeek(),
+                'created_end' => \Carbon\Carbon::now()->endOfWeek(),
+            ]),
+            'today' => $leads->countLeads([
+                'type' => 'count',
+                'created_start' => \Carbon\Carbon::today()->format('Y-m-d'),
+                'created_end' => \Carbon\Carbon::now()->format('Y-m-d'),
+            ]),
+            'converted' => $leads->countLeads([
+                'type' => 'count',
+                'converted' => 'yes',
+            ])
+        ];
+
 
         //[payments]
         $payload['payments'] = [

@@ -1,11 +1,11 @@
     <!-- Column -->
-    <div class="col-lg-4 col-md-12">
+    <div class="col-lg-6 col-md-12">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex m-b-30 no-block">
                     <h5 class="card-title m-b-0 align-self-center">{{ cleanLang(__('lang.leads')) }}</h5>
                     <div class="ml-auto">
-                        {{ cleanLang(__('lang.this_year')) }}
+
                     </div>
                 </div>
                 <div id="leadsWidget"></div>

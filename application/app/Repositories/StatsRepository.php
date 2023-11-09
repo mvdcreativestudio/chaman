@@ -288,6 +288,16 @@ class StatsRepository {
             });
         }
 
+        // date range filter
+        if (isset($data['created_start']) && isset($data['created_end'])) {
+        $leads->whereBetween('lead_created', [$data['created_start'], $data['created_end']]);
+        }
+
+        //converted
+        if(isset($data['converted']) && $data['converted'] != 'no') {
+            $leads->where('lead_converted', $data['converted']);
+        }
+
         return $leads->count();
     }
 

@@ -6,7 +6,7 @@
             <div class="d-flex p-10 no-block">
                 <span class="align-slef-center">
                     <!-- Muestra el total de ingresos -->
-                    <h2 class="m-b-0">{{ runtimeMoneyFormat($payload['payments']['total']) }}</h2>
+                    <h2 class="m-b-0"></h2>
                     <h6 class="text-muted m-b-0">Ingresos Totales</h6>
                 </span>
                 <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i>

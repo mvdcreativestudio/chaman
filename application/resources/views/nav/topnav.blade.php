@@ -109,7 +109,7 @@
             <!--RIGHT SIDE-->
             <ul class="navbar-nav navbar-top-right my-lg-0" id="right-topnav-navbar">
 
-                <!-- Reminders Notification-->
+                {{-- <!-- Reminders Notification-->
                 <li class="nav-item dropdown {{ request('user_has_due_reminder') }} d-none d-sm-block" id="topnav-reminders-dropdown"
                     data-url="{{ url('reminders/topnav-feed') }}" data-progress-bar='hidden'
                     data-loading-target="topnav-reminders-container">
@@ -142,7 +142,7 @@
                         </ul>
                     </div>
                 </li>
-                <!-- Reminders Notification-->
+                <!-- Reminders Notification--> --}}
 
 
 
@@ -193,7 +193,7 @@
                 </li>
                 @endif
 
-                <!-- settings -->
+                {{-- <!-- settings -->
                 @if(auth()->user()->is_admin)
                 <li class="nav-item">
                     <a class="nav-link waves-effect waves-dark font-22 p-t-10 p-r-10" href="/settings" id="32"
@@ -201,7 +201,7 @@
                         <i class="sl-icon-settings"></i>
                     </a>
                 </li>
-                @endif
+                @endif --}}
 
                 <!-- add content -->
                 @if(auth()->user()->is_team && auth()->user()->can_add_content)
@@ -225,7 +225,7 @@
                             <i class="sl-icon-people"></i> {{ cleanLang(__('lang.client')) }}</a>
                         @endif
 
-                        <!-- project -->
+                        {{-- <!-- project -->
                         @if(config('visibility.modules.projects') && auth()->user()->role->role_projects >= 2)
                         <a href="javascript:void(0)"
                             class="dropdown-item dropdown-item-iconed edit-add-modal-button js-ajax-ux-request reset-target-modal-form"
@@ -249,7 +249,7 @@
                             data-action-ajax-loading-target="commonModalBody" data-save-button-class=""
                             data-project-progress="0">
                             <i class="ti-menu-alt"></i> {{ cleanLang(__('lang.task')) }}</a>
-                        @endif
+                        @endif --}}
 
                         <!-- lead -->
                         @if(config('visibility.modules.leads') && auth()->user()->role->role_leads >= 2)
@@ -261,10 +261,10 @@
                             data-action-url="{{url('/leads?ref=quickadd') }}" data-action-method="POST"
                             data-action-ajax-loading-target="commonModalBody" data-save-button-class=""
                             data-project-progress="0">
-                            <i class="sl-icon-call-in"></i> {{ cleanLang(__('lang.lead')) }}</a>
+                            <i class="sl-icon-call-in"></i> Lead </a>
                         @endif
 
-                        <!-- invoice -->
+                        {{-- <!-- invoice -->
                         @if(config('visibility.modules.invoices') && auth()->user()->role->role_invoices >= 2)
                         <a href="javascript:void(0)"
                             class="dropdown-item dropdown-item-iconed edit-add-modal-button js-ajax-ux-request reset-target-modal-form"
@@ -275,10 +275,10 @@
                             data-action-ajax-loading-target="commonModalBody" data-save-button-class=""
                             data-project-progress="0">
                             <i class="sl-icon-doc"></i> {{ cleanLang(__('lang.invoice')) }}</a>
-                        @endif
+                        @endif --}}
 
 
-                        <!-- estimate -->
+                        {{-- <!-- estimate -->
                         @if(config('visibility.modules.estimates') && auth()->user()->role->role_estimates >= 2)
                         <a href="javascript:void(0)"
                             class="dropdown-item dropdown-item-iconed edit-add-modal-button js-ajax-ux-request reset-target-modal-form"
@@ -378,7 +378,7 @@
                         <a class="dropdown-item dropdown-item-iconed"
                             href="{{ url('/tickets/create') }}">
                             <i class="ti-comments"></i> {{ cleanLang(__('lang.ticket')) }}</a>
-                        @endif
+                        @endif --}}
 
                     </div>
                 </li>
@@ -503,7 +503,7 @@
                             </li>
                             @endif
 
-                            <!--update notifcations-->
+                            {{-- <!--update notifcations-->
                             <li>
                                 <a href="javascript:void(0)" id="topnavUpdateNotificationsButton"
                                     class="edit-add-modal-button js-ajax-ux-request reset-target-modal-form"
@@ -518,7 +518,7 @@
                                     data-action-ajax-loading-target="commonModalBody">
                                     <i class="sl-icon-bell p-r-4"></i>
                                     {{ cleanLang(__('lang.notification_settings')) }}</a>
-                            </li>
+                            </li> --}}
 
                             {{-- <!--update theme-->
                             <li>

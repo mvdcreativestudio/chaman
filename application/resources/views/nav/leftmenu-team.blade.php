@@ -24,7 +24,7 @@
                 <!--home-->
                 @endif
 
-                <!--datacenter[done]-->
+                {{-- <!--datacenter[done]-->
                 @if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
                 config('visibility.modules.users')]))
                 <li data-modular-id="main_menu_team_contracts"
@@ -56,7 +56,7 @@
                     </ul>
                 </li>
                 @endif
-                <!--datacenter-->
+                <!--datacenter--> --}}
 
 
                 <!--users[done]-->
@@ -79,7 +79,7 @@
                         @if(config('visibility.modules.users'))
                         <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
                             <a href="/users"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">{{ cleanLang(__('lang.client_users')) }}</a>
+                                class="{{ $page['submenu_contacts'] ?? '' }}">Usuarios</a>
                         </li>
                         @endif
                     </ul>
@@ -103,7 +103,7 @@
                     </ul>
                 </li>
 
-                <!--FRANCHISES HARDCODEADO-->
+                {{-- <!--OBJECTIVES HARDCODEADO-->
                 <li data-modular-id="main_menu_team_contracts"
                 class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}">
                 <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
@@ -117,9 +117,9 @@
                                 class="{{ $page['submenu_contracts'] ?? '' }}">Objetivos</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <!--projects[done]-->
+                {{-- <!--projects[done]-->
                 @if(config('visibility.modules.projects'))
                 <li data-modular-id="main_menu_team_projects"
                     class="sidenav-menu-item {{ $page['mainmenu_projects'] ?? '' }}">
@@ -150,10 +150,10 @@
                     </ul>
                 </li>
                 @endif
-                <!--projects-->
+                <!--projects--> --}}
 
 
-                <!--tasks[done]-->
+                {{-- <!--tasks[done]-->
                 @if(config('visibility.modules.tasks'))
                 <li data-modular-id="main_menu_team_tasks"
                     class="sidenav-menu-item {{ $page['mainmenu_tasks'] ?? '' }} menu-tooltip menu-with-tooltip"
@@ -165,7 +165,7 @@
                     </a>
                 </li>
                 @endif
-                <!--tasks-->
+                <!--tasks--> --}}
 
                 
 
@@ -183,7 +183,7 @@
                 @endif
                 <!--leads-->
 
-                <!--sales-->
+                {{-- <!--sales-->
                 @if(runtimeGroupMenuVibility([config('visibility.modules.invoices'),
                 config('visibility.modules.payments'), config('visibility.modules.estimates'),
                 config('visibility.modules.products'), config('visibility.modules.expenses'),
@@ -236,10 +236,10 @@
                     </ul>
                 </li>
                 @endif
-                <!--billing-->
+                <!--billing--> --}}
 
 
-                <!--proposals [multiple]-->
+                {{-- <!--proposals [multiple]-->
                 @if(config('visibility.modules.proposals') && auth()->user()->role->role_templates_proposals > 0)
                 <!--multipl menu---->
                 <li data-modular-id="main_menu_team_proposals"
@@ -360,7 +360,7 @@
                         </span>
                     </a>
                 </li>
-                @endif
+                @endif --}}
 
                 <!--[MODULES] - dynamic menu-->
                 {!! config('module_menus.main_menu_team') !!}
@@ -451,13 +451,13 @@
                                 class="{{ $page['submenu_timesheets'] ?? '' }}">{{ cleanLang(__('lang.time_sheets')) }}</a>
                         </li>
                         @endif
-                        @if(auth()->user()->is_admin)
+                        {{-- @if(auth()->user()->is_admin)
                         <li class="sidenav-submenu mainmenu_settings {{ $page['submenu_settings'] ?? '' }}"
                             id="submenu_settings">
                             <a href="/settings"
                                 class="{{ $page['submenu_settings'] ?? '' }}">{{ cleanLang(__('lang.settings')) }}</a>
                         </li>
-                        @endif
+                        @endif --}}
                     </ul>
                 </li>
                 @endif

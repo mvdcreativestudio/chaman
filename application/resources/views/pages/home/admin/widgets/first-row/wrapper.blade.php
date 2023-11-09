@@ -1,10 +1,10 @@
-<div class="">
+{{-- <div class="">
      <!--GOALS-->
      @include('pages.home.admin.widgets.first-row.goals')
-</div>
+</div> --}}
 
 <div class="row">
-    <!--PAYMENTS TODAY-->
+    {{-- <!--PAYMENTS TODAY-->
     @include('pages.home.admin.widgets.first-row.payments-today')
 
     <!--PAYMENTS THIS MONTH-->
@@ -23,7 +23,10 @@
     @include('pages.home.admin.widgets.first-row.invoices-due')
 
     <!--INVOICES OVERDUE-->
-    @include('pages.home.admin.widgets.first-row.invoices-overdue')
+    @include('pages.home.admin.widgets.first-row.invoices-overdue') --}}
+
+    <!-- LEADS -->
+    @include('pages.home.admin.widgets.leads.leads')
 
 
 </div>
