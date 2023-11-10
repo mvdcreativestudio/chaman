@@ -9,9 +9,11 @@
         @if(auth()->user()->is_team)
         <div>
 
-            <div class="p-b-10 align-right">
-                
-                <span class="badge badge-pill badge-success p-t-4 p-l-12 p-r-12">Activa</span>
+            <div class="active-status">
+
+            
+                <small class="text-muted">Asignada a:</small>
+                <span class="badge badge-pill badge-success">Activa</span>
                 
                 
             </div>

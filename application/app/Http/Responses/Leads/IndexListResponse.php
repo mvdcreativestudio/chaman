@@ -188,7 +188,7 @@ class IndexListResponse implements Responsable {
             $page['url'] = loadMoreButtonUrl($leads->currentPage() + 1, request('source'));
             $page['loading_target'] = 'leads-td-container';
             $page['visibility_show_load_more'] = ($leads->currentPage() < $leads->lastPage()) ? true : false;
-            return view('pages/leads/wrapper', compact('page', 'leads', 'stats', 'categories', 'tags', 'statuses', 'fields'))->render();
+            return view('pages/leads/wrapper', compact('page', 'leads', 'stats', 'categories', 'tags', 'statuses', 'fields', 'clients'))->render();
         }
 
     }

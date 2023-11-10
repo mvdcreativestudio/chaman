@@ -156,7 +156,7 @@
         <!--billing address section-->
         <div class="spacer row">
             <div class="col-sm-12 col-lg-8">
-                <span class="title">{{ cleanLang(__('lang.billing_address')) }}</span class="title">
+                <span class="title">Dirección de Facturación</span class="title">
             </div>
             <div class="col-sm-12 col-lg-4">
                 <div class="switch  text-right">
@@ -328,7 +328,7 @@
         <!--shipping address section-->
 
 
-        <!--APP MODULES-->
+        {{-- <!--APP MODULES-->
         @if(auth()->user()->is_team)
         <div class="spacer row">
             <div class="col-sm-12 col-lg-8">
@@ -472,12 +472,12 @@
             </div>
 
         </div>
-        @endif
+        @endif --}}
 
 
         <!--CUSTOMER FIELDS [collapsed]-->
         @if(auth()->user()->is_team && config('system.settings_customfields_display_clients') == 'toggled')
-        <div class="spacer row">
+        {{-- <div class="spacer row">
             <div class="col-sm-12 col-lg-8">
                 <span class="title">{{ cleanLang(__('lang.more_information')) }}</span class="title">
             </div>
@@ -490,7 +490,7 @@
                     </label>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div id="client_custom_fields_collaped" class="hidden">
 
             @if(config('app.application_demo_mode'))

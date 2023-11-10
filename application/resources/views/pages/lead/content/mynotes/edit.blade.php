@@ -1,5 +1,7 @@
 <!--heading-->
-<div class="x-heading p-t-10"><i class="mdi mdi-file-document-box"></i>{{ cleanLang(__('lang.my_notes')) }}</div>
+<div class="x-heading p-t-10"><i class="mdi mdi-file-document-box"></i>{{ cleanLang(__('lang.my_notes')) }}
+    <p>Las notas son privadas y de uso único para el equipo</p>
+</div>
 
 
 

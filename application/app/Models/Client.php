@@ -148,6 +148,12 @@ class Client extends Model {
         return $this->hasMany('App\Models\Ticket', 'ticket_clientid', 'client_id');
     }
 
+    
+    public function leads()
+    {
+        return $this->hasMany(Lead::class, 'lead_clientid', 'client_id');
+    }
+
     /**
      * Query Scope: Counting a clients projects (of various statuses)
      * @param object $query automatically passed by eloquent

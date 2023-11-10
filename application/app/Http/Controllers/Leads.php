@@ -40,6 +40,7 @@ use App\Http\Responses\Leads\UpdateTagsResponse;
 use App\Models\Checklist;
 use App\Models\Comment;
 use App\Models\Lead;
+use App\Models\Client;
 use App\Permissions\AttachmentPermissions;
 use App\Permissions\ChecklistPermissions;
 use App\Permissions\CommentPermissions;
@@ -139,10 +140,14 @@ class Leads extends Controller {
      */
     protected $customrepo;
 
+
+    protected $clientRepo;
+
     public function __construct(
         LeadRepository $leadrepo,
         TagRepository $tagrepo,
         UserRepository $userrepo,
+        ClientRepository $clientRepo,
         AttachmentRepository $attachmentrepo,
         AttachmentPermissions $attachmentpermissions,
         CommentPermissions $commentpermissions,
@@ -161,6 +166,7 @@ class Leads extends Controller {
         //vars
         $this->leadrepo = $leadrepo;
         $this->tagrepo = $tagrepo;
+        $this->clientRepo = $clientRepo;
         $this->userrepo = $userrepo;
         $this->attachmentrepo = $attachmentrepo;
         $this->leadpermissions = $leadpermissions;
@@ -304,6 +310,7 @@ class Leads extends Controller {
 
     /**
      * Prepare the listing of leads (list view)
+     * @param object ClientRepository instance of the repository
      * @return array
      */
     public function indexList() {
@@ -327,8 +334,7 @@ class Leads extends Controller {
         //get all tags (type: lead) - for filter panel
         $tags = $this->tagrepo->getByType('lead');
 
-        
-
+        $clients = $this->clientRepo->search();
 
         //all available lead statuses
         $statuses = \App\Models\LeadStatus::all();
@@ -337,6 +343,7 @@ class Leads extends Controller {
         $payload = [
             'page' => $this->pageSettings('leads'),
             'leads' => $leads,
+            'clients' => $clients,
             'stats' => $this->statsWidget(),
             'categories' => $categories,
             'tags' => $tags,
@@ -350,6 +357,7 @@ class Leads extends Controller {
 
     /**
      * Prepare the listing of leads (kanban view)
+     * @param object ClientRepository instance of the repository
      * @return blade view | ajax view
      */
     public function indexKanban() {
@@ -370,10 +378,13 @@ class Leads extends Controller {
         //get all tags (type: lead) - for filter panel
         $tags = $this->tagrepo->getByType('lead');
 
+        $clients = $this->clientRepo->search();
+
         //reponse payload
         $payload = [
             'page' => $page,
             'boards' => $boards,
+            'clients' => $clients,
             'categories' => $categories,
             'stats' => $this->statsWidget(),
             'statuses' => \App\Models\LeadStatus::all(),
