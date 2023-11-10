@@ -695,27 +695,16 @@
 /** OBJETIVO **/
 
 .objective-detail {
-   .card {
-      width: 300px;
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin: 10px;
-      text-align: center;
-  }
-  
-  img {
-      max-width: 100%;
-      height: auto;
-  }
-  
-  h1 {
-      font-size: 24px;
-      margin: 10px 0;
-  }
-  
-  p {
-      font-size: 16px;
-      margin: 5px 0;
-  }
-  
+   width: 600px; /* Ancho del contenedor */
+   height: 600px; /* Altura del contenedor */
+   margin: 0 auto; /* Centrar horizontalmente */
+   background-color: #fff; /* Color de fondo */
+   border-radius: 10px; /* Radio del borde */
+   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+   display: flex;
+   
+}
+
+.active-status {
+   justify-content: right;
 }
