@@ -27,7 +27,6 @@
             @include('pages.leads.components.table.wrapper')
             <!--leads table-->
             @endif
-
             <!--filter-->
             @include('pages.leads.components.misc.filter-leads')
             <!--filter-->

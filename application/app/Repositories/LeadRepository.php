@@ -117,6 +117,33 @@ class LeadRepository {
         //apply filters
         if ($data['apply_filters']) {
 
+            if (is_array(request('filter_creator')) && !empty(array_filter(request('filter_creator')))) {
+                $leads->whereIn('lead_creatorid', request('filter_creator'));
+            }
+
+            $clientIds = [];
+            $leadIds = [];
+            $filterValues = request('filter_client') ?: [];
+
+            foreach ($filterValues as $filterValue) {
+                [$type, $id] = explode('-', $filterValue, 2);
+                if ($type == 'client') {
+                    $clientIds[] = $id;
+                } elseif ($type == 'lead') {
+                    $leadIds[] = $id;
+                }
+            }
+
+            if (!empty($clientIds)) {
+                $leads->whereHas('client', function ($query) use ($clientIds) {
+                    $query->whereIn('client_id', $clientIds);
+                });
+            }
+
+            if (!empty($leadIds)) {
+                $leads->whereIn('id', $leadIds);
+            }
+
             //filter archived leads
             if (request()->filled('filter_lead_state') && (request('filter_lead_state') == 'active' || request('filter_lead_state') == 'archived')) {
                 $leads->where('lead_active_state', request('filter_lead_state'));

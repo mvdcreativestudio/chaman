@@ -1,4 +1,5 @@
 <!-- right-sidebar -->
+
 <div class="right-sidebar" id="sidepanel-filter-leads">
     <form>
         <div class="slimscrollright">
@@ -12,8 +13,6 @@
             <!--title-->
             <!--body-->
             <div class="r-panel-body">
-
-
                 <!--creator (santix)-->
                 <div class="filter-block">
                     <div class="title">
@@ -22,7 +21,6 @@
                     <div class="fields">
                         <div class="row">
                             <div class="col-md-12">
-                                <!-- Asegúrate de que la lista de usuarios (creadores) esté disponible para la vista -->
                                 <select name="filter_creator" id="filter_creator" class="form-control form-control-sm select2-basic select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true">
                                     @foreach(config('system.team_members') as $user)
                                     <option value="{{ $user->id }}">{{ $user->full_name }}</option>
@@ -42,19 +40,22 @@
                     <div class="fields">
                         <div class="row">
                             <div class="col-md-12">
-                                <!-- Asegúrate de que la lista de usuarios (creadores) esté disponible para la vista -->
-                                <select name="filter_creator" id="filter_creator" class="form-control form-control-sm select2-basic select2-multiselect2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true">
-                                    @foreach(config('system.team_members') as $user)
-                                    <option value="{{ $user->id }}">{{ $user->full_name }}</option>
+                                <!-- Asegúrate de que la lista de clientes esté disponible para la vista -->
+                                <select name="filter_client" id="filter_client" class="form-control form-control-sm select2-basic select2-multiselect2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true">
+                                @foreach($clients as $client)
+                                    <option value="client-{{ $client->id }}">{{ $client->first_name }} {{ $client->last_name }}</option>
+                                @endforeach
+                                @foreach($boards as $board)
+                                    @foreach($board['leads'] as $lead) 
+                                        <option value="lead-{{ $lead->id }}">{{ $lead->lead_firstname }} {{ $lead->lead_lastname }}</option>
                                     @endforeach
+                                @endforeach
                                 </select>
+                            
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
 
                 {{-- <!--assigned-->
                 @if(config('visibility.filter_panel_assigned'))
