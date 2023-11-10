@@ -36,7 +36,7 @@
             id="pref_view_leads_layout"
             class="list-actions-button btn btn-page-actions waves-effect waves-dark js-ajax-ux-request {{ runtimeActive(auth()->user()->pref_view_leads_layout) }}"
             data-url="{{ urlResource('/leads/search?action=search&toggle=layout') }}">
-            <i class="sl-icon-list"></i>
+            <i class="ti-layout-grid2"></i>
         </button>
         <!--leads kanban task sorting-->
         <div class="btn-group" id="list_actions_sort_kanban">

@@ -267,7 +267,7 @@
 
 
 
-        <!--CUSTOMER FIELDS [collapsed]-->
+        {{-- <!--CUSTOMER FIELDS [collapsed]-->
         @if(config('system.settings_customfields_display_leads') == 'toggled')
         <div class="spacer row">
             <div class="col-sm-12 col-lg-8">
@@ -295,7 +295,7 @@
             @include('misc.customfields')
         </div>
         @endif
-        <!--/#CUSTOMER FIELDS [collapsed]-->
+        <!--/#CUSTOMER FIELDS [collapsed]--> --}}
 
 
 
