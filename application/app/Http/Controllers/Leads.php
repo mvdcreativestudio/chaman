@@ -327,6 +327,9 @@ class Leads extends Controller {
         //get all tags (type: lead) - for filter panel
         $tags = $this->tagrepo->getByType('lead');
 
+        
+
+
         //all available lead statuses
         $statuses = \App\Models\LeadStatus::all();
 
