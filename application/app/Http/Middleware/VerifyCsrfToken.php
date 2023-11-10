@@ -20,6 +20,7 @@ class VerifyCsrfToken extends Middleware {
         'api/paypal/ipn',
         'payments/thankyou',
         'payments/thankyou/razorpay',
+        'whatsapp/webhook',
 
         //[MT]
         'app-admin/webhooks/*',
