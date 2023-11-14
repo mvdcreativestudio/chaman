@@ -18,52 +18,87 @@
                     value="{{ $lead->lead_title ?? '' }}">
             </div>
         </div>
-        <!--first name-->
+
+        <!-- Switch para Cliente/Lead -->
         <div class="form-group row">
-            <label
-                class="col-sm-12 col-lg-3 text-left control-label col-form-label required">{{ cleanLang(__('lang.first_name')) }}*</label>
-            <div class="col-sm-12 col-lg-9">
-                <input type="text" class="form-control form-control-sm" id="lead_firstname" name="lead_firstname"
-                    placeholder="" value="{{ $lead->lead_firstname ?? '' }}">
-            </div>
-        </div>
-        <!--last name-->
-        <div class="form-group row">
-            <label
-                class="col-sm-12 col-lg-3 text-left control-label col-form-label required">{{ cleanLang(__('lang.last_name')) }}*</label>
-            <div class="col-sm-12 col-lg-9">
-                <input type="text" class="form-control form-control-sm" id="lead_lastname" name="lead_lastname"
-                    placeholder="" value="{{ $lead->lead_lastname ?? '' }}">
-            </div>
-        </div>
-        <!--telephone-->
-        <div class="form-group row">
-            <label
-                class="col-sm-12 col-lg-3 text-left control-label col-form-label">{{ cleanLang(__('lang.telephone')) }}</label>
-            <div class="col-sm-12 col-lg-9">
-                <input type="text" class="form-control form-control-sm" id="lead_phone" name="lead_phone" placeholder=""
-                    value="{{ $lead->lead_phone ?? '' }}">
-            </div>
-        </div>
-        <!--email-->
-        <div class="form-group row">
-            <label
-                class="col-sm-12 col-lg-3 text-left control-label col-form-label">{{ cleanLang(__('lang.email_address')) }}</label>
-            <div class="col-sm-12 col-lg-9">
-                <input type="text" class="form-control form-control-sm" id="lead_email" name="lead_email" placeholder=""
-                    value="{{ $lead->lead_email ?? '' }}">
+            <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">
+                Cliente existente
+            </label>
+            <div class="switch  text-right">
+                <label>
+                <input type="checkbox" name="is_client_switch" id="is_client_switch"
+                        class="js-switch-toggle-hidden-content" data-target="client_section">
+                    <span class="lever switch-col-light-blue"></span>
+                </label>
             </div>
         </div>
 
-
-        <!--value-->
-        <div class="form-group row">
-            <label
-                class="col-sm-12 col-lg-3 text-left control-label col-form-label">{{ cleanLang(__('lang.lead_value')) }} ({{
-                            config('system.settings_system_currency_symbol') }})</label>
+        <!-- Select para Clientes -->
+        <div class="form-group row" style="display: none;" id="client_select_section">
+            <label class="col-sm-12 col-lg-3 text-left control-label col-form-label required">
+                Cliente
+            </label>
             <div class="col-sm-12 col-lg-9">
-                <input type="number" class="form-control form-control-sm" id="lead_value" name="lead_value"
-                    placeholder="" value="{{ $lead->lead_value ?? '' }}">
+                <select class="form-control form-control-sm select2-basic" tabindex="-1" aria-hidden="true" id="client_select" name="client_select">
+                    @foreach($clients as $client)
+                        @if($client->client_id)
+                        <option value="{{ $client->client_id }}" 
+                            {{ runtimePreselectedInArray($client->client_id, $currentClientId ?? []) }}>
+                        {{ $client->client_company_name }}
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div id="lead_section">
+            <!--first name-->
+            <div class="form-group row">
+                <label
+                    class="col-sm-12 col-lg-3 text-left control-label col-form-label required">{{ cleanLang(__('lang.first_name')) }}*</label>
+                <div class="col-sm-12 col-lg-9">
+                    <input type="text" class="form-control form-control-sm" id="lead_firstname" name="lead_firstname"
+                        placeholder="" value="{{ $lead->lead_firstname ?? '' }}">
+                </div>
+            </div>
+            <!--last name-->
+            <div class="form-group row">
+                <label
+                    class="col-sm-12 col-lg-3 text-left control-label col-form-label required">{{ cleanLang(__('lang.last_name')) }}*</label>
+                <div class="col-sm-12 col-lg-9">
+                    <input type="text" class="form-control form-control-sm" id="lead_lastname" name="lead_lastname"
+                        placeholder="" value="{{ $lead->lead_lastname ?? '' }}">
+                </div>
+            </div>
+            <!--telephone-->
+            <div class="form-group row">
+                <label
+                    class="col-sm-12 col-lg-3 text-left control-label col-form-label">{{ cleanLang(__('lang.telephone')) }}</label>
+                <div class="col-sm-12 col-lg-9">
+                    <input type="text" class="form-control form-control-sm" id="lead_phone" name="lead_phone" placeholder=""
+                        value="{{ $lead->lead_phone ?? '' }}">
+                </div>
+            </div>
+            <!--email-->
+            <div class="form-group row">
+                <label
+                    class="col-sm-12 col-lg-3 text-left control-label col-form-label">{{ cleanLang(__('lang.email_address')) }}</label>
+                <div class="col-sm-12 col-lg-9">
+                    <input type="text" class="form-control form-control-sm" id="lead_email" name="lead_email" placeholder=""
+                        value="{{ $lead->lead_email ?? '' }}">
+                </div>
+            </div>
+
+
+            <!--value-->
+            <div class="form-group row">
+                <label
+                    class="col-sm-12 col-lg-3 text-left control-label col-form-label">{{ cleanLang(__('lang.lead_value')) }} ({{
+                                config('system.settings_system_currency_symbol') }})</label>
+                <div class="col-sm-12 col-lg-9">
+                    <input type="number" class="form-control form-control-sm" id="lead_value" name="lead_value"
+                        placeholder="" value="{{ $lead->lead_value ?? '' }}">
+                </div>
             </div>
         </div>
 
@@ -300,7 +335,7 @@
 
 
         <!--address and organisation - toggle-->
-        <div class="spacer row">
+        <div class="spacer row" id="organisation_toggle">
             <div class="col-sm-12 col-lg-8">
                 <span class="title">{{ cleanLang(__('lang.address_and_organisation_details')) }}</span class="title">
             </div>
@@ -416,3 +451,27 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('is_client_switch').addEventListener('change', function() {
+    const clientSection = document.getElementById('client_section');
+    const leadSection = document.getElementById('lead_section');
+    const organisationToggle = document.getElementById('organisation_toggle');
+    const addLeadAddressSection = document.getElementById('add_lead_address_section');
+    const clientSelectSection = document.getElementById('client_select_section');
+
+    if (this.checked) {
+        // Si el switch está activado, muestra el select de clientes y oculta los campos de lead
+        clientSelectSection.style.display = 'flex';
+        leadSection.style.display = 'none';
+        organisationToggle.style.display = 'none';
+        addLeadAddressSection.style.display = 'none';
+    } else {
+        // Si el switch está desactivado, muestra los campos de lead y oculta el select de clientes
+        clientSelectSection.style.display = 'none';
+        leadSection.style.display = 'block';
+        organisationToggle.style.display = 'flex';
+        addLeadAddressSection.style.display = 'block';
+    }
+    });
+</script>

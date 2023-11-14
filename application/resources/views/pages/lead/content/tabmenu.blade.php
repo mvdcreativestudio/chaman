@@ -4,7 +4,7 @@
             role="tab" data-url="{{ url('leads/content/'.$lead->lead_id.'/show-main?show=tab') }}"
             data-loading-class="loading-before-centre" data-loading-target="card-leads-left-panel"><span
                 class="hidden-sm-up"><i class="ti-home"></i></span> <span
-                class="hidden-xs-down">@lang('lang.lead')</span></a> </li>
+                class="hidden-xs-down">@lang('lang.client') / @lang('lang.lead')</span></a> </li>
 
                 
     <!--organisation-->

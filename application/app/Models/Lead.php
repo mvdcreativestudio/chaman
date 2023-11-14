@@ -163,7 +163,7 @@ class Lead extends Model {
 
     public function client()
     {
-        return $this->belongsTo(Client::class, 'lead_clientid', 'client_id');
+        return $this->belongsTo('App\Models\Client', 'lead_clientid', 'client_id');
     }
 
 }

@@ -45,20 +45,14 @@ class LeadStoreUpdate extends FormRequest {
         //initialize
         $rules = [];
 
+        $isClientSwitchSelected = request('is_client_switch'); // Asegúrate de que 'selected' es el valor correcto
+
         /**-------------------------------------------------------
          * common rules for both [create] and [update] requests
          * ------------------------------------------------------*/
         //validate
         $rules += [
             'lead_title' => [
-                'required',
-                new NoTags,
-            ],
-            'lead_firstname' => [
-                'required',
-                new NoTags,
-            ],
-            'lead_lastname' => [
                 'required',
                 new NoTags,
             ],
@@ -146,6 +140,17 @@ class LeadStoreUpdate extends FormRequest {
                 },
             ],
         ];
+
+        if (!$isClientSwitchSelected) {
+            $rules['lead_firstname'] = [
+                'required',
+                new NoTags,
+            ];
+            $rules['lead_lastname'] = [
+                'required',
+                new NoTags,
+            ];
+        }    
 
         //validate
         return $rules;
