@@ -3,8 +3,65 @@
 <div class="container-fluid">
 
 <div class="container-conv">
-        <div class="left-side-conv"><h1>left side</h1></div>
+        <div class="left-side-conv">
+            <!--header chat -->
+            <div class="header-conv">
+                <div class="img-text-conv">
+                    <div class="userimg-conv">
+                        <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
+                    </div>
+                    <h4>Carla Rodriguez<br><span>online</span></h4>
+                </div>
+                <ul class="nav-icons-conv">
+                    <li><i class="sl-icon-phone"></i></li>
+                    <li><i class="sl-icon-camrecorder"></i></li>
+                    <li><i class="sl-icon-options-vertical"></i></li>
+                </ul>
+            </div>
+            <!--header chat -->
+
+            <!--chat box -->
+            <div class="chat-box-conv">
+
+                 <div class="other-message-container">
+                    <div class="userimg-conv">
+                        <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
+                    </div>
+                    <div class="message-conv other-message-conv">                                        
+                         <p>Hola quería hacer un pedido, estoy buscando papel higiénico para mi fabrica? 🤔</p>
+                    </div>
+                 </div>   
+                    
+                
+                <div class="message-conv my-message-conv">
+                    <p>Carla, Cómo estas? Sí claro, te puedo ofrecer 24 rollos, 36 rollos, 50 rollos. De marca Elite</p>
+                </div>
+                <div class="other-message-container">
+                    <div class="userimg-conv">
+                        <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
+                    </div>
+                    <div class="message-conv other-message-conv">                                        
+                         <p>Mandame 24, porfavor 😃</p>
+                    </div>
+                 </div>
+                
+            </div>
+            <!--chat box -->
+
+            <!--chat input -->
+            <div class="chatbox-input-conv">
+            <i class="sl-icon-emotsmile"></i>            
+            <input type="text" placeholder="Escribe algo...">
+            <i class="ti-image"></i>
+            <i class="ti-clip"></i>
+            <i class="sl-icon-microphone"></i>
+
+            </div>
+
+        </div>
+        
         <div class="right-side-conv">
+
          <!--barra de busqueda -->
          <div class="search-chat-conv">
             <div>
@@ -13,6 +70,8 @@
             </div>
          </div>
           <!--barra de busqueda -->
+
+          <!--listado de chats -->
           <div class="chatlist-conv">
             <div class="block-conv">
                 <div class="imgbox-conv">
@@ -156,7 +215,7 @@
                     </div>
                 </div>
           </div>
-          
+          <!--listado de chats -->
         
     </div>
 
