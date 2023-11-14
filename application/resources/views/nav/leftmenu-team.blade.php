@@ -238,6 +238,44 @@
                 @endif
                 <!--billing-->
 
+                <!--PEDIDOS RRSS HARDCODEAO-->
+                @if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
+                config('visibility.modules.users')]))
+                <li data-modular-id="main_menu_team_clients"
+                    class="sidenav-menu-item {{ $page['mainmenu_customers'] ?? '' }}">
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
+                        <i class="ti-instagram"></i>
+                        <span class="hide-menu">Pedidos RRSS
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        
+                        <li class="sidenav-menu-item {{ $page['mainmenu_messages'] ?? '' }} menu-tooltip menu-with-tooltip" id="submenu_contacts">
+                            <a href="/conversations"
+                                class="{{ $page['submenu_customers'] ?? '' }}">Conversaciones</a>
+                        </li>
+                        
+                        
+                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
+                            <a href="/users"
+                                class="{{ $page['submenu_contacts'] ?? '' }}">Pedidos Activos</a>
+                        </li>
+
+                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
+                            <a href="/users"
+                                class="{{ $page['submenu_contacts'] ?? '' }}">Rechazados</a>
+                        </li>
+
+                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
+                            <a href="/users"
+                                class="{{ $page['submenu_contacts'] ?? '' }}">Completados</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                @endif
+                <!--PEDIDOS RRSS-->
+
 
                 <!--proposals [multiple]-->
                 @if(config('visibility.modules.proposals') && auth()->user()->role->role_templates_proposals > 0)

@@ -71,6 +71,14 @@ Route::group(['prefix' => 'whatsapp'], function () {
 
 
 
+//SUMERIA - PEDIDOS RRSS / Conversaciones
+
+use App\Http\Controllers\ConversationsController;
+
+Route::get('/conversations', [ConversationsController::class, 'show'])->name('conversations.show');
+
+
+
 
 
 
