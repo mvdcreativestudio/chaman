@@ -26,14 +26,43 @@
         </div>
         <!--Name-->
         <div class="x-element text-center font-14" id="card-lead-element-container-name">
-            @if($lead->permission_edit_lead)
-            <span class="x-highlight x-editable js-card-settings-button-static" id="card-lead-name" data-container=".card-modal" tabindex="0"
-                data-popover-content="card-lead-name-popover" data-title="{{ cleanLang(__('lang.name')) }}">
-                <span id="card-lead-firstname-containter">{{ $lead->lead_firstname }}</span> <span
-                    id="card-lead-lastname-containter">{{ $lead->lead_lastname }}</span></span>
+            @if($lead->permission_edit_lead && !$lead->client)
+                <span class="x-highlight x-editable js-card-settings-button-static" id="card-lead-name" data-container=".card-modal" tabindex="0"
+                    data-popover-content="card-lead-name-popover" data-title="{{ cleanLang(__('lang.name')) }}">
+                    <span id="card-lead-firstname-containter">{{ $lead->lead_firstname }}</span> <span
+                        id="card-lead-lastname-containter">{{ $lead->lead_lastname }}</span>
+                </span>
+            @elseif($lead->client)
+                <span class="x-highlight x-editable js-card-settings-button-static" id="card-lead-client" data-container=".card-modal" tabindex="0"
+                    data-popover-content="card-lead-client-popover" data-title="{{ cleanLang(__('lang.client')) }}">
+                    {{ $lead->client->client_company_name }}
+                </span>
             @else
-            <span class="x-highlight">{{ $lead->lead_firstname }} {{ $lead->lead_lastname }}</span>
+                <span class="x-highlight">{{ $lead->lead_firstname }} {{ $lead->lead_lastname }}</span>
             @endif
+        </div>
+        <div class="hidden" id="card-lead-client-popover">
+            <div class="form-group row m-b-10">
+                <div class="col-sm-12">
+                    <select class="custom-select col-12 form-control form-control-sm" tabindex="-1" aria-hidden="true" id="lead_client_id" name="lead_client_id">
+                        @foreach($clients as $client)
+                            @if($client->client_id)
+                                <option value="{{ $client->client_id }}" 
+                                    {{ runtimePreselectedInArray($client->client_id, $currentClientId ?? []) }}>
+                                    {{ $client->client_company_name }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="form-group text-right">
+                <button type="button" class="btn btn-danger btn-sm" id="card-leads-update-name-button"
+                    data-progress-bar='hidden' data-url="{{ url('/leads/'.$lead->lead_id.'/update-name') }}"
+                    data-type="form" data-ajax-type="post" data-form-id="popover-body">
+                    {{ cleanLang(__('lang.update')) }}
+                </button>
+            </div>
         </div>
         @if(request()->input('user_role_type') == 'admin_role')
         <div class="x-element" id="card-lead-element-container-franchise">
@@ -108,16 +137,19 @@
         </div>
         <!--telephone-->
         <div class="x-element"><i class="mdi mdi-phone"></i> <span>{{ cleanLang(__('lang.telephone')) }}: </span>
-            @if($lead->permission_edit_lead)
+            @if($lead->permission_edit_lead && !$lead->client)
             <span class="x-highlight x-editable js-card-settings-button-static" data-container=".card-modal" id="card-lead-phone" tabindex="0"
                 data-popover-content="card-lead-phone-popover" data-value="{{ $lead->lead_phone }}"
                 data-title="{{ cleanLang(__('lang.telephone')) }}">{{ $lead->lead_phone ?? '---' }}</span>
+            @elseif($lead->client)
+            <span class="x-highlight">{{ $lead->client->client_phone ?? '---' }}</span>
             @else
             <span class="x-highlight">{{ $lead->lead_phone ?? '---' }}</span>
             @endif
         </div>
 
         <!--email-->
+        @if($lead->permission_edit_lead && !$lead->client)
         <div class="x-element">
             <i class="mdi mdi-email"></i> 
             <span>{{ cleanLang(__('lang.email')) }}: </span>
@@ -140,6 +172,7 @@
                 </span>
             @endif
         </div>
+        @endif
 
 
         <!--Source-->
@@ -180,7 +213,7 @@
             <h6>{{ cleanLang(__('lang.actions')) }}</h6>
         </div>
         <!--convert to customer-->
-        @if($lead->permission_edit_lead && $lead->lead_converted == 'no')
+        @if($lead->permission_edit_lead && $lead->lead_converted == 'no' && !$lead->lead_clientid)
         <div class="x-element x-action js-lead-convert-to-customer" id="card-lead-milestone" tabindex="0"
              data-url="{{ url('leads/'.$lead->lead_id.'/convert-details') }}"
             data-popover-content="card-lead-milestones" data-title="{{ cleanLang(__('lang.convert_to_customer')) }}"><i

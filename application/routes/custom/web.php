@@ -50,16 +50,26 @@ Route::group(['prefix' => 'objective'], function () {
 
 });
 
-Route::post('/update-progress-for-all-objectives', 'ObjectiveController@updateProgressForAllObjectives'); // Ruta para recargar objetivos hasta que esté el Cron
-Route::get('/objectives', 'ObjectiveController@index');
-Route::get('/objectives/{id}', 'ObjectiveController@show');
-Route::get('/objective/edit/{id}', 'ObjectiveController@showEditModal');
-
 //SUMERIA - Detalles Objetivos - Provisorio
 
 use App\Http\Controllers\ObjectiveDetailController;
 
 Route::get('/objective-detail', [ObjectiveDetailController::class, 'show'])->name('objective-detail');
+
+Route::post('/update-progress-for-all-objectives', 'ObjectiveController@updateProgressForAllObjectives'); // Ruta para recargar objetivos hasta que esté el Cron
+Route::get('/objectives', 'ObjectiveController@index');
+Route::get('/objectives/{id}', 'ObjectiveController@show');
+Route::get('/objective/edit/{id}', 'ObjectiveController@showEditModal');
+
+Route::group(['prefix' => 'whatsapp'], function () {
+    Route::get('/send', 'WhatsApp@sendMessage')->name('whatsapp.send');
+    Route::get('/webhook', 'WhatsApp@webhook')->name('whatsapp.webhook.get');
+    Route::post('/webhook', 'WhatsApp@recibe')->name('whatsapp.webhook.post');
+    Route::get('/business/{businessId}/whatsapp-accounts', 'WhatsApp@getOwnedWhatsAppBusinessAccounts')->name('business.whatsapp.accounts');
+    Route::get('/phone-numbers/{whatsAppBusinessAccountId}', 'WhatsApp@getPhoneNumbers')->name('whatsapp.phone.numbers');
+});
+
+
 
 //SUMERIA - PEDIDOS RRSS / Conversaciones
 

@@ -161,4 +161,9 @@ class Lead extends Model {
         return $this->belongsTo('App\Models\Franchise', 'franchise_id', 'id');
     }
 
+    public function client()
+    {
+        return $this->belongsTo('App\Models\Client', 'lead_clientid', 'client_id');
+    }
+
 }

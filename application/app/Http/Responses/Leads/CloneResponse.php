@@ -38,7 +38,7 @@ class CloneResponse implements Responsable {
         $payload = $this->payload;
 
         //show the form
-        $html = view('pages/leads/components/modals/clone', compact('lead', 'statuses'))->render();
+        $html = view('pages/leads/components/modals/clone', compact('lead', 'statuses', 'clients'))->render();
         $jsondata['dom_html'][] = [
             'selector' => '#commonModalBody',
             'action' => 'replace',

@@ -20,7 +20,11 @@
             {{ str_limit($lead->lead_title, 20) }}</a>
     </td>
     <td class="leads_col_contact" id="leads_col_contact_{{ $lead->lead_id }}">
-        {{ str_limit($lead->full_name, 15) }}
+        @if($lead->client)
+            {{ str_limit($lead->client->client_company_name, 15) }}
+        @else
+            {{ str_limit($lead->full_name, 15) }}
+        @endif
     </td>
     <td class="leads_col_date" id="leads_col_date_{{ $lead->lead_id }}">
         {{ runtimeDate($lead->lead_created) }}

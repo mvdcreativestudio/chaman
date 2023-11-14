@@ -38,7 +38,7 @@ class ShowResponse implements Responsable {
         $payload = $this->payload;
 
         // RIGHT PANEL---
-        $html = view('pages/lead/rightpanel', compact('page', 'lead', 'assigned', 'sources', 'statuses', 'tags', 'categories', 'payload', 'reminder', 'tags', 'current_tags'))->render();
+        $html = view('pages/lead/rightpanel', compact('page', 'lead', 'assigned', 'sources', 'statuses', 'tags', 'categories', 'payload', 'reminder', 'tags', 'current_tags', 'clients'))->render();
         $jsondata['dom_html'][] = array(
             'selector' => '#card--leads-right-panel',
             'action' => 'replace',
