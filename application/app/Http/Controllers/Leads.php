@@ -337,7 +337,7 @@ class Leads extends Controller {
         //get all tags (type: lead) - for filter panel
         $tags = $this->tagrepo->getByType('lead');
 
-        $clients = $this->clientRepo->search();
+        $clients = \App\Models\Client::all();
 
         //all available lead statuses
         $statuses = \App\Models\LeadStatus::all();
@@ -381,7 +381,7 @@ class Leads extends Controller {
         //get all tags (type: lead) - for filter panel
         $tags = $this->tagrepo->getByType('lead');
 
-        $clients = $this->clientRepo->search();
+        $clients = \App\Models\Client::all();
 
         //reponse payload
         $payload = [

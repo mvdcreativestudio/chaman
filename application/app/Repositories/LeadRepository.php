@@ -141,7 +141,7 @@ class LeadRepository {
             }
 
             if (!empty($leadIds)) {
-                $leads->whereIn('id', $leadIds);
+                $leads->whereIn('lead_id', $leadIds);
             }
 
             //filter archived leads

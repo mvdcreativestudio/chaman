@@ -59,7 +59,7 @@
         <!--IMPORTING-->
         @if(config('visibility.list_page_actions_importing'))
         <button type="button" title="{{ cleanLang(__('lang.import_leads')) }}" id="leads-import-button"
-            class="data-toggle-tooltip list-actions-button btn btn-page-actions waves-effect waves-dark edit-add-modal-button js-ajax-ux-request reset-target-modal-form"
+            class="hidden data-toggle-tooltip list-actions-button btn btn-page-actions waves-effect waves-dark edit-add-modal-button js-ajax-ux-request reset-target-modal-form"
             data-toggle="modal" data-target="#commonModal" data-footer-visibility="hidden" data-top-padding="none"
             data-action-url="{{ url('import/leads') }}" data-action-method="POST" data-loading-target="commonModalBody"
             data-action-ajax-loading-target="commonModalBody" data-modal-title="@lang('lang.import_leads')"
