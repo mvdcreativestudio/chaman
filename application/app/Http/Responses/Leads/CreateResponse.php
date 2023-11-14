@@ -25,29 +25,28 @@ class CreateResponse implements Responsable {
      * @return \Illuminate\Http\Response
      */
     public function toResponse($request) {
-
-        //set all data to arrays
+        // Establecer todos los datos en arrays
         foreach ($this->payload as $key => $value) {
             $$key = $value;
         }
-
-        //render the form
-        $html = view('pages/leads/components/modals/add-edit-inc', compact('page', 'categories', 'tags', 'statuses', 'sources', 'fields'))->render();
+    
+        // Renderizar el formulario
+        $html = view('pages/leads/components/modals/add-edit-inc', compact('page', 'categories', 'tags', 'statuses', 'sources', 'fields', 'clients'))->render();
         $jsondata['dom_html'][] = array(
             'selector' => '#commonModalBody',
             'action' => 'replace',
             'value' => $html);
-
-        //show modal footer
+    
+        // Mostrar pie de página del modal
         $jsondata['dom_visibility'][] = array('selector' => '#commonModalFooter', 'action' => 'show');
-
+    
         // POSTRUN FUNCTIONS------
         $jsondata['postrun_functions'][] = [
             'value' => 'NXLeadCreate',
         ];
-
-        //ajax response
+    
+        // Respuesta AJAX
         return response()->json($jsondata);
-    }
+    }    
 
 }

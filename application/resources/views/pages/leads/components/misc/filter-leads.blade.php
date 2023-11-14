@@ -43,7 +43,9 @@
                                 <!-- Asegúrate de que la lista de clientes esté disponible para la vista -->
                                 <select name="filter_client" id="filter_client" class="form-control form-control-sm select2-basic select2-multiselect2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true">
                                 @foreach($clients as $client)
-                                    <option value="client-{{ $client->id }}">{{ $client->first_name }} {{ $client->last_name }}</option>
+                                    @if($client->clientid)
+                                        <option value="client-{{ $client->clientid }}">{{ $client->first_name }} {{ $client->last_name }}</option>
+                                    @endif
                                 @endforeach
                                 @foreach($boards as $board)
                                     @foreach($board['leads'] as $lead) 
