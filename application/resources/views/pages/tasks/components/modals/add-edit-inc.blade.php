@@ -5,7 +5,7 @@
         <!--project-->
         <div class="form-group row">
             <label
-                class="col-sm-12 col-lg-3 text-left control-label col-form-label required">{{ cleanLang(__('lang.project')) }}*</label>
+                class="col-sm-12 col-lg-3 text-left control-label col-form-label ">{{ cleanLang(__('lang.project')) }}*</label>
             <div class="col-sm-12 col-lg-9">
                 <select name="task_projectid" id="task_projectid"
                     class="projects_assigned_toggle projects_assigned_client_toggle form-control form-control-sm js-select2-basic-search-modal select2-hidden-accessible"

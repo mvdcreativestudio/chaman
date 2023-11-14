@@ -119,7 +119,7 @@
                     </ul>
                 </li> --}}
 
-                {{-- <!--projects[done]-->
+                <!--projects[done]-->
                 @if(config('visibility.modules.projects'))
                 <li data-modular-id="main_menu_team_projects"
                     class="sidenav-menu-item {{ $page['mainmenu_projects'] ?? '' }}">
@@ -142,18 +142,18 @@
                                 class="{{ $page['submenu_projects'] ?? '' }}">{{ cleanLang(__('lang.projects')) }}</a>
                         </li>
                         @endif
-                        <li class="sidenav-submenu {{ $page['submenu_templates'] ?? '' }}"
+                        {{-- <li class="sidenav-submenu {{ $page['submenu_templates'] ?? '' }}"
                             id="submenu_project_templates">
                             <a href="{{ _url('/templates/projects') }}"
                                 class="{{ $page['submenu_templates'] ?? '' }}">{{ cleanLang(__('lang.templates')) }}</a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
                 @endif
-                <!--projects--> --}}
+                <!--projects-->
 
 
-                {{-- <!--tasks[done]-->
+                <!--tasks[done]-->
                 @if(config('visibility.modules.tasks'))
                 <li data-modular-id="main_menu_team_tasks"
                     class="sidenav-menu-item {{ $page['mainmenu_tasks'] ?? '' }} menu-tooltip menu-with-tooltip"
@@ -165,7 +165,7 @@
                     </a>
                 </li>
                 @endif
-                <!--tasks--> --}}
+                <!--tasks-->
 
                 
 

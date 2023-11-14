@@ -236,7 +236,7 @@
                             data-action-ajax-loading-target="commonModalBody" data-save-button-class=""
                             data-project-progress="0">
                             <i class="ti-folder"></i> {{ cleanLang(__('lang.project')) }}</a>
-                        @endif
+                        @endif--}}
 
                         <!-- task -->
                         @if(config('visibility.modules.tasks') && auth()->user()->role->role_tasks >= 2)
@@ -249,7 +249,7 @@
                             data-action-ajax-loading-target="commonModalBody" data-save-button-class=""
                             data-project-progress="0">
                             <i class="ti-menu-alt"></i> {{ cleanLang(__('lang.task')) }}</a>
-                        @endif --}}
+                        @endif 
 
                         <!-- lead -->
                         @if(config('visibility.modules.leads') && auth()->user()->role->role_leads >= 2)

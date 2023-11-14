@@ -82,7 +82,7 @@
         @endif
         <!--/#client-->
 
-        <!--SELECT TEMPLATE-->
+        {{-- <!--SELECT TEMPLATE-->
         @if($page['section'] == 'create')
         <div class="client-selectors">
             <div class="form-group row">
@@ -114,7 +114,7 @@
             </div>
         </div>
         @endif
-        <!--/#SELECT TEMPLATE-->
+        <!--/#SELECT TEMPLATE--> --}}
 
 
         <!--TITLE-->
