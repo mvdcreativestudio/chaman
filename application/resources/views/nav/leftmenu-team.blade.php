@@ -251,7 +251,7 @@
                     <ul aria-expanded="false" class="collapse">
                         
                         <li class="sidenav-menu-item {{ $page['mainmenu_messages'] ?? '' }} menu-tooltip menu-with-tooltip" id="submenu_contacts">
-                            <a href="/messages"
+                            <a href="/conversations"
                                 class="{{ $page['submenu_customers'] ?? '' }}">Conversaciones</a>
                         </li>
                         

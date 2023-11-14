@@ -61,6 +61,14 @@ use App\Http\Controllers\ObjectiveDetailController;
 
 Route::get('/objective-detail', [ObjectiveDetailController::class, 'show'])->name('objective-detail');
 
+//SUMERIA - PEDIDOS RRSS / Conversaciones
+
+use App\Http\Controllers\ConversationsController;
+
+Route::get('/conversations', [ConversationsController::class, 'show'])->name('conversations.show');
+
+
+
 
 
 
