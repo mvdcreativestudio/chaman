@@ -141,7 +141,7 @@ class LeadRepository {
             }
 
             if (!empty($leadIds)) {
-                $leads->whereIn('id', $leadIds);
+                $leads->whereIn('lead_id', $leadIds);
             }
 
             //filter archived leads
@@ -291,6 +291,7 @@ class LeadRepository {
         //eager load
         $leads->with([
             'tags',
+            'client',
             'leadstatus',
             'attachments',
             'assigned',
@@ -325,24 +326,31 @@ class LeadRepository {
         //save new user
         $lead = new $this->leads;
 
-        //data
         $lead->lead_creatorid = auth()->id();
-        $lead->lead_firstname = request('lead_firstname');
-        $lead->lead_lastname = request('lead_lastname');
-        $lead->lead_email = request('lead_email');
-        $lead->lead_phone = request('lead_phone');
-        $lead->lead_job_position = request('lead_job_position');
-        $lead->lead_company_name = request('lead_company_name');
-        $lead->lead_website = request('lead_website');
-        $lead->lead_street = request('lead_street');
-        $lead->lead_city = request('lead_city');
-        $lead->lead_state = request('lead_state');
-        $lead->lead_zip = request('lead_zip');
-        $lead->lead_country = request('lead_country');
-        $lead->lead_source = request('lead_source');
+
+        if (request('is_client_switch')) {
+            // Asignar client_id
+            $lead->lead_clientid = request('client_select');
+        } else {
+            //data
+            $lead->lead_firstname = request('lead_firstname');
+            $lead->lead_lastname = request('lead_lastname');
+            $lead->lead_email = request('lead_email');
+            $lead->lead_phone = request('lead_phone');
+            $lead->lead_job_position = request('lead_job_position');
+            $lead->lead_company_name = request('lead_company_name');
+            $lead->lead_website = request('lead_website');
+            $lead->lead_street = request('lead_street');
+            $lead->lead_city = request('lead_city');
+            $lead->lead_state = request('lead_state');
+            $lead->lead_zip = request('lead_zip');
+            $lead->lead_country = request('lead_country');
+            $lead->lead_source = request('lead_source');
+            $lead->lead_value = request('lead_value');  
+        }
+
         $lead->lead_title = request('lead_title');
         $lead->lead_description = request('lead_description');
-        $lead->lead_value = request('lead_value');
         $lead->lead_last_contacted = request('lead_last_contacted'); //or \Carbon\Carbon::now()
         $lead->lead_status = request('lead_status');
         $lead->lead_position = $position;
@@ -360,50 +368,56 @@ class LeadRepository {
     }
 
     /**
-     * update a record
+     * Update a record
      * @param int $id record id
      * @return mixed int|bool
      */
     public function update($id) {
 
-        //get the record
+        // Obtener el registro
         if (!$lead = $this->leads->find($id)) {
             Log::error("record could not be found", ['process' => '[LeadAssignedRepository]', config('app.debug_ref'), 'function' => __function__, 'file' => basename(__FILE__), 'line' => __line__, 'path' => __file__, 'lead_id' => $id ?? '']);
             return false;
         }
 
-        //last updated
-        $lead->lead_updatorid = auth()->id();
+        if (request('is_client')) {
+            // Actualizar client_id
+            $lead->lead_clientid = request('client_id');
+        } else {
+            // Actualizar datos de lead
+            $lead->lead_firstname = request('lead_firstname');
+            $lead->lead_lastname = request('lead_lastname');
+            $lead->lead_email = request('lead_email');
+            $lead->lead_phone = request('lead_phone');
+            $lead->lead_job_position = request('lead_job_position');
+            $lead->lead_company_name = request('lead_company_name');
+            $lead->lead_website = request('lead_website');
+            $lead->lead_street = request('lead_street');
+            $lead->lead_city = request('lead_city');
+            $lead->lead_state = request('lead_state');
+            $lead->lead_zip = request('lead_zip');
+            $lead->lead_country = request('lead_country');
+            $lead->lead_source = request('lead_source');
+            $lead->lead_value = request('lead_value');
+        }
 
-        //general
-        $lead->lead_firstname = request('lead_firstname');
-        $lead->lead_lastname = request('lead_lastname');
-        $lead->lead_email = request('lead_email');
-        $lead->lead_phone = request('lead_phone');
-        $lead->lead_job_position = request('lead_job_position');
-        $lead->lead_company_name = request('lead_company_name');
-        $lead->lead_website = request('lead_website');
-        $lead->lead_street = request('lead_street');
-        $lead->lead_city = request('lead_city');
-        $lead->lead_state = request('lead_state');
-        $lead->lead_zip = request('lead_zip');
-        $lead->lead_country = request('lead_country');
-        $lead->lead_source = request('lead_source');
         $lead->lead_title = request('lead_title');
         $lead->lead_description = request('lead_description');
-        $lead->lead_value = request('lead_value');
-        $lead->lead_last_contacted = request('lead_last_contacted');
+        $lead->lead_last_contacted = request('lead_last_contacted'); // or \Carbon\Carbon::now()
         $lead->lead_status = request('lead_status');
-
-        //save
+        $lead->lead_updatorid = auth()->id();
+        $lead->lead_categoryid = request('lead_categoryid');
+        
+        // Guardar
         if ($lead->save()) {
-            //apply custom fields data
+            // Aplicar campos personalizados
             $this->applyCustomFields($lead->lead_id);
             return $lead->lead_id;
         } else {
             return false;
         }
     }
+
 
     /**
      * feed for leads
@@ -511,25 +525,31 @@ class LeadRepository {
      */
     public function cloneLead($lead = '', $data = []) {
 
-        //we are copying
-        $new_lead = $lead->replicate();
-        $new_lead->lead_created = now();
-        $new_lead->lead_creatorid = auth()->id();
-        $new_lead->lead_title = $data['lead_title'];
+    $new_lead = $lead->replicate();
+    $new_lead->lead_created = now();
+    $new_lead->lead_creatorid = auth()->id();
+    $new_lead->lead_title = $data['lead_title'];
+    $new_lead->lead_status = $data['lead_status'];
+    $new_lead->lead_email = $data['lead_email'];
+    $new_lead->lead_value = $data['lead_value'];
+    $new_lead->lead_phone = $data['lead_phone'];
+    $new_lead->lead_company_name = $data['lead_company_name'];
+    $new_lead->lead_website = $data['lead_website'];
+    $new_lead->lead_last_contacted = null;
+    $new_lead->lead_converted_by_userid = null;
+    $new_lead->lead_converted_date = null;
+    $new_lead->lead_converted_clientid = null;
+    $new_lead->lead_active_state = 'active';
+
+    // Establecer cliente o nombres según corresponda
+    if (isset($data['lead_clientid'])) {
+        $new_lead->lead_clientid = $data['lead_clientid'];
+    } else {
         $new_lead->lead_firstname = $data['lead_firstname'];
         $new_lead->lead_lastname = $data['lead_lastname'];
-        $new_lead->lead_status = $data['lead_status'];
-        $new_lead->lead_email = $data['lead_email'];
-        $new_lead->lead_value = $data['lead_value'];
-        $new_lead->lead_phone = $data['lead_phone'];
-        $new_lead->lead_company_name = $data['lead_company_name'];
-        $new_lead->lead_website = $data['lead_website'];
-        $new_lead->lead_last_contacted = null;
-        $new_lead->lead_converted_by_userid = null;
-        $new_lead->lead_converted_date = null;
-        $new_lead->lead_converted_clientid = null;
-        $new_lead->lead_active_state = 'active';
-        $new_lead->save();
+    }
+
+    $new_lead->save();
 
         //copy check list
         if ($data['copy_checklist']) {

@@ -8,7 +8,20 @@
 </div>
 
 <div class="modal-selector p-t-30 p-b-1 m-b-30">
-
+    @if($lead->lead_clientid)
+        <div class="form-group row">
+            <label class="col-sm-12 col-lg-3 text-left control-label col-form-label required">@lang('lang.client')</label>
+            <div class="col-sm-12 col-lg-9">
+                <select class="select2-basic form-control form-control-sm" id="lead_client_id" name="lead_client_id">
+                    @foreach($clients as $client)
+                        <option value="{{ $client->client_id }}" {{ $client->client_id == $lead->lead_clientid ? 'selected' : '' }}>
+                            {{ $client->client_company_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    @else
     <!--first name-->
     <div class="form-group row">
         <label
@@ -28,7 +41,7 @@
                 value="{{ $lead->lead_lastname }}">
         </div>
     </div>
-
+    @endif
 
     <!--statuses-->
     <div class="form-group row">

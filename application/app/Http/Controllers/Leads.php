@@ -143,7 +143,10 @@ class Leads extends Controller {
 
     protected $clientRepo;
 
+    protected $client;
+
     public function __construct(
+        Client $client,
         LeadRepository $leadrepo,
         TagRepository $tagrepo,
         UserRepository $userrepo,
@@ -334,7 +337,7 @@ class Leads extends Controller {
         //get all tags (type: lead) - for filter panel
         $tags = $this->tagrepo->getByType('lead');
 
-        $clients = $this->clientRepo->search();
+        $clients = \App\Models\Client::all();
 
         //all available lead statuses
         $statuses = \App\Models\LeadStatus::all();
@@ -378,7 +381,7 @@ class Leads extends Controller {
         //get all tags (type: lead) - for filter panel
         $tags = $this->tagrepo->getByType('lead');
 
-        $clients = $this->clientRepo->search();
+        $clients = \App\Models\Client::all();
 
         //reponse payload
         $payload = [
@@ -459,7 +462,7 @@ class Leads extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function create(CategoryRepository $categoryrepo) {
+    public function create(CategoryRepository $categoryrepo, ClientRepository $clientRepo) {
 
         //lead categories
         $categories = $categoryrepo->get('lead');
@@ -481,6 +484,8 @@ class Leads extends Controller {
         ]);
         $fields = $this->getCustomFields();
 
+        $clients = \App\Models\Client::all();
+
         //reponse payload
         $payload = [
             'page' => $this->pageSettings('create'),
@@ -490,6 +495,7 @@ class Leads extends Controller {
             'sources' => $sources,
             'stats' => $this->statsWidget(),
             'fields' => $fields,
+            'clients' => $clients
         ];
 
         //show the form
@@ -534,7 +540,6 @@ class Leads extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(LeadStoreUpdate $request, LeadAssignedRepository $assignedrepo) {
-
         //custom field validation
         if ($messages = $this->customFieldValidationFailed()) {
             abort(409, $messages);
@@ -777,6 +782,8 @@ class Leads extends Controller {
             $has_reminder = false;
         }
 
+        $clients = \App\Models\Client::all();
+
         //reponse payload
         $payload = [
             'page' => $this->pageSettings('lead', $lead),
@@ -796,6 +803,7 @@ class Leads extends Controller {
             'resource_id' => $id,
             'has_reminder' => $has_reminder,
             'progress' => $this->checklistProgress($checklists),
+            'clients' => $clients,
         ];
 
         //showing just the tab
@@ -816,7 +824,6 @@ class Leads extends Controller {
      */
     public function edit(CategoryRepository $categoryrepo, $id) {
 
-        //nothing here
     }
     /**
      * update a lead in storage.
@@ -1870,6 +1877,25 @@ class Leads extends Controller {
         //get the lead
         $leads = $this->leadrepo->search($id);
         $lead = $leads->first();
+
+        if (request()->filled('lead_client_id')) {
+            $lead->lead_clientid = request('lead_client_id');
+            $lead->save();
+    
+            // Resto del código para procesar y responder
+            $leads = $this->leadrepo->search($id);
+            $this->processLead($leads->first());
+    
+            //reponse payload
+            $payload = [
+                'type' => 'update-client',
+                'client_name' => Client::where('client_id', $lead->lead_clientid)->first()->client_company_name,
+                'client_id' => $lead->lead_clientid,
+                'leads' => $leads,
+            ];
+    
+            return new UpdateResponse($payload);
+        }
 
         //validate
         $validator = Validator::make(request()->all(), [
@@ -3264,9 +3290,12 @@ class Leads extends Controller {
         //all available lead statuses
         $statuses = \App\Models\LeadStatus::all();
 
+        $clients = \App\Models\Client::all();
+
         //payload
         $payload = [
             'lead' => $lead,
+            'clients' => $clients,
             'statuses' => $statuses,
         ];
 
@@ -3283,14 +3312,15 @@ class Leads extends Controller {
      */
     public function cloneStore(LeadAssignedRepository $assignedrepo, $id) {
 
-        //lead
+        // Obtener el lead original
         $lead = \App\Models\Lead::Where('lead_id', $id)->first();
-
-        //clone the lead
+    
+        // Determinar si se está clonando con un cliente
+        $isCloningWithClient = request()->filled('lead_client_id');
+    
+        // Datos para la clonación
         $data = [
             'lead_title' => request('lead_title'),
-            'lead_firstname' => request('lead_firstname'),
-            'lead_lastname' => request('lead_lastname'),
             'lead_status' => request('lead_status'),
             'lead_email' => request('lead_email'),
             'lead_value' => request('lead_value'),
@@ -3300,42 +3330,51 @@ class Leads extends Controller {
             'copy_checklist' => (request('copy_checklist') == 'on') ? true : false,
             'copy_files' => (request('copy_files') == 'on') ? true : false,
         ];
+    
+        // Agregar cliente o nombres según corresponda
+        if ($isCloningWithClient) {
+            $data['lead_clientid'] = request('lead_client_id');
+        } else {
+            $data['lead_firstname'] = request('lead_firstname');
+            $data['lead_lastname'] = request('lead_lastname');
+        }
+    
+        // Clonar el lead
         $new_lead = $this->leadrepo->cloneLead($lead, $data);
-
-        //assign the lead to self, for none admin users
+    
+        // Asignar el lead a sí mismo para usuarios que no sean administradores
         if (auth()->user()->role->role_assign_leads == 'no') {
             $assignedrepo->add($new_lead->lead_id, auth()->id());
         }
-
-        //get table friendly collection
+    
+        // Obtener una colección amigable para la tabla
         $leads = $this->leadrepo->search($new_lead->lead_id);
-
-        //process for timers
+    
+        // Procesar para temporizadores
         $this->processLeads($leads);
-
-        //apply some permissions
+    
+        // Aplicar permisos
         if ($leads) {
             foreach ($leads as $lead) {
                 $this->applyPermissions($lead);
             }
         }
-
-        //apply custom fields
+    
+        // Aplicar campos personalizados
         if ($leads) {
             foreach ($leads as $lead) {
                 $lead->fields = $this->getCustomFields($lead);
             }
         }
-
-        //payload
+    
+        // Preparar el payload
         $payload = [
             'lead' => $leads->first(),
             'leads' => $leads,
         ];
-
-        //show the view
+    
+        // Mostrar la vista
         return new CloneStoreResponse($payload);
-
     }
 
     /**

@@ -54,6 +54,19 @@ class UpdateResponse implements Responsable {
 
         }
 
+        if (isset($type) && $type == 'update-client') {
+            $jsondata['dom_html'][] = [
+                'selector' => "#card-lead-client",
+                'action' => 'replace',
+                'value' => $client_name,
+            ];
+            $jsondata['dom_classes'][] = [
+                'selector' => '#card-lead-element-container-name',
+                'action' => 'remove',
+                'value' => 'loading',
+            ];
+        }
+
         //update name
         if (isset($type) && $type == 'update-name') {
             $jsondata['dom_html'][] = array(

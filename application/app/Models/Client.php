@@ -151,7 +151,7 @@ class Client extends Model {
     
     public function leads()
     {
-        return $this->hasMany(Lead::class, 'lead_clientid', 'client_id');
+        return $this->hasMany('App\Models\Lead', 'lead_clientid', 'client_id');
     }
 
     /**

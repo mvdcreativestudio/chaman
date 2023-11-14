@@ -43,13 +43,26 @@
                                 <!-- Asegúrate de que la lista de clientes esté disponible para la vista -->
                                 <select name="filter_client" id="filter_client" class="form-control form-control-sm select2-basic select2-multiselect2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true">
                                 @foreach($clients as $client)
-                                    <option value="client-{{ $client->id }}">{{ $client->first_name }} {{ $client->last_name }}</option>
+                                    @if($client->client_id)
+                                        <option value="client-{{ $client->client_id }}">{{ $client->client_company_name }}</option>
+                                    @endif
                                 @endforeach
-                                @foreach($boards as $board)
-                                    @foreach($board['leads'] as $lead) 
-                                        <option value="lead-{{ $lead->id }}">{{ $lead->lead_firstname }} {{ $lead->lead_lastname }}</option>
+                                @if(isset($boards))
+                                    @foreach($boards as $board)
+                                        @foreach($board['leads'] as $lead)
+                                            @if($lead->lead_firstname)
+                                            <option value="lead-{{ $lead->id }}">{{ $lead->lead_firstname }} {{ $lead->lead_lastname }}</option>
+                                            @endif
+                                        @endforeach
                                     @endforeach
-                                @endforeach
+                                @endif
+                                @if(isset($leads))
+                                    @foreach($leads as $lead)
+                                        @if($lead->lead_firstname)
+                                        <option value="lead-{{ $lead->lead_id }}">{{ $lead->lead_firstname }} {{ $lead->lead_lastname }}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
                                 </select>
                             
                             </div>
