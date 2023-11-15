@@ -239,7 +239,7 @@ class IndexKanbanResponse implements Responsable {
         } else {
             //standard view
             $page['loading_target'] = 'leads-td-container';
-            return view('pages/leads/wrapper', compact('page', 'boards', 'stats', 'categories', 'tags', 'statuses', 'fields'))->render();
+            return view('pages/leads/wrapper', compact('page', 'boards', 'stats', 'categories', 'tags', 'statuses', 'fields', 'clients'))->render();
         }
 
     }

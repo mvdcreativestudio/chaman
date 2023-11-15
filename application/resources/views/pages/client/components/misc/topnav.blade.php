@@ -58,13 +58,13 @@
                         </div>
                     </li>
                     <!--tickets-->
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link  tabs-menu-item js-dynamic-url js-ajax-ux-request {{ $page['tabmenu_tickets'] ?? '' }}"
                             id="tabs-menu-tickets" data-toggle="tab" data-loading-class="loading-tabs"
                             data-loading-target="embed-content-container"
                             data-dynamic-url="{{ url('clients') }}/{{ $client->client_id }}/tickets"
                             data-url="{{ url('/tickets') }}?ticketresource_type=client&ticketresource_id={{ $client->client_id }}&source=ext&page=1"
-                            href="#clients_ajaxtab" role="tab">{{ cleanLang(__('lang.tickets')) }}</a></li>
+                            href="#clients_ajaxtab" role="tab">{{ cleanLang(__('lang.tickets')) }}</a></li> --}}
                     <!--contracts-->
                     <li class="nav-item hidden">
                         <a class="nav-link tabs-menu-item js-dynamic-url js-ajax-ux-request {{ $page['tabmenu_projects'] ?? '' }}"

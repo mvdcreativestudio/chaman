@@ -75,8 +75,16 @@
     </div>
     <div class="x-meta">
         <!--name-->
-        <label class="label label-outline-default p-t-3 p-b-3 p-r-8 p-l-8">{{ $lead->lead_firstname }}
-            {{ $lead->lead_lastname }}</label>
+        <label class="label label-outline-default p-t-3 p-b-3 p-r-8 p-l-8">
+            @if($lead->lead_firstname)
+            {{ $lead->lead_firstname }}
+            {{ $lead->lead_lastname }}
+            @elseif($lead->client)
+            {{ $lead->client->client_company_name}}
+            @else
+            {{ "No hay nombre para mostrar "}}
+            @endif
+        </label>
         <!--value-->
         @if(config('system.settings_leads_kanban_value') == 'show')
         <div><label
@@ -97,7 +105,14 @@
         <!--telephone-->
         @if(config('system.settings_leads_kanban_telephone') == 'show')
         <span class="wordwrap"><strong>{{ cleanLang(__('lang.telephone')) }}:</strong>
-            {{ $lead->lead_phone ?? '---' }}</span>
+            @if($lead->lead_phone)
+            <a href="tel:{{ $lead->lead_phone }}">{{ $lead->lead_phone }}</a>
+            @elseif($lead->client)
+            <a href="tel:{{ $lead->client->client_phone }}">{{ $lead->client->client_phone }}</a>
+            @else
+            {{ "No hay telefono para mostrar "}}
+            @endif
+        </span>
         @endif
         <!-- Franquicia (solo para admin_role) -->
         @if(request()->input('user_role_type') == 'admin_role')
@@ -122,7 +137,7 @@
         <span><strong>{{ cleanLang(__('lang.category')) }}:</strong> {{ $lead->category_name ?? '---' }}</span>
         @endif
         <!--email-->
-        @if(config('system.settings_leads_kanban_email') == 'show')
+        @if(config('system.settings_leads_kanban_email') == 'show' && $lead->lead_email)
         <span class="wordwrap"><strong>{{ cleanLang(__('lang.email')) }}:</strong>
             {{ $lead->lead_email ?? '---' }}</span>
         @endif

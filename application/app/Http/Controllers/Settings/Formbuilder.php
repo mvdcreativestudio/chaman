@@ -84,37 +84,42 @@ class Formbuilder extends Controller {
 
         //crumbs, page data & stats
         $page = $this->pageSettings();
-
+    
         //get the form
         $webforms = $this->webformrepo->search($id);
         if (!$webform = $webforms->first()) {
             abort(404);
         }
-
+    
         $first_last_name = 0;
         $fields = json_decode(request('webform-builder-payload'));
+        $isClientSwitchSelected = request('is_client_switch') === 'true';
+    
         foreach ($fields as $field) {
-            if (isset($field->name) && ($field->name == 'lead_firstname' || $field->name == 'lead_lastname')) {
-                $first_last_name++;
+            if (!$isClientSwitchSelected) {
+                if (isset($field->name) && ($field->name == 'lead_firstname' || $field->name == 'lead_lastname')) {
+                    $first_last_name++;
+                }
             }
         }
-        if ($first_last_name != 2) {
+        if (!$isClientSwitchSelected && $first_last_name != 2) {
             abort(409, __('lang.lead_first_last_name_required'));
         }
-
+    
         //update webform
         $webform->webform_builder_payload = json_encode(request('webform-builder-payload'));
         $webform->save();
-
+    
         //reponse payload
         $payload = [
             'page' => $page,
             'webform' => $webform,
         ];
-
+    
         //show the view
         return new SaveFormResponse($payload);
     }
+    
 
     /**
      * Get all the enabled lead custom fields and render then as an array that

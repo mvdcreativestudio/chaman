@@ -20,7 +20,6 @@
 </div>
 @endif
 
-
 <!--filter-->
 @if(auth()->user()->is_team)
 @include('pages.leads.components.misc.filter-leads')
