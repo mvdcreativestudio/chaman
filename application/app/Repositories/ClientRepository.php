@@ -270,6 +270,9 @@ class ClientRepository {
         $client->client_billing_country = request('client_billing_country');
         $client->client_categoryid = (request()->filled('client_categoryid')) ? request('client_categoryid') : 2; //default
         $client->franchise_id = auth()->user()->franchise_id;
+        if ($client->franchise_id === null) {
+            $client->franchise_id = null;
+        }
 
         //module settings
         $client->client_app_modules = request('client_app_modules');

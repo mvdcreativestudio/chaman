@@ -49,7 +49,7 @@
                                 data-url="{{ urlResource('/clients?action=sort&orderby=client_status&sortorder=asc') }}">{{ cleanLang(__('lang.status')) }}<span
                                     class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
                         </th>
-                        @if(request('user_role_type') == 'admin_role' || request('user_role_type') == 'franchise_admin_role'))
+                        @if(request('user_role_type') == 'admin_role' || request('user_role_type') == 'franchise_admin_role')
                         <th class="clients_col_creator">
                             Creador
                         </th>

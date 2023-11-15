@@ -62,9 +62,14 @@
     @endif
     @if(request('user_role_type') == 'admin_role')
     <td class="clients_col_franchise" id="clients_col_franchise_{{ $client->client_id }}">
-        {{ $client->franchise->name }}
+        @if($client->franchise_id == 0)
+            ---
+        @else
+            {{ $client->franchise->name }}
+        @endif
     </td>
     @endif
+
     @if(config('visibility.action_column'))
     <td class="clients_col_action actions_column" id="clients_col_action_{{ $client->client_id }}">
         <!--action button-->
