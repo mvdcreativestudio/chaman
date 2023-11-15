@@ -366,7 +366,6 @@ class Contacts extends Controller {
             'no_results_message' => __('lang.no_results_found'),
             'mainmenu_contacts' => 'active',
             'mainmenu_customers' => 'active',
-            'submenu_contacts' => 'active',
             'sidepanel_id' => 'sidepanel-filter-contacts',
             'dynamic_search_url' => url('contacts/search?action=search&contactresource_id=' . request('contactresource_id') . '&contactresource_type=' . request('contactresource_type')),
             'add_button_classes' => '',

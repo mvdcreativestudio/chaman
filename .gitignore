@@ -8,3 +8,4 @@ application/storage/logs
 application/storage/framework
 storage/temp
 storage/avatars
+application/storage/framework/cache/data
