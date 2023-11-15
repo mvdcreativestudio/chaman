@@ -54,7 +54,7 @@ class ClientRepository {
         $clients = $this->clients->newQuery();
 
         // all client fields
-        $clients->selectRaw('*');
+        $clients->selectRaw('clients.*');
 
         //count: clients projects by status
         foreach (config('settings.project_statuses') as $key => $value) {
@@ -76,16 +76,24 @@ class ClientRepository {
         $clients->sumInvoices('all');
 
         //sum payments
-        $clients->selectRaw("(SELECT SUM(payment_amount)
-                                     FROM payments
-                                     WHERE payments.payment_clientid = clients.client_id
-                                     ) AS sum_all_payments");
+        $clients->select('clients.*');
+
+        $clients->addSelect([
+            'sum_all_payments' => function ($query) {
+                $query->selectRaw("SUM(payment_amount)")
+                      ->from('payments')
+                      ->whereColumn('payments.payment_clientid', 'clients.client_id');
+            }
+        ]);
+
 
         //join: primary contact
         $clients->leftJoin('users', function ($join) {
             $join->on('users.clientid', '=', 'clients.client_id');
             $join->on('users.account_owner', '=', DB::raw("'yes'"));
         });
+
+        
 
         //join: client category
         $clients->leftJoin('categories', 'categories.category_id', '=', 'clients.client_categoryid');
@@ -109,6 +117,7 @@ class ClientRepository {
         if (request()->filled('filter_client_id')) {
             $clients->where('client_id', request('filter_client_id'));
         }
+        
         if (is_numeric($id)) {
             $clients->where('client_id', $id);
         }
@@ -184,6 +193,22 @@ class ClientRepository {
 
         }
 
+        $clients->with(['franchise', 'creator']);
+
+        switch (request()->input('user_role_type')) {
+            case 'admin_role':
+                break;
+            case 'franchise_admin_role':
+                // Filtra los clientes pertenecientes a la franquicia del usuario
+                $clients->where('clients.franchise_id', auth()->user()->franchise_id);
+                break;
+            case 'common_role':
+                // Filtra los clientes creados por el usuario y pertenecientes a su franquicia
+                $clients->where('clients.client_creatorid', auth()->id())
+                        ->where('clients.franchise_id', auth()->user()->franchise_id);
+                break;
+        }    
+
         //sorting
         if (in_array(request('sortorder'), array('desc', 'asc')) && request('orderby') != '') {
             //direct column name
@@ -244,6 +269,7 @@ class ClientRepository {
         $client->client_billing_zip = request('client_billing_zip');
         $client->client_billing_country = request('client_billing_country');
         $client->client_categoryid = (request()->filled('client_categoryid')) ? request('client_categoryid') : 2; //default
+        $client->franchise_id = auth()->user()->franchise_id;
 
         //module settings
         $client->client_app_modules = request('client_app_modules');

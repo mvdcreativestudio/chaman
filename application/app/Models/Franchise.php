@@ -41,7 +41,13 @@ class Franchise extends Model
     
     public function projects()
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany('App\Models\Project', 'franchise_id');
     }
+
+    public function clients()
+    {
+        return $this->hasMany('App\Models\Client', 'franchise_id', 'client_id');
+    }
+
 }
 

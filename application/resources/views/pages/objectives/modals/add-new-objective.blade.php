@@ -145,29 +145,6 @@ function toggleDropdowns() {
         $('#user_dropdown').hide();
     }
 }
-
-// Ejemplo de función AJAX para cargar franquicias
-function loadFranchises() {
-    $.get('/path/to/franchises/endpoint', function(data) {
-        let options = '<option value="">Seleccione una franquicia</option>';
-        data.forEach(franchise => {
-            options += `<option value="${franchise.id}">${franchise.name}</option>`;
-        });
-        $('#franchise_id').html(options);
-    });
-}
-
-// Ejemplo de función AJAX para cargar usuarios
-function loadUsers() {
-    $.get('/path/to/users/endpoint', function(data) {
-        let options = '<option value="">Seleccione un usuario</option>';
-        data.forEach(user => {
-            options += `<option value="${user.id}">${user.first_name} ${user.last_name}</option>`;
-        });
-        $('#user_id').html(options);
-    });
-}
-
 </script>
 
 
