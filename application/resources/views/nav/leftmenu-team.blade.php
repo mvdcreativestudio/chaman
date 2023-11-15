@@ -76,12 +76,6 @@
                                 class="{{ $page['submenu_customers'] ?? '' }}">{{ cleanLang(__('lang.clients')) }}</a>
                         </li>
                         @endif
-                        @if(config('visibility.modules.users'))
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/users"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">{{ cleanLang(__('lang.client_users')) }}</a>
-                        </li>
-                        @endif
                     </ul>
                 </li>
                 @endif
