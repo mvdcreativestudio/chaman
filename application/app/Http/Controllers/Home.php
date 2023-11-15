@@ -174,58 +174,56 @@ class Home extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function teamDashboard() {
-
         //payload
         $payload = [];
-
+    
         //[leads]
         $payload['leads'] = [
             'total' => $this->statsrepo->countLeads([
                 'type' => 'count',
-                'created_by' => auth()->id(),
-            ]),
+            ], 'team'), // Aquí pasamos 'team' como el segundo parámetro
         ];
-
+    
         //[projects][all]
         $payload['projects'] = [
             'pending' => $this->statsrepo->countProjects([
                 'status' => 'pending',
                 'assigned' => auth()->id(),
-            ]),
+            ], 'team'), // También aquí
         ];
-
+    
         //tasks]
         $payload['tasks'] = [
             'new' => $this->statsrepo->countTasks([
                 'status' => 'new',
                 'assigned' => auth()->id(),
-            ]),
+            ], 'team'), // Y aquí
             'pending' => $this->statsrepo->countTasks([
                 'status' => 'pending',
                 'assigned' => auth()->id(),
-            ]),
+            ], 'team'), // Y aquí
             'completed' => $this->statsrepo->countTasks([
                 'status' => 'completed',
                 'assigned' => auth()->id(),
-            ]),
+            ], 'team'), // Y aquí
         ];
-
+    
         //filter
         request()->merge([
             'eventtracking_userid' => auth()->id(),
         ]);
         $payload['all_events'] = $this->trackingrepo->search(20);
-
+    
         //filter
         request()->merge([
             'filter_assigned' => [auth()->id()],
         ]);
         $payload['my_projects'] = $this->projectrepo->search('', ['limit' => 30]);
-
+    
         //return payload
         return $payload;
-
     }
+    
 
     /**
      * display client dashboard
@@ -296,6 +294,7 @@ class Home extends Controller {
         //[leads]
 
         $leads = $this->statsrepo;
+        
         $payload['leads'] = [
             'total' => $leads->countLeads([
                 'type' => 'count',
@@ -307,8 +306,8 @@ class Home extends Controller {
             ]),
             'today' => $leads->countLeads([
                 'type' => 'count',
-                'created_start' => \Carbon\Carbon::today()->format('Y-m-d'),
-                'created_end' => \Carbon\Carbon::now()->format('Y-m-d'),
+                'created_start' => \Carbon\Carbon::today(),
+                'created_end' => \Carbon\Carbon::now(),
             ]),
             'converted' => $leads->countLeads([
                 'type' => 'count',

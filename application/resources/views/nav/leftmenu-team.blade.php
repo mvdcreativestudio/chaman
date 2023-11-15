@@ -238,7 +238,7 @@
                 @endif
                 <!--billing--> --}}
 
-                <!--PEDIDOS RRSS HARDCODEAO-->
+                {{-- <!--PEDIDOS RRSS HARDCODEAO-->
                 @if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
                 config('visibility.modules.users')]))
                 <li data-modular-id="main_menu_team_clients"
@@ -274,7 +274,7 @@
                     </ul>
                 </li>
                 @endif
-                <!--PEDIDOS RRSS-->
+                <!--PEDIDOS RRSS--> --}}
 
 
                 {{-- <!--proposals [multiple]-->

@@ -64,12 +64,12 @@
                 </button>
             </div>
         </div>
-        @if(request()->input('user_role_type') == 'admin_role')
+        @if(request()->input('user_role_type') == 'admin_role' && $lead->franchise_id !== 0)
         <div class="x-element" id="card-lead-element-container-franchise">
             <i class="ti-layout-grid2"></i> <span>{{ cleanLang(__('lang.franchise')) }}: </span>
             <span class="x-highlight js-card-settings-button-static" data-container=".card-modal" id="card-lead-franchise-name" tabindex="0"
-            data-popover-content="card-lead-franchise-name-popover" data-value="{{ $lead->franchise->name }}"
-            data-title="{{ cleanLang(__('lang.franchise')) }}">{{ $lead->franchise->name }}</span>
+                  data-popover-content="card-lead-franchise-name-popover" data-value="{{ $lead->franchise->name }}"
+                  data-title="{{ cleanLang(__('lang.franchise')) }}">{{ $lead->franchise->name }}</span>
         </div>
         @endif
         <!--value-->

@@ -221,7 +221,8 @@
     </div>
     @endif
 
-    @if(config('settings.project_permissions_view_invoices'))
+    <!-- RESUMEN FACTURACION DEL PROYECTO -->
+    {{-- @if(config('settings.project_permissions_view_invoices'))
     <!--INVOICES-->
     <div class="m-t-10 m-b-10">
         <hr>
@@ -268,7 +269,7 @@
             </table>
         </div>
     </div>
-    @endif
+    @endif --}}
 
 
     @if(config('visibility.project_show_custom_fields'))

@@ -268,7 +268,7 @@ class StatsRepository {
      *         - assigned (optional)
      * @return float
      */
-    public function countLeads($data = []) {
+    public function countLeads($data = [], $dashboardType = '') {
 
         $leads = $this->leads->newQuery();
 
@@ -293,9 +293,14 @@ class StatsRepository {
         $leads->whereBetween('lead_created', [$data['created_start'], $data['created_end']]);
         }
 
-        //converted
-        if(isset($data['converted']) && $data['converted'] != 'no') {
-            $leads->where('lead_converted', $data['converted']);
+        // converted
+        if (isset($data['converted']) && $data['converted'] != 'no') {
+            // En lugar de verificar el campo 'lead_converted', verifica 'lead_status'
+            $leads->where('lead_status', 2);
+        }
+
+        if ($dashboardType === 'team') {
+            $leads->where('lead_creatorid', auth()->id());
         }
 
         return $leads->count();

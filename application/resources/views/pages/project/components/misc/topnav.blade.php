@@ -62,7 +62,7 @@
             </li>
             @endif
             <!--billing-->
-            @if(auth()->user()->is_team || auth()->user()->is_client_owner)
+            {{-- @if(auth()->user()->is_team || auth()->user()->is_client_owner)
             <li data-modular-id="project_tabs_menu_financial"
                 class="nav-item dropdown {{ $page['tabmenu_more'] ?? '' }}  {{ menuVisibilityProjectBillingTab() }}">
                 <a class="nav-link dropdown-toggle  tabs-menu-item" data-loading-class="loading-tabs"
@@ -110,7 +110,7 @@
                     <!--[timesheets]-->
                 </div>
             </li>
-            @endif
+            @endif --}}
 
             <!--[MODULES] - dynamic menu-->
             {!! config('module_menus.project_tabs_menu') !!}
