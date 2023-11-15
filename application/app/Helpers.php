@@ -286,7 +286,7 @@ function getUsersAvatar($directory = '', $filename = '', $user_id = '') {
     //dd($user_id);
 
     if ($user_id === 0) {
-        return url('storage/avatars/system/avatar.jpg');
+        return url('storage/avatars/system/avatar.jpeg');
     }
 
     //from database
@@ -296,7 +296,7 @@ function getUsersAvatar($directory = '', $filename = '', $user_id = '') {
         return url(Storage::url($avatar));
     }
     //default avatar
-    return url('storage/avatars/system/default_avatar.jpg');
+    return url('storage/avatars/system/default_avatar.jpeg');
 }
 
 /**
