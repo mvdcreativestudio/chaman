@@ -16,6 +16,9 @@ class Client extends Model {
     protected $primaryKey = 'client_id';
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $guarded = ['client_id'];
+    protected $fillable = [
+        'franchise_id',
+    ];
     const CREATED_AT = 'client_created';
     const UPDATED_AT = 'client_updated';
 
@@ -260,6 +263,14 @@ class Client extends Model {
      */
     public function getLangClientStatusAttribute() {
         return runtimeLang($this->client_status);
+    }
+
+    /**
+     * Obtiene la franquicia del cliente.
+     */
+    public function franchise()
+    {
+        return $this->belongsTo('App\Models\Franchise', 'franchise_id', 'id');
     }
 
 }
