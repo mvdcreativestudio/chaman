@@ -1,5 +1,14 @@
 @extends('layout.wrapper') @section('content')
 <div class="container-fluid">
+
+    <div class="row page-titles">
+
+    <!-- Page Title & Bread Crumbs -->
+    @include('pages.conversations.misc.crumbs')
+    <!--Page Title & Bread Crumbs -->
+
+    </div>
+
     <div class="general d-flex m-0 p-0">
         <div class="izquierda col-10 row m-0 p-0">
 
@@ -23,7 +32,7 @@
 
             <div class="conversacion-abierta col-12 m-0 p-0">
                 <!--chat box -->
-            <div class="chat-box-conv">
+            <div class="chat-box-conv overflow-container">
 
                 <div class="other-message-container d-flex">
                    <div class="userimg-conv">
@@ -60,6 +69,7 @@
 
                     </div>
                  </div>
+                 
                
            </div>
            
@@ -97,7 +107,7 @@
 
             <div class="contactos col-12 m-0 p-0">
                 <!--listado de chats -->
-          <div class="chatlist-conv">
+          <div class="chatlist-conv overflow-container">
             <div class="block-conv">
                 <div class="imgbox-conv">
                     <img src="public\images\Perfiles chat Chaman\Perfil 1.jpeg" class="cover">

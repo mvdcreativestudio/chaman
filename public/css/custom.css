@@ -711,23 +711,14 @@
 }
 
 
-/* Estilos para simular el chat de WhatsApp */
-
-
-/* .container-fluid {
-   background-color: #007b55;
-} */
-
-
-
-
+/* CONVERSACIONES */
 
 
 .header-conv {
    position: relative;
    width: 100%;
-
-   background: orange;
+   background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
+   linear-gradient(0deg, rgba(145, 158, 171, 0.24), rgba(145, 158, 171, 0.24));
    display: flex;
    justify-content: space-between;
    align-items: center;
@@ -756,7 +747,7 @@
 .chat-box-conv {
    position: relative;
    width: 100%;
-   height: calc(100% - 60px);
+   height: calc(100% - 3px);
    padding: 50px;
    overflow-y: auto;
 }
@@ -798,7 +789,8 @@
 }
 
 .other-message-conv p {
-   background: var(--background-light-neutral, #F4F6F8);
+   background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
+   linear-gradient(0deg, rgba(145, 158, 171, 0.24), rgba(145, 158, 171, 0.24));
    text-align: left;
 }
 
@@ -809,7 +801,7 @@
    left: -12px;
    width: 20px;
    height: 20px;
-   background: linear-gradient(225deg, var(--background-light-neutral, #F4F6F8) 0%, var(--background-light-neutral, #F4F6F8) 50%, transparent 50%, transparent);
+   background: linear-gradient(225deg, #FFFFFF 0%, #FFFFFF 50%, transparent 50%, transparent);
 }
 
 .time-chat-act {
@@ -825,7 +817,8 @@
 .chatbox-input-conv { 
    position: relative;
    width: 100%;
-   background: greenyellow;
+   background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
+   linear-gradient(0deg, rgba(145, 158, 171, 0.24), rgba(145, 158, 171, 0.24));
    padding: 15px;
    height: 100%;
    display: flex;
@@ -901,7 +894,7 @@
 .search-chat-conv div input {
    width: 100%;
    outline: none;
-   border: none;
+   border: 1px solid;
    background: #fff;
    padding: 6px;
    height: 38px;
@@ -925,7 +918,8 @@
    position: relative;
    height: 100%;
    overflow-y: auto;
-   background: yellow;
+   background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
+   linear-gradient(0deg, rgba(145, 158, 171, 0.24), rgba(145, 158, 171, 0.24));
 }
 
 .chatlist-conv .block-conv {
@@ -1025,7 +1019,7 @@
    
 
 
-/** CHAT BORRAR **/
+/** CHAT ADAPTAR **/
 
 .general {
 
@@ -1033,27 +1027,25 @@
 }
 
 .usuario {
-   background-color: red;
    height: 10vh;
 }
 
 .conversacion-abierta {
-   background-color: green;
-   height: 55vh;
+   background-color: #e8f8fc;
+   height: 59.1vh;
 }
 
 .escribir-mensaje {
-   background-color: blue;
-   height: 10vh;
+   height: 5.9vh;
 }
 
 .buscar {
-   background-color: pink;
+   background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
+   linear-gradient(0deg, rgba(145, 158, 171, 0.24), rgba(145, 158, 171, 0.24));
    height: 10vh;
 }
 
 .contactos {
-   background-color: skyblue;
    height: 65vh;
 }
 
@@ -1066,3 +1058,33 @@
    width: 100%;
    object-fit: cover!important;
 }
+
+/* scrollbar */
+
+/* Estilo para el contenedor que tiene overflow-y */
+.overflow-container {
+   overflow-y: scroll; /* Puedes usar 'auto' en lugar de 'scroll' según tus necesidades */
+   scrollbar-width: thin; /* Ancho del track de la barra de desplazamiento */
+ }
+ 
+ /* Estilo específico para navegadores basados en WebKit (como Chrome y Safari) */
+ .overflow-container::-webkit-scrollbar {
+   width: 8px; /* Ancho de la barra de desplazamiento */
+ }
+ 
+ /* Estilo del track de la barra de desplazamiento */
+ .overflow-container::-webkit-scrollbar-track {
+   background-color: transparent; /* Color del track de la barra de desplazamiento */
+ }
+ 
+ /* Estilo del mango (pulgares) de la barra de desplazamiento */
+ .overflow-container::-webkit-scrollbar-thumb {
+   background-color: transparent; /* Color del mango de la barra de desplazamiento */
+   border-radius: 4px; /* Bordes redondeados del mango */
+ }
+ 
+ /* Estilo del borde de la barra de desplazamiento */
+ .overflow-container::-webkit-scrollbar-thumb:hover {
+   background-color: #a0a0a0; /* Color del mango al pasar el mouse sobre él */
+ }
+ 
