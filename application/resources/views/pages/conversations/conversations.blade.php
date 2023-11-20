@@ -19,7 +19,7 @@
                     <div class="userimg-conv">
                         <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
                     </div>
-                    <h4>Carla Rodriguez<br><span>online</span></h4>
+                    <h4>Carla Rodriguez</h4>
                 </div>
                 <ul class="nav-icons-conv">
                     <li><i class="sl-icon-phone"></i></li>
