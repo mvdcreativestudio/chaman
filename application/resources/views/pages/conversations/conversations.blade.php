@@ -1,243 +1,14 @@
 @extends('layout.wrapper') @section('content')
-{{-- <!-- main content -->
 <div class="container-fluid">
 
-<div class="container-conv">
-        <div class="left-side-conv">
-            <!--header chat -->
-            <div class="header-conv">
-                <div class="img-text-conv">
-                    <div class="userimg-conv">
-                        <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
-                    </div>
-                    <h4>Carla Rodriguez<br><span>online</span></h4>
-                </div>
-                <ul class="nav-icons-conv">
-                    <li><i class="sl-icon-phone"></i></li>
-                    <li><i class="sl-icon-camrecorder"></i></li>
-                    <li><i class="sl-icon-options-vertical"></i></li>
-                </ul>
-            </div>
-            <!--header chat -->
+    <div class="row page-titles">
 
-            <!--chat box -->
-            <div class="chat-box-conv">
+    <!-- Page Title & Bread Crumbs -->
+    @include('pages.conversations.misc.crumbs')
+    <!--Page Title & Bread Crumbs -->
 
-                 <div class="other-message-container">
-                    <div class="userimg-conv">
-                        <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
-                    </div>
-                    <div class="message-conv other-message-conv">                                        
-                         <p>Hola quería hacer un pedido, estoy buscando papel higiénico para mi fabrica? 🤔</p>
-                    </div>
-                 </div>   
-                    
-                
-                <div class="message-conv my-message-conv">
-                    <p>Carla, Cómo estas? Sí claro, te puedo ofrecer 24 rollos, 36 rollos, 50 rollos. De marca Elite</p>
-                </div>
-                <div class="other-message-container">
-                    <div class="userimg-conv">
-                        <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
-                    </div>
-                    <div class="message-conv other-message-conv">                                        
-                         <p>Mandame 24, porfavor 😃</p>
-                    </div>
-                 </div>
-                
-            </div>
-            
-            <!--chat box -->
-
-            <!--chat input -->
-            <div class="chatbox-input-conv">
-                <i class="sl-icon-emotsmile"></i>            
-                <input type="text" placeholder="Escribe algo...">
-                <i class="ti-image"></i>
-                <i class="ti-clip"></i>
-                <i class="sl-icon-microphone"></i>
-            </div>
-
-        </div>
-        
-        <div class="right-side-conv">
-
-         <!--barra de busqueda -->
-         <div class="search-chat-conv">
-            <div>
-                <input type="text" placeholder="Buscar contactos">
-                <i class="ti-search"></i>
-            </div>
-         </div>
-          <!--barra de busqueda -->
-
-          <!--listado de chats -->
-          <div class="chatlist-conv">
-            <div class="block-conv">
-                <div class="imgbox-conv">
-                    <img src="public\images\Perfiles chat Chaman\Perfil 1.jpeg" class="cover">
-                </div>
-                <div class="details-conv">
-                    <div class="list-head">
-                        <h4>Romina Simón</h4>
-                        <p class="time-conv">4:12 PM</p>
-                    </div>
-                    <div class="message-p">
-                        <p>Tú: Listo te mando</p>
-                    </div>
-                </div>
-            </div>
-            <div class="block-conv active">
-                <div class="imgbox-conv">
-                    <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
-                </div>
-                <div class="details-conv">
-                    <div class="list-head">
-                        <h4>Carla Rodriguez</h4>
-                        <p class="time-conv">4:02 PM</p>
-                    </div>
-                    <div class="message-p">
-                        <p><i class="ti-image"></i> Imagen</p>
-                    </div>
-                </div>
-            </div>
-            <div class="block-conv unread">
-                <div class="imgbox-conv">
-                    <img src="public\images\Perfiles chat Chaman\Perfil 2.jpeg" class="cover">
-                </div>
-                <div class="details-conv">
-                    <div class="list-head">
-                        <h4>Lucas Obrien</h4>
-                        <p class="time-conv">1 hora</p>
-                    </div>
-                    <div class="message-p">
-                        <p>Necesito 5 litros de limpiador Floral y 5 litros de limpador Armonia</p>
-                        <b>1</b>
-                    </div>
-                </div>
-            </div>
-            <div class="block-conv">
-                <div class="imgbox-conv">
-                    <img src="public\images\Perfiles chat Chaman\Perfil 3.jpeg" class="cover">
-                </div>
-                <div class="details-conv">
-                    <div class="list-head">
-                        <h4>Roberto Masla</h4>
-                        <p class="time-conv">10 Horas</p>
-                    </div>
-                    <div class="message-p">
-                        <p>Me quedé sin internet</p>
-                    </div>
-                </div>
-          </div>
-          <div class="block-conv unread">
-                <div class="imgbox-conv">
-                    <img src="public\images\Perfiles chat Chaman\Perfil 4.jpeg" class="cover">
-                </div>
-                <div class="details-conv">
-                    <div class="list-head">
-                        <h4>Fabiana Rial</h4>
-                        <p class="time-conv">3 días</p>
-                    </div>
-                    <div class="message-p">
-                        <p>Podemos repetir el pedido de la otra vez por favor?</p>
-                        <b>1</b>
-                    </div>
-                </div>
-            </div>
-            <div class="block-conv">
-                <div class="imgbox-conv">
-                    <img src="public\images\Perfiles chat Chaman\Perfil 6.jpeg" class="cover">
-                </div>
-                <div class="details-conv">
-                    <div class="list-head">
-                        <h4>Miguel Rodri</h4>
-                        <p class="time-conv">10 dias</p>
-                    </div>
-                    <div class="message-p">
-                        <p>Gracias, hablamos mas tarde</p>
-                    </div>
-                </div>
-          </div>
-          <div class="block-conv">
-                <div class="imgbox-conv">
-                    <img src="public\images\Perfiles chat Chaman\Perfil 7.jpeg" class="cover">
-                </div>
-                <div class="details-conv">
-                    <div class="list-head">
-                        <h4>Cristina Stanley</h4>
-                        <p class="time-conv">10 días</p>
-                    </div>
-                    <div class="message-p">
-                        <p>Che me pasas el papel?</p>
-                    </div>
-                </div>
-          </div>
-          <div class="block-conv">
-                <div class="imgbox-conv">
-                    <img src="public\images\Perfiles chat Chaman\Perfil 8.jpeg" class="cover">
-                </div>
-                <div class="details-conv">
-                    <div class="list-head">
-                        <h4>Nahuel Noble</h4>
-                        <p class="time-conv">11 días</p>
-                    </div>
-                    <div class="message-p">
-                        <p>Quería pedir jabon de mano Elite perlado Herbal</p>
-                    </div>
-                </div>
-          </div>
-          <div class="block-conv">
-                <div class="imgbox-conv">
-                    <img src="public\images\Perfiles chat Chaman\Perfil 9.jpeg" class="cover">
-                </div>
-                <div class="details-conv">
-                    <div class="list-head">
-                        <h4>Juan Perez</h4>
-                        <p class="time-conv">13 días</p>
-                    </div>
-                    <div class="message-p">
-                        <p>Me llamás ahora porfa.</p>
-                    </div>
-                </div>
-          </div>
-          <div class="block-conv">
-                <div class="imgbox-conv">
-                    <img src="public\images\Perfiles chat Chaman\Perfil 10.jpeg" class="cover">
-                </div>
-                <div class="details-conv">
-                    <div class="list-head">
-                        <h4>Gerardo Carlo</h4>
-                        <p class="time-conv">14 días</p>
-                    </div>
-                    <div class="message-p">
-                        <p>Necesitamos que venga ya, cuanto calculas de demora?</p>
-                    </div>
-                </div>
-          </div>
-          <div class="block-conv">
-            <div class="imgbox-conv">
-                <img src="public\images\Perfiles chat Chaman\Perfil 10.jpeg" class="cover">
-            </div>
-            <div class="details-conv">
-                <div class="list-head">
-                    <h4>Gerardo Carlo</h4>
-                    <p class="time-conv">14 días</p>
-                </div>
-                <div class="message-p">
-                    <p>Necesitamos que venga ya, cuanto calculas de demora?</p>
-                </div>
-            </div>
-      </div>
-          
-          <!--listado de chats -->
-        
     </div>
 
-</div> --}}
-
-
-<div class="container-fluid">
     <div class="general d-flex m-0 p-0">
         <div class="izquierda col-10 row m-0 p-0">
 
@@ -261,46 +32,44 @@
 
             <div class="conversacion-abierta col-12 m-0 p-0">
                 <!--chat box -->
-            <div class="chat-box-conv">
+            <div class="chat-box-conv overflow-container">
 
                 <div class="other-message-container d-flex">
                    <div class="userimg-conv">
                        <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
                    </div>
                    <div class="message-conv other-message-conv pl-3">                                        
-                        <p>Hola quería hacer un pedido, estoy buscando papel higiénico para mi fabrica? 🤔</p>
+                        <p>Hola quería hacer un pedido, estoy buscando papel higiénico para mi fabrica? 🤔<br><span class="time-chat-act">3:59 PM</span></p>
 
                    </div>
                    
                 </div>   
-
                    
                
                <div class="message-conv my-message-conv">
-                   <p>Carla, Cómo estas? Sí claro, te puedo ofrecer 24 rollos, 36 rollos, 50 rollos. De marca Elite</p>
+                   <p>Carla, Cómo estas? Sí claro, te puedo ofrecer 24 rollos, 36 rollos, 50 rollos. De marca Elite<br><span class="time-chat-act">4:00 PM</span></p>
                </div>
-               <div class="other-message-container">
+
+
+               <div class="other-message-container d-flex">
                    <div class="userimg-conv">
                        <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
                    </div>
-                   <div class="message-conv other-message-conv">                                        
-                        <p>Mandame 24, porfavor 😃</p>
+                   <div class="message-conv other-message-conv pl-3">                                        
+                        <p>Mandame 24, porfavor 😃<br><span class="time-chat-act">4:02 PM</span></p>
                    </div>
                 </div>
-
-                <div class="message-conv my-message-conv">
-                    <p>Aca va una imagen</p>
-                </div>
-                <div class="other-message-container">
+               
+                <div class="other-message-container d-flex">
                     <div class="userimg-conv">
                         <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
                     </div>
-                    <div class="message-conv other-message-conv message-img"> 
-                        <p>                          <img class="imagen-conv" src="public\images\Imagenes chat Chaman\Pago-realizado.png" alt="">
-                        </p>                                       
+                    <div class="message-conv other-message-conv message-img pl-3"> 
+                        <p><img class="imagen-conv" src="public\images\Imagenes chat Chaman\Pago-realizado.png" alt=""><br><span class="time-chat-act">4:02 PM</span></p>                                       
 
                     </div>
                  </div>
+                 
                
            </div>
            
@@ -338,15 +107,15 @@
 
             <div class="contactos col-12 m-0 p-0">
                 <!--listado de chats -->
-          <div class="chatlist-conv">
+          <div class="chatlist-conv overflow-container">
             <div class="block-conv">
                 <div class="imgbox-conv">
                     <img src="public\images\Perfiles chat Chaman\Perfil 1.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4>Romina Simón</h4>
-                        <p class="time-conv">4:12 PM</p>
+                        <h4 class ="m-0">Romina Simón</h4>
+                        <p class="time-conv m-0">4:12 PM</p>
                     </div>
                     <div class="message-p">
                         <p>Tú: Listo te mando</p>
@@ -359,8 +128,8 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4>Carla Rodriguez</h4>
-                        <p class="time-conv">4:02 PM</p>
+                        <h4 class ="m-0">Carla Rodriguez</h4>
+                        <p class="time-conv m-0">4:02 PM</p>
                     </div>
                     <div class="message-p">
                         <p><i class="ti-image"></i> Imagen</p>
@@ -373,8 +142,8 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4>Lucas Obrien</h4>
-                        <p class="time-conv">1 hora</p>
+                        <h4 class ="m-0">Lucas Obrien</h4>
+                        <p class="time-conv m-0">1 hora</p>
                     </div>
                     <div class="message-p">
                         <p>Necesito 5 litros de limpiador Floral y 5 litros de limpador Armonia</p>
@@ -388,8 +157,8 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4>Roberto Masla</h4>
-                        <p class="time-conv">10 Horas</p>
+                        <h4 class ="m-0">Roberto Masla</h4>
+                        <p class="time-conv m-0">10 Horas</p>
                     </div>
                     <div class="message-p">
                         <p>Me quedé sin internet</p>
@@ -402,8 +171,8 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4>Fabiana Rial</h4>
-                        <p class="time-conv">3 días</p>
+                        <h4 class ="m-0">Fabiana Rial</h4>
+                        <p class="time-conv m-0">3 días</p>
                     </div>
                     <div class="message-p">
                         <p>Podemos repetir el pedido de la otra vez por favor?</p>
@@ -417,8 +186,8 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4>Miguel Rodri</h4>
-                        <p class="time-conv">10 dias</p>
+                        <h4 class ="m-0">Miguel Rodri</h4>
+                        <p class="time-conv m-0">10 dias</p>
                     </div>
                     <div class="message-p">
                         <p>Gracias, hablamos mas tarde</p>
@@ -431,8 +200,8 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4>Cristina Stanley</h4>
-                        <p class="time-conv">10 días</p>
+                        <h4 class ="m-0">Cristina Stanley</h4>
+                        <p class="time-conv m-0">10 días</p>
                     </div>
                     <div class="message-p">
                         <p>Che me pasas el papel?</p>
@@ -445,8 +214,8 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4>Nahuel Noble</h4>
-                        <p class="time-conv">11 días</p>
+                        <h4 class ="m-0">Nahuel Noble</h4>
+                        <p class="time-conv m-0">11 días</p>
                     </div>
                     <div class="message-p">
                         <p>Quería pedir jabon de mano Elite perlado Herbal</p>
@@ -459,8 +228,8 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4>Juan Perez</h4>
-                        <p class="time-conv">13 días</p>
+                        <h4 class ="m-0">Juan Perez</h4>
+                        <p class="time-conv m-0">13 días</p>
                     </div>
                     <div class="message-p">
                         <p>Me llamás ahora porfa.</p>
@@ -473,8 +242,8 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4>Gerardo Carlo</h4>
-                        <p class="time-conv">14 días</p>
+                        <h4 class ="m-0">Gerardo Carlo</h4>
+                        <p class="time-conv m-0">14 días</p>
                     </div>
                     <div class="message-p">
                         <p>Necesitamos que venga ya, cuanto calculas de demora?</p>
@@ -611,6 +380,9 @@
         </div>
     </div>
 </div>
+
+
+
       
 <!--main content -->
 @endsection
