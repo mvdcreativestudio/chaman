@@ -19,7 +19,7 @@
                     <div class="userimg-conv">
                         <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
                     </div>
-                    <h4>Carla Rodriguez<br><span>online</span></h4>
+                    <h4>Carla Rodriguez</h4>
                 </div>
                 <ul class="nav-icons-conv">
                     <li><i class="sl-icon-phone"></i></li>
@@ -114,7 +114,7 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4 class ="m-0">Romina Simón</h4>
+                        <h7 class ="m-0">Romina Simón</h7>
                         <p class="time-conv m-0">4:12 PM</p>
                     </div>
                     <div class="message-p">
@@ -128,7 +128,7 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4 class ="m-0">Carla Rodriguez</h4>
+                        <h7 class ="m-0">Carla Rodriguez</h7>
                         <p class="time-conv m-0">4:02 PM</p>
                     </div>
                     <div class="message-p">
@@ -136,13 +136,13 @@
                     </div>
                 </div>
             </div>
-            <div class="block-conv unread">
+            <div class="block-conv">
                 <div class="imgbox-conv">
                     <img src="public\images\Perfiles chat Chaman\Perfil 2.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4 class ="m-0">Lucas Obrien</h4>
+                        <h7 class ="m-0">Lucas Obrien</h7>
                         <p class="time-conv m-0">1 hora</p>
                     </div>
                     <div class="message-p">
@@ -157,7 +157,7 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4 class ="m-0">Roberto Masla</h4>
+                        <h7 class ="m-0">Roberto Masla</h7>
                         <p class="time-conv m-0">10 Horas</p>
                     </div>
                     <div class="message-p">
@@ -165,13 +165,13 @@
                     </div>
                 </div>
           </div>
-          <div class="block-conv unread">
+          <div class="block-conv">
                 <div class="imgbox-conv">
                     <img src="public\images\Perfiles chat Chaman\Perfil 4.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4 class ="m-0">Fabiana Rial</h4>
+                        <h7 class ="m-0">Fabiana Rial</h7>
                         <p class="time-conv m-0">3 días</p>
                     </div>
                     <div class="message-p">
@@ -186,7 +186,7 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4 class ="m-0">Miguel Rodri</h4>
+                        <h7 class ="m-0">Miguel Rodri</h7>
                         <p class="time-conv m-0">10 dias</p>
                     </div>
                     <div class="message-p">
@@ -200,7 +200,7 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4 class ="m-0">Cristina Stanley</h4>
+                        <h7 class ="m-0">Cristina Stanley</h7>
                         <p class="time-conv m-0">10 días</p>
                     </div>
                     <div class="message-p">
@@ -214,7 +214,7 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4 class ="m-0">Nahuel Noble</h4>
+                        <h7 class ="m-0">Nahuel Noble</h7>
                         <p class="time-conv m-0">11 días</p>
                     </div>
                     <div class="message-p">
@@ -228,7 +228,7 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4 class ="m-0">Juan Perez</h4>
+                        <h7 class ="m-0">Juan Perez</h7>
                         <p class="time-conv m-0">13 días</p>
                     </div>
                     <div class="message-p">
@@ -242,7 +242,7 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h4 class ="m-0">Gerardo Carlo</h4>
+                        <h7 class ="m-0">Gerardo Carlo</h7>
                         <p class="time-conv m-0">14 días</p>
                     </div>
                     <div class="message-p">
@@ -256,7 +256,7 @@
             </div>
             <div class="details-conv">
                 <div class="list-head">
-                    <h4>Gerardo Carlo</h4>
+                    <h7>Gerardo Carlo</h7>
                     <p class="time-conv">14 días</p>
                 </div>
                 <div class="message-p">
@@ -271,7 +271,7 @@
             </div>
             <div class="details-conv">
                 <div class="list-head">
-                    <h4>Gerardo Carlo</h4>
+                    <h7>Gerardo Carlo</h7>
                     <p class="time-conv">14 días</p>
                 </div>
                 <div class="message-p">
@@ -286,7 +286,7 @@
             </div>
             <div class="details-conv">
                 <div class="list-head">
-                    <h4>Gerardo Carlo</h4>
+                    <h7>Gerardo Carlo</h7>
                     <p class="time-conv">14 días</p>
                 </div>
                 <div class="message-p">
@@ -301,7 +301,7 @@
             </div>
             <div class="details-conv">
                 <div class="list-head">
-                    <h4>Gerardo Carlo</h4>
+                    <h7>Gerardo Carlo</h7>
                     <p class="time-conv">14 días</p>
                 </div>
                 <div class="message-p">
@@ -316,7 +316,7 @@
             </div>
             <div class="details-conv">
                 <div class="list-head">
-                    <h4>Gerardo Carlo</h4>
+                    <h7>Gerardo Carlo</h7>
                     <p class="time-conv">14 días</p>
                 </div>
                 <div class="message-p">
@@ -331,7 +331,7 @@
             </div>
             <div class="details-conv">
                 <div class="list-head">
-                    <h4>Gerardo Carlo</h4>
+                    <h7>Gerardo Carlo</h7>
                     <p class="time-conv">14 días</p>
                 </div>
                 <div class="message-p">
@@ -346,7 +346,7 @@
             </div>
             <div class="details-conv">
                 <div class="list-head">
-                    <h4>Gerardo Carlo</h4>
+                    <h7>Gerardo Carlo</h7>
                     <p class="time-conv">14 días</p>
                 </div>
                 <div class="message-p">
@@ -361,7 +361,7 @@
             </div>
             <div class="details-conv">
                 <div class="list-head">
-                    <h4>Gerardo Carlo</h4>
+                    <h7>Gerardo Carlo</h7>
                     <p class="time-conv">14 días</p>
                 </div>
                 <div class="message-p">
