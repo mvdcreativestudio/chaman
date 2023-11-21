@@ -129,10 +129,10 @@
                 <div class="details-conv">
                     <div class="list-head">
                         <h7 class ="m-0">Carla Rodriguez</h7>
-                        <p class="time-conv m-0">4:02 PM</p>
+                        <p class="time-conv m-0 active-text">4:02 PM</p>
                     </div>
                     <div class="message-p">
-                        <p><i class="ti-image"></i> Imagen</p>
+                        <p class="active-text"><i class="ti-image"></i> Imagen</p>
                     </div>
                 </div>
             </div>
@@ -242,7 +242,7 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h7 class ="m-0">Gerardo Carlo</h7>
+                        <h7 class ="strong m-0">Gerardo Carlo</h7>
                         <p class="time-conv m-0">14 días</p>
                     </div>
                     <div class="message-p">
@@ -256,7 +256,7 @@
             </div>
             <div class="details-conv">
                 <div class="list-head">
-                    <h7>Gerardo Carlo</h7>
+                    <h7 class="m-0">Gerardo Carlo</h7>
                     <p class="time-conv">14 días</p>
                 </div>
                 <div class="message-p">
@@ -264,115 +264,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="block-conv">
-            <div class="imgbox-conv">
-                <img src="public\images\Perfiles chat Chaman\Perfil 10.jpeg" class="cover">
-            </div>
-            <div class="details-conv">
-                <div class="list-head">
-                    <h7>Gerardo Carlo</h7>
-                    <p class="time-conv">14 días</p>
-                </div>
-                <div class="message-p">
-                    <p>Necesitamos que venga ya, cuanto calculas de demora?</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="block-conv">
-            <div class="imgbox-conv">
-                <img src="public\images\Perfiles chat Chaman\Perfil 10.jpeg" class="cover">
-            </div>
-            <div class="details-conv">
-                <div class="list-head">
-                    <h7>Gerardo Carlo</h7>
-                    <p class="time-conv">14 días</p>
-                </div>
-                <div class="message-p">
-                    <p>Necesitamos que venga ya, cuanto calculas de demora?</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="block-conv">
-            <div class="imgbox-conv">
-                <img src="public\images\Perfiles chat Chaman\Perfil 10.jpeg" class="cover">
-            </div>
-            <div class="details-conv">
-                <div class="list-head">
-                    <h7>Gerardo Carlo</h7>
-                    <p class="time-conv">14 días</p>
-                </div>
-                <div class="message-p">
-                    <p>Necesitamos que venga ya, cuanto calculas de demora?</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="block-conv">
-            <div class="imgbox-conv">
-                <img src="public\images\Perfiles chat Chaman\Perfil 10.jpeg" class="cover">
-            </div>
-            <div class="details-conv">
-                <div class="list-head">
-                    <h7>Gerardo Carlo</h7>
-                    <p class="time-conv">14 días</p>
-                </div>
-                <div class="message-p">
-                    <p>Necesitamos que venga ya, cuanto calculas de demora?</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="block-conv">
-            <div class="imgbox-conv">
-                <img src="public\images\Perfiles chat Chaman\Perfil 10.jpeg" class="cover">
-            </div>
-            <div class="details-conv">
-                <div class="list-head">
-                    <h7>Gerardo Carlo</h7>
-                    <p class="time-conv">14 días</p>
-                </div>
-                <div class="message-p">
-                    <p>Necesitamos que venga ya, cuanto calculas de demora?</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="block-conv">
-            <div class="imgbox-conv">
-                <img src="public\images\Perfiles chat Chaman\Perfil 10.jpeg" class="cover">
-            </div>
-            <div class="details-conv">
-                <div class="list-head">
-                    <h7>Gerardo Carlo</h7>
-                    <p class="time-conv">14 días</p>
-                </div>
-                <div class="message-p">
-                    <p>Necesitamos que venga ya, cuanto calculas de demora?</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="block-conv">
-            <div class="imgbox-conv">
-                <img src="public\images\Perfiles chat Chaman\Perfil 10.jpeg" class="cover">
-            </div>
-            <div class="details-conv">
-                <div class="list-head">
-                    <h7>Gerardo Carlo</h7>
-                    <p class="time-conv">14 días</p>
-                </div>
-                <div class="message-p">
-                    <p>Necesitamos que venga ya, cuanto calculas de demora?</p>
-                </div>
-            </div>
-        </div>
-
-        
-
-        
           
           <!--listado de chats -->
             </div>

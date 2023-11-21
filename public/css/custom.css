@@ -17,6 +17,8 @@
 
 
 
+
+
 /** NOTIFICACIÓN FRANCHISES **/
 
 #list-page-actions-container {
@@ -936,6 +938,11 @@
 
 .chatlist-conv .block-conv.active {
    background: rgb(0, 152, 179);
+   color: white!important;
+}
+
+.active-text {
+   color: white!important;
 }
 
 .chatlist-conv .block-conv:hover {
