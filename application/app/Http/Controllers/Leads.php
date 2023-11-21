@@ -337,25 +337,7 @@ class Leads extends Controller {
         //get all tags (type: lead) - for filter panel
         $tags = $this->tagrepo->getByType('lead');
 
-        $clientsQuery = \App\Models\Client::query();
-
-        // Aplicar condiciones basadas en el rol del usuario
-        switch (request()->input('user_role_type')) {
-            case 'admin_role':
-                break;
-            case 'franchise_admin_role':
-                $clientsQuery->where('franchise_id', auth()->user()->franchise_id);
-                break;
-            case 'common_role':
-                $clientsQuery->where(function ($query) {
-                    $query->where('client_creatorid', auth()->id())
-                        ->where('franchise_id', auth()->user()->franchise_id);
-                });
-                break;
-        }
-
-        // Obtener los resultados
-        $clients = $clientsQuery->get();
+        $clients = \App\Models\Client::all();
 
         //all available lead statuses
         $statuses = \App\Models\LeadStatus::all();
@@ -399,26 +381,7 @@ class Leads extends Controller {
         //get all tags (type: lead) - for filter panel
         $tags = $this->tagrepo->getByType('lead');
 
-        $clientsQuery = \App\Models\Client::query();
-
-        // Aplicar condiciones basadas en el rol del usuario
-        switch (request()->input('user_role_type')) {
-            case 'admin_role':
-                break;
-            case 'franchise_admin_role':
-                $clientsQuery->where('franchise_id', auth()->user()->franchise_id);
-                break;
-            case 'common_role':
-                $clientsQuery->where(function ($query) {
-                    $query->where('client_creatorid', auth()->id())
-                        ->where('franchise_id', auth()->user()->franchise_id);
-                });
-                break;
-        }
-
-        // Obtener los resultados
-        $clients = $clientsQuery->get();
-
+        $clients = \App\Models\Client::all();
 
         //reponse payload
         $payload = [
@@ -521,25 +484,7 @@ class Leads extends Controller {
         ]);
         $fields = $this->getCustomFields();
 
-        $clientsQuery = \App\Models\Client::query();
-
-        // Aplicar condiciones basadas en el rol del usuario
-        switch (request()->input('user_role_type')) {
-            case 'admin_role':
-                break;
-            case 'franchise_admin_role':
-                $clientsQuery->where('franchise_id', auth()->user()->franchise_id);
-                break;
-            case 'common_role':
-                $clientsQuery->where(function ($query) {
-                    $query->where('client_creatorid', auth()->id())
-                        ->where('franchise_id', auth()->user()->franchise_id);
-                });
-                break;
-        }
-
-        // Obtener los resultados
-        $clients = $clientsQuery->get();
+        $clients = \App\Models\Client::all();
 
         //reponse payload
         $payload = [
@@ -837,26 +782,7 @@ class Leads extends Controller {
             $has_reminder = false;
         }
 
-        $clientsQuery = \App\Models\Client::query();
-
-        // Aplicar condiciones basadas en el rol del usuario
-        switch (request()->input('user_role_type')) {
-            case 'admin_role':
-                break;
-            case 'franchise_admin_role':
-                $clientsQuery->where('franchise_id', auth()->user()->franchise_id);
-                break;
-            case 'common_role':
-                $clientsQuery->where(function ($query) {
-                    $query->where('client_creatorid', auth()->id())
-                        ->where('franchise_id', auth()->user()->franchise_id);
-                });
-                break;
-        }
-
-        // Obtener los resultados
-        $clients = $clientsQuery->get();
-
+        $clients = \App\Models\Client::all();
 
         //reponse payload
         $payload = [
@@ -3364,26 +3290,7 @@ class Leads extends Controller {
         //all available lead statuses
         $statuses = \App\Models\LeadStatus::all();
 
-        $clientsQuery = \App\Models\Client::query();
-
-        // Aplicar condiciones basadas en el rol del usuario
-        switch (request()->input('user_role_type')) {
-            case 'admin_role':
-                break;
-            case 'franchise_admin_role':
-                $clientsQuery->where('franchise_id', auth()->user()->franchise_id);
-                break;
-            case 'common_role':
-                $clientsQuery->where(function ($query) {
-                    $query->where('client_creatorid', auth()->id())
-                        ->where('franchise_id', auth()->user()->franchise_id);
-                });
-                break;
-        }
-
-        // Obtener los resultados
-        $clients = $clientsQuery->get();
-
+        $clients = \App\Models\Client::all();
 
         //payload
         $payload = [
