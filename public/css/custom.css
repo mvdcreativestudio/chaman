@@ -15,6 +15,14 @@
     font-weight: 400!important;
 }
 
+.navbar-header {
+   padding-left: 0px!important;
+}
+
+.top-navbar {
+   text-align: center;   
+}
+
 
 
 
