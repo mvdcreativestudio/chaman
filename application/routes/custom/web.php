@@ -76,6 +76,7 @@ Route::group(['prefix' => 'whatsapp'], function () {
 use App\Http\Controllers\ConversationsController;
 
 Route::get('/conversations', [ConversationsController::class, 'show'])->name('conversations.show');
+Route::get('/conversations/settings', [ConversationsController::class, 'settings'])->name('conversations.settings');
 
 
 

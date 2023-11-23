@@ -10,4 +10,8 @@ class ConversationsController extends Controller
     {
         return view('pages.conversations.conversations');
     }
+
+    public function settings()
+    {
+        return view('pages.conversations.settings');}
 }
