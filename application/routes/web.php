@@ -35,7 +35,7 @@ Route::any('logout', function () {
     return redirect('/login');
 });
 
-//CLIENTS
+//CLIENTS+
 Route::group(['prefix' => 'clients'], function () {
     Route::any("/search", "Clients@index");
     Route::post("/delete", "Clients@destroy")->middleware(['demoModeCheck']);

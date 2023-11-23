@@ -743,16 +743,13 @@
 }
 
 .img-text-conv h4 {
+   font-size: 16px;
    font-weight: 500;
    line-height: 1.2em;
    margin-left: 15px;
    padding-top: 10px;
 }
 
-.img-text-conv h4 span {
-   font-size: 0.8em;
-   color: #555;
-}
 
 .chat-box-conv {
    position: relative;
@@ -769,7 +766,7 @@
    margin: 5px 0;
 }
 
-.message-conv p {
+.message-conv .text-buble {
    position: relative;
    right: 0;
    text-align: right;
@@ -780,7 +777,7 @@
    font-size: 0.9em;
 }
 
-.message-conv p::before {
+.message-conv .text-buble::before {
    content: '';
    position: absolute;
    top: 0;
@@ -798,13 +795,13 @@
    justify-content: flex-start;
 }
 
-.other-message-conv p {
+.other-message-conv .text-buble {
    background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
    linear-gradient(0deg, rgba(145, 158, 171, 0.24), rgba(145, 158, 171, 0.24));
    text-align: left;
 }
 
-.message-conv.other-message-conv p::before {
+.message-conv.other-message-conv .text-buble::before {
    content: '';
    position: absolute;
    top: 0;
@@ -815,12 +812,11 @@
 }
 
 .time-chat-act {
-   position: relative;
-   display: block;
-   font-size: 0.7em;
-   width: 100%;
-   text-align: end;
-   color: #777;
+   font-size: 0.75em;
+   color: #aaa;
+   padding-left: 15px;
+   padding-top: 100px;
+   
    
 }
 
@@ -853,6 +849,19 @@
    border-radius: 30px;
    font-size: 1em;
 }
+
+.chatbox-input-conv .send-button {
+   outline: none;
+   border: none;
+   width: 55px;
+   height: 35px;
+   box-sizing: border-box;
+   border-radius: 15%;
+   background-color: rgb(0, 152, 179);
+   color: white;
+}
+
+
 
 .userimg-conv {
    position: relative;
@@ -979,7 +988,7 @@
    margin-top: 27px;
 }
 
-.chatlist-conv .block-conv .details-conv .list-head h4 {
+.chatlist-conv .block-conv .details-conv .list-head h7 {
    font-size: 1.1em;
    font-weight: 600;
    color: #111;
