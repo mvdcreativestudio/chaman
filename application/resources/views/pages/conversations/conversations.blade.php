@@ -10,7 +10,7 @@
     </div>
 
     <div class="general d-flex m-0 p-0">
-        <div class="izquierda col-lg-10 col-md-12 row m-0 p-0">
+        <div class="izquierda col-12 col-lg-10 col-md-12 row m-0 p-0">
 
             <div class="usuario col-12 m-0 p-0">
                 <!--header chat -->
@@ -98,7 +98,7 @@
 
 
 
-        <div class="derecha col-lg-2 col-md-12 row m-0 p-0">
+        <div class="derecha col-12 col-lg-2 col-md-12 row m-0 p-0">
 
             <div class="buscar col-12 m-0 p-0">
                 <!--barra de busqueda -->
