@@ -766,7 +766,7 @@
    margin: 5px 0;
 }
 
-.message-conv .text-buble {
+.message-conv p {
    position: relative;
    right: 0;
    text-align: right;
@@ -777,7 +777,7 @@
    font-size: 0.9em;
 }
 
-.message-conv .text-buble::before {
+.message-conv p::before {
    content: '';
    position: absolute;
    top: 0;
@@ -795,13 +795,13 @@
    justify-content: flex-start;
 }
 
-.other-message-conv .text-buble {
+.other-message-conv p {
    background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
    linear-gradient(0deg, rgba(145, 158, 171, 0.24), rgba(145, 158, 171, 0.24));
    text-align: left;
 }
 
-.message-conv.other-message-conv .text-buble::before {
+.message-conv.other-message-conv p::before {
    content: '';
    position: absolute;
    top: 0;
@@ -812,12 +812,12 @@
 }
 
 .time-chat-act {
+   position: relative;
+   display: block;
    font-size: 0.75em;
-   color: #aaa;
-   padding-left: 15px;
-   padding-top: 100px;
-   
-   
+   width: 100%;
+   text-align: end;
+   color: #aaa;       
 }
 
 .chatbox-input-conv { 
