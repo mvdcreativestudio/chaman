@@ -22,12 +22,6 @@
                             <input type="text" class="form-control" id="address" name="address" placeholder="Introduce la dirección" required>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="phone" class="col-sm-12 col-lg-3 text-left control-label col-form-label">Teléfono:</label>
-                        <div class="col-sm-12 col-lg-9">
-                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Introduce el teléfono" required>
-                        </div>
-                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary" id="franchiseModalActionButton" data-add-text="Registrar" data-edit-text="Actualizar">Registrar</button>
