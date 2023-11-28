@@ -251,8 +251,8 @@
                         
                         
                         <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/users"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">Pedidos Activos</a>
+                            <a href="/conversations/settings"
+                                class="{{ $page['submenu_contacts'] ?? '' }}">Configuración</a>
                         </li>
 
                         <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">

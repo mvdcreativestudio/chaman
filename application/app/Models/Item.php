@@ -16,6 +16,22 @@ class Item extends Model {
     protected $primaryKey = 'item_id';
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $guarded = ['item_id'];
+    protected $fillable = [
+        'item_id',
+        'item_created',
+        'item_updated',
+        'item_categoryid',
+        'item_creatorid',
+        'item_type',
+        'item_description',
+        'item_unit',
+        'item_rate',
+        'item_tax_status',
+        'item_dimensions_length',
+        'item_dimensions_width',
+        'item_notes_estimatation',
+        'item_notes_production',
+    ];
     const CREATED_AT = 'item_created';
     const UPDATED_AT = 'item_updated';
 

@@ -55,7 +55,7 @@
                             <tr>
                                 <td class="team_col_first_name">{{ $franchise->name }}</td>
                                 <td class="team_col_position">{{ $franchise->address }}</td>
-                                <td class="team_col_role">{{ $franchise->phone }}</td>
+                                <td class="team_col_role">{{ $franchise->phoneNumber->phone_number ?? '---' }}</td>
                                 <td class="team_col_email">
                                     @if ($franchise->is_disabled)
                                         <span class="text-danger">Inactiva</span>

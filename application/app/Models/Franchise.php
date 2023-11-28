@@ -48,6 +48,10 @@ class Franchise extends Model
     {
         return $this->hasMany('App\Models\Client', 'franchise_id', 'client_id');
     }
-
+    
+    public function phoneNumber()
+    {
+        return $this->hasOne(FranchisePhone::class);
+    }
 }
 
