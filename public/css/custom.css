@@ -858,7 +858,7 @@
    height: 35px;
    box-sizing: border-box;
    border-radius: 15%;
-   background-color: rgb(0, 152, 179);
+   background-color: #20aee3;
    color: white;
 }
 
@@ -955,7 +955,7 @@
 
 
 .chatlist-conv .block-conv.active {
-   background: rgb(0, 152, 179);
+   background: #20aee3;
    color: white!important;
 }
 
@@ -965,6 +965,10 @@
 
 .chatlist-conv .block-conv:hover {
    background: #f5f5f5;
+}
+
+.chatlist-conv .block-conv.active:hover {
+   background: #009dd6;
 }
 
 .chatlist-conv .block-conv .imgbox-conv {
@@ -1004,7 +1008,7 @@
 }
 
 .chatlist-conv .block-conv.unread .details-conv .list-head .time-conv {   
-   color: #00B8D9;
+   color: #20aee3;
 }
 
 .chatlist-conv .block-conv.unread .details-conv .message-p p {
@@ -1030,7 +1034,7 @@
 }
 
 .message-p b {
-   background: #00B8D9;
+   background: #20aee3;
    color: #fff;
    min-width: 20px;
    height: 20px;
@@ -1051,9 +1055,6 @@
    height: 75vh;
 }
 
-.usuario {
-   height: 10vh;
-}
 
 .conversacion-abierta {
    background-color: #e8f8fc;
@@ -1071,7 +1072,7 @@
 }
 
 .contactos {
-   height: 65vh;
+   height: 63.2vh;
 }
 
 .message-img {

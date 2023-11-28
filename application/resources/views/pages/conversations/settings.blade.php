@@ -24,23 +24,27 @@
     @endif
 
     <div class="row mt-5 px-3 card px-4 py-5">
-        <form action="{{ route('whatsapp.update.meta.business.id') }}" method="POST" class=" radius">
+        <form action="{{ route('whatsapp.update.meta.business.id') }}" method="POST" class="radius">
             @csrf
             <div class="form-group">
-                <h4 class="mb-4">ID del Negocio (business_id)</h4>
-                <input type="text" class="form-control" style="width: 300px;" id="meta_business_id" name="meta_business_id" placeholder="Ingrese business_id brindado por Meta" value="{{ $meta_business_id ?? '' }}">
+                <h4 class="mb-4">* ID del Negocio</h4>
+                <input type="text" class="form-control"  id="meta_business_id" name="meta_business_id" placeholder="Ingrese business_id brindado por Meta" value="{{ $meta_business_id ?? '' }}">
               </div>
             <button type="submit" class="btn btn-primary">Actualizar ID del Negocio</button>
         </form>
 
+        <br>
+
         <form action="{{ route('whatsapp.update.admin.token') }}" method="POST">
             @csrf
             <div class="form-group">
-            <h4 class="mb-4 mt-4">Token de Administrador</h4>
+            <h4 class="mb-4 mt-4">* Token de Administrador</h4>
                 <input type="text" class="form-control" id="admin_token" name="admin_token" placeholder="Ingrese el token de administrador" value="{{ $token ?? '' }}" required>
             </div>
             <button type="submit" class="btn btn-primary">Actualizar Token</button>
         </form>
+
+        <br>
 
         @if(!empty($whatsAppAccounts))
             <div class="mt-4">
