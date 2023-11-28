@@ -10,7 +10,7 @@
     </div>
 
     <div class="general d-flex m-0 p-0">
-        <div class="izquierda col-12 col-lg-10 col-md-12 row m-0 p-0">
+        <div class="izquierda col-12 col-lg-10 col-md-12 row m-0 p-0 d-none d-lg-block">
 
             <div class="usuario col-12 m-0 p-0">
                 <!--header chat -->
@@ -38,17 +38,10 @@
                    <div class="userimg-conv">
                        <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
                    </div>
-                   <div class="message-conv other-message-conv pl-3">
-                    <div class="text-buble"=>
-                      <h7>Mandame 24, porfavor 😃</h7>
-                      <span class="time-chat-act m-0">3:59 PM</span>
-                      
-                    </div>                                        
-                        
-
+                   <div class="message-conv other-message-conv pl-3">                                        
+                        <p>Hola quería hacer un pedido, estoy buscando papel higiénico para mi fabrica? 🤔<br><span class="time-chat-act">4:00 PM</span></p>
                    </div>
-                   
-                </div>   
+                </div> 
                    
                
                <div class="message-conv my-message-conv">
