@@ -65,8 +65,19 @@ Route::group(['prefix' => 'whatsapp'], function () {
     Route::get('/send', 'WhatsApp@sendMessage')->name('whatsapp.send');
     Route::get('/webhook', 'WhatsApp@webhook')->name('whatsapp.webhook.get');
     Route::post('/webhook', 'WhatsApp@recibe')->name('whatsapp.webhook.post');
-    Route::get('/business/{businessId}/whatsapp-accounts', 'WhatsApp@getOwnedWhatsAppBusinessAccounts')->name('business.whatsapp.accounts');
+    Route::get('/business/whatsapp-accounts', 'WhatsApp@getOwnedWhatsAppBusinessAccounts')->name('business.whatsapp.accounts');
     Route::get('/phone-numbers/{whatsAppBusinessAccountId}', 'WhatsApp@getPhoneNumbers')->name('whatsapp.phone.numbers');
+    Route::post('/update-meta-business-id', 'WhatsApp@updateMetaBusinessId')->name('whatsapp.update.meta.business.id');
+    Route::post('/update-admin-token', 'WhatsApp@updateAdminToken')->name('whatsapp.update.admin.token');
+    Route::post('/associate-phone', 'WhatsApp@associatePhoneNumberWithFranchise')->name('whatsapp.associate.phone');
+    Route::post('/disassociate/{phone_id}', 'WhatsApp@disassociatePhoneNumber')->name('whatsapp.disassociate');
+});
+
+Route::group(['prefix' => 'api-import'], function () {
+    Route::get('/clientes', 'ExternalAPIController@getClientes');
+    Route::get('/productos', 'ExternalAPIController@getProductos');
+    Route::get('/proveedores', 'ExternalAPIController@getProveedores');
+    Route::get('/ventas', 'ExternalAPIController@getVentas');
 });
 
 

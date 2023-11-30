@@ -10,9 +10,9 @@
     </div>
 
     <div class="general d-flex m-0 p-0">
-        <div class="izquierda col-12 col-lg-10 col-md-12 row m-0 p-0 d-none d-lg-block">
+        <div class="izquierda col-10 col-lg-10 col-md-10 row m-0 p-0 d-none d-lg-block">
 
-            <div class="usuario col-12 m-0 p-0">
+            <div class="col-12 m-0 p-0">
                 <!--header chat -->
             <div class="header-conv">
                 <div class="img-text-conv">
@@ -127,7 +127,7 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head">
-                        <h7 class ="m-0">Carla Rodriguez</h7>
+                        <h7 class ="m-0 active-text">Carla Rodriguez</h7>
                         <p class="time-conv m-0 active-text">4:02 PM</p>
                     </div>
                     <div class="message-p">

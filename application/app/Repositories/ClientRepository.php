@@ -92,7 +92,6 @@ class ClientRepository {
             $join->on('users.clientid', '=', 'clients.client_id');
             $join->on('users.account_owner', '=', DB::raw("'yes'"));
         });
-
         
 
         //join: client category
@@ -193,22 +192,6 @@ class ClientRepository {
 
         }
 
-        $clients->with(['franchise', 'creator']);
-
-        switch (request()->input('user_role_type')) {
-            case 'admin_role':
-                break;
-            case 'franchise_admin_role':
-                // Filtra los clientes pertenecientes a la franquicia del usuario
-                $clients->where('clients.franchise_id', auth()->user()->franchise_id);
-                break;
-            case 'common_role':
-                // Filtra los clientes creados por el usuario y pertenecientes a su franquicia
-                $clients->where('clients.client_creatorid', auth()->id())
-                        ->where('clients.franchise_id', auth()->user()->franchise_id);
-                break;
-        }    
-
         //sorting
         if (in_array(request('sortorder'), array('desc', 'asc')) && request('orderby') != '') {
             //direct column name
@@ -239,6 +222,7 @@ class ClientRepository {
         $clients->with([
             'tags',
             'users',
+            'creator'
         ]);
 
         // Get the results and return them.
@@ -268,11 +252,7 @@ class ClientRepository {
         $client->client_billing_state = request('client_billing_state');
         $client->client_billing_zip = request('client_billing_zip');
         $client->client_billing_country = request('client_billing_country');
-        $client->client_categoryid = (request()->filled('client_categoryid')) ? request('client_categoryid') : 2; //default
-        $client->franchise_id = auth()->user()->franchise_id;
-        if ($client->franchise_id === null) {
-            $client->franchise_id = null;
-        }
+        $client->client_categoryid = (request()->filled('client_categoryid')) ? request('client_categoryid') : 2;
 
         //module settings
         $client->client_app_modules = request('client_app_modules');

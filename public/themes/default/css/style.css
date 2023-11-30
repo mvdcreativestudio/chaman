@@ -4673,19 +4673,19 @@ Buttons
 
 .btn-primary,
 .btn-primary.disabled {
-  background: #6772e5;
-  border: 1px solid #6772e5;
+  background: #20aee3;
+  border: 1px solid #20aee3;
   transition: 0.2s ease-in; }
   .btn-primary:hover,
   .btn-primary.disabled:hover {
-    background: #6772e5;
-    box-shadow: 0 14px 26px -12px rgba(116, 96, 238, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(116, 96, 238, 0.2);
-    border: 1px solid #6772e5; }
+    background: #20aee3;
+    box-shadow: 0 14px 26px -12px rgba(96, 198, 238, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(96, 198, 238, 0.2);
+    border: 1px solid #20aee3; }
   .btn-primary.active, .btn-primary:active, .btn-primary:focus,
   .btn-primary.disabled.active,
   .btn-primary.disabled:active,
   .btn-primary.disabled:focus {
-    background: #6352ce;
+    background: #52a7ce;
     border-color: transparent; }
 
 .btn-themecolor,

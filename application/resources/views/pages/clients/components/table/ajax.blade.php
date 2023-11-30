@@ -53,22 +53,11 @@
         <span class="label {{ runtimeClientStatusLabel($client->client_status) }}">{{
             runtimeLang($client->client_status) }}</span>
     </td>
-    @if(request('user_role_type') == 'admin_role' || request('user_role_type') == 'franchise_admin_role')
     <td class="clients_col_creator" id="clients_col_creator_{{ $client->client_id }}">
         <img src="{{ getUsersAvatar($client->avatar_directory, $client->avatar_filename) }}" alt="user"
         class="img-circle avatar-xsmall">
         {{ $client->creator->full_name ?? '---' }}
     </td>
-    @endif
-    @if(request('user_role_type') == 'admin_role')
-    <td class="clients_col_franchise" id="clients_col_franchise_{{ $client->client_id }}">
-        @if($client->franchise_id == 0)
-            ---
-        @else
-            {{ $client->franchise->name }}
-        @endif
-    </td>
-    @endif
 
     @if(config('visibility.action_column'))
     <td class="clients_col_action actions_column" id="clients_col_action_{{ $client->client_id }}">
