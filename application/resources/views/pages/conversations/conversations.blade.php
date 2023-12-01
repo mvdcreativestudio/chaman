@@ -10,12 +10,16 @@
     </div>
 
     <div class="general d-flex m-0 p-0">
-        <div class="izquierda col-10 col-lg-10 col-md-10 row m-0 p-0 d-none d-lg-block">
+        <div class="izquierda col-12 col-lg-10 col-md-12 row m-0 p-0 d-none d-lg-block" id="columnaIzquierda">
 
             <div class="col-12 m-0 p-0">
                 <!--header chat -->
             <div class="header-conv">
                 <div class="img-text-conv">
+                    <!-- Flecha de volver visible solo en dispositivos móviles -->
+                    <div class="flecha-volver d-lg-none" style="cursor: pointer;">
+                       <i class="ti-arrow-left"></i> <!-- Asumiendo que estás utilizando FontAwesome para el icono -->
+                    </div>
                     <div class="userimg-conv">
                         <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
                     </div>
@@ -272,6 +276,34 @@
 </div>
 
 
+<!-- Asegúrate de incluir jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('.block-conv').on('click', function() {
+        // Verifica si la pantalla es de tamaño móvil
+        if ($(window).width() < 992) {
+            // Oculta la columna derecha
+            $('.derecha').addClass('d-none');
+            // Muestra la columna izquierda
+            $('.izquierda').removeClass('d-none');
+            // Muestra la flecha de volver solo en dispositivos móviles
+            $('.flecha-volver').removeClass('d-none');
+        }
+    });
+
+    // Agrega un controlador de clic para la flecha de volver
+    $('.flecha-volver').on('click', function() {
+        // Oculta la columna izquierda
+        $('.izquierda').addClass('d-none');
+        // Muestra la columna derecha
+        $('.derecha').removeClass('d-none');
+        // Oculta la flecha de volver
+        $(this).addClass('d-none');
+    });
+});
+</script>
 
       
 <!--main content -->
