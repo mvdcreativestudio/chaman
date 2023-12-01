@@ -736,6 +736,10 @@
    background-color: #007b55;
 }
 
+.flecha-volver {
+   margin-right: 15px; /* Ajusta la distancia según tus necesidades */
+}
+
 .img-text-conv {
    position: relative;
    display: flex;
