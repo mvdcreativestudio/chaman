@@ -9,10 +9,10 @@
 
     </div>
 
-    <div class="general d-flex m-0 p-0">
-        <div class="izquierda col-12 col-lg-10 col-md-12 row m-0 p-0 d-none d-lg-block" id="columnaIzquierda">
+    <div class="general d-flex flex-column flex-lg-row m-0 p-0">
+        <div class="izquierda col-lg-10 m-0 p-0 d-none d-lg-block" id="columnaIzquierda">
 
-            <div class="col-12 m-0 p-0">
+            <div class="m-0 p-0">
                 <!--header chat -->
             <div class="header-conv">
                 <div class="img-text-conv">
@@ -34,7 +34,7 @@
             <!--header chat -->
             </div>
 
-            <div class="conversacion-abierta col-12 m-0 p-0">
+            <div class="conversacion-abierta m-0 p-0">
                 <!--chat box -->
             <div class="chat-box-conv overflow-container">
 
@@ -78,13 +78,14 @@
            <!--chat box -->
             </div>
 
-            <div class="escribir-mensaje col-12 m-0 p-0">
+            <div class="escribir-mensaje m-0 p-0">
 
                 <!--chat input -->
                 <div class="chatbox-input-conv">
                     <i class="sl-icon-emotsmile"></i>            
                     <input type="text" placeholder="Escribe algo...">
-                    <button class="send-button" onclick="">Enviar</button>
+                    <button class="send-button d-lg-block d-none" onclick="">Enviar</button>
+                    <i class="ti-control-play d-lg-none"></i>                    
                     <i class="ti-image"></i>
                     <i class="ti-clip"></i>
                     <i class="sl-icon-microphone"></i>
@@ -95,9 +96,9 @@
 
 
 
-        <div class="derecha col-12 col-lg-2 col-md-12 row m-0 p-0">
+        <div class="derecha col-lg-2 m-0 p-0">
 
-            <div class="buscar col-12 m-0 p-0">
+            <div class="buscar m-0 p-0">
                 <!--barra de busqueda -->
          <div class="search-chat-conv">
             <div>
@@ -108,7 +109,7 @@
           <!--barra de busqueda -->
             </div>
 
-            <div class="contactos col-12 m-0 p-0">
+            <div class="contactos m-0 p-0">
                 <!--listado de chats -->
           <div class="chatlist-conv overflow-container">
             <div class="block-conv">
@@ -116,7 +117,7 @@
                     <img src="public\images\Perfiles chat Chaman\Perfil 1.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
-                    <div class="list-head">
+                    <div class="list-head m-0">
                         <h7 class ="m-0">Romina Simón</h7>
                         <p class="time-conv m-0">4:12 PM</p>
                     </div>
@@ -130,7 +131,7 @@
                     <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
-                    <div class="list-head">
+                    <div class="list-head m-0">
                         <h7 class ="m-0 active-text">Carla Rodriguez</h7>
                         <p class="time-conv m-0 active-text">4:02 PM</p>
                     </div>
@@ -144,7 +145,7 @@
                     <img src="public\images\Perfiles chat Chaman\Perfil 2.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
-                    <div class="list-head">
+                    <div class="list-head m-0">
                         <h7 class ="m-0">Lucas Obrien</h7>
                         <p class="time-conv m-0">1 hora</p>
                     </div>
@@ -159,7 +160,7 @@
                     <img src="public\images\Perfiles chat Chaman\Perfil 3.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
-                    <div class="list-head">
+                    <div class="list-head m-0">
                         <h7 class ="m-0">Roberto Masla</h7>
                         <p class="time-conv m-0">10 Horas</p>
                     </div>
@@ -173,7 +174,7 @@
                     <img src="public\images\Perfiles chat Chaman\Perfil 4.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
-                    <div class="list-head">
+                    <div class="list-head m-0">
                         <h7 class ="m-0">Fabiana Rial</h7>
                         <p class="time-conv m-0">3 días</p>
                     </div>
@@ -188,7 +189,7 @@
                     <img src="public\images\Perfiles chat Chaman\Perfil 6.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
-                    <div class="list-head">
+                    <div class="list-head m-0">
                         <h7 class ="m-0">Miguel Rodri</h7>
                         <p class="time-conv m-0">10 dias</p>
                     </div>
@@ -202,7 +203,7 @@
                     <img src="public\images\Perfiles chat Chaman\Perfil 7.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
-                    <div class="list-head">
+                    <div class="list-head m-0">
                         <h7 class ="m-0">Cristina Stanley</h7>
                         <p class="time-conv m-0">10 días</p>
                     </div>
@@ -216,7 +217,7 @@
                     <img src="public\images\Perfiles chat Chaman\Perfil 8.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
-                    <div class="list-head">
+                    <div class="list-head m-0">
                         <h7 class ="m-0">Nahuel Noble</h7>
                         <p class="time-conv m-0">11 días</p>
                     </div>
@@ -230,7 +231,7 @@
                     <img src="public\images\Perfiles chat Chaman\Perfil 9.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
-                    <div class="list-head">
+                    <div class="list-head m-0">
                         <h7 class ="m-0">Juan Perez</h7>
                         <p class="time-conv m-0">13 días</p>
                     </div>
@@ -244,7 +245,7 @@
                     <img src="public\images\Perfiles chat Chaman\Perfil 10.jpeg" class="cover">
                 </div>
                 <div class="details-conv">
-                    <div class="list-head">
+                    <div class="list-head m-0">
                         <h7 class ="strong m-0">Gerardo Carlo</h7>
                         <p class="time-conv m-0">14 días</p>
                     </div>
@@ -258,7 +259,7 @@
                 <img src="public\images\Perfiles chat Chaman\Perfil 10.jpeg" class="cover">
             </div>
             <div class="details-conv">
-                <div class="list-head">
+                <div class="list-head m-0">
                     <h7 class="m-0">Gerardo Carlo</h7>
                     <p class="time-conv">14 días</p>
                 </div>
@@ -277,8 +278,6 @@
 
 
 <!-- Asegúrate de incluir jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <script>
 $(document).ready(function() {
     $('.block-conv').on('click', function() {
@@ -304,6 +303,7 @@ $(document).ready(function() {
     });
 });
 </script>
+
 
       
 <!--main content -->
