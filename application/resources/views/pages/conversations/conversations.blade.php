@@ -10,7 +10,7 @@
     </div>
 
     <div class="general d-flex flex-column flex-lg-row m-0 p-0">
-        <div class="izquierda col-lg-10 m-0 p-0 d-none d-lg-block" id="columnaIzquierda">
+        <div class="izquierda col-xl-9 col-lg-8 m-0 p-0 d-none d-lg-block" id="columnaIzquierda">
 
             <div class="m-0 p-0">
                 <!--header chat -->
@@ -96,13 +96,13 @@
 
 
 
-        <div class="derecha col-lg-2 m-0 p-0">
+        <div class="derecha col-xl-3 col-lg-4 m-0 p-0">
 
             <div class="buscar m-0 p-0">
                 <!--barra de busqueda -->
          <div class="search-chat-conv">
             <div>
-                <input type="text" placeholder="Buscar contactos">
+                <input type="text" class="searchPlaceHolder" placeholder="Buscar contactos">
                 <i class="ti-search"></i>
             </div>
          </div>

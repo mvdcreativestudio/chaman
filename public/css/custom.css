@@ -918,12 +918,12 @@
 .search-chat-conv div input {
    width: 100%;
    outline: none;
-   border: 1px solid;
+   border: 1px rgb(219, 219, 219) solid;
    background: #fff;
    padding: 0.429rem;
    height: 2.714rem;
    border-radius: 0.714rem;
-   font-size: 1rem;
+   font-size: .8rem;
    padding-left: 2.857rem;
 }
 
@@ -997,7 +997,7 @@
 }
 
 .chatlist-conv .block-conv .details-conv .list-head h7 {
-   font-size: 1.1rem;
+   font-size: 1em;
    font-weight: 600;
    color: #111;
    
@@ -1014,6 +1014,10 @@
    color: #20aee3;
 }
 
+.time-conv {
+   padding-left: 5px;
+}
+
 .chatlist-conv .block-conv.unread .details-conv .message-p p {
    color: #111;
 }
@@ -1028,10 +1032,11 @@
    color: #aaa;
    display: -webkit-box;
    -webkit-line-clamp: 1;
-   font-size: 0.9rem;
+   font-size: 0.9em;
    -webkit-box-orient: vertical;
    overflow: hidden;
    text-overflow: ellipsis;
+   padding-right: 5px;
    
 }
 
@@ -1115,4 +1120,3 @@
  .overflow-container::-webkit-scrollbar-thumb:hover {
    background-color: #a0a0a0; /* Color del mango al pasar el mouse sobre él */
  }
- 
