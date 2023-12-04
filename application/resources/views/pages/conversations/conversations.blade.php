@@ -18,7 +18,7 @@
                 <div class="img-text-conv">
                     <!-- Flecha de volver visible solo en dispositivos móviles -->
                     <div class="flecha-volver d-lg-none" style="cursor: pointer;">
-                       <i class="ti-arrow-left"></i> <!-- Asumiendo que estás utilizando FontAwesome para el icono -->
+                       <i class="ti-arrow-left"></i>
                     </div>
                     <div class="userimg-conv">
                         <img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg" class="cover">
@@ -132,8 +132,8 @@
                 </div>
                 <div class="details-conv">
                     <div class="list-head m-0">
-                        <h7 class ="m-0 active-text">Carla Rodriguez</h7>
-                        <p class="time-conv m-0 active-text">4:02 PM</p>
+                        <h7 class ="m-0">Carla Rodriguez</h7>
+                        <p class="time-conv m-0">4:02 PM</p>
                     </div>
                     <div class="message-p">
                         <p class="active-text"><i class="ti-image"></i> Imagen</p>
@@ -281,6 +281,12 @@
 <script>
 $(document).ready(function() {
     $('.block-conv').on('click', function() {
+        // Remueve la clase "active" de todas las instancias de "block-conv"
+        $('.block-conv').removeClass('active');
+        
+        // Agrega la clase "active" solo al elemento clicado
+        $(this).addClass('active');
+        
         // Verifica si la pantalla es de tamaño móvil
         if ($(window).width() < 992) {
             // Oculta la columna derecha
@@ -300,6 +306,9 @@ $(document).ready(function() {
         $('.derecha').removeClass('d-none');
         // Oculta la flecha de volver
         $(this).addClass('d-none');
+        
+        // Remueve la clase "active" al volver a la vista principal en móviles
+        $('.block-conv').removeClass('active');
     });
 });
 </script>

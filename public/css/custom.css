@@ -934,7 +934,7 @@
 .search-chat-conv div i {
    position: absolute;
    left: 2.143rem;
-   top: 2.5rem;
+   top: 2.4rem;
    font-size: 1.2em;
 }
 
@@ -963,7 +963,15 @@
    color: white!important;
 }
 
-.active-text {
+.chatlist-conv .block-conv.active .details-conv .list-head h7 {
+   color: white!important;
+}
+
+.chatlist-conv .block-conv.active .details-conv .list-head p {
+   color: white!important;
+}
+
+.chatlist-conv .block-conv.active .details-conv .message-p p {
    color: white!important;
 }
 
