@@ -25,37 +25,35 @@
                 @endif
 
                 <!--datacenter[done]-->
-                @if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
-                config('visibility.modules.users')]))
+             
                 <li data-modular-id="main_menu_team_contracts"
-                    class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}">
+                    class="sidenav-menu-item {{ request()->is('datacenter*') ? 'active' : '' }}">
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="ti-menu-alt"></i>
-                        <span class="hide-menu">Datacenter
-                        </span>
+                        <span class="hide-menu">Datacenter</span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         
-                        <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}" id="submenu_contracts">
-                            <a href="/datacenter"
-                                class="{{ $page['submenu_contracts'] ?? '' }}">Inicio</a>
+                        <li class="sidenav-submenu {{ request()->is('datacenter*') ? 'active' : '' }}" id="submenu_contracts">
+                            <a href="{{ _url('/datacenter') }}"
+                                class="{{ request()->is('datacenter*') ? 'active' : '' }}">Inicio</a>
                         </li>
                         
                         
-                        <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}" id="submenu_contracts">
-                            <a href="/sales"
-                                class="{{ $page['submenu_contracts'] ?? '' }}">Ventas</a>
+                        <li class="sidenav-submenu {{ request()->is('sales*') ? 'active' : '' }}" id="submenu_contracts">
+                            <a href="{{ _url('/sales') }}"
+                                class=" {{ $page['submenu_sales'] ?? '' }}">Ventas</a>
                         </li>
 
                         
-                        <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}" id="submenu_contracts">
-                            <a href="/stock"
-                                class="{{ $page['submenu_contracts'] ?? '' }}">Stock</a>
+                        <li class="sidenav-submenu {{ request()->is('stock*') ? 'active' : '' }}" id="submenu_contracts">
+                            <a href="{{ _url('/stock') }}"
+                                class="{{ request()->is('stock*') ? 'active' : '' }}">Stock</a>
                         </li>
                         
                     </ul>
                 </li>
-                @endif
+                
                 <!--datacenter-->
 
 
@@ -83,32 +81,32 @@
 
                 <!--FRANCHISES HARDCODEADO-->
                 <li data-modular-id="main_menu_team_contracts"
-                class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}">
+                class="sidenav-menu-item {{ request()->is('franchises*') ? 'active' : '' }}">
                 <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                     <i class="ti-layout-grid2"></i>
                     <span class="hide-menu">Franquicias</span>
                 </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}"
+                        <li class="sidenav-submenu {{ request()->is('franchises*') ? 'active' : '' }}"
                             id="submenu_project_contracts">
                             <a href="{{ _url('/franchises') }}"
-                                class="{{ $page['submenu_contracts'] ?? '' }}">Franquicias</a>
+                               class="{{ request()->is('franchises*') ? 'active' : '' }}">Franquicias</a>
                         </li>
                     </ul>
                 </li>
 
-                <!--FRANCHISES HARDCODEADO-->
+                <!--OBJETIVOS HARDCODEADO-->
                 <li data-modular-id="main_menu_team_contracts"
-                class="sidenav-menu-item {{ $page['mainmenu_contracts'] ?? '' }}">
+                class="sidenav-menu-item {{ request()->is('objectives*') ? 'active' : '' }}">
                 <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                     <i class="ti-check"></i>
                     <span class="hide-menu">Objetivos</span>
                 </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}"
+                        <li class="sidenav-submenu {{ request()->is('objectives*') ? 'active' : '' }}"
                             id="submenu_project_contracts">
                             <a href="{{ _url('/objectives') }}"
-                                class="{{ $page['submenu_contracts'] ?? '' }}">Objetivos</a>
+                                class="{{ request()->is('objectives*') ? 'active' : '' }}">Objetivos</a>
                         </li>
                     </ul>
                 </li>
@@ -233,10 +231,9 @@
                 <!--billing-->
 
                 <!--PEDIDOS RRSS HARDCODEAO-->
-                @if(runtimeGroupMenuVibility([config('visibility.modules.clients'),
-                config('visibility.modules.users')]))
+                
                 <li data-modular-id="main_menu_team_clients"
-                    class="sidenav-menu-item {{ $page['mainmenu_customers'] ?? '' }}">
+                    class="sidenav-menu-item {{ request()->is('conversations*') ? 'active' : '' }}">
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
                         <i class="ti-instagram"></i>
                         <span class="hide-menu">Pedidos RRSS
@@ -244,30 +241,30 @@
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         
-                        <li class="sidenav-menu-item {{ $page['mainmenu_messages'] ?? '' }} menu-tooltip menu-with-tooltip" id="submenu_contacts">
-                            <a href="/conversations"
-                                class="{{ $page['submenu_customers'] ?? '' }}">Conversaciones</a>
+                        <li class="sidenav-submenu {{ request()->is('conversations*') ? 'active' : '' }}" id="submenu_contacts">
+                            <a href="{{ _url('/conversations') }}"
+                                class="{{ request()->is('conversations*') ? 'active' : '' }}">Conversaciones</a>
                         </li>
                         
                         
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
-                            <a href="/conversations/settings"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">Configuración</a>
+                        <li class="sidenav-submenu {{ request()->is('settings*') ? 'active' : '' }}" id="submenu_contacts">
+                            <a href="{{ _url('/conversations/settings') }}"
+                                class="{{ request()->is('settings*') ? 'active' : '' }}">Configuración</a>
                         </li>
 
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
+                        <li class="sidenav-submenu {{ request()->is('datacenter*') ? 'active' : '' }}" id="submenu_contacts">
                             <a href="/users"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">Rechazados</a>
+                                class="{{ request()->is('franchises*') ? 'active' : '' }}">Rechazados</a>
                         </li>
 
-                        <li class="sidenav-submenu {{ $page['submenu_contacts'] ?? '' }}" id="submenu_contacts">
+                        <li class="sidenav-submenu {{ request()->is('datacenter*') ? 'active' : '' }}" id="submenu_contacts">
                             <a href="/users"
-                                class="{{ $page['submenu_contacts'] ?? '' }}">Completados</a>
+                                class="{{ request()->is('franchises*') ? 'active' : '' }}">Completados</a>
                         </li>
                         
                     </ul>
                 </li>
-                @endif
+                
                 <!--PEDIDOS RRSS-->
 
 
