@@ -30,6 +30,35 @@
                     <li><i class="sl-icon-camrecorder"></i></li>
                     <li><i class="sl-icon-options-vertical"></i></li>
                 </ul>
+
+
+                <div class="dropdown-content">
+                      
+                   <div class="row" style="width: 25%;">
+                      <div class="col">
+                         <div class="avatar-dropdown">
+                            <div class="userimg-drop"><img src="public\images\Perfiles chat Chaman\Perfil 5.jpeg"></div>
+                            <h4>Carla Rodriguez</h4>
+                            <h5>Administracion Disco</h5>                         
+                         </div>
+                         
+                      </div>
+                   </div>
+
+                    <div class="row" style="width: 25%;">
+                      <div class="col">
+                        <div class="info-dropwdown">Informacion</div>
+                      </div>
+                   </div>
+
+                   <div class="row" style="width: 60%;">
+                      <div class="col">
+                        <div class="archivos-drop">archivos</div>
+                      </div>
+                   </div>
+                </div>
+
+
             </div>
             <!--header chat -->
             </div>
@@ -296,6 +325,9 @@ $(document).ready(function() {
             // Muestra la flecha de volver solo en dispositivos móviles
             $('.flecha-volver').removeClass('d-none');
         }
+        
+        // Oculta la dropdown-content cuando se hace clic en un elemento de la lista de chats
+        $('.dropdown-content').removeClass('visible');
     });
 
     // Agrega un controlador de clic para la flecha de volver
@@ -309,6 +341,12 @@ $(document).ready(function() {
         
         // Remueve la clase "active" al volver a la vista principal en móviles
         $('.block-conv').removeClass('active');
+    });
+
+    // Agrega un controlador de clic para la clase header-conv
+    $('.header-conv').on('click', function() {
+        // Toggle (alternar) la visibilidad de la dropdown-content
+        $('.dropdown-content').toggleClass('visible');
     });
 });
 </script>
