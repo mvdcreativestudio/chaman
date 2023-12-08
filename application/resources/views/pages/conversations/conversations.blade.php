@@ -47,15 +47,74 @@
 
                     <div class="row" style="width: 25%;">
                       <div class="col">
-                        <div class="info-dropwdown">Informacion</div>
+                        <div class="info-dropwdown">
+                            <h4>INFORMATION</h4>
+
+                            <ul class="icons-drop">
+                                <li><i class="ti-location-pin"></i><h5>Blanes 1133</h5></li>
+                                <li><i class="sl-icon-phone"></i><h5>096 780 853</h5></li>
+                                <li><i class="ti-email"></i><h5>rod.car@disco.com</h5></li>
+                            </ul>
+
+                        </div>
                       </div>
                    </div>
 
                    <div class="row" style="width: 60%;">
-                      <div class="col">
-                        <div class="archivos-drop">archivos</div>
-                      </div>
-                   </div>
+
+                   
+    <div class="col">
+        <div class="archivos-drop">
+            <h4>ARCHIVOS</h4>
+
+            <div class="files-drop row">
+                <!-- Primer archivo -->
+                <div class="col-md-6">
+                    <div class="files-block">
+                        <img src="public\images\Perfiles chat Chaman\ARCHIVO 1.jpg">
+                        <div class="files-detail">
+                            <h6>diseño2.jpg</h6>
+                            <h7>04 Aug 2022 2:00 PM</h7>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segundo archivo -->
+                <div class="col-md-6">
+                    <div class="files-block">
+                        <img src="public\images\Perfiles chat Chaman\ARCHIVO 2.jpg">
+                        <div class="files-detail">
+                            <h6>diseño 1.png</h6>
+                            <h7>03 Aug 2022 1:00 PM</h7>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tercer archivo -->
+                <div class="col-md-6">
+                    <div class="files-block">
+                        <img src="public\images\Perfiles chat Chaman\ARCHIVO 3.png">
+                        <div class="files-detail">
+                            <h6>audio2.mp3</h6>
+                            <h7>22 Jul 2022 1:00 AM</h7>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cuarto archivo -->
+                <div class="col-md-6">
+                    <div class="files-block">
+                        <img src="public\images\Perfiles chat Chaman\ARCHIVO 4.png">
+                        <div class="files-detail">
+                            <h6>archivo5.rar</h6>
+                            <h7>22 Jul 2022 1:00 AM</h7>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                 </div>
 
 
