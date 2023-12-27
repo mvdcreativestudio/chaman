@@ -73,6 +73,35 @@ class ExternalAPIController extends Controller
     }
 
     public function getVentas() {
+        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/ventas');
+
+        if ($response['error'] == 0 && isset($response['items'])) {
+            foreach ($response['items'] as $item) {
+                \App\Models\Sale::updateOrCreate(
+                    [
+                        'lineas' => $item['lineas'] ?? null,
+                        'impuestos' => $item['impuestos'] ?? null,
+                        'subtotal' => $item['subtotal'] ?? null,
+                        'total' => $item['total'] ?? null,
+                        'moneda' => $item['moneda'] ?? null,
+                        'moneda_id' => $item['moneda_id'] ?? null,
+                        'estado' => $item['estado'] ?? null,
+                        'fecha_creacion' => $item['fecha_creacion'] ?? null,
+                        'fecha_emision' => $item['fecha_emision'] ?? null,
+                        'pagos' => $item['pagos'] ?? null,
+                        'ruc_franquicia' => $item['rucFranquicia'] ?? null,
+                        'accion' => $item['accion'] ?? null,
+                    ]
+                );
+            }
+        }
+
         return $this->apiRequest('RUT218168420010@crmAPI/Consultas/ventas');
+    }
+
+    public function showSales() {
+        $sales = \App\Models\Sale::all();
+
+        return view('pages.api.sales', compact('sales'));
     }
 }
