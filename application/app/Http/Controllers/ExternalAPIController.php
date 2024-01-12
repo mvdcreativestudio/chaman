@@ -22,22 +22,27 @@ class ExternalAPIController extends Controller
     
         if ($response['error'] == 0 && isset($response['items'])) {
             foreach ($response['items'] as $item) {
-                \App\Models\Client::updateOrCreate(
-                    [
-                        'franchise_ruc' => $item['rucFranquicia'] ?? null,
-                    ],
-                    [
-                        'client_company_name' => $item['nombre'] ?? null,
-                        'client_phone' => $item['celular'] ?? null,
-                        'client_billing_street' => $item['direccion'] ?? null,
-                        'client_billing_city' => $item['ciudad'] ?? null,
-                        'client_billing_state' => $item['departamento'] ?? null,
-                        'client_billing_country' => $item['pais'] ?? null,
-                        'client_creatorid' => auth()->id(),
-                        'client_created' => now(),
-                        'client_updated' => now(),
-                    ]
-                );
+                try {
+                    \App\Models\Client::createOrUpdate(
+                        [
+                            'franchise_ruc' => $item['rucFranquicia'] ?? null,
+                        ],
+                        [
+                            'client_company_name' => $item['nombre'] ?? null,
+                            'client_phone' => $item['celular'] ?? null,
+                            'client_billing_street' => $item['direccion'] ?? null,
+                            'client_billing_city' => $item['ciudad'] ?? null,
+                            'client_billing_state' => $item['departamento'] ?? null,
+                            'client_billing_country' => $item['pais'] ?? null,
+                            'client_creatorid' => auth()->id(),
+                            'client_created' => now(),
+                            'client_updated' => now(),
+                        ]
+                    );
+                } catch (\Exception $e) {
+                    \Log::error('Error al procesar el cliente con RUC ' . ($item['rucFranquicia'] ?? 'desconocido') . ': ' . $e->getMessage());
+                }
+                
             }
         }
     

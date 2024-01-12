@@ -5,7 +5,7 @@
             <div class="d-flex p-10 no-block">
                 <span class="align-slef-center">
                     <h2 class="m-b-0">{{ runtimeMoneyFormat($payload['invoices']['due']) }}</h2>
-                    <h6 class="text-muted m-b-0">Facturas Por Vencer</h6>
+                    <h6 class="text-muted m-b-0">Cobros Por Vencer</h6>
                 </span>
                 <div class="align-self-center display-6 ml-auto"><i class="text-warning icon-Coin"></i></div>
             </div>

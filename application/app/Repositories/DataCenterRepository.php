@@ -62,10 +62,20 @@ class DatacenterRepository {
     public function getAverageTicket($year) {
         $totalSales = $this->sales->whereYear('fecha_creacion', $year)->sum('total');
         $totalTransactions = $this->sales->whereYear('fecha_creacion', $year)->count();
-        $formattedAverageTicket = number_format($totalSales / $totalTransactions, 0, '', '.');
-
+    
+        // Verificar si hay transacciones antes de dividir
+        if ($totalTransactions > 0) {
+            $averageTicket = $totalSales / $totalTransactions;
+        } else {
+            $averageTicket = 0; // O manejarlo de la manera que prefieras
+        }
+    
+        // Formatear el promedio
+        $formattedAverageTicket = number_format($averageTicket, 0, '', '.');
+    
         return $formattedAverageTicket;
     }
+    
 
     public function getGMV($year) {
         $totalSales = $this->sales->whereYear('fecha_creacion', $year)->sum('total');
