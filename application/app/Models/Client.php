@@ -18,6 +18,17 @@ class Client extends Model {
     protected $guarded = ['client_id'];
     protected $fillable = [
         'franchise_id',
+        'client_company_name',
+        'client_creatorid',
+        'client_phone',
+        'client_billing_street',
+        'client_billing_city',
+        'client_billing_state',
+        'client_billing_country',
+        'client_creatorid',
+        'client_created',
+        'client_updated',
+        'franchise_ruc'
     ];
     const CREATED_AT = 'client_created';
     const UPDATED_AT = 'client_updated';

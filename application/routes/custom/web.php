@@ -1,30 +1,26 @@
 <?php
 
-/**----------------------------------------------------------------------------------------------------------------
- * [GROWCRM - CUSTOM ROUTES]
- * Place your custom routes or overides in this file. This file is not updated with Grow CRM updates
- * ---------------------------------------------------------------------------------------------------------------*/
-
-// DATACENTER - Home
 use App\Http\Controllers\DatacenterController;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\WhatsApp;
+use App\Http\Controllers\ExternalAPIController;
+use App\Http\Controllers\ObjectiveDetailController;
+use App\Http\Controllers\ConversationsController;
+use App\Http\Controllers\Franchise;
+use App\Http\Controllers\ObjectiveController;
+use App\Http\Controllers\ApiImportController;
+
+
+// DATACENTER
 
 Route::get('/datacenter', [DatacenterController::class, 'index']);
-
-
-// DATACENTER - Ventas
-use App\Http\Controllers\SalesController;
-
 Route::get('/sales', [SalesController::class, 'show'])->name('sales.show');
-
-// DATACENTER - Stock
-use App\Http\Controllers\StockController;
-
 Route::get('/stock', [StockController::class, 'show'])->name('stock.show');
+Route::get('/datacenternuevo', [DatacenterController::class, 'datacenterNuevo'])->name('datacenter.nuevo');
 
 
-
-
- // SUMERIA - Franquicias
+// Franquicias
 Route::group(['prefix' => 'franchise'], function () {
     Route::any("/search", "Franchise@getAll"); // Para obtener todas las franquicias
     Route::get("/{id}", "Franchise@get"); // Para obtener una sola franquicia por ID
@@ -37,7 +33,7 @@ Route::group(['prefix' => 'franchise'], function () {
 
 Route::get('/franchises', 'Franchise@index')->middleware('franchiseAccess');
 
-// SUMERIA - Objetivos
+//Objetivos
 
 Route::group(['prefix' => 'objective'], function () {
     Route::any("/search", "ObjectiveController@getAll"); // Para obtener todos los objetivos
@@ -50,32 +46,45 @@ Route::group(['prefix' => 'objective'], function () {
 
 });
 
-//SUMERIA - Detalles Objetivos - Provisorio
-
-use App\Http\Controllers\ObjectiveDetailController;
 
 Route::get('/objective-detail', [ObjectiveDetailController::class, 'show'])->name('objective-detail');
-
 Route::post('/update-progress-for-all-objectives', 'ObjectiveController@updateProgressForAllObjectives'); // Ruta para recargar objetivos hasta que esté el Cron
 Route::get('/objectives', 'ObjectiveController@index');
 Route::get('/objectives/{id}', 'ObjectiveController@show');
 Route::get('/objective/edit/{id}', 'ObjectiveController@showEditModal');
 
+
+// Whatsapp
+
 Route::group(['prefix' => 'whatsapp'], function () {
     Route::get('/send', 'WhatsApp@sendMessage')->name('whatsapp.send');
     Route::get('/webhook', 'WhatsApp@webhook')->name('whatsapp.webhook.get');
     Route::post('/webhook', 'WhatsApp@recibe')->name('whatsapp.webhook.post');
-    Route::get('/business/{businessId}/whatsapp-accounts', 'WhatsApp@getOwnedWhatsAppBusinessAccounts')->name('business.whatsapp.accounts');
+    Route::get('/business/whatsapp-accounts', 'WhatsApp@getOwnedWhatsAppBusinessAccounts')->name('business.whatsapp.accounts');
     Route::get('/phone-numbers/{whatsAppBusinessAccountId}', 'WhatsApp@getPhoneNumbers')->name('whatsapp.phone.numbers');
+    Route::post('/update-meta-business-id', 'WhatsApp@updateMetaBusinessId')->name('whatsapp.update.meta.business.id');
+    Route::post('/update-admin-token', 'WhatsApp@updateAdminToken')->name('whatsapp.update.admin.token');
+    Route::post('/associate-phone', 'WhatsApp@associatePhoneNumberWithFranchise')->name('whatsapp.associate.phone');
+    Route::post('/disassociate/{phone_id}', 'WhatsApp@disassociatePhoneNumber')->name('whatsapp.disassociate');
 });
 
+// API Import
 
+Route::group(['prefix' => 'api-import'], function () {
+    Route::get('/clientes', 'ExternalAPIController@getClientes');
+    Route::get('/productos', 'ExternalAPIController@getProductos');
+    Route::get('/proveedores', 'ExternalAPIController@getProveedores');
+    Route::get('/ventas', 'ExternalAPIController@getVentas');
+});
 
-//SUMERIA - PEDIDOS RRSS / Conversaciones
+// SALES
 
-use App\Http\Controllers\ConversationsController;
+Route::get('/sales', [ExternalAPIController::class, 'showSales'])->name('sales.show');
+
+//PEDIDOS RRSS / Conversaciones
 
 Route::get('/conversations', [ConversationsController::class, 'show'])->name('conversations.show');
+Route::get('/conversations/settings', [ConversationsController::class, 'settings'])->name('conversations.settings');
 
 
 

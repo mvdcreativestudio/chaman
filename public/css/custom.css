@@ -743,16 +743,13 @@
 }
 
 .img-text-conv h4 {
+   font-size: 16px;
    font-weight: 500;
    line-height: 1.2em;
    margin-left: 15px;
    padding-top: 10px;
 }
 
-.img-text-conv h4 span {
-   font-size: 0.8em;
-   color: #555;
-}
 
 .chat-box-conv {
    position: relative;
@@ -817,11 +814,10 @@
 .time-chat-act {
    position: relative;
    display: block;
-   font-size: 0.7em;
+   font-size: 0.75em;
    width: 100%;
    text-align: end;
-   color: #777;
-   
+   color: #aaa;       
 }
 
 .chatbox-input-conv { 
@@ -853,6 +849,19 @@
    border-radius: 30px;
    font-size: 1em;
 }
+
+.chatbox-input-conv .send-button {
+   outline: none;
+   border: none;
+   width: 55px;
+   height: 35px;
+   box-sizing: border-box;
+   border-radius: 15%;
+   background-color: rgb(0, 152, 179);
+   color: white;
+}
+
+
 
 .userimg-conv {
    position: relative;
@@ -979,7 +988,7 @@
    margin-top: 27px;
 }
 
-.chatlist-conv .block-conv .details-conv .list-head h4 {
+.chatlist-conv .block-conv .details-conv .list-head h7 {
    font-size: 1.1em;
    font-weight: 600;
    color: #111;
@@ -1102,7 +1111,6 @@
  .overflow-container::-webkit-scrollbar-thumb:hover {
    background-color: #a0a0a0; /* Color del mango al pasar el mouse sobre él */
  }
- 
 
 
 .right-sidebar .rpanel-title {

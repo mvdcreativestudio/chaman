@@ -313,7 +313,7 @@ return [
         'expense_date' => strtolower(__('lang.date')),
         'expense_amount' => strtolower(__('lang.amount')),
         'expense_categoryid' => strtolower(__('lang.category')),
-        'expense_billable' => strtolower(__('lang.bar')),
+
 
         //tickets
         'ticket_clientid' => strtolower(__('lang.client')),
