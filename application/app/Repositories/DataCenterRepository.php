@@ -48,31 +48,112 @@ class DatacenterRepository {
 
     /** Obtener ventas totales */
 
-    public function getTotalSalesCount($startDate = null, $endDate = null)
+    public function getTotalSalesCount($startDate = null, $endDate = null, $rucFranquicia = null)
     {
         $query = Sale::query();
     
+        // Filtrar por rango de fechas si se proporcionan
         if (!is_null($startDate) && !is_null($endDate)) {
             $query->whereBetween('fecha_creacion', [$startDate, $endDate]);
+        }
+    
+        // Filtrar por estado 'Pagado'
+        $query->where('estado', 'Pagado');
+    
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
         }
     
         return $query->count();
     }
     
+    
 
-    public function getTotalSalesCountForPeriod($period)
+    public function getTotalSalesCountForPeriod($period, $rucFranquicia = null)
     {
-    switch ($period) {
-        case 'thisYear':
-            return $this->getTotalSalesCount(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'));
-        case 'thisMonth':
-            return $this->getTotalSalesCount(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'));
-        case 'today':
-            return $this->getTotalSalesCount(now()->format('Y-m-d'), now()->format('Y-m-d'));
-        case 'yesterday':
-            return $this->getTotalSalesCount(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'));
-        default:
-            break;
+        switch ($period) {
+            case 'thisYear':
+                return $this->getTotalSalesCount(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getTotalSalesCount(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getTotalSalesCount(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                return $this->getTotalSalesCount(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+            default:
+                // Manejar otros casos o lanzar una excepción
+                break;
+        }
+    }
+
+
+    public function getTotalSalesPendingCount($startDate = null, $endDate = null, $rucFranquicia = null)
+    {
+        $query = Sale::query();
+
+        if (!is_null($startDate) && !is_null($endDate)) {
+            $query
+                ->whereBetween('fecha_creacion', [$startDate, $endDate])
+                ->where('estado', 'No Pagado');
+        }
+
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+
+        return $query->count();
+    }
+
+    public function getTotalSalesPendingCountForPeriod($period, $rucFranquicia = null)
+    {
+        switch($period) {
+            case 'thisYear':
+                return $this->getTotalSalesPendingCount(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getTotalSalesPendingCount(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getTotalSalesPendingCount(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                return $this->getTotalSalesPendingCount(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+            default:
+                break;
+        }
+    }
+
+    public function getTotalSalesPending($startDate = null, $endDate = null, $rucFranquicia = null)
+    {
+        $query = Sale::query();
+
+        if (!is_null($startDate) && !is_null($endDate)) {
+            $query
+                ->whereBetween('fecha_creacion', [$startDate, $endDate])
+                ->where('estado', 'No Pagado');
+        }
+
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+        
+        return number_format($query->sum('total'), 0, '.', '.');
+
+    }
+
+    public function getTotalSalesPendingForPeriod($period, $rucFranquicia = null)
+    {
+        switch($period) {
+            case 'thisYear':
+                return $this->getTotalSalesPending(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getTotalSalesPending(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getTotalSalesPending(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                return $this->getTotalSalesPending(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+            default:
+                break;
         }
     }
 
@@ -96,10 +177,16 @@ class DatacenterRepository {
         }
     
         // Construir la consulta para sumar las ventas
-        $totalSales = $this->sales->whereBetween('fecha_creacion', [$startDate, $endDate])->sum('total');
+        $totalSales = $this->sales
+            ->whereBetween('fecha_creacion', [$startDate, $endDate])
+            ->where('estado', 'Pagado')
+            ->sum('total');
     
         // Construir la consulta para contar las transacciones
-        $totalTransactions = $this->sales->whereBetween('fecha_creacion', [$startDate, $endDate])->count();
+        $totalTransactions = $this->sales
+            ->whereBetween('fecha_creacion', [$startDate, $endDate])
+            ->where('estado', 'Pagado')
+            ->count();
     
         // Calcular el ticket promedio
         if ($totalTransactions > 0) {
@@ -133,7 +220,7 @@ class DatacenterRepository {
      
     
 
-    public function getGMV($startDate = null, $endDate = null) {
+    public function getGMV($startDate = null, $endDate = null, $rucFranquicia = null) {
         // Si no se proporcionan fechas, asume el año actual
         if (is_null($startDate) && is_null($endDate)) {
             $startDate = now()->startOfYear()->format('Y-m-d');
@@ -146,14 +233,20 @@ class DatacenterRepository {
         }
     
         // Construir la consulta
-        $query = $this->sales->whereBetween('fecha_creacion', [$startDate, $endDate]);
+        $query = $this->sales
+            ->whereBetween('fecha_creacion', [$startDate, $endDate])
+            ->where('estado', 'Pagado');
+    
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
     
         // Obtener la suma total de ventas
         $totalSales = $query->sum('total');
     
         // Formatear el total de ventas
         $formattedTotalSales = number_format($totalSales, 0, '', '.');
-
     
         // Devolver los resultados
         return [
@@ -163,20 +256,22 @@ class DatacenterRepository {
         ];
     }
     
-    public function getGMVForPeriod($period) {
+    
+    public function getGMVForPeriod($period, $rucFranquicia) {
         switch ($period) {
             case 'thisYear':
-                return $this->getGMV();
+                return $this->getGMV(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
             case 'thisMonth':
-                return $this->getGMV(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'));
+                return $this->getGMV(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
             case 'today':
-                return $this->getGMV(now()->format('Y-m-d'));
+                return $this->getGMV(now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
-                return $this->getGMV(now()->subDay()->format('Y-m-d'));
+                return $this->getGMV(now()->subDay()->format('Y-m-d'), $rucFranquicia);
             default:
                 break;
         }
     }
+
     
     
     
