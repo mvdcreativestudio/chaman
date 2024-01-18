@@ -20,7 +20,7 @@
         {{ runtimeCheckBlank($team->email) }}
     </td>
     <td class="team_col_franchise">
-        {{ $team->franchise->name ?? 'N/A' }}
+        {{ $team->franchise['name'] ?? '---' }}
     </td>
     <td class="team_col_phone">
         {{ runtimeCheckBlank($team->phone) }}

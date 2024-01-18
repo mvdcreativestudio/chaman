@@ -17,4 +17,14 @@ class FranchisePhone extends Model
     {
         return $this->belongsTo(Franchise::class);
     }
+
+    public function sentMessages()
+    {
+        return $this->morphMany(Message::class, 'from_phone');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->morphMany(Message::class, 'to_phone');
+    }
 }

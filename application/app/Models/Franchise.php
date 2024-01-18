@@ -51,7 +51,7 @@ class Franchise extends Model
     
     public function phoneNumber()
     {
-        return $this->hasOne(FranchisePhone::class);
+        return $this->hasOne(PhoneNumber::class, 'franchise_id');
     }
 }
 

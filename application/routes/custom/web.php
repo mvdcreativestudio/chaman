@@ -63,6 +63,7 @@ Route::get('/objective/edit/{id}', 'ObjectiveController@showEditModal');
 
 Route::group(['prefix' => 'whatsapp'], function () {
     Route::get('/send', 'WhatsApp@sendMessage')->name('whatsapp.send');
+    Route::post('/sendMedia', 'WhatsApp@sendMediaMessage')->name('whatsapp.sendMedia');
     Route::get('/webhook', 'WhatsApp@webhook')->name('whatsapp.webhook.get');
     Route::post('/webhook', 'WhatsApp@recibe')->name('whatsapp.webhook.post');
     Route::get('/business/whatsapp-accounts', 'WhatsApp@getOwnedWhatsAppBusinessAccounts')->name('business.whatsapp.accounts');
@@ -88,6 +89,8 @@ use App\Http\Controllers\ConversationsController;
 
 Route::get('/conversations', [ConversationsController::class, 'show'])->name('conversations.show');
 Route::get('/conversations/settings', [ConversationsController::class, 'settings'])->name('conversations.settings');
+Route::get('/conversations/fetch-messages', [ConversationsController::class, 'fetchMessages'])->name('conversations.messages');
+
 
 
 

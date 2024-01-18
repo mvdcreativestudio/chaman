@@ -203,10 +203,6 @@ class RoleRepository {
         if ($role->franchise_admin_role) {
             $role->update(['franchise_admin_role' => false]);
         } else {
-            // Desactivamos cualquier otro rol que tenga franchise_admin_role = true.
-            \App\Models\Role::where('franchise_admin_role', true)->update(['franchise_admin_role' => false]);
-    
-            // Establecemos el rol específico a franchise_admin_role = true.
             $role->update(['franchise_admin_role' => true]);
         }
     }

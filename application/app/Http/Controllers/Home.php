@@ -320,14 +320,10 @@ class Home extends Controller {
             ]),
         ];
 
+
         //[income][yearly]
         $payload['income'] = $this->statsrepo->sumYearlyIncome([
             'period' => 'this_year',
-        ]);
-
-        //[income][last_year]
-        $payload['income'] = $this->statsrepo->sumYearlyIncome([
-            'period'=> 'last_year'
         ]);
 
         //[expense][yearly]
@@ -410,8 +406,6 @@ class Home extends Controller {
             $objective->status = $this->objectiveService->calculateStatusForObjective($objective);
             $objective->save();
         }
-
-
         //return payload
         return $payload;
 

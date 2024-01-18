@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 
+
 class User extends Authenticatable {
     use Notifiable;
 
@@ -317,7 +318,11 @@ class User extends Authenticatable {
     public function scopeLeftjoinClients($query) {
         $query->leftJoin('clients', function ($leftJoin) {
             $leftJoin->on('clients.client_id', '=', 'users.clientid');
-        });
+        })
+        ->addSelect([
+            'users.*',
+            'clients.franchise_id as client_franchise_id'
+        ]);
     }
 
     public function franchise() {
