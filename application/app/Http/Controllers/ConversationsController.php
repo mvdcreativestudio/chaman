@@ -15,21 +15,23 @@ class ConversationsController extends Controller
     {
         $user = auth()->user();
         $userFranchise = $user->franchise;
+        $chats = collect(); // Inicializa $chats como una colección vacía
     
         if (!$userFranchise) {
-            return view('pages.conversations.conversations')->with('error', 'No tienes una franquicia asociada.');
+            return view('pages.conversations.conversations', compact('chats'))->with('error', 'No tienes una franquicia asociada.');
         }
     
         $phoneNumber = $userFranchise->phoneNumber;
     
         if (!$phoneNumber) {
-            return view('pages.conversations.conversations')->with('error', 'Tu franquicia no tiene un número de teléfono asociado.');
+            return view('pages.conversations.conversations', compact('chats'))->with('error', 'Tu franquicia no tiene un número de teléfono asociado.');
         }
     
         $chats = $phoneNumber->getLastMessagesForChats();
     
         return view('pages.conversations.conversations', compact('chats'));
-    }    
+    }
+    
     
 
     public function fetchMessages(Request $request)
