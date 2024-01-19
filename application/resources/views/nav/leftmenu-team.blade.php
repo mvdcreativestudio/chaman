@@ -193,9 +193,16 @@
                         @if(config('visibility.modules.invoices'))
                         <li class="sidenav-submenu {{ $page['submenu_invoices'] ?? '' }}" id="submenu_invoices">
                             <a href="/invoices"
-                                class=" {{ $page['submenu_invoices'] ?? '' }}">{{ cleanLang(__('lang.invoices')) }}</a>
+                                class=" {{ $page['submenu_invoices'] ?? '' }}">Facturas CRM</a>
                         </li>
                         @endif
+
+                        <li class="sidenav-submenu {{ $page['submenu_api_invoices'] ?? '' }}"
+                            id="submenu_api_invoices">
+                            <a href="/sales"
+                                class=" {{ $page['submenu_api_invoices'] ?? '' }}">Facturas API</a>
+                        </li>
+
                         @if(config('visibility.modules.payments'))
                         <li class="sidenav-submenu {{ $page['submenu_payments'] ?? '' }}" id="submenu_payments">
                             <a href="/payments"

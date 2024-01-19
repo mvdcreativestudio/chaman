@@ -20,7 +20,7 @@ class ObjectiveService {
                         return $this->calculateConvertedLeadsProgress($objective);
                         break;
                     default:
-                        return 0; // Valor predeterminado para leads cuando no se conoce el module_target
+                        return 0; 
                 }
                 break;
 
@@ -52,76 +52,133 @@ class ObjectiveService {
         // Lógica específica para calcular el progreso para objetivos de leads
         $startDate = $objective->start_date;
         $endDate = $objective->end_date;
-
+        $userId = $objective->user_id;
+        $franchiseId = $objective->franchise_id;
+    
         // Obtener la cantidad de leads generados en el rango de fechas del objetivo
         $leadsInObjectiveRange = DB::table('leads')
             ->whereBetween('lead_created', [$startDate, $endDate])
+            ->where(function ($query) use ($userId, $franchiseId) {
+                $query->where('lead_creatorid', $userId)
+                      ->orWhere(function ($query) use ($franchiseId) {
+                          $query->whereIn('lead_creatorid', function ($query) use ($franchiseId) {
+                              $query->select('id')
+                                    ->from('users')
+                                    ->where('franchise_id', $franchiseId);
+                          });
+                      });
+            })
             ->count();
-
+    
         // Calcular el progreso
         $progress = round(($leadsInObjectiveRange / $objective->target_value) * 100);
-
+    
         return min($progress, 100);
-
     }
+    
 
     private function calculateConvertedLeadsProgress(Objective $objective)
     {
         // Lógica específica para calcular el progreso para objetivos de leads convertidos
         $startDate = $objective->start_date;
         $endDate = $objective->end_date;
-
+        $userId = $objective->user_id;
+        $franchiseId = $objective->franchise_id;
+    
         // Obtener la cantidad de leads convertidos en el rango de fechas del objetivo
         $leadsInObjectiveRange = DB::table('leads')
             ->whereBetween('lead_created', [$startDate, $endDate])
             ->where('lead_status', 2)
+            ->where(function ($query) use ($userId, $franchiseId) {
+                $query->where('lead_creatorid', $userId)
+                      ->orWhere(function ($query) use ($franchiseId) {
+                          $query->whereIn('lead_creatorid', function ($query) use ($franchiseId) {
+                              $query->select('id')
+                                    ->from('users')
+                                    ->where('franchise_id', $franchiseId);
+                          });
+                      });
+            })
             ->count();
-
+    
         // Calcular el progreso
         $progress = round(($leadsInObjectiveRange / $objective->target_value) * 100);
-
+    
         return min($progress, 100);
-
     }
-
-
+    
 
     // VENTAS
 
     private function calculateCreatedSalesProgress(Objective $objective)
     {
-        // Lógica específica para calcular el progreso para objetivos de ventas
-        $startDate = $objective->start_date;
-        $endDate = $objective->end_date;
+    // Lógica específica para calcular el progreso para objetivos de ventas
+    $startDate = $objective->start_date;
+    $endDate = $objective->end_date;
+    $userId = $objective->user_id;
+    $franchiseId = $objective->franchise_id;
 
-        // Obtener la cantidad de ventas generadas en el rango de fechas del objetivo
-        $salesInObjectiveRange = DB::table('invoices')
-            ->whereBetween('bill_created', [$startDate, $endDate])
-            ->count();
+    // Obtener la cantidad de ventas generadas en el rango de fechas del objetivo
+    $salesInObjectiveRange = DB::table('invoices')
+        ->whereBetween('bill_created', [$startDate, $endDate])
+        ->where(function ($query) use ($userId, $franchiseId) {
+            if ($userId) {
+                $query->where('bill_creatorid', $userId);
+            }
+            if ($franchiseId) {
+                $query->orWhere(function ($subQuery) use ($franchiseId) {
+                    $subQuery->whereIn('bill_creatorid', function ($subQuery) use ($franchiseId) {
+                        $subQuery->select('id')
+                                 ->from('users')
+                                 ->where('franchise_id', $franchiseId);
+                    });
+                });
+            }
+        })
+        ->count();
 
-        // Calcular el progreso
-        $progress = round(($salesInObjectiveRange / $objective->target_value) * 100);
+    // Calcular el progreso
+    $progress = round(($salesInObjectiveRange / $objective->target_value) * 100);
 
-        return min($progress, 100);
+    return min($progress, 100);
     }
+
+
 
     private function calculateConvertedSalesProgress(Objective $objective)
     {
-        // Lógica específica para calcular el progreso para objetivos de ventas convertidas
-        $startDate = $objective->start_date;
-        $endDate = $objective->end_date;
+    // Lógica específica para calcular el progreso para objetivos de ventas convertidas
+    $startDate = $objective->start_date;
+    $endDate = $objective->end_date;
+    $userId = $objective->user_id;
+    $franchiseId = $objective->franchise_id;
 
-        // Obtener la cantidad de ventas convertidas en el rango de fechas del objetivo
-        $salesInObjectiveRange = DB::table('invoices')
-            ->whereBetween('bill_created', [$startDate, $endDate])
-            ->where('bill_status', 'paid')
-            ->count();
+    // Obtener la cantidad de ventas convertidas en el rango de fechas del objetivo
+    $salesInObjectiveRange = DB::table('invoices')
+        ->whereBetween('bill_created', [$startDate, $endDate])
+        ->where('bill_status', 'paid')
+        ->where(function ($query) use ($userId, $franchiseId) {
+            if ($userId) {
+                $query->where('bill_creatorid', $userId);
+            }
+            if ($franchiseId) {
+                $query->orWhere(function ($subQuery) use ($franchiseId) {
+                    $subQuery->whereIn('bill_creatorid', function ($subQuery) use ($franchiseId) {
+                        $subQuery->select('id')
+                                 ->from('users')
+                                 ->where('franchise_id', $franchiseId);
+                    });
+                });
+            }
+        })
+        ->count();
 
-        // Calcular el progreso
-        $progress = round(($salesInObjectiveRange / $objective->target_value) * 100);
+    // Calcular el progreso
+    $progress = round(($salesInObjectiveRange / $objective->target_value) * 100);
 
-        return min($progress, 100);
+    return min($progress, 100);
     }
+
 
     // GASTOS
 
@@ -130,19 +187,34 @@ class ObjectiveService {
         // Lógica específica para calcular el progreso para objetivos de gastos reducidos
         $startDate = $objective->start_date;
         $endDate = $objective->end_date;
-
-    // Obtener la suma total de gastos en el rango de fechas del objetivo
-        $totalExpensesInObjectiveRange = DB::table('expenses')
-        ->whereBetween('expense_date', [$startDate, $endDate])
-        ->sum('expense_amount'); 
+        $userId = $objective->user_id;
+        $franchiseId = $objective->franchise_id;
     
+        // Obtener la suma total de gastos en el rango de fechas del objetivo
+        $totalExpensesInObjectiveRange = DB::table('expenses')
+            ->whereBetween('expense_date', [$startDate, $endDate])
+            ->where(function ($query) use ($userId, $franchiseId) {
+                if ($userId) {
+                    $query->where('expense_creatorid', $userId);
+                }
+                if ($franchiseId) {
+                    $query->orWhere(function ($subQuery) use ($franchiseId) {
+                        $subQuery->whereIn('expense_creatorid', function ($subQuery) use ($franchiseId) {
+                            $subQuery->select('id')
+                                     ->from('users')
+                                     ->where('franchise_id', $franchiseId);
+                        });
+                    });
+                }
+            })
+            ->sum('expense_amount'); 
         
         // Calcular el progreso
         $progress = ($totalExpensesInObjectiveRange / $objective->target_value) * 100;
-
+    
         return $progress;
-        
     }
+    
 
     
     // Lógica para determinar el estado del objetivo (active o inactive)
@@ -158,7 +230,5 @@ class ObjectiveService {
             return 'inactive';
         }
     }
-
-    // Puedes agregar otras funciones relacionadas con la lógica de objetivos aquí
 
 }
