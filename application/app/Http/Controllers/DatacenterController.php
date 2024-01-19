@@ -30,6 +30,8 @@ class DatacenterController extends Controller
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
         $rucFranquicia = $request->input('rucFranquicia');
+        $year = now()->year;
+        $monthlyGMV = $this->datacenterRepository->getMonthlyGMV($year, $rucFranquicia);
 
 
 
@@ -55,6 +57,8 @@ class DatacenterController extends Controller
             'totalSalesCount' => $totalSalesCount,
             'totalSalesPendingCount' => $totalSalesPendingCount,
             'totalSalesPending' => $totalSalesPending,
+            'monthlyGMV' => $monthlyGMV,
+
         ];
     
         return response()->json(['data' => $data]);

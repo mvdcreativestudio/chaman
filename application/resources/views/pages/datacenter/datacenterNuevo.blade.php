@@ -22,10 +22,15 @@
             </div>
             <div class="form-group mb-2">
                 <select id="franchise-selector" class="form-control">
-                        <option value="" selected>Seleccione una franquicia</option>
-                    @foreach($franchises as $franchise)
-                        <option value="{{ $franchise->ruc }}">{{ $franchise->name }}</option>
-                    @endforeach
+
+                        @if (Auth()->user()->role_id == 1)
+                            <option value="" selected data-name="Todas las franquicias">Todas las franquicias</option>
+                            @foreach($franchises as $franchise)
+                                <option value="{{ $franchise->ruc }}" data-name="{{ $franchise->name }}">{{ $franchise->name }}</option>
+                            @endforeach
+                        @else 
+                            <option value="{{ Auth()->user()->franchise->ruc }}">{{ Auth()->user()->franchise->name }}</option>
+                        @endif
                 </select>
             </div>
         </form>
@@ -165,6 +170,93 @@
 
 </div>
 
+{{-- Second Row --}}
+
+<div class="col-md-12 element-content mt-4">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex m-b-30 justify-content-between">
+                <h5 class="card-title m-b-0 align-self-center">GMV - <span id="franchise-name">Todas las franquicias</span></h5>
+
+            </div>
+            <div id="chart-gmv"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+        function updateChart(data) {
+        var months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        var monthlyGMV = data.monthlyGMV.map(function(value) {
+            return parseFloat(value) || 0;
+        });
+
+        var chartData = {
+            x: 'x',
+            columns: [
+                ['x'].concat(months),
+                ['GMV'].concat(monthlyGMV)
+            ],
+            types: {
+                'GMV': 'bar'
+            }
+        };
+
+        var chartConfig = {
+            bindto: '#chart-gmv',
+            data: chartData,
+            axis: {
+                x: {
+                    type: 'category'
+                },
+                y: {
+                    tick: {
+                        format: d3.format("$,")
+                    }
+                }
+            }
+        };
+        console.log("Datos procesados para la gráfica:", chartData); // Agregar esta línea
+
+
+        c3.generate(chartConfig);
+    }
+
+    function fetchGMVData() {
+        var selectedFranchise = $('#franchise-selector').val();
+        var selectedTimeframe = $('#gmv-timeframe').val();
+        $.ajax({
+            url: 'datacenter/filter',
+            type: 'GET',
+            data: {
+                timeframe: selectedTimeframe,
+                rucFranquicia: selectedFranchise
+            },
+            success: function(response) {
+                console.log("Datos recibidos:", response); // Agregar esta línea
+                if (response && response.data) {
+                    updateChart(response.data);
+                } else {
+                    console.error('Datos no encontrados en la respuesta', response);
+                }
+            },
+            error: function(error) {
+                console.error('Error al obtener datos de GMV:', error);
+            }
+        });
+    }
+    $('#franchise-selector').on('change', fetchGMVData);
+    $('#timeframe-selector').on('change', fetchGMVData);
+
+    fetchGMVData();
+});
+
+
+</script>
+
+
+
 
 <script>
 $(document).ready(function() {
@@ -213,7 +305,24 @@ $(document).ready(function() {
 
     // Establecer el valor por defecto del selector y desencadenar el evento change
     $('#gmv-timeframe').val('thisYear').change();
+
+    // Función para actualizar el título basado en la franquicia seleccionada
+    function updateTitle() {
+        var selectedFranchiseName = $('#franchise-selector option:selected').data('name') || 'Todas las franquicias';
+        $('#franchise-name').text(selectedFranchiseName);
+    }
+
+    // Evento de cambio para el selector de franquicias
+    $('#franchise-selector').on('change', function() {
+        updateTitle();
+        handleFilterChange(); // Asumiendo que esta es tu función para manejar el cambio
+    });
+
+    // Llamada inicial para establecer el título correcto al cargar la página
+    updateTitle();
 });
+
+
 
 </script>
     

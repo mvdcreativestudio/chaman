@@ -57,8 +57,8 @@ class DatacenterRepository {
             $query->whereBetween('fecha_creacion', [$startDate, $endDate]);
         }
     
-        // Filtrar por estado 'Pagado'
-        $query->where('estado', 'Pagado');
+        // // Filtrar por estado 'Pagado'
+        // $query->where('estado', 'Pagado');
     
         // Filtrar por RUC de franquicia si se proporciona
         if (!is_null($rucFranquicia)) {
@@ -179,13 +179,11 @@ class DatacenterRepository {
         // Construir la consulta para sumar las ventas
         $totalSales = $this->sales
             ->whereBetween('fecha_creacion', [$startDate, $endDate])
-            ->where('estado', 'Pagado')
             ->sum('total');
     
         // Construir la consulta para contar las transacciones
         $totalTransactions = $this->sales
             ->whereBetween('fecha_creacion', [$startDate, $endDate])
-            ->where('estado', 'Pagado')
             ->count();
     
         // Calcular el ticket promedio
@@ -234,8 +232,7 @@ class DatacenterRepository {
     
         // Construir la consulta
         $query = $this->sales
-            ->whereBetween('fecha_creacion', [$startDate, $endDate])
-            ->where('estado', 'Pagado');
+            ->whereBetween('fecha_creacion', [$startDate, $endDate]);
     
         // Filtrar por RUC de franquicia si se proporciona
         if (!is_null($rucFranquicia)) {
@@ -271,6 +268,25 @@ class DatacenterRepository {
                 break;
         }
     }
+
+    public function getMonthlyGMV($year, $rucFranquicia = null) {
+        $monthlyGMV = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth()->format('Y-m-d');
+            $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth()->format('Y-m-d');
+    
+            $query = $this->sales->whereBetween('fecha_creacion', [$startDate, $endDate]);
+            if (!is_null($rucFranquicia)) {
+                $query->where('ruc_franquicia', $rucFranquicia);
+            }
+    
+            $monthlyGMV[] = $query->sum('total');
+        }
+        return $monthlyGMV;
+    }
+
+    
+    
 
     
     
