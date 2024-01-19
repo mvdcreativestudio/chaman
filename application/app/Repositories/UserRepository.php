@@ -50,6 +50,8 @@ class UserRepository {
             $users->where('clientid', request()->input('clientid'));
         }
 
+        $users->with('franchise');
+
         return $users->first();
     }
 
@@ -152,6 +154,8 @@ class UserRepository {
             }
         }
 
+        
+
         //search: various client columns and relationships (where first, then wherehas)
         if (request()->filled('search_query')) {
             $users->where(function ($query) {
@@ -182,6 +186,7 @@ class UserRepository {
         //eager load
         $users->with([
             'role',
+            'franchise'
         ]);
 
         // Get the results and return them.

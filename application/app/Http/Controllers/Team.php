@@ -94,6 +94,7 @@ class Team extends Controller {
             'type' => 'team',
             'status' => 'active',
         ]);
+
         $users = $this->userrepo->search();
         
         // Obtengo todas las franquicias
@@ -313,13 +314,44 @@ class Team extends Controller {
         $this->userrepo->updatePreferences(auth()->id());
 
     }
-
+    
     /**
      * Remove the specified team member from storage.
      * @param int $id team member id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
+
+        //get the user
+        $user = $this->userrepo->get($id);
+    
+        //check permissions
+        if (!runtimeTeamPermissionDelete($user)) {
+            abort(403);
+        }
+    
+        //delete project assignments
+        \App\Models\ProjectAssigned::Where('projectsassigned_userid', $id)->delete();
+    
+        //delete task assignments
+        \App\Models\TaskAssigned::Where('tasksassigned_userid', $id)->delete();
+    
+        //delete lead assignments
+        \App\Models\LeadAssigned::Where('leadsassigned_userid', $id)->delete();
+    
+        //delete project manager
+        \App\Models\ProjectManager::Where('projectsmanager_userid', $id)->delete();
+    
+        //delete the user
+        $user->delete();
+    }
+
+    /**
+     * Remove the specified team member from storage.
+     * @param int $id team member id
+     * @return \Illuminate\Http\Response
+     */
+    public function OldDestroy($id) {
 
         //get the user
         $user = $this->userrepo->get($id);
