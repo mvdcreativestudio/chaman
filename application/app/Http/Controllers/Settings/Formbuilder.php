@@ -329,7 +329,7 @@ class Formbuilder extends Controller {
             'attrs' => [
                 'type' => 'text',
             ],
-            'icon' => 'formbuilder-custom-field-icon lead_lastname required',
+            'icon' => 'formbuilder-custom-field-icon lead_lastname',
             'className' => 'form-control',
             'values' => [],
         ];
