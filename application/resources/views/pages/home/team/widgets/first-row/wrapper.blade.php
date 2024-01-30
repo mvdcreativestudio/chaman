@@ -1,5 +1,9 @@
 <div class="row">
-    <!--PROJECTS PENDING-->
+
+    <!-- PAYMENTS -->
+    @include('pages.home.team.widgets.first-row.datacenter')
+        
+    {{-- <!--PROJECTS PENDING-->
     @include('pages.home.team.widgets.first-row.projects-pending')
 
     <!--PROJECTS COMPLETED-->
@@ -9,5 +13,5 @@
     @include('pages.home.team.widgets.first-row.tasks-inprogress')
 
     <!--INVOICES OVERDUE-->
-    @include('pages.home.team.widgets.first-row.tasks-feedback')
+    @include('pages.home.team.widgets.first-row.tasks-feedback') --}}
 </div>

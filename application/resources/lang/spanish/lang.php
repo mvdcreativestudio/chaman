@@ -1169,7 +1169,7 @@ return [
 'start_time' => "Hora de inicio",
 'start_timer' => "Iniciar temporizador",
 'start' => "Comienzo",
-'state' => "Estado",
+'state' => "Barrio",
 'stats_panel_default_state' => "Estado predeterminado del panel de estadísticas",
 'stats_panel_default' => "Panel de estadísticas: posición predeterminada",
 'status_already_exists' => "El estado ya existe",
