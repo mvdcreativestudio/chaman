@@ -173,6 +173,80 @@ class DatacenterRepository {
         }
     }
 
+
+    public function getTotalSalesPaidCount($startDate = null, $endDate = null, $rucFranquicia = null)
+    {
+        $query = Sale::query();
+
+        if (!is_null($startDate) && !is_null($endDate)) {
+            $query
+                ->whereBetween('fecha_creacion', [$startDate, $endDate]);
+        }
+
+        $query->where('estado', 'Pagado');
+
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+
+        return $query->count();
+    }
+
+    public function getTotalSalesPaidCountForPeriod($period, $rucFranquicia = null)
+    {
+        switch($period) {
+            case 'thisYear':
+                return $this->getTotalSalesPaidCount(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getTotalSalesPaidCount(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getTotalSalesPaidCount(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                return $this->getTotalSalesPaidCount(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+            default:
+                break;
+        }
+    }
+
+    public function getTotalSalesCancelledCount($startDate = null, $endDate = null, $rucFranquicia = null)
+    {
+        $query = Sale::query();
+
+        if (!is_null($startDate) && !is_null($endDate)) {
+            $query
+                ->whereBetween('fecha_creacion', [$startDate, $endDate]);
+        }
+
+        $query->where('estado', 'Anulada');
+
+
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+
+        return $query->count();
+    }
+
+    public function getTotalSalesCancelledCountForPeriod($period, $rucFranquicia = null)
+    {
+        switch($period) {
+            case 'thisYear':
+                return $this->getTotalSalesCancelledCount(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getTotalSalesCancelledCount(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getTotalSalesCancelledCount(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                return $this->getTotalSalesCancelledCount(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+            default:
+                break;
+        }
+    }
+
+
+
     public function getTotalSalesPending($startDate = null, $endDate = null, $rucFranquicia = null)
     {
         $query = Sale::query();
