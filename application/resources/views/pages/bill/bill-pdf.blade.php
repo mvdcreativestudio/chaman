@@ -97,6 +97,13 @@
                                         class="text-uppercase {{ runtimeInvoiceStatusColors($bill->bill_status, 'text') }} muted">
                                         {{ cleanLang(__('lang.draft')) }}</h2>
                                 </span>
+                                <!--current-->
+                                <span class="js-invoice-statuses {{ runtimeInvoiceStatus('current', $bill->bill_status) }}"
+                                    id="invoice-status-current">
+                                    <h2
+                                        class="text-uppercase {{ runtimeInvoiceStatusColors($bill->bill_status, 'text') }}">
+                                        {{ cleanLang(__('lang.current')) }}</h2>
+                                </span>
                                 <!--due-->
                                 <span class="js-invoice-statuses {{ runtimeInvoiceStatus('due', $bill->bill_status) }}"
                                     id="invoice-status-due">

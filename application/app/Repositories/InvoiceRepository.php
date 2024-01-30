@@ -410,53 +410,53 @@ class InvoiceRepository {
      */
     public function refreshInvoice($invoice) {
 
-        //get the invoice
+        // Obtener la factura
         if (is_numeric($invoice)) {
             if ($invoices = $this->search($invoice)) {
                 $invoice = $invoices->first();
             }
         }
-
+    
         if (!$invoice instanceof \App\Models\Invoice) {
             return false;
         }
-
-        //change dates to carbon format
+    
+        // Cambiar fechas a formato Carbon
         $bill_date = \Carbon\Carbon::parse($invoice->bill_date);
         $bill_due_date = \Carbon\Carbon::parse($invoice->bill_due_date);
-
-        //invoice status for none draft invoices
-        if ($invoice->bill_status != 'draft') {
-
-            //invoice status - due
-            if ($invoice->invoice_balance > 0) {
-                $invoice->bill_status = 'due';
+        $today = \Carbon\Carbon::now();
+    
+        // Estado de la factura para facturas que no son borradores
+        if ($invoice->bill_status != 'draft' && $invoice->bill_status != 'paid') {
+    
+            // Calculando la diferencia en días
+            $days_until_due = $bill_due_date->diffInDays($today);
+    
+            // Invertir el signo si la fecha de vencimiento es anterior a la fecha actual
+            if ($bill_due_date->isPast() == 1) {
+                $days_until_due = -$days_until_due;
             }
-
-            //invoice status - paid
+    
+            // Establecer el estado de la factura
+            if ($days_until_due < 0) {
+                $invoice->bill_status = 'overdue';
+            } elseif ($days_until_due <= 5) {
+                $invoice->bill_status = 'due';
+            } else {
+                $invoice->bill_status = 'current';
+            }
+    
+            // Estado de la factura - pagada
             if ($invoice->bill_final_amount > 0 && $invoice->invoice_balance <= 0) {
                 $invoice->bill_status = 'paid';
             }
-
-            //invoice is overdue
-            if ($invoice->bill_status == 'due' || $invoice->bill_status == 'part_paid') {
-                if ($bill_due_date->diffInDays(today(), false) > 0) {
-                    $invoice->bill_status = 'overdue';
-                }
-            }
-
-            //overdue invoice with date updated
-            if ($invoice->bill_status == 'overdue') {
-                if ($bill_due_date->diffInDays(today(), false) < 0) {
-                    $invoice->bill_status = 'due';
-                }
-            }
-
+    
         }
-
-        //update invoice
+    
+        // Actualizar factura
         $invoice->save();
     }
+    
 
     /**
      * update an invoice from he edit invoice page

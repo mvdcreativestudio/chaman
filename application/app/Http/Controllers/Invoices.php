@@ -436,8 +436,19 @@ class Invoices extends Controller {
             $invoice = \App\Models\Invoice::find($id);
             
             // Si el invoice no existe o el usuario no es el creador, abortar
-            if (!$invoice || $invoice->bill_creatorid != auth()->user()->creatorid) {
-                abort(403, 'Permission Denied');
+            switch (request()->input('user_role_type')) {
+                case 'admin_role':
+                    break;
+                case 'franchise_admin_role':
+                    if ($invoice->franchise_id != auth()->user()->franchise_id) {
+                        abort(403, 'Permission Denied');
+                    }            
+                    break;
+                case 'common_role':
+                    if ($invoice->bill_creatorid != auth()->user()->id) {
+                        abort(403, 'Permission Denied');
+                    }
+                    break;
             }
         }
 
@@ -567,15 +578,25 @@ class Invoices extends Controller {
         //get invoice again
         $invoice = \App\Models\Invoice::Where('bill_invoiceid', $invoice->bill_invoiceid)->first();
 
-        //get new invoice status and save it
-        $bill_date = \Carbon\Carbon::parse($invoice->bill_date);
-        $bill_due_date = \Carbon\Carbon::parse($invoice->bill_due_date);
-        if ($bill_due_date->diffInDays(today(), false) < 0) {
-            $invoice->bill_status = 'due';
-        } else {
-            $invoice->bill_status = 'overdue';
+        if ($invoice->bill_status != 'draft' && $invoice->bill_status != 'paid') {
+            $bill_due_date = \Carbon\Carbon::parse($invoice->bill_due_date);
+            $today = \Carbon\Carbon::now();
+        
+            $days_until_due = $bill_due_date->diffInDays($today);
+        
+            if ($bill_due_date->isPast() == 1) {
+                $days_until_due = -$days_until_due;
+            }
+        
+            if ($days_until_due < 0) {
+                $invoice->bill_status = 'overdue';
+            } elseif ($days_until_due <= 5) {
+                $invoice->bill_status = 'due';
+            } else {
+                $invoice->bill_status = 'current';
+            }
+            $invoice->save();
         }
-        $invoice->save();
 
         //reponse payload
         $payload = [
@@ -597,9 +618,19 @@ class Invoices extends Controller {
             // Obtener el invoice
             $invoice = \App\Models\Invoice::find($id);
             
-            // Si el invoice no existe o el usuario no es el creador, abortar
-            if (!$invoice || $invoice->bill_creatorid != auth()->user()->creatorid) {
-                abort(403, 'Permission Denied');
+            switch (request()->input('user_role_type')) {
+                case 'admin_role':
+                    break;
+                case 'franchise_admin_role':
+                    if ($invoice->franchise_id != auth()->user()->franchise_id) {
+                        abort(403, 'Permission Denied');
+                    }            
+                    break;
+                case 'common_role':
+                    if ($invoice->bill_creatorid != auth()->user()->id) {
+                        abort(403, 'Permission Denied');
+                    }
+                    break;
             }
         }
 
@@ -643,9 +674,19 @@ class Invoices extends Controller {
             // Obtener el invoice
             $invoice = \App\Models\Invoice::find($id);
             
-            // Si el invoice no existe o el usuario no es el creador, abortar
-            if (!$invoice || $invoice->bill_creatorid != auth()->user()->creatorid) {
-                abort(403, 'Permission Denied');
+            switch (request()->input('user_role_type')) {
+                case 'admin_role':
+                    break;
+                case 'franchise_admin_role':
+                    if ($invoice->franchise_id != auth()->user()->franchise_id) {
+                        abort(403, 'Permission Denied');
+                    }            
+                    break;
+                case 'common_role':
+                    if ($invoice->bill_creatorid != auth()->user()->id) {
+                        abort(403, 'Permission Denied');
+                    }
+                    break;
             }
         }
 
@@ -687,12 +728,21 @@ class Invoices extends Controller {
 
 
         if (auth()->user()->role->role_invoices_scope != 'global') {
-            // Obtener el invoice
             $invoice = \App\Models\Invoice::find($id);
             
-            // Si el invoice no existe o el usuario no es el creador, abortar
-            if (!$invoice || $invoice->bill_creatorid != auth()->user()->creatorid) {
-                abort(403, 'Permission Denied');
+            switch (request()->input('user_role_type')) {
+                case 'admin_role':
+                    break;
+                case 'franchise_admin_role':
+                    if ($invoice->franchise_id != auth()->user()->franchise_id) {
+                        abort(403, 'Permission Denied');
+                    }            
+                    break;
+                case 'common_role':
+                    if ($invoice->bill_creatorid != auth()->user()->id) {
+                        abort(403, 'Permission Denied');
+                    }
+                    break;
             }
         }
 
@@ -730,6 +780,28 @@ class Invoices extends Controller {
         //update
         if (!$this->invoicerepo->update($id)) {
             abort(409);
+        }
+
+        $invoice = \App\Models\Invoice::find($id);
+
+        if ($invoice->bill_status != 'draft' && $invoice->bill_status != 'paid') {
+            $bill_due_date = \Carbon\Carbon::parse($invoice->bill_due_date);
+            $today = \Carbon\Carbon::now();
+        
+            $days_until_due = $bill_due_date->diffInDays($today);
+        
+            if ($bill_due_date->isPast() == 1) {
+                $days_until_due = -$days_until_due;
+            }
+        
+            if ($days_until_due < 0) {
+                $invoice->bill_status = 'overdue';
+            } elseif ($days_until_due <= 5) {
+                $invoice->bill_status = 'due';
+            } else {
+                $invoice->bill_status = 'current';
+            }
+            $invoice->save();
         }
 
         //delete & update tags
