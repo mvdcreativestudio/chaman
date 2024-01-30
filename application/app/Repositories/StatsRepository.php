@@ -18,6 +18,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 
+
 class StatsRepository {
 
     protected $users;
@@ -418,7 +419,7 @@ class StatsRepository {
             //get yearly payments
             switch ($data['period']) {
             case 'this_year':
-                $year = \Carbon\Carbon::now()->format('Y');
+                $year = \Carbon\Carbon::now()->format('Y');  
                 break;
             case 'last_year':
                 $year = \Carbon\Carbon::now()->subYear()->format('Y');
@@ -508,4 +509,6 @@ class StatsRepository {
         //results
         return $results;
     }
+
+    
 }

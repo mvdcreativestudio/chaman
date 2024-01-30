@@ -16,7 +16,10 @@ use App\Repositories\ProjectRepository;
 use App\Repositories\StatsRepository;
 use App\Repositories\TaskRepository;
 use App\Repositories\ObjectiveRepository;
+use App\Repositories\DatacenterRepository;
 use App\Services\ObjectiveService;
+use App\Models\Franchise;
+
 
 class Home extends Controller {
 
@@ -30,6 +33,7 @@ class Home extends Controller {
     protected $leadrepo;
     protected $objectiverepo;
     protected $objectiveService;
+    protected $datacenterrepo;
 
 
     public function __construct(
@@ -40,7 +44,8 @@ class Home extends Controller {
         TaskRepository $taskrepo,
         LeadRepository $leadrepo,
         ObjectiveRepository $objectiverepo,
-        ObjectiveService $objectiveService
+        ObjectiveService $objectiveService,
+        DatacenterRepository $datacenterrepo
     ) {
 
         //parent
@@ -54,6 +59,7 @@ class Home extends Controller {
         $this->leadrepo = $leadrepo;
         $this->objectiverepo = $objectiverepo;
         $this->objectiveService = $objectiveService;
+        $this->datacenterrepo = $datacenterrepo;
 
         //authenticated
         $this->middleware('auth');
@@ -174,6 +180,12 @@ class Home extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function teamDashboard() {
+        
+        $userFranchiseId = auth()->user()->franchise_id;
+
+        // Obtener el RUC de la franquicia
+        $franchiseRUC = Franchise::where('id', $userFranchiseId)->pluck('ruc')->first();
+
         //payload
         $payload = [];
     
@@ -207,7 +219,7 @@ class Home extends Controller {
                 'assigned' => auth()->id(),
             ], 'team'), // Y aquí
         ];
-    
+
         //filter
         request()->merge([
             'eventtracking_userid' => auth()->id(),
@@ -348,16 +360,16 @@ class Home extends Controller {
                 'type' => 'sum',
                 'status' => 'overdue',
             ]),
+            'current' => $this->statsrepo->sumCountInvoices([
+                'type' => 'sum',
+                'status' => 'current',
+            ]),
         ];
+
 
         //[income][yearly]
         $payload['income'] = $this->statsrepo->sumYearlyIncome([
             'period' => 'this_year',
-        ]);
-
-        //[income][last_year]
-        $payload['income'] = $this->statsrepo->sumYearlyIncome([
-            'period'=> 'last_year'
         ]);
 
         //[expense][yearly]
@@ -440,6 +452,37 @@ class Home extends Controller {
             $objective->status = $this->objectiveService->calculateStatusForObjective($objective);
             $objective->save();
         }
+
+        $dailySales = $this->datacenterrepo->getDailySales(now()->format('Y-m-d'));
+        $monthlySales = $this->datacenterrepo->getMonthlySales(now()->format('Y-m'));
+        $yearlySales = $this->datacenterrepo->getYearlySales(now()->format('Y'));
+        $averageTicket = $this->datacenterrepo->getAverageTicket(now()->format('Y'));
+        $yearlySales2023 = $this->datacenterrepo->getYearlySales(2023);
+        $averageTicket2023 = $this->datacenterrepo->getAverageTicket(2023);
+        $totalSalesCount = $this->datacenterrepo->getTotalSalesCount();
+        $totalSalesPendingCount = $this->datacenterrepo->getTotalSalesPendingCount();
+        $totalSalesPending = $this->datacenterrepo->getTotalSalesPending();
+        $totalSalesCancelledCount = $this->datacenterrepo->getTotalSalesCancelledCount();
+        $totalSalesPaidCount = $this->datacenterrepo->getTotalSalesPaidCount();
+        $gmvData = $this->datacenterrepo->getGMV(2023);
+        $gmv = $gmvData['gmv'];
+    
+
+        // Agregar los datos de ventas al payload
+        $payload['sales'] = [
+            'dailySales' => $dailySales,
+            'monthlySales' => $monthlySales,
+            'yearlySales' => $yearlySales,
+            'averageTicket' => $averageTicket,
+            'yearlySales2023' => $yearlySales2023,
+            'averageTicket2023' => $averageTicket2023,
+            'totalSalesCount' => $totalSalesCount,
+            'totalSalesPendingCount' => $totalSalesPendingCount,
+            'totalSalesPending' => $totalSalesPending,
+            'totalSalesCancelledCount' => $totalSalesCancelledCount,
+            'totalSalesPaidCount' => $totalSalesPaidCount,
+            'gmv' => $gmv,
+        ];
 
 
         //return payload

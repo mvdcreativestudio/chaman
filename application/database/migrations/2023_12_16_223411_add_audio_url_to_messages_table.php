@@ -1,11 +1,10 @@
 <?php
 
-use Facade\Ignition\Tabs\Tab;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPhoneNumberToFranchisePhone extends Migration
+class AddAudioUrlToMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +13,8 @@ class AddPhoneNumberToFranchisePhone extends Migration
      */
     public function up()
     {
-        Schema::table('franchise_phone', function (Blueprint $table) {
-            $table->string('phone_number')->after('phone_id')->nullable();
+        Schema::table('messages', function (Blueprint $table) {
+            $table->string('audio_url')->nullable()->after('image_url');
         });
     }
 
@@ -26,8 +25,8 @@ class AddPhoneNumberToFranchisePhone extends Migration
      */
     public function down()
     {
-        Schema::table('franchise_phone', function (Blueprint $table) {
-            //
+        Schema::table('messages', function (Blueprint $table) {
+            $table->dropColumn('audio_url');
         });
     }
 }

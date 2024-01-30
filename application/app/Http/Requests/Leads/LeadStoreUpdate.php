@@ -146,10 +146,6 @@ class LeadStoreUpdate extends FormRequest {
                 'required',
                 new NoTags,
             ];
-            $rules['lead_lastname'] = [
-                'required',
-                new NoTags,
-            ];
         }    
 
         //validate

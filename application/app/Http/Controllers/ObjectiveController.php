@@ -131,6 +131,14 @@ class ObjectiveController extends Controller {
         }
     }
 
+    public function updateProgressForAllObjectives() {
+        $objectives = Objective::all();
+        foreach ($objectives as $objective) {
+            $objective->calculateProgressForObjective();
+        }
+        return back()->with('success', 'Objetivos actualizados correctamente');
+    }
+
     
     
 

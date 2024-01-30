@@ -1169,7 +1169,7 @@ return [
 'start_time' => "Hora de inicio",
 'start_timer' => "Iniciar temporizador",
 'start' => "Comienzo",
-'state' => "Estado",
+'state' => "Barrio",
 'stats_panel_default_state' => "Estado predeterminado del panel de estadísticas",
 'stats_panel_default' => "Panel de estadísticas: posición predeterminada",
 'status_already_exists' => "El estado ya existe",
@@ -2066,4 +2066,5 @@ return [
 'set_as_franchise_admin' => 'Marcar como administrador de franquicias',
 'remove_franchise_role' => 'Desmarcar como rol de franquicia',
 'set_as_franchise_role' => 'Marcar como rol de franquicia',
+'current' => 'A tiempo de pagar'
 ];

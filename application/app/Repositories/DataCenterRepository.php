@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Models\Sale;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+
 
 class DatacenterRepository {
 
@@ -22,9 +24,21 @@ class DatacenterRepository {
      * @param string $date
      * @return float
      */
-    public function getDailySales($date) {
-        return $this->sales->whereDate('fecha_creacion', $date)->sum('total');
+    public function getDailySales($date, $rucFranquicia = null) {
+        $query = $this->sales->whereDate('fecha_creacion', $date);
+    
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        $totalSales = $query->sum('total');
+        
+        // Formatear el número: sin decimales y con punto como separador de miles
+        return number_format($totalSales, 0, '', '.');
     }
+    
+    
 
     /**
      * Obtener ventas en un mes
@@ -32,19 +46,56 @@ class DatacenterRepository {
      * @param string $month
      * @return float
      */
-    public function getMonthlySales($month) {
-        return $this->sales->whereMonth('fecha_creacion', Carbon::parse($month)->month)->sum('total');
+    public function getMonthlySales($month, $rucFranquicia = null) {
+        $query = $this->sales->whereMonth('fecha_creacion', Carbon::parse($month)->month);
+    
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        $totalSales = $query->sum('total');
+    
+        // Formatear el número: sin decimales y con punto como separador de miles
+        return number_format($totalSales, 0, '', '.');
     }
-
+    
     /**
      * Obtener ventas en un año
      *
      * @param string $year
      * @return float
      */
-    public function getYearlySales($year) {
-        return $this->sales->whereYear('fecha_creacion', $year)->sum('total');
+    public function getYearlySales($year, $rucFranquicia = null) {
+        $query = $this->sales->whereYear('fecha_creacion', Carbon::parse($year)->year);
+    
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        $totalSales = $query->sum('total');
+    
+        // Formatear el número: sin decimales y con punto como separador de miles
+        return number_format($totalSales, 0, '', '.');
     }
+
+    public function getTotalSales($rucFranquicia = null) {
+        // Crear una nueva consulta
+        $query = $this->sales->newQuery();
+    
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        // Realizar la suma
+        $totalSales = $query->sum('total');
+    
+        // Formatear el número
+        return number_format($totalSales, 0, '', '.');
+    }
+    
 
     /** Obtener ventas totales */
 
@@ -57,8 +108,8 @@ class DatacenterRepository {
             $query->whereBetween('fecha_creacion', [$startDate, $endDate]);
         }
     
-        // Filtrar por estado 'Pagado'
-        $query->where('estado', 'Pagado');
+        // // Filtrar por estado 'Pagado'
+        // $query->where('estado', 'Pagado');
     
         // Filtrar por RUC de franquicia si se proporciona
         if (!is_null($rucFranquicia)) {
@@ -122,6 +173,80 @@ class DatacenterRepository {
         }
     }
 
+
+    public function getTotalSalesPaidCount($startDate = null, $endDate = null, $rucFranquicia = null)
+    {
+        $query = Sale::query();
+
+        if (!is_null($startDate) && !is_null($endDate)) {
+            $query
+                ->whereBetween('fecha_creacion', [$startDate, $endDate]);
+        }
+
+        $query->where('estado', 'Pagado');
+
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+
+        return $query->count();
+    }
+
+    public function getTotalSalesPaidCountForPeriod($period, $rucFranquicia = null)
+    {
+        switch($period) {
+            case 'thisYear':
+                return $this->getTotalSalesPaidCount(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getTotalSalesPaidCount(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getTotalSalesPaidCount(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                return $this->getTotalSalesPaidCount(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+            default:
+                break;
+        }
+    }
+
+    public function getTotalSalesCancelledCount($startDate = null, $endDate = null, $rucFranquicia = null)
+    {
+        $query = Sale::query();
+
+        if (!is_null($startDate) && !is_null($endDate)) {
+            $query
+                ->whereBetween('fecha_creacion', [$startDate, $endDate]);
+        }
+
+        $query->where('estado', 'Anulada');
+
+
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+
+        return $query->count();
+    }
+
+    public function getTotalSalesCancelledCountForPeriod($period, $rucFranquicia = null)
+    {
+        switch($period) {
+            case 'thisYear':
+                return $this->getTotalSalesCancelledCount(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getTotalSalesCancelledCount(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getTotalSalesCancelledCount(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                return $this->getTotalSalesCancelledCount(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+            default:
+                break;
+        }
+    }
+
+
+
     public function getTotalSalesPending($startDate = null, $endDate = null, $rucFranquicia = null)
     {
         $query = Sale::query();
@@ -164,7 +289,7 @@ class DatacenterRepository {
      * @param string $year
      * @return float
      */
-    public function getAverageTicket($startDate = null, $endDate = null) {
+    public function getAverageTicket($startDate = null, $endDate = null, $rucFranquicia = null) {
         // Si no se proporcionan fechas, asume el año actual
         if (is_null($startDate) && is_null($endDate)) {
             $startDate = now()->startOfYear()->format('Y-m-d');
@@ -176,17 +301,15 @@ class DatacenterRepository {
             $endDate = $startDate;
         }
     
-        // Construir la consulta para sumar las ventas
-        $totalSales = $this->sales
-            ->whereBetween('fecha_creacion', [$startDate, $endDate])
-            ->where('estado', 'Pagado')
-            ->sum('total');
-    
-        // Construir la consulta para contar las transacciones
-        $totalTransactions = $this->sales
-            ->whereBetween('fecha_creacion', [$startDate, $endDate])
-            ->where('estado', 'Pagado')
-            ->count();
+        // Construir la consulta con filtro opcional por RUC de franquicia
+        $query = $this->sales->whereBetween('fecha_creacion', [$startDate, $endDate]);
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+
+        // Sumar las ventas y contar las transacciones
+        $totalSales = $query->sum('total');
+        $totalTransactions = $query->count();
     
         // Calcular el ticket promedio
         if ($totalTransactions > 0) {
@@ -201,18 +324,18 @@ class DatacenterRepository {
         return $formattedAverageTicket;
     }
 
-    public function getAverageTicketForPeriod($period) {
+    public function getAverageTicketForPeriod($period, $rucFranquicia = null) {
         switch ($period) {
             case 'thisYear':
-                return $this->getAverageTicket();
+                return $this->getAverageTicket(null, null, $rucFranquicia);
             case 'thisMonth':
-                return $this->getAverageTicket(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'));
+                return $this->getAverageTicket(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
             case 'thisWeek':
-                return $this->getAverageTicket(now()->startOfWeek()->format('Y-m-d'), now()->endOfWeek()->format('Y-m-d'));
+                return $this->getAverageTicket(now()->startOfWeek()->format('Y-m-d'), now()->endOfWeek()->format('Y-m-d'), $rucFranquicia);
             case 'today':
-                return $this->getAverageTicket(now()->format('Y-m-d'));
+                return $this->getAverageTicket(now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
-                return $this->getAverageTicket(now()->subDay()->format('Y-m-d'));
+                return $this->getAverageTicket(now()->subDay()->format('Y-m-d'), $rucFranquicia);
             default:
                 break;
         }
@@ -234,8 +357,7 @@ class DatacenterRepository {
     
         // Construir la consulta
         $query = $this->sales
-            ->whereBetween('fecha_creacion', [$startDate, $endDate])
-            ->where('estado', 'Pagado');
+            ->whereBetween('fecha_creacion', [$startDate, $endDate]);
     
         // Filtrar por RUC de franquicia si se proporciona
         if (!is_null($rucFranquicia)) {
@@ -266,11 +388,31 @@ class DatacenterRepository {
             case 'today':
                 return $this->getGMV(now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
-                return $this->getGMV(now()->subDay()->format('Y-m-d'), $rucFranquicia);
+                $yesterdayDate = now()->subDay()->format('Y-m-d');
+                return $this->getGMV($yesterdayDate, $yesterdayDate, $rucFranquicia);
             default:
                 break;
         }
     }
+
+    public function getMonthlyGMV($year, $rucFranquicia = null) {
+        $monthlyGMV = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth()->format('Y-m-d');
+            $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth()->format('Y-m-d');
+    
+            $query = $this->sales->whereBetween('fecha_creacion', [$startDate, $endDate]);
+            if (!is_null($rucFranquicia)) {
+                $query->where('ruc_franquicia', $rucFranquicia);
+            }
+    
+            $monthlyGMV[] = $query->sum('total');
+        }
+        return $monthlyGMV;
+    }
+
+    
+    
 
     
     
