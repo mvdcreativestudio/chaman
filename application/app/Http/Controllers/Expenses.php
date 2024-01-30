@@ -197,64 +197,82 @@ class Expenses extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(ExpenseStoreUpdate $request) {
-
-        //for billable projects
-        if (request('expense_billable') == 'on') {
-            if (!$project = \App\Models\Project::Where('project_id', request('expense_projectid'))->first()) {
-                abort(409, __('lang.project_not_found'));
-            }
-            request()->merge([
-                'expense_clientid' => $project->project_clientid,
+        try {
+            // Validación de entradas
+            $validatedData = $request->validate([
+                'expense_billable' => 'required',
+                'expense_projectid' => 'required',
             ]);
-        }
-
-        //create the invoice
-        if (!$expense_id = $this->expenserepo->create()) {
-            abort(409);
-        }
-
-        //get the item object (friendly for rendering in blade template)
-        $expenses = $this->expenserepo->search($expense_id, ['apply_filters' => false]);
-
-        //[save attachments] loop through and save each attachment
-        if (request()->filled('attachments')) {
-            foreach (request('attachments') as $uniqueid => $file_name) {
-                $data = [
-                    'attachment_clientid' => request('expense_clientid'),
-                    'attachmentresource_type' => 'expense',
-                    'attachmentresource_id' => $expense_id,
-                    'attachment_directory' => $uniqueid,
-                    'attachment_uniqiueid' => $uniqueid,
-                    'attachment_filename' => $file_name,
-                ];
-                //process and save to db
-                $this->attachmentrepo->process($data);
+    
+            //for billable projects
+            if (request('expense_billable') == 'on') {
+                if (!$project = \App\Models\Project::Where('project_id', request('expense_projectid'))->first()) {
+                    abort(409, __('lang.project_not_found'));
+                }
+                request()->merge([
+                    'expense_clientid' => $project->project_clientid,
+                ]);
             }
-        }
-
-        //counting all rows (filtering depending on referral view)
-        $data = ['apply_filters' => false];
-        if (request()->filled('expenseresource_id') && request()->filled('expenseresource_type')) {
-            $data = [
-                'expenseresource_id' => request('expenseresource_id'),
-                'expenseresource_type' => request('expenseresource_type'),
+    
+            //create the invoice
+            if (!$expense_id = $this->expenserepo->create()) {
+                abort(409);
+            }
+    
+            //get the item object (friendly for rendering in blade template)
+            $expenses = $this->expenserepo->search($expense_id, ['apply_filters' => false]);
+    
+            //[save attachments] loop through and save each attachment
+            if (request()->filled('attachments')) {
+                foreach (request('attachments') as $uniqueid => $file_name) {
+                    $data = [
+                        'attachment_clientid' => request('expense_clientid'),
+                        'attachmentresource_type' => 'expense',
+                        'attachmentresource_id' => $expense_id,
+                        'attachment_directory' => $uniqueid,
+                        'attachment_uniqiueid' => $uniqueid,
+                        'attachment_filename' => $file_name,
+                    ];
+                    //process and save to db
+                    $this->attachmentrepo->process($data);
+                }
+            }
+    
+            //counting all rows (filtering depending on referral view)
+            $data = ['apply_filters' => false];
+            if (request()->filled('expenseresource_id') && request()->filled('expenseresource_type')) {
+                $data = [
+                    'expenseresource_id' => request('expenseresource_id'),
+                    'expenseresource_type' => request('expenseresource_type'),
+                ];
+            }
+            $rows = $this->expenserepo->search('', $data);
+            $count = $rows->count();
+    
+            //response payload
+            $payload = [
+                'expenses' => $expenses,
+                'expense' => $expenses->first(),
+                'count' => $count,
+                'stats' => $this->statsWidget(),
             ];
+    
+            // Registro de éxito
+            \Log::info("Expense created successfully", ['expense_id' => $expense_id]);
+    
+            // Process response
+            return new StoreResponse($payload);
+    
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error("Error de validación al crear gasto: " . json_encode($e->validator->errors()->all()));
+            abort(422, "Datos inválidos: " . $e->getMessage());
+        } catch (\Exception $e) {
+            \Log::error("Error al crear gasto: " . $e->getMessage());
+            abort(500, "Error interno del servidor");
         }
-        $rows = $this->expenserepo->search('', $data);
-        $count = $rows->count();
-
-        //reponse payload
-        $payload = [
-            'expenses' => $expenses,
-            'expense' => $expenses->first(),
-            'count' => $count,
-            'stats' => $this->statsWidget(),
-        ];
-
-        //process reponse
-        return new StoreResponse($payload);
-
+        
     }
+    
 
     /**
      * Display the specified expense.

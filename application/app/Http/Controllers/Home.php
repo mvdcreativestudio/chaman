@@ -18,6 +18,7 @@ use App\Repositories\TaskRepository;
 use App\Repositories\ObjectiveRepository;
 use App\Services\ObjectiveService;
 
+
 class Home extends Controller {
 
     private $page = array();
@@ -201,6 +202,143 @@ class Home extends Controller {
                 'assigned' => auth()->id(),
             ]),
         ];
+
+         //[objectives]
+ 
+         $objectives = $this->objectiverepo->getActiveInactive();
+
+         // Obtener el franchise id del usuario autenticado
+        $userFranchiseId = auth()->user()->franchise_id;
+
+        // Filtrar objetivos por franchise id
+        $objectives = $this->objectiverepo->getActiveInactive(['franchise_id' => $userFranchiseId]);
+
+        $payload['objectives'] = $objectives;
+
+ 
+ 
+         //[payments]
+         $payload['payments'] = [
+             'today' => $this->statsrepo->sumCountPayments([
+                 'type' => 'sum',
+                 'date' => \Carbon\Carbon::now()->format('Y-m-d'),
+             ]),
+             'this_month' => $this->statsrepo->sumCountPayments([
+                 'type' => 'sum',
+                 'start_date' => \Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),
+                 'end_date' => \Carbon\Carbon::now()->lastOfMonth()->format('Y-m-d'),
+             ]),
+             'this_year' => $this->statsrepo->sumCountPayments([
+                 'type' => 'sum',
+                 'start_date' => \Carbon\Carbon::now()->startOfYear()->format('Y-m-d'),
+                 'end_date' => \Carbon\Carbon::now()->endOfYear()->format('Y-m-d'),
+             ]),
+             'total' => $this->statsrepo->sumCountPayments([
+                 'type' => 'sum',
+             ]),
+         ];
+ 
+ 
+         //[invoices]
+         $payload['invoices'] = [
+             'due' => $this->statsrepo->sumCountInvoices([
+                 'type' => 'sum',
+                 'status' => 'due',
+             ]),
+             'overdue' => $this->statsrepo->sumCountInvoices([
+                 'type' => 'sum',
+                 'status' => 'overdue',
+             ]),
+         ];
+ 
+ 
+         //[income][yearly]
+         $payload['income'] = $this->statsrepo->sumYearlyIncome([
+             'period' => 'this_year',
+         ]);
+ 
+         //[expense][yearly]
+         $payload['expenses'] = $this->statsrepo->sumYearlyExpenses([
+             'period' => 'this_year',
+         ]);
+ 
+         //[projects][all]
+         $payload['all_projects'] = [
+             'not_started' => $this->statsrepo->countProjects([
+                 'status' => 'not_started',
+             ]),
+             'in_progress' => $this->statsrepo->countProjects([
+                 'status' =>
+                 'in_progress',
+             ]),
+             'on_hold' => $this->statsrepo->countProjects([
+                 'status' => 'on_hold',
+             ]),
+             'completed' => $this->statsrepo->countProjects([
+                 'status' => 'completed',
+             ]),
+         ];
+ 
+         //[projects][ny]
+         $payload['my_projects'] = [
+             'not_started' => $this->statsrepo->countProjects([
+                 'status' => 'not_started',
+                 'assigned' => auth()->id(),
+             ]),
+             'in_progress' => $this->statsrepo->countProjects([
+                 'status' => 'in_progress',
+                 'assigned' => auth()->id(),
+             ]),
+             'on_hold' => $this->statsrepo->countProjects([
+                 'status' => 'on_hold',
+                 'assigned' => auth()->id(),
+             ]),
+             'completed' => $this->statsrepo->countProjects([
+                 'status' => 'completed',
+                 'assigned' => auth()->id(),
+             ]),
+         ];
+ 
+         //filter
+         $payload['all_events'] = $this->eventsrepo->search([
+             'pagination' => 20,
+             'filter' => 'timeline_visible',
+         ]);
+ 
+         //[leads] - alltime
+         $data = $this->widgetLeads('alltime');
+         $payload['leads_stats'] = json_encode($data['stats']);
+         $payload['leads_key_colors'] = json_encode($data['leads_key_colors']);
+         $payload['leads_chart_center_title'] = $data['leads_chart_center_title'];
+ 
+         //filter payments-today
+         $payload['filter_payment_today'] = \Carbon\Carbon::now()->format('Y-m-d');
+ 
+         //filter payments - this month
+         $payload['filter_payment_month_start'] = \Carbon\Carbon::now()->startOfMonth()->format('Y-m-d');
+         $payload['filter_payment_month_end'] = \Carbon\Carbon::now()->lastOfMonth()->format('Y-m-d');
+ 
+         $payload['filter_payment_this_year'] = [
+             'start_date' => \Carbon\Carbon::now()->startOfYear()->format('Y-m-d'),
+             'end_date' => \Carbon\Carbon::now()->endOfYear()->format('Y-m-d'),
+         ];
+ 
+         $payload['filter_payment_total'] = [
+             'start_date' => null,  // Deja la fecha de inicio como null para obtener todos los registros históricamente.
+             'end_date' => null,    // Deja la fecha de finalización como null para obtener todos los registros históricamente.
+         ];
+         
+         foreach ($payload['objectives'] as $objective) {
+             // Calcular el progreso
+             $progress = $this->objectiveService->calculateProgressForObjective($objective);
+     
+             // Actualizar el progreso y estado del objetivo
+             $objective->progress = $progress;
+             $objective->status = $this->objectiveService->calculateStatusForObjective($objective);
+             $objective->save();
+         }
+ 
+
 
         //filter
         request()->merge([

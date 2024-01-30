@@ -22,22 +22,27 @@ class ExternalAPIController extends Controller
     
         if ($response['error'] == 0 && isset($response['items'])) {
             foreach ($response['items'] as $item) {
-                \App\Models\Client::updateOrCreate(
-                    [
-                        'franchise_ruc' => $item['rucFranquicia'] ?? null,
-                    ],
-                    [
-                        'client_company_name' => $item['nombre'] ?? null,
-                        'client_phone' => $item['celular'] ?? null,
-                        'client_billing_street' => $item['direccion'] ?? null,
-                        'client_billing_city' => $item['ciudad'] ?? null,
-                        'client_billing_state' => $item['departamento'] ?? null,
-                        'client_billing_country' => $item['pais'] ?? null,
-                        'client_creatorid' => auth()->id(),
-                        'client_created' => now(),
-                        'client_updated' => now(),
-                    ]
-                );
+                try {
+                    \App\Models\Client::createOrUpdate(
+                        [
+                            'franchise_ruc' => $item['rucFranquicia'] ?? null,
+                        ],
+                        [
+                            'client_company_name' => $item['nombre'] ?? null,
+                            'client_phone' => $item['celular'] ?? null,
+                            'client_billing_street' => $item['direccion'] ?? null,
+                            'client_billing_city' => $item['ciudad'] ?? null,
+                            'client_billing_state' => $item['departamento'] ?? null,
+                            'client_billing_country' => $item['pais'] ?? null,
+                            'client_creatorid' => auth()->id(),
+                            'client_created' => now(),
+                            'client_updated' => now(),
+                        ]
+                    );
+                } catch (\Exception $e) {
+                    \Log::error('Error al procesar el cliente con RUC ' . ($item['rucFranquicia'] ?? 'desconocido') . ': ' . $e->getMessage());
+                }
+                
             }
         }
     
@@ -73,6 +78,35 @@ class ExternalAPIController extends Controller
     }
 
     public function getVentas() {
+        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/ventas');
+
+        if ($response['error'] == 0 && isset($response['items'])) {
+            foreach ($response['items'] as $item) {
+                \App\Models\Sale::updateOrCreate(
+                    [
+                        'lineas' => $item['lineas'] ?? null,
+                        'impuestos' => $item['impuestos'] ?? null,
+                        'subtotal' => $item['subtotal'] ?? null,
+                        'total' => $item['total'] ?? null,
+                        'moneda' => $item['moneda'] ?? null,
+                        'moneda_id' => $item['moneda_id'] ?? null,
+                        'estado' => $item['estado'] ?? null,
+                        'fecha_creacion' => $item['fecha_creacion'] ?? null,
+                        'fecha_emision' => $item['fecha_emision'] ?? null,
+                        'pagos' => $item['pagos'] ?? null,
+                        'ruc_franquicia' => $item['rucFranquicia'] ?? null,
+                        'accion' => $item['accion'] ?? null,
+                    ]
+                );
+            }
+        }
+
         return $this->apiRequest('RUT218168420010@crmAPI/Consultas/ventas');
+    }
+
+    public function showSales() {
+        $sales = \App\Models\Sale::all();
+
+        return view('pages.api.sales', compact('sales'));
     }
 }

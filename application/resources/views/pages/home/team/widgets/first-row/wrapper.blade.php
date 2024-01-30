@@ -1,4 +1,14 @@
 <div class="row">
+
+    <!-- OBJETIVOS -->
+    @include('pages.home.team.widgets.first-row.goals')
+
+    <!-- PAYMENTS -->
+    @include('pages.home.team.widgets.first-row.payments-today')
+    @include('pages.home.team.widgets.first-row.payments-this-month')
+    @include('pages.home.team.widgets.first-row.payments-this-year')
+    @include('pages.home.team.widgets.first-row.payments-total')
+        
     <!--PROJECTS PENDING-->
     @include('pages.home.team.widgets.first-row.projects-pending')
 
