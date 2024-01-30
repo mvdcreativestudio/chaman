@@ -40,6 +40,13 @@ class ObjectiveService {
                         return $this->calculateExpensesReductionProgress($objective);
                         break;
                 }
+                break;
+            case 'incomes':
+                switch ($objective->moddule_target) {
+                    case 'income_objective':
+                        return $this->calculateIncomesProgress($objective);
+                        break;
+                }
         }
     }
 
@@ -178,7 +185,7 @@ class ObjectiveService {
 
     return min($progress, 100);
     }
-
+ 
 
     // GASTOS
 

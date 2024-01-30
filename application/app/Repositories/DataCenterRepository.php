@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Models\Sale;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+
 
 class DatacenterRepository {
 
@@ -22,9 +24,21 @@ class DatacenterRepository {
      * @param string $date
      * @return float
      */
-    public function getDailySales($date) {
-        return $this->sales->whereDate('fecha_creacion', $date)->sum('total');
+    public function getDailySales($date, $rucFranquicia = null) {
+        $query = $this->sales->whereDate('fecha_creacion', $date);
+    
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        $totalSales = $query->sum('total');
+        
+        // Formatear el número: sin decimales y con punto como separador de miles
+        return number_format($totalSales, 0, '', '.');
     }
+    
+    
 
     /**
      * Obtener ventas en un mes
@@ -32,19 +46,56 @@ class DatacenterRepository {
      * @param string $month
      * @return float
      */
-    public function getMonthlySales($month) {
-        return $this->sales->whereMonth('fecha_creacion', Carbon::parse($month)->month)->sum('total');
+    public function getMonthlySales($month, $rucFranquicia = null) {
+        $query = $this->sales->whereMonth('fecha_creacion', Carbon::parse($month)->month);
+    
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        $totalSales = $query->sum('total');
+    
+        // Formatear el número: sin decimales y con punto como separador de miles
+        return number_format($totalSales, 0, '', '.');
     }
-
+    
     /**
      * Obtener ventas en un año
      *
      * @param string $year
      * @return float
      */
-    public function getYearlySales($year) {
-        return $this->sales->whereYear('fecha_creacion', $year)->sum('total');
+    public function getYearlySales($year, $rucFranquicia = null) {
+        $query = $this->sales->whereYear('fecha_creacion', Carbon::parse($year)->year);
+    
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        $totalSales = $query->sum('total');
+    
+        // Formatear el número: sin decimales y con punto como separador de miles
+        return number_format($totalSales, 0, '', '.');
     }
+
+    public function getTotalSales($rucFranquicia = null) {
+        // Crear una nueva consulta
+        $query = $this->sales->newQuery();
+    
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        // Realizar la suma
+        $totalSales = $query->sum('total');
+    
+        // Formatear el número
+        return number_format($totalSales, 0, '', '.');
+    }
+    
 
     /** Obtener ventas totales */
 
@@ -263,7 +314,8 @@ class DatacenterRepository {
             case 'today':
                 return $this->getGMV(now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
-                return $this->getGMV(now()->subDay()->format('Y-m-d'), $rucFranquicia);
+                $yesterdayDate = now()->subDay()->format('Y-m-d');
+                return $this->getGMV($yesterdayDate, $yesterdayDate, $rucFranquicia);
             default:
                 break;
         }

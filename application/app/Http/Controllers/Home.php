@@ -16,7 +16,9 @@ use App\Repositories\ProjectRepository;
 use App\Repositories\StatsRepository;
 use App\Repositories\TaskRepository;
 use App\Repositories\ObjectiveRepository;
+use App\Repositories\DatacenterRepository;
 use App\Services\ObjectiveService;
+use App\Models\Franchise;
 
 
 class Home extends Controller {
@@ -31,6 +33,7 @@ class Home extends Controller {
     protected $leadrepo;
     protected $objectiverepo;
     protected $objectiveService;
+    protected $datacenterrepo;
 
 
     public function __construct(
@@ -41,7 +44,8 @@ class Home extends Controller {
         TaskRepository $taskrepo,
         LeadRepository $leadrepo,
         ObjectiveRepository $objectiverepo,
-        ObjectiveService $objectiveService
+        ObjectiveService $objectiveService,
+        DatacenterRepository $datacenterrepo
     ) {
 
         //parent
@@ -55,6 +59,7 @@ class Home extends Controller {
         $this->leadrepo = $leadrepo;
         $this->objectiverepo = $objectiverepo;
         $this->objectiveService = $objectiveService;
+        $this->datacenterrepo = $datacenterrepo;
 
         //authenticated
         $this->middleware('auth');
@@ -175,6 +180,11 @@ class Home extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function teamDashboard() {
+        
+        $userFranchiseId = auth()->user()->franchise_id;
+
+        // Obtener el RUC de la franquicia
+        $franchiseRUC = Franchise::where('id', $userFranchiseId)->pluck('ruc')->first();
 
         //payload
         $payload = [];
@@ -210,12 +220,12 @@ class Home extends Controller {
          // Obtener el franchise id del usuario autenticado
         $userFranchiseId = auth()->user()->franchise_id;
 
+
         // Filtrar objetivos por franchise id
-        $objectives = $this->objectiverepo->getActiveInactive(['franchise_id' => $userFranchiseId]);
+        $objectives = $this->objectiverepo->getAll(['franchise_id' => $userFranchiseId]);
 
         $payload['objectives'] = $objectives;
 
- 
  
          //[payments]
          $payload['payments'] = [
@@ -337,7 +347,47 @@ class Home extends Controller {
              $objective->status = $this->objectiveService->calculateStatusForObjective($objective);
              $objective->save();
          }
- 
+
+         $today = \Carbon\Carbon::now()->format('Y-m-d');
+
+         $dailySales = $this->datacenterrepo->getDailySales(now()->format('Y-m-d'));
+         $monthlySales = $this->datacenterrepo->getMonthlySales(now()->format('Y-m'));
+         $yearlySales = $this->datacenterrepo->getYearlySales(now()->format('Y'));
+         $averageTicket = $this->datacenterrepo->getAverageTicket(now()->format('Y'));
+         $yearlySales2023 = $this->datacenterrepo->getYearlySales(2023);
+         $averageTicket2023 = $this->datacenterrepo->getAverageTicket(2023);
+         $totalSalesCount = $this->datacenterrepo->getTotalSalesCount();
+         $totalSalesPendingCount = $this->datacenterrepo->getTotalSalesPendingCount();
+         $totalSalesPending = $this->datacenterrepo->getTotalSalesPending();
+         $gmvData = $this->datacenterrepo->getGMV(2023);
+         $gmv = $gmvData['gmv'];
+
+         $yesterdaySales = $this->datacenterrepo->getDailySales(\Carbon\Carbon::now()->subDays(1)->format('Y-m-d'), $franchiseRUC);
+         $thisMonthSales = $this->datacenterrepo->getMonthlySales(\Carbon\Carbon::now()->format('Y-m'), $franchiseRUC);
+         $thisYearSales = $this->datacenterrepo->getYearlySales(\Carbon\Carbon::now()->format('Y'), $franchiseRUC);
+         $totalSales = $this->datacenterrepo->getTotalSales($franchiseRUC);
+     
+         // Agregar los datos de ventas al payload
+         $payload['sales'] = [
+             'dailySales' => $dailySales,
+             'monthlySales' => $monthlySales,
+             'yearlySales' => $yearlySales,
+             'averageTicket' => $averageTicket,
+             'yearlySales2023' => $yearlySales2023,
+             'averageTicket2023' => $averageTicket2023,
+             'totalSalesCount' => $totalSalesCount,
+             'totalSalesPendingCount' => $totalSalesPendingCount,
+             'totalSalesPending' => $totalSalesPending,
+             'gmv' => $gmv,
+             'yesterdaySales' => $yesterdaySales,
+             'thisMonthSales' => $thisMonthSales,
+             'thisYearSales' => $thisYearSales,
+             'totalSales' => $totalSales,
+         ];
+
+         // datos
+
+          
 
 
         //filter
@@ -456,6 +506,10 @@ class Home extends Controller {
                 'type' => 'sum',
                 'status' => 'overdue',
             ]),
+            'current' => $this->statsrepo->sumCountInvoices([
+                'type' => 'sum',
+                'status' => 'current',
+            ]),
         ];
 
 
@@ -544,6 +598,35 @@ class Home extends Controller {
             $objective->status = $this->objectiveService->calculateStatusForObjective($objective);
             $objective->save();
         }
+
+        $dailySales = $this->datacenterrepo->getDailySales(now()->format('Y-m-d'));
+        $monthlySales = $this->datacenterrepo->getMonthlySales(now()->format('Y-m'));
+        $yearlySales = $this->datacenterrepo->getYearlySales(now()->format('Y'));
+        $averageTicket = $this->datacenterrepo->getAverageTicket(now()->format('Y'));
+        $yearlySales2023 = $this->datacenterrepo->getYearlySales(2023);
+        $averageTicket2023 = $this->datacenterrepo->getAverageTicket(2023);
+        $totalSalesCount = $this->datacenterrepo->getTotalSalesCount();
+        $totalSalesPendingCount = $this->datacenterrepo->getTotalSalesPendingCount();
+        $totalSalesPending = $this->datacenterrepo->getTotalSalesPending();
+        $gmvData = $this->datacenterrepo->getGMV(2023);
+        $gmv = $gmvData['gmv'];
+    
+
+        // Agregar los datos de ventas al payload
+        $payload['sales'] = [
+            'dailySales' => $dailySales,
+            'monthlySales' => $monthlySales,
+            'yearlySales' => $yearlySales,
+            'averageTicket' => $averageTicket,
+            'yearlySales2023' => $yearlySales2023,
+            'averageTicket2023' => $averageTicket2023,
+            'totalSalesCount' => $totalSalesCount,
+            'totalSalesPendingCount' => $totalSalesPendingCount,
+            'totalSalesPending' => $totalSalesPending,
+            'gmv' => $gmv,
+        ];
+
+
         //return payload
         return $payload;
 

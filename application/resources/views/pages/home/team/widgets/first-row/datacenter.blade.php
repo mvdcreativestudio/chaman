@@ -4,8 +4,93 @@
 
 @section ('content')
 
+<!-- OBJETIVOS -->
+@include('pages.home.team.widgets.first-row.goals')
+
+<!-- VENTAS EN TIEMPO REAL -->
+
+<div class="d-flex">
+    <!-- Todays Payments -->
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body p-l-15 p-r-15">
+                <div class="d-flex p-10 no-block">
+                    <span class="align-slef-center">
+                        <h2 class="m-b-0">${{ $payload['sales']['yesterdaySales'] }}</h2>
+                        <h6 class="text-muted m-b-0">Ingresos Ayer</h6>
+                    </span>
+                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payments - This month-->
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body p-l-15 p-r-15">
+                <div class="d-flex p-10 no-block">
+                    <span class="align-slef-center">
+                        <h2 class="m-b-0">${{ $payload['sales']['thisMonthSales'] }}</h2>
+                        <h6 class="text-muted m-b-0">Ingresos Este Mes</h6>
+                    </span>
+                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i></div>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payments - This month-->
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body p-l-15 p-r-15">
+                <div class="d-flex p-10 no-block">
+                    <span class="align-slef-center">
+                        <h2 class="m-b-0">${{ $payload['sales']['thisYearSales'] }}</h2>
+                        <h6 class="text-muted m-b-0">Ingresos Este Año</h6>
+                    </span>
+                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i></div>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payments - This month-->
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body p-l-15 p-r-15">
+                <div class="d-flex p-10 no-block">
+                    <span class="align-slef-center">
+                        <h2 class="m-b-0">${{ $payload['sales']['totalSales'] }}</h2>
+                        <h6 class="text-muted m-b-0">Ingresos Totales</h6>
+                    </span>
+                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i></div>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {{-- Selector de períodos y franquicias --}}
-<div class="d-flex mt-4">
+<div class="d-flex mt-0">
     <div class="col-3">
         <form id="gmv-selector-form" class="form-inline">
             <div class="form-group mb-2 mr-2">
@@ -41,12 +126,12 @@
 {{-- First Row --}}
 
 <div class="d-flex col-12 pt-4">
-    <div class="col-lg-3 col-md-6 click-url cursor-pointer" data-url="{{ url('invoices/search?ref=list&filter_bill_status[]=due') }}">
+    <div class="col-lg-3 col-md-6">
         <div class="card">
             <div class="card-body p-l-15 p-r-15">
                 <div class="d-flex p-10 no-block">
                     <span class="align-slef-center">
-                        <h2 class="m-b-0" id="totalSalesCount">{{ $totalSalesCount }}</h2>
+                        <h2 class="m-b-0" id="totalSalesCount">{{ $payload['sales']['totalSalesCount'] }}</h2>
                         <h6 class="text-muted m-b-0">Cantidad de Ordenes</h6>
                     </span>
                     <div class="align-self-center display-6 ml-auto"><i class="text-success icon-Coin"></i></div>
@@ -59,12 +144,12 @@
         </div>
     </div>
     
-    <div class="col-lg-3 col-md-6 click-url cursor-pointer" data-url="{{ url('invoices/search?ref=list&filter_bill_status[]=overdue') }}">
+    <div class="col-lg-3 col-md-6">
         <div class="card">
             <div class="card-body p-l-15 p-r-15">
                 <div class="d-flex p-10 no-block">
                     <span class="align-slef-center">
-                        <h2 class="m-b-0" id="totalSalesPendingCount">{{ $totalSalesPendingCount }}</h2>
+                        <h2 class="m-b-0" id="totalSalesPendingCount">{{ $payload['sales']['totalSalesPendingCount'] }}</h2>
                         <h6 class="text-muted m-b-0">Ordenes a Crédito</h6>
                     </span>
                     <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Coin"></i></div>
@@ -76,47 +161,13 @@
             </div>
         </div>
     </div>
+       
     
-    <div class="col-lg-3 col-md-6 click-url cursor-pointer" data-url="{{ url('invoices/search?ref=list&filter_bill_status[]=due') }}">
-        <div class="card">
-            <div class="card-body p-l-15 p-r-15">
-                <div class="d-flex p-10 no-block">
-                    <span class="align-slef-center">
-                        <h2 class="m-b-0">NaN</h2>
-                        <h6 class="text-muted m-b-0">Credito en la Calle</h6>
-                    </span>
-                    <div class="align-self-center display-6 ml-auto"><i class="text-danger icon-Coin"></i></div>
-                </div>
-            </div>
-            <div class="progress">
-                <div class="progress-bar bg-danger w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-lg-3 col-md-6 click-url cursor-pointer" data-url="{{ url('invoices/search?ref=list&filter_bill_status[]=due') }}">
-        <div class="card">
-            <div class="card-body p-l-15 p-r-15">
-                <div class="d-flex p-10 no-block">
-                    <span class="align-slef-center">
-                        <h2 class="m-b-0">NaN</h2>
-                        <h6 class="text-muted m-b-0">CLV</h6>
-                    </span>
-                    <div class="align-self-center display-6 ml-auto"><i class="text-warning icon-Coin"></i></div>
-                </div>
-            </div>
-            <div class="progress">
-                <div class="progress-bar bg-warning w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="d-flex col-12 pt-4">    
     
-    <div class="col-lg-3 col-md-6 click-url cursor-pointer" data-url="{{ url('invoices/search?ref=list&filter_bill_status[]=due') }}">
+    <div class="col-lg-3 col-md-6">
         <div class="general-app-widget" >
               {{-- <div class="chart-sparkline" >
                     <div class="layer" >
@@ -127,14 +178,14 @@
                     <div class="number-percent-rand" > 98% </div>
               </div> --}}
               <div class="text" >
-                    <div class="number-long-rand gmv" > ${{ $gmv }} </div>
+                    <div class="number-long-rand gmv" > ${{ $payload['sales']['gmv'] }} </div>
 
                     <div class="conversion" >GMV</div>
               </div>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 click-url cursor-pointer" data-url="{{ url('invoices/search?ref=list&filter_bill_status[]=due') }}">
+    <div class="col-lg-3 col-md-6">
         <div class="general-app-widget" >
               {{-- <div class="chart-sparkline" >
                     <div class="layer" >
@@ -145,13 +196,13 @@
                     <div class="number-percent-rand" > 98% </div>
               </div> --}}
               <div class="text" >
-                    <div class="number-long-rand averageTicket" > ${{ $averageTicket }} </div>
+                    <div class="number-long-rand averageTicket" > ${{ $payload['sales']['averageTicket'] }} </div>
                     <div class="conversion" >Ticket Medio</div>
               </div>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 click-url cursor-pointer" data-url="{{ url('invoices/search?ref=list&filter_bill_status[]=due') }}">
+    <div class="col-lg-3 col-md-6" data-url="{{ url('invoices/search?ref=list&filter_bill_status[]=due') }}">
         <div class="general-app-widget" >
               {{-- <div class="chart-sparkline" >
                     <div class="layer" >
@@ -162,7 +213,7 @@
                     <div class="number-percent-rand" > 98% </div>
               </div> --}}
               <div class="text" >
-                    <div class="number-long-rand" id="totalSalesPending"> ${{ $totalSalesPending }} </div>
+                    <div class="number-long-rand" id="totalSalesPending"> ${{ $payload['sales']['totalSalesPending'] }} </div>
                     <div class="conversion" >Crédito en la calle</div>
               </div>
         </div>
@@ -176,7 +227,7 @@
     <div class="card">
         <div class="card-body">
             <div class="d-flex m-b-30 justify-content-between">
-                <h5 class="card-title m-b-0 align-self-center">GMV - <span id="franchise-name">Todas las franquicias</span></h5>
+                <h5 class="card-title m-b-0 align-self-center">GMV</h5>
 
             </div>
             <div id="chart-gmv"></div>
@@ -260,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <script>
 $(document).ready(function() {
-    
+
     // Función para manejar el cambio en los filtros
     function handleFilterChange() {
         var selectedTimeframe = $('#gmv-timeframe').val();
@@ -279,11 +330,15 @@ $(document).ready(function() {
             data.timeframe = selectedTimeframe;
         }
 
+        console.log("Enviando solicitud AJAX con los siguientes datos:", data);
+
         $.ajax({
             url: '{{ route('datacenter.filter') }}',
             type: 'GET',
             data: data,
             success: function(response) {
+                console.log("Respuesta recibida:", response);
+
                 if(response && response.data) {
                     $('.gmv').text('$' + response.data.gmv);
                     $('.averageTicket').text('$' + response.data.averageTicket);
@@ -293,6 +348,9 @@ $(document).ready(function() {
                 } else {
                     console.error('No data in response', response);
                 }
+            },
+            error: function(error) {
+                console.error('Error al obtener datos de GMV:', error);
             }
         });
     }
@@ -305,22 +363,8 @@ $(document).ready(function() {
 
     // Establecer el valor por defecto del selector y desencadenar el evento change
     $('#gmv-timeframe').val('thisYear').change();
-
-    // Función para actualizar el título basado en la franquicia seleccionada
-    function updateTitle() {
-        var selectedFranchiseName = $('#franchise-selector option:selected').data('name') || 'Todas las franquicias';
-        $('#franchise-name').text(selectedFranchiseName);
-    }
-
-    // Evento de cambio para el selector de franquicias
-    $('#franchise-selector').on('change', function() {
-        updateTitle();
-        handleFilterChange(); // Asumiendo que esta es tu función para manejar el cambio
-    });
-
-    // Llamada inicial para establecer el título correcto al cargar la página
-    updateTitle();
 });
+
 
 
 
