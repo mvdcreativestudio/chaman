@@ -1903,10 +1903,6 @@ class Leads extends Controller {
                 'required',
                 new NoTags,
             ],
-            'lead_lastname' => [
-                'required',
-                new NoTags,
-            ],
         ]);
 
         //validation errors

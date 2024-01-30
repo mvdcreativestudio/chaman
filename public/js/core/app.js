@@ -1710,7 +1710,6 @@ function NXLeadCreate() {
         rules: {
             lead_title: "required",
             lead_firstname: "required",
-            lead_lastname: "required"
         },
         submitHandler: function (form) {
             nxAjaxUxRequest($("#commonModalSubmitButton"));
@@ -4204,7 +4203,6 @@ function NXCloneLead() {
         rules: {
             lead_title: "required",
             lead_firstname: "required",
-            lead_lastname: "required",
             lead_status: "required",
         },
         submitHandler: function (form) {

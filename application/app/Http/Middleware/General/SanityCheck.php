@@ -72,6 +72,7 @@ class SanityCheck {
         $invoice_statuses = [
             'draft',
             'due',
+            'current',
             'overdue',
             'paid',
             'part_paid',

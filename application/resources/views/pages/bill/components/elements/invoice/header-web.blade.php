@@ -23,6 +23,13 @@
                     <h1 class="text-uppercase {{ runtimeInvoiceStatusColors('due', 'text') }}">
                         {{ cleanLang(__('lang.due')) }}</h1>
                 </span>
+                <!--current-->
+                <span class="js-invoice-statuses {{ runtimeInvoiceStatus('current', $bill->bill_status) }}"
+                    id="invoice-status-current">
+                    <h2
+                        class="text-uppercase {{ runtimeInvoiceStatusColors($bill->bill_status, 'text') }}">
+                        {{ cleanLang(__('lang.current')) }}</h2>
+                </span>
                 <!--overdue-->
                 <span class="js-invoice-statuses {{ runtimeInvoiceStatus('overdue', $bill->bill_status) }}"
                     id="invoice-status-overdue">
