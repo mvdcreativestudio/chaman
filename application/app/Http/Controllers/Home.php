@@ -506,6 +506,10 @@ class Home extends Controller {
                 'type' => 'sum',
                 'status' => 'overdue',
             ]),
+            'current' => $this->statsrepo->sumCountInvoices([
+                'type' => 'sum',
+                'status' => 'current',
+            ]),
         ];
 
 
