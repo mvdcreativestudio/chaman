@@ -26,7 +26,7 @@
                         <select class="form-control" id="module" name="module">
                             <option value="" selected disabled>Seleccione un módulo</option>
                             <option value="leads">Leads</option>
-                            <option value="sales">Ventas</option>
+                            <option value="sales">Ventas en CRM</option>
                             <option value="clients">Clientes</option>
                             <option value="expenses">Gastos</option>
                         </select>
