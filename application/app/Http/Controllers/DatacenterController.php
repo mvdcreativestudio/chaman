@@ -37,13 +37,13 @@ class DatacenterController extends Controller
 
         if ($period == 'custom') {
             $gmvData = $this->datacenterRepository->getGMV($startDate, $endDate, $rucFranquicia);
-            $averageTicketData = $this->datacenterRepository->getAverageTicket($startDate, $endDate);
+            $averageTicketData = $this->datacenterRepository->getAverageTicket($startDate, $endDate, $rucFranquicia);
             $totalSalesCount = $this->datacenterRepository->getTotalSalesCount($startDate, $endDate, $rucFranquicia);
             $totalSalesPendingCount = $this->datacenterRepository->getTotalSalesPendingCount($startDate, $endDate, $rucFranquicia);
             $totalSalesPending = $this->datacenterRepository->getTotalSalesPending($startDate, $endDate, $rucFranquicia);
         } else {
             $gmvData = $this->datacenterRepository->getGMVForPeriod($period, $rucFranquicia);
-            $averageTicketData = $this->datacenterRepository->getAverageTicketForPeriod($period);
+            $averageTicketData = $this->datacenterRepository->getAverageTicketForPeriod($period, $rucFranquicia);
             $totalSalesCount = $this->datacenterRepository->getTotalSalesCountForPeriod($period, $rucFranquicia);
             $totalSalesPendingCount = $this->datacenterRepository->getTotalSalesPendingCountForPeriod($period, $rucFranquicia);
             $totalSalesPending = $this->datacenterRepository->getTotalSalesPendingForPeriod($period, $rucFranquicia);
