@@ -89,6 +89,11 @@ class Kernel extends ConsoleKernel {
 
         //tap payments
         $schedule->call(new \App\Cronjobs\Tap\TapPaymentCron)->everyMinute();
+
+        // Sync External API Global
+        $schedule->call(new \App\Cronjobs\SyncExternalAPICron)->daily();
+        // Para testear con schedule:run usar everyMinute() 
+        //$schedule->call(new \App\Cronjobs\SyncExternalAPICron)->everyMinute();
     }
 
     /**
