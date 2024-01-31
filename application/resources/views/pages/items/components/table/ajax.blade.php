@@ -17,6 +17,8 @@
         </span>
     </td>
     @endif
+    <td class="items_col_category ucwords" id="items_col_category_{{ $item->item_id }}">
+        {{ str_limit($item->nombre ?? '---', 30) }}</td>
     <td class="items_col_description" id="items_col_description_{{ $item->item_id }}">
         @if(config('settings.trimmed_title'))
         {{ runtimeProductStripTags(str_limit($item->item_description ?? '---', 45)) }}
@@ -28,9 +30,10 @@
         {{ runtimeMoneyFormat($item->item_rate) }}
     </td>
     <td class="items_col_unit" id="items_col_unit_{{ $item->item_id }}">{{ $item->item_unit }}</td>
+    <td class="items_col_franquicia" id="items_col_franquicia_{{ $item->rucFranquicia }}">{{ $item->rucFranquicia }}</td>
     @if(config('visibility.items_col_category'))
     <td class="items_col_category ucwords" id="items_col_category_{{ $item->item_id }}">
-        {{ str_limit($item->category_name ?? '---', 30) }}</td>
+        {{ str_limit($item->categoria ?? '---', 30) }}</td>
     @endif
     @if(config('visibility.items_col_action'))
     <td class="items_col_action actions_column" id="items_col_action_{{ $item->item_id }}">

@@ -56,11 +56,16 @@ class ExternalAPIController extends Controller
             foreach ($response['items'] as $item) {
                 \App\Models\Item::updateOrCreate(
                     [
-                        'item_id' => $item['codigo'] ?? null,
+                        'codigo' => $item['codigo'],
+                        'rucFranquicia' => $item['rucFranquicia'],
                     ],
                     [
-                        'item_description' => $item['nombre'] ?? null,
+                        'nombre' => $item['nombre'],
                         'item_rate' => $item['precio'] ?? 0,
+                        'stock' => $item['stock'],
+                        'categoria' => $item['categoria'],
+                        'accion' => $item['accion'],
+                        'item_description' => $item['descripcion'],
                         'item_creatorid' => auth()->id(),
                         'item_created' => now(),
                         'item_updated' => now(),
@@ -72,37 +77,105 @@ class ExternalAPIController extends Controller
         return response()->json($response);
     }
     
+    
 
     public function getProveedores() {
-        return $this->apiRequest('RUT218168420010@crmAPI/Consultas/proveedores');
-    }
-
-    public function getVentas() {
-        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/ventas');
-
+        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/proveedores?todos=1');
+    
         if ($response['error'] == 0 && isset($response['items'])) {
             foreach ($response['items'] as $item) {
-                \App\Models\Sale::updateOrCreate(
+                \App\Models\Suppliers::updateOrCreate(
                     [
-                        'lineas' => $item['lineas'] ?? null,
-                        'impuestos' => $item['impuestos'] ?? null,
-                        'subtotal' => $item['subtotal'] ?? null,
-                        'total' => $item['total'] ?? null,
-                        'moneda' => $item['moneda'] ?? null,
-                        'moneda_id' => $item['moneda_id'] ?? null,
-                        'estado' => $item['estado'] ?? null,
-                        'fecha_creacion' => $item['fecha_creacion'] ?? null,
-                        'fecha_emision' => $item['fecha_emision'] ?? null,
-                        'pagos' => $item['pagos'] ?? null,
-                        'ruc_franquicia' => $item['rucFranquicia'] ?? null,
-                        'accion' => $item['accion'] ?? null,
+                        'razon_social' => $item['razon_social'],
+                        'rucFranquicia' => $item['rucFranquicia'],
+                    ],
+                    [
+                        'nombre' => $item['nombre'],
+                        'direccion' => $item['direccion'] ?? '-',
+                        'telefono' => $item['telefono'] ?? '-',
+                        'celular' => $item['celular'] ?? '-',
+                        'email' => $item['email'] ?? '-',
+                        'ciudad' => $item['ciudad'] ?? '-',
+                        'departamento' => $item['departamento'] ?? '-',
+                        'pais' => $item['pais'] ?? '-',
+                        'accion' => $item['accion'],
                     ]
                 );
             }
         }
-
-        return $this->apiRequest('RUT218168420010@crmAPI/Consultas/ventas');
+    
+        return response()->json($response);
     }
+
+    // public function getVentas() {
+    //     $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/ventas?todos=1&pagina=1');
+
+    //     if ($response['error'] == 0 && isset($response['items'])) {
+    //         foreach ($response['items'] as $item) {
+    //             \App\Models\Sale::updateOrCreate(
+    //                 [
+    //                     'lineas' => $item['lineas'] ?? null,
+    //                     'impuestos' => $item['impuestos'] ?? null,
+    //                     'subtotal' => $item['subtotal'] ?? null,
+    //                     'total' => $item['total'] ?? null,
+    //                     'moneda' => $item['moneda'] ?? null,
+    //                     'moneda_id' => $item['moneda_id'] ?? null,
+    //                     'estado' => $item['estado'] ?? null,
+    //                     'fecha_creacion' => $item['fecha_creacion'] ?? null,
+    //                     'fecha_emision' => $item['fecha_emision'] ?? null,
+    //                     'pagos' => $item['pagos'] ?? null,
+    //                     'ruc_franquicia' => $item['rucFranquicia'] ?? null,
+    //                     'accion' => $item['accion'] ?? null,
+    //                     'cliente_id' => $item['cliente_id'] ?? null,
+    //                 ]
+    //             );
+    //         }
+    //     }
+
+    //     return $this->apiRequest('RUT218168420010@crmAPI/Consultas/ventas?todos=1&pagina=1');
+    // }
+
+
+    public function getVentas() {
+        $page = 1;
+        $allVentas = [];
+        $continueFetching = true;
+    
+        while ($continueFetching) {
+            $response = $this->apiRequest("RUT218168420010@crmAPI/Consultas/ventas?todos=1&pagina=$page");
+    
+            if ($response['error'] == 0 && isset($response['items']) && !empty($response['items'])) {
+                foreach ($response['items'] as $item) {
+                    \App\Models\Sale::updateOrCreate(
+                        [
+                            'lineas' => $item['lineas'] ?? null,
+                            'impuestos' => $item['impuestos'] ?? null,
+                            'subtotal' => $item['subtotal'] ?? null,
+                            'total' => $item['total'] ?? null,
+                            'moneda' => $item['moneda'] ?? null,
+                            'moneda_id' => $item['moneda_id'] ?? null,
+                            'estado' => $item['estado'] ?? null,
+                            'fecha_creacion' => $item['fecha_creacion'] ?? null,
+                            'fecha_emision' => $item['fecha_emision'] ?? null,
+                            'pagos' => $item['pagos'] ?? null,
+                            'ruc_franquicia' => $item['rucFranquicia'] ?? null,
+                            'accion' => $item['accion'] ?? null,
+                            'cliente_id' => $item['cliente_id'] ?? null,
+                        ]
+                    );
+                    $allVentas[] = $item; // Agregar el item a la lista total
+                }
+                $page++; // Incrementar para la siguiente página
+            } else {
+                $continueFetching = false; // No hay más páginas o hay un error
+            }
+        }
+    
+        return $allVentas; // Devuelve todas las ventas de todas las páginas
+    }
+
+    
+    
 
     public function showSales() {
         $sales = \App\Models\Sale::all();

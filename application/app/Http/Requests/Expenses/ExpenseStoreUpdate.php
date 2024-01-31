@@ -94,16 +94,10 @@ class ExpenseStoreUpdate extends FormRequest {
                     }
                 },
             ],
-            'expense_billable' => [
-                'nullable',
-                function ($attribute, $value, $fail) {
-                    if ($value == 'on' && (!request()->filled('expense_projectid'))) {
-                        return $fail(__('lang.a_project_is_required_for_billable_expenses'));
-                    }
-                },
-            ],
+            'expense_billable' => 'nullable',
+            
         ];
-
+    
         //validate
         return $rules;
     }

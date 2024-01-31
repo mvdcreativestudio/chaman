@@ -17,6 +17,10 @@
                             </span>
                         </th>
                         @endif
+                        <th class="items_col_nombre"><a class="js-ajax-ux-request js-list-sorting"
+                            id="sort_item_nombre" href="javascript:void(0)"
+                            data-url="{{ urlResource('/items?action=sort&orderby=item_nombre&sortorder=asc') }}">Nombre<span
+                                class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a></th>
                         <th class="items_col_description"><a class="js-ajax-ux-request js-list-sorting"
                                 id="sort_item_description" href="javascript:void(0)"
                                 data-url="{{ urlResource('/items?action=sort&orderby=item_description&sortorder=asc') }}">{{ cleanLang(__('lang.description')) }}<span
@@ -30,6 +34,11 @@
                                 href="javascript:void(0)"
                                 data-url="{{ urlResource('/items?action=sort&orderby=item_unit&sortorder=asc') }}">{{ cleanLang(__('lang.unit')) }}<span
                                     class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
+                        </th>
+                        <th class="items_col_franquicia"><a class="js-ajax-ux-request js-list-sorting" id="sort_franquicia"
+                            href="javascript:void(0)"
+                            data-url="{{ urlResource('/items?action=sort&orderby=franquicia&sortorder=asc') }}">Franquicia<span
+                                class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
                         </th>
                         @if(config('visibility.items_col_category'))
                         <th class="items_col_category"><a class="js-ajax-ux-request js-list-sorting" id="sort_category"

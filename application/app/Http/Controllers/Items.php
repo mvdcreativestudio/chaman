@@ -167,6 +167,7 @@ class Items extends Controller {
         //create the item
         if (!$item_id = $this->itemrepo->create()) {
             abort(409, __('lang.error_request_could_not_be_completed'));
+            
         }
 
         //get the item object (friendly for rendering in blade template)

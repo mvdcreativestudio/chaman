@@ -84,14 +84,14 @@
             @else
             <!--already invoiced - cannot change client/project-->
             <!--existing client-->
-            <div class="form-group row">
+            {{-- <div class="form-group row">
                 <label
                     class="col-sm-12 col-lg-3 text-left control-label col-form-label">{{ cleanLang(__('lang.client')) }}</label>
                 <div class="col-sm-12 col-lg-9">
                     <input type="text" class="form-control" value="{{ $expense->client_company_name ?? '' }}" disabled>
                     <input type="hidden" name="expense_clientid" value="{{ $expense->expense_clientid ?? '' }}">
                 </div>
-            </div>
+            </div> --}}
             <!--existing client-->
             <div class="form-group row">
                 <label
@@ -150,7 +150,24 @@
         </div>
         @endif
 
-
+        <div class="form-group row">
+            <label class="col-sm-12 col-lg-3 text-left control-label col-form-label required">Proveedor</label>
+            <div class="col-sm-12 col-lg-9">
+                <select name="expense_supplierid" id="expense_supplierid" class="select2-basic form-control form-control-sm">
+                    <option></option>
+                    <!-- Lista de proveedores -->
+                    @foreach($suppliers as $supplier)
+                        <option value="{{ $supplier->id }}" 
+                            {{ runtimePreselected($supplier->id, $expense->expense_supplierid ?? '') }}>
+                            {{ $supplier->nombre }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        
+        
+          
         <!--billable-->
         <div class="form-group form-group-checkbox row" id="expense_billable_option">
             <label class="col-sm-12 col-lg-3 col-form-label text-left">{{ cleanLang(__('lang.billable')) }}?</label>

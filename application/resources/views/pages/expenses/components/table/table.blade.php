@@ -37,13 +37,10 @@
                                 data-url="{{ urlResource('/expenses?action=sort&orderby=user&sortorder=asc') }}">{{ cleanLang(__('lang.user')) }}<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
                         </th>
                         @endif
-                        <!--column visibility-->
-                        @if(config('visibility.expenses_col_client'))
-                        <th class="expenses_col_client"><a class="js-ajax-ux-request js-list-sorting" id="sort_client"
-                                href="javascript:void(0)"
-                                data-url="{{ urlResource('/expenses?action=sort&orderby=client&sortorder=asc') }}">{{ cleanLang(__('lang.client')) }}<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
+                        <th class="expenses_col_supplier"><a class="js-ajax-ux-request js-list-sorting" id="sort_supplier"
+                            href="javascript:void(0)"
+                            data-url="{{ urlResource('/expenses?action=sort&orderby=supplier&sortorder=asc') }}">Proveedor<span class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
                         </th>
-                        @endif
                         <!--column visibility-->
                         @if(config('visibility.expenses_col_project'))
                         <th class="expenses_col_project"><a class="js-ajax-ux-request js-list-sorting" id="sort_project"

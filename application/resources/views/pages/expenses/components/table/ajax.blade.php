@@ -38,13 +38,10 @@
             class="img-circle avatar-xsmall"> {{ str_limit($expense->first_name ?? runtimeUnkownUser(), 8) }}
     </td>
     @endif
-    <!--column visibility-->
-    @if(config('visibility.expenses_col_client'))
-    <td class="expenses_col_client">
+    <td class="expenses_col_supplier">
         <a
-            href="/clients/{{ $expense->expense_clientid }}">{{ str_limit($expense->client_company_name ?? '---', 12) }}</a>
+            href="/suppliers/{{ $expense->expense_supplierid }}">{{ str_limit($expense->supplier->nombre ?? '---', 12) }}</a>
     </td>
-    @endif
     <!--column visibility-->
     @if(config('visibility.expenses_col_project'))
     <td class="expenses_col_project">

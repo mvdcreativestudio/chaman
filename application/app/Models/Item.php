@@ -31,6 +31,12 @@ class Item extends Model {
         'item_dimensions_width',
         'item_notes_estimatation',
         'item_notes_production',
+        'codigo',
+        'nombre',
+        'stock',
+        'categoria',
+        'rucFranquicia',
+        'accion',
     ];
     const CREATED_AT = 'item_created';
     const UPDATED_AT = 'item_updated';

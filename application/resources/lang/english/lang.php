@@ -529,7 +529,7 @@ return [
     'error_communicating_updates_server' => "Error communicating with the update server",
     'error_loading_item' => "The request item could loaded at this time",
     'error_no_permission_for_resource' => "You do not have permission for this action",
-    'error_not_found' => "The request item could not be found",
+    'error_not_found' => "No se encontró la página",
     'error_request_could_not_be_completed' => "An error was encountered processing your request",
     'error_session_timeout' => "Your session has timed out. Please login again",
     'estimate_aleady_published' => "This estimate has already been published",

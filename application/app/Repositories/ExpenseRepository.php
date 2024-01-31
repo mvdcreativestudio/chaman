@@ -52,6 +52,8 @@ class ExpenseRepository {
         $expenses->leftJoin('projects', 'projects.project_id', '=', 'expenses.expense_projectid');
         $expenses->leftJoin('categories', 'categories.category_id', '=', 'expenses.expense_categoryid');
         $expenses->leftJoin('users', 'users.id', '=', 'expenses.expense_creatorid');
+        $expenses->leftJoin('suppliers', 'suppliers.id', '=', 'expenses.expense_supplierid');
+
 
         // all client fields
         $expenses->selectRaw('*');
@@ -62,6 +64,17 @@ class ExpenseRepository {
         //filter by passed id
         if (is_numeric($id)) {
             $expenses->where('expense_id', $id);
+        }
+
+        // Buscar en campos del proveedor
+        if (request()->filled('search_query')) {
+            $expenses->where(function ($query) {
+
+                // Buscar en la tabla de proveedores
+                $query->orWhereHas('supplier', function ($q) {
+                    $q->where('suppliers.nombre', 'LIKE', '%' . request('search_query') . '%');
+                });
+            });
         }
 
         //filter by client - used for counting on external pages
@@ -81,6 +94,12 @@ class ExpenseRepository {
             if (request()->filled('filter_expense_clientid') && $data['apply_filters']) {
                 $expenses->where('expense_clientid', request('filter_expense_clientid'));
             }
+
+            //filters: supplier id
+            if (request()->filled('filter_expense_supplierid')) {
+                $expenses->where('expenses.expense_supplierid', request('filter_expense_supplierid'));
+            }
+            
 
             //filters: creator id
             if (request()->filled('filter_expense_creatorid')) {
@@ -168,6 +187,9 @@ class ExpenseRepository {
                     });
                     $query->orWhereHas('project', function ($q) {
                         $q->where('project_title', 'LIKE', '%' . request('search_query') . '%');
+                    });
+                    $query->orWhereHas('supplier', function ($q) {
+                        $q->where('suppliers.nombre', 'LIKE', '%' . request('search_query') . '%');
                     });
 
                 });
@@ -260,6 +282,7 @@ class ExpenseRepository {
         $expense->expense_description = request('expense_description');
         $expense->expense_billable = (request('expense_billable') == 'on') ? 'billable' : 'not_billable';
         $expense->franchise_id = auth()->user()->franchise_id;
+        $expense->expense_supplierid = request('expense_supplierid');
 
         //save and return id
         if ($expense->save()) {
