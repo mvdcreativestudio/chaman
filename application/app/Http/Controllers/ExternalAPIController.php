@@ -138,42 +138,64 @@ class ExternalAPIController extends Controller
 
     public function getVentas() {
         $page = 1;
-        $allVentas = [];
-        $continueFetching = true;
+        $importedDataCount = 0;
+        $discardedDataCount = 0;
+        $discardedDataReasons = [];
     
-        while ($continueFetching) {
-            $response = $this->apiRequest("RUT218168420010@crmAPI/Consultas/ventas?todos=1&pagina=$page");
+        while (true) {
+            $response = $this->apiRequest("RUT218168420010@crmAPI/Consultas/ventas?pagina=$page");
     
             if ($response['error'] == 0 && isset($response['items']) && !empty($response['items'])) {
                 foreach ($response['items'] as $item) {
-                    \App\Models\Sale::updateOrCreate(
-                        [
-                            'lineas' => $item['lineas'] ?? null,
-                            'impuestos' => $item['impuestos'] ?? null,
-                            'subtotal' => $item['subtotal'] ?? null,
-                            'total' => $item['total'] ?? null,
-                            'moneda' => $item['moneda'] ?? null,
-                            'moneda_id' => $item['moneda_id'] ?? null,
-                            'estado' => $item['estado'] ?? null,
-                            'fecha_creacion' => $item['fecha_creacion'] ?? null,
-                            'fecha_emision' => $item['fecha_emision'] ?? null,
-                            'pagos' => $item['pagos'] ?? null,
-                            'ruc_franquicia' => $item['rucFranquicia'] ?? null,
-                            'accion' => $item['accion'] ?? null,
-                            'cliente_id' => $item['cliente_id'] ?? null,
-                        ]
-                    );
-                    $allVentas[] = $item; // Agregar el item a la lista total
+                    // Definimos las condiciones para buscar una venta existente
+                    $conditions = [
+                        'fecha_creacion' => $item['fecha_creacion'] ?? null,
+                        'cliente_id' => $item['cliente_id'] ?? null,
+                    ];
+    
+                    // Utilizamos el método firstOrNew para obtener un registro existente o crear uno nuevo basado en las condiciones
+                    $venta = \App\Models\Sale::firstOrNew($conditions);
+    
+                    // Actualizamos los atributos de la venta con los datos del API
+                    $venta->lineas = $item['lineas'] ?? null;
+                    $venta->impuestos = $item['impuestos'] ?? null;
+                    $venta->subtotal = $item['subtotal'] ?? null;
+                    $venta->total = $item['total'] ?? null;
+                    $venta->moneda = $item['moneda'] ?? null;
+                    $venta->moneda_id = $item['moneda_id'] ?? null;
+                    $venta->estado = $item['estado'] ?? null;
+                    $venta->fecha_emision = $item['fecha_emision'] ?? null;
+                    $venta->pagos = $item['pagos'] ?? null;
+                    $venta->ruc_franquicia = $item['rucFranquicia'] ?? null;
+                    $venta->accion = $item['accion'] ?? null;
+                    $venta->cliente_id = $item['cliente_id'] ?? null;
+    
+                    // Guardamos el registro en la base de datos
+                    $venta->save();
+    
+                    if ($venta->wasRecentlyCreated) {
+                        $importedDataCount++;
+                    } else {
+                        $discardedDataCount++;
+                        $discardedDataReasons[] = "Venta descartada: Ya existe una venta con fecha_creacion y cliente_id similares.";
+                    }
                 }
-                $page++; // Incrementar para la siguiente página
+                $page++;
             } else {
-                $continueFetching = false; // No hay más páginas o hay un error
+                break;
             }
         }
     
-        return $allVentas; // Devuelve todas las ventas de todas las páginas
+        $result = [
+            'Datos Importados' => $importedDataCount,
+            'Datos Descartados' => $discardedDataCount,
+            'Motivos del descarte' => $discardedDataReasons,
+        ];
+    
+        return response()->json($result);
     }
-
+    
+    
     
     
 

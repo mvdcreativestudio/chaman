@@ -57,7 +57,7 @@
         </div>
 
         <!--IMPORTING-->
-        @if(config('visibility.list_page_actions_importing'))
+
         <button type="button" title="{{ cleanLang(__('lang.import_leads')) }}" id="leads-import-button"
             class="hidden data-toggle-tooltip list-actions-button btn btn-page-actions waves-effect waves-dark edit-add-modal-button js-ajax-ux-request reset-target-modal-form"
             data-toggle="modal" data-target="#commonModal" data-footer-visibility="hidden" data-top-padding="none"
@@ -66,7 +66,7 @@
             data-url="{{ url('import/leads/create') }}">
             <i class="ti-import"></i>
         </button>
-        @endif
+
 
         <!--FILTERING-->
         @if(config('visibility.list_page_actions_filter_button'))
