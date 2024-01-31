@@ -34,6 +34,7 @@ return [
     'invoice_statuses' => [
         'draft' => 'default',
         'due' => 'warning',
+        'current' => 'info',
         'overdue' => 'danger',
         'paid' => 'success',
         'part_paid' => 'info',

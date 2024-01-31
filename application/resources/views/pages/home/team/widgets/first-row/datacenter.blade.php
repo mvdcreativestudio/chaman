@@ -9,89 +9,9 @@
 
 <!-- VENTAS EN TIEMPO REAL -->
 
-<div class="d-flex">
-    <!-- Todays Payments -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card">
-            <div class="card-body p-l-15 p-r-15">
-                <div class="d-flex p-10 no-block">
-                    <span class="align-slef-center">
-                        <h2 class="m-b-0">${{ $payload['sales']['yesterdaySales'] }}</h2>
-                        <h6 class="text-muted m-b-0">Ingresos Ayer</h6>
-                    </span>
-                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="progress">
-                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Payments - This month-->
-    <div class="col-lg-3 col-md-6">
-        <div class="card">
-            <div class="card-body p-l-15 p-r-15">
-                <div class="d-flex p-10 no-block">
-                    <span class="align-slef-center">
-                        <h2 class="m-b-0">${{ $payload['sales']['thisMonthSales'] }}</h2>
-                        <h6 class="text-muted m-b-0">Ingresos Este Mes</h6>
-                    </span>
-                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i></div>
-                </div>
-            </div>
-            <div class="progress">
-                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Payments - This month-->
-    <div class="col-lg-3 col-md-6">
-        <div class="card">
-            <div class="card-body p-l-15 p-r-15">
-                <div class="d-flex p-10 no-block">
-                    <span class="align-slef-center">
-                        <h2 class="m-b-0">${{ $payload['sales']['thisYearSales'] }}</h2>
-                        <h6 class="text-muted m-b-0">Ingresos Este Año</h6>
-                    </span>
-                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i></div>
-                </div>
-            </div>
-            <div class="progress">
-                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Payments - This month-->
-    <div class="col-lg-3 col-md-6">
-        <div class="card">
-            <div class="card-body p-l-15 p-r-15">
-                <div class="d-flex p-10 no-block">
-                    <span class="align-slef-center">
-                        <h2 class="m-b-0">${{ $payload['sales']['totalSales'] }}</h2>
-                        <h6 class="text-muted m-b-0">Ingresos Totales</h6>
-                    </span>
-                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i></div>
-                </div>
-            </div>
-            <div class="progress">
-                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 {{-- Selector de períodos y franquicias --}}
 <div class="d-flex mt-0">
-    <div class="col-3">
+    <div class="col-12 col-md-3">
         <form id="gmv-selector-form" class="form-inline">
             <div class="form-group mb-2 mr-2">
                 <select id="gmv-timeframe" class="form-control">
@@ -122,17 +42,95 @@
     </div>
 </div>
 
+<div class="row col-12">
+    <!-- Todays Payments -->
+    <div class="col-lg-3 col-6">
+        <div class="card">
+            <div class="card-body p-l-15 p-r-15">
+                <div class="d-flex p-10 no-block">
+                    <span class="align-slef-center">
+                        <h2 class="m-b-0">${{ $payload['sales']['yesterdaySales'] }}</h2>
+                        <h6 class="text-muted m-b-0">Ingresos Ayer</h6>
+                    </span>
+                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payments - This month-->
+    <div class="col-lg-3 col-6">
+        <div class="card">
+            <div class="card-body p-l-15 p-r-15">
+                <div class="d-flex p-10 no-block">
+                    <span class="align-slef-center">
+                        <h2 class="m-b-0">${{ $payload['sales']['thisMonthSales'] }}</h2>
+                        <h6 class="text-muted m-b-0">Ingresos Este Mes</h6>
+                    </span>
+                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i></div>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payments - This month-->
+    <div class="col-lg-3 col-6">
+        <div class="card">
+            <div class="card-body p-l-15 p-r-15">
+                <div class="d-flex p-10 no-block">
+                    <span class="align-slef-center">
+                        <h2 class="m-b-0">${{ $payload['sales']['thisYearSales'] }}</h2>
+                        <h6 class="text-muted m-b-0">Ingresos Este Año</h6>
+                    </span>
+                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i></div>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payments - This month-->
+    <div class="col-lg-3 col-6">
+        <div class="card">
+            <div class="card-body p-l-15 p-r-15">
+                <div class="d-flex p-10 no-block">
+                    <span class="align-slef-center">
+                        <h2 class="m-b-0">${{ $payload['sales']['totalSales'] }}</h2>
+                        <h6 class="text-muted m-b-0">Ingresos Totales</h6>
+                    </span>
+                    <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Credit-Card2"></i></div>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar bg-info w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{-- First Row --}}
 
-<div class="d-flex col-12 pt-4">
-    <div class="col-lg-3 col-md-6">
+<div class="row col-12 pt-4">
+    <div class="col-lg-3 col-6">
         <div class="card">
             <div class="card-body p-l-15 p-r-15">
                 <div class="d-flex p-10 no-block">
                     <span class="align-slef-center">
                         <h2 class="m-b-0" id="totalSalesCount">{{ $payload['sales']['totalSalesCount'] }}</h2>
-                        <h6 class="text-muted m-b-0">Cantidad de Ordenes</h6>
+                        <h6 class="text-muted m-b-0">Ordenes</h6>
                     </span>
                     <div class="align-self-center display-6 ml-auto"><i class="text-success icon-Coin"></i></div>
                 </div>
@@ -143,14 +141,14 @@
             </div>
         </div>
     </div>
-    
-    <div class="col-lg-3 col-md-6">
+
+    <div class="col-lg-3 col-6">
         <div class="card">
             <div class="card-body p-l-15 p-r-15">
                 <div class="d-flex p-10 no-block">
                     <span class="align-slef-center">
-                        <h2 class="m-b-0" id="totalSalesPendingCount">{{ $payload['sales']['totalSalesPendingCount'] }}</h2>
-                        <h6 class="text-muted m-b-0">Ordenes a Crédito</h6>
+                        <h2 class="m-b-0" id="totalSalesPaidCount">{{ $payload['sales']['totalSalesPaidCount'] }}</h2>
+                        <h6 class="text-muted m-b-0">Pagas</h6>
                     </span>
                     <div class="align-self-center display-6 ml-auto"><i class="text-info icon-Coin"></i></div>
                 </div>
@@ -161,13 +159,49 @@
             </div>
         </div>
     </div>
+    
+    <div class="col-lg-3 col-6">
+        <div class="card">
+            <div class="card-body p-l-15 p-r-15">
+                <div class="d-flex p-10 no-block">
+                    <span class="align-slef-center">
+                        <h2 class="m-b-0" id="totalSalesPendingCount">{{ $payload['sales']['totalSalesPendingCount'] }}</h2>
+                        <h6 class="text-muted m-b-0">Crédito</h6>
+                    </span>
+                    <div class="align-self-center display-6 ml-auto"><i class="text-warning icon-Coin"></i></div>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar bg-warning w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <div class="card">
+            <div class="card-body p-l-15 p-r-15">
+                <div class="d-flex p-10 no-block">
+                    <span class="align-slef-center">
+                        <h2 class="m-b-0" id="totalSalesCancelledCount">{{ $payload['sales']['totalSalesCancelledCount'] }}</h2>
+                        <h6 class="text-muted m-b-0">Anuladas</h6>
+                    </span>
+                    <div class="align-self-center display-6 ml-auto"><i class="text-danger icon-Coin"></i></div>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar bg-danger w-100 h-px-3" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
        
     
 </div>
 
-<div class="d-flex col-12 pt-4">    
+<div class="row col-12 pt-4">    
     
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-3 col-md-6 mb-2">
         <div class="general-app-widget" >
               {{-- <div class="chart-sparkline" >
                     <div class="layer" >
@@ -185,7 +219,7 @@
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-3 col-md-6 mb-2">
         <div class="general-app-widget" >
               {{-- <div class="chart-sparkline" >
                     <div class="layer" >
@@ -202,7 +236,7 @@
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6" data-url="{{ url('invoices/search?ref=list&filter_bill_status[]=due') }}">
+    <div class="col-lg-3 col-md-6 mb-2" data-url="{{ url('invoices/search?ref=list&filter_bill_status[]=due') }}">
         <div class="general-app-widget" >
               {{-- <div class="chart-sparkline" >
                     <div class="layer" >
@@ -223,7 +257,7 @@
 
 {{-- Second Row --}}
 
-<div class="col-md-12 element-content mt-4">
+<div class="col-md-7 col-12 element-content mt-4">
     <div class="card">
         <div class="card-body">
             <div class="d-flex m-b-30 justify-content-between">
@@ -345,6 +379,8 @@ $(document).ready(function() {
                     $('#totalSalesCount').text(response.data.totalSalesCount);
                     $('#totalSalesPendingCount').text(response.data.totalSalesPendingCount);
                     $('#totalSalesPending').text('$' + response.data.totalSalesPending);
+                    $('#totalSalesPaidCount').text(response.data.totalSalesPaidCount);
+                    $('#totalSalesCancelledCount').text(response.data.totalSalesCancelledCount);
                 } else {
                     console.error('No data in response', response);
                 }

@@ -359,6 +359,8 @@ class Home extends Controller {
          $totalSalesCount = $this->datacenterrepo->getTotalSalesCount();
          $totalSalesPendingCount = $this->datacenterrepo->getTotalSalesPendingCount();
          $totalSalesPending = $this->datacenterrepo->getTotalSalesPending();
+         $totalSalesCancelledCount = $this->datacenterrepo->getTotalSalesCancelledCount();
+         $totalSalesPaidCount = $this->datacenterrepo->getTotalSalesPaidCount();
          $gmvData = $this->datacenterrepo->getGMV(2023);
          $gmv = $gmvData['gmv'];
 
@@ -378,6 +380,8 @@ class Home extends Controller {
              'totalSalesCount' => $totalSalesCount,
              'totalSalesPendingCount' => $totalSalesPendingCount,
              'totalSalesPending' => $totalSalesPending,
+             'totalSalesCancelledCount' => $totalSalesCancelledCount,
+             'totalSalesPaidCount' => $totalSalesPaidCount,
              'gmv' => $gmv,
              'yesterdaySales' => $yesterdaySales,
              'thisMonthSales' => $thisMonthSales,
@@ -608,6 +612,8 @@ class Home extends Controller {
         $totalSalesCount = $this->datacenterrepo->getTotalSalesCount();
         $totalSalesPendingCount = $this->datacenterrepo->getTotalSalesPendingCount();
         $totalSalesPending = $this->datacenterrepo->getTotalSalesPending();
+        $totalSalesCancelledCount = $this->datacenterrepo->getTotalSalesCancelledCount();
+        $totalSalesPaidCount = $this->datacenterrepo->getTotalSalesPaidCount();
         $gmvData = $this->datacenterrepo->getGMV(2023);
         $gmv = $gmvData['gmv'];
     
@@ -623,6 +629,8 @@ class Home extends Controller {
             'totalSalesCount' => $totalSalesCount,
             'totalSalesPendingCount' => $totalSalesPendingCount,
             'totalSalesPending' => $totalSalesPending,
+            'totalSalesCancelledCount' => $totalSalesCancelledCount,
+            'totalSalesPaidCount' => $totalSalesPaidCount,
             'gmv' => $gmv,
         ];
 

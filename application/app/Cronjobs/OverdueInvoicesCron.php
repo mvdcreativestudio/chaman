@@ -94,6 +94,33 @@ class OverdueInvoicesCron {
             $invoice->save();
         }
 
+        $invoices = \App\Models\Invoice::whereNotIn('bill_status', ['draft', 'paid'])->get();
+        foreach ($invoices as $invoice) {
+            $bill_due_date = \Carbon\Carbon::parse($invoice->bill_due_date);
+            $today = \Carbon\Carbon::now();
+            
+            // Calculando la diferencia en días
+            $days_until_due = $bill_due_date->diffInDays($today);
+            
+            // Invertir el signo si la fecha de vencimiento es anterior a la fecha actual
+            if ($bill_due_date->isPast() == 1) {
+                $days_until_due = -$days_until_due;
+            }
+            
+            // Luego sigue la lógica para establecer el estado de la factura
+            if ($days_until_due < 0) {
+                // La factura está vencida
+                $invoice->bill_status = 'overdue';
+            } elseif ($days_until_due < 5) {
+                // La factura está por vencer
+                $invoice->bill_status = 'due';
+            } else {
+                // La factura está en estado corriente
+                $invoice->bill_status = 'current';
+            }
+            $invoice->save();
+        }
+
         //reset last cron run data
         \App\Models\Settings::where('settings_id', 1)
             ->update([

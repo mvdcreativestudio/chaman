@@ -67,7 +67,7 @@ class Kernel extends ConsoleKernel {
         $schedule->call(new \App\Cronjobs\RecurringInvoicesCron)->everyFiveMinutes();
 
         //Invoice statuses & overdue invoice reminders
-        $schedule->call(new \App\Cronjobs\OverdueInvoicesCron)->everyFiveMinutes();
+        $schedule->call(new \App\Cronjobs\OverdueInvoicesCron)->everyMinute();
 
         //Overdue task reminders
         $schedule->call(new \App\Cronjobs\TaskOverdueCron)->everyFiveMinutes();
@@ -90,6 +90,10 @@ class Kernel extends ConsoleKernel {
         //tap payments
         $schedule->call(new \App\Cronjobs\Tap\TapPaymentCron)->everyMinute();
 
+        // Sync External API Global
+        $schedule->call(new \App\Cronjobs\SyncExternalAPICron)->dailyAt('03:00');
+        // Para testear con schedule:run usar everyMinute() 
+        //$schedule->call(new \App\Cronjobs\SyncExternalAPICron)->everyMinute();
     }
 
     /**
