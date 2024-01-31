@@ -32,7 +32,7 @@ class EditResponse implements Responsable {
         }
 
         //render the form
-        $html = view('pages/expenses/components/modals/add-edit-inc', compact('page', 'expense', 'categories', 'attachments'))->render();
+        $html = view('pages/expenses/components/modals/add-edit-inc', compact('page', 'expense', 'categories', 'attachments', 'suppliers'))->render();
         $jsondata['dom_html'][] = array(
             'selector' => '#commonModalBody',
             'action' => 'replace',

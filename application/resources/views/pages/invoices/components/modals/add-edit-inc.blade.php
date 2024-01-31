@@ -103,8 +103,6 @@
 
         @endif
 
-
-
         <!--invoice date-->
         <div class="form-group row">
             <label
@@ -231,8 +229,7 @@
         </div>
         <!--/#options toggle-->
 
-
-
+        
         <!--source-->
         <input type="hidden" name="source" value="{{ request('source') }}">
 

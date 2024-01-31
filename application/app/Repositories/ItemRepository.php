@@ -75,11 +75,14 @@ class ItemRepository {
                 $query->orWhere('item_description', 'LIKE', '%' . request('search_query') . '%');
                 $query->orWhere('item_rate', '=', request('search_query'));
                 $query->orWhere('item_unit', '=', request('search_query'));
+                // Aquí incluyes la búsqueda por 'nombre'
+                $query->orWhere('nombre', 'LIKE', '%' . request('search_query') . '%');
                 $query->orWhereHas('category', function ($q) {
                     $q->where('category_name', 'LIKE', '%' . request('search_query') . '%');
                 });
             });
         }
+
 
         //sorting
         if (in_array(request('sortorder'), array('desc', 'asc')) && request('orderby') != '') {

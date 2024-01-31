@@ -67,4 +67,7 @@ class Expense extends Model {
         return $this->belongsTo('App\Models\Franchise');
     }
 
+    public function supplier() {
+        return $this->belongsTo('App\Models\Suppliers', 'expense_supplierid', 'id');
+    }
 }

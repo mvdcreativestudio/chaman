@@ -31,6 +31,8 @@ use App\Repositories\ExpenseRepository;
 use App\Repositories\ProjectRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\SupplierRepository;
+use App\Models\Suppliers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -62,6 +64,7 @@ class Expenses extends Controller {
         ExpenseRepository $expenserepo,
         UserRepository $userrepo,
         AttachmentRepository $attachmentrepo,
+        SupplierRepository $supplierrepo,
         TagRepository $tagrepo) {
 
         //parent
@@ -173,7 +176,10 @@ class Expenses extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function create(CategoryRepository $categoryrepo) {
+    public function create(SupplierRepository $supplierrepo, CategoryRepository $categoryrepo) {
+
+        $suppliers = $supplierrepo->getAllSuppliers();
+
 
         //page settings
         $page = $this->pageSettings('create');
@@ -185,6 +191,7 @@ class Expenses extends Controller {
         $payload = [
             'page' => $page,
             'categories' => $categories,
+            'suppliers' => $suppliers,
         ];
 
         //show the form
@@ -201,11 +208,10 @@ class Expenses extends Controller {
             // Validación de entradas
             $validatedData = $request->validate([
                 'expense_billable' => 'required',
-                'expense_projectid' => 'required',
             ]);
     
-            //for billable projects
-            if (request('expense_billable') == 'on') {
+            // Procesamiento para proyectos facturables
+            if (request('expense_billable') == 'on' && request()->filled('expense_projectid')) {
                 if (!$project = \App\Models\Project::Where('project_id', request('expense_projectid'))->first()) {
                     abort(409, __('lang.project_not_found'));
                 }
@@ -227,6 +233,7 @@ class Expenses extends Controller {
                 foreach (request('attachments') as $uniqueid => $file_name) {
                     $data = [
                         'attachment_clientid' => request('expense_clientid'),
+                        'expense_supplierid' => request('expense_supplierid') ?? null,
                         'attachmentresource_type' => 'expense',
                         'attachmentresource_id' => $expense_id,
                         'attachment_directory' => $uniqueid,
@@ -307,11 +314,14 @@ class Expenses extends Controller {
         $attachments = \App\Models\Attachment::Where('attachmentresource_id', $id)
             ->Where('attachmentresource_type', 'expense')
             ->get();
+        
+        $suppliers = \App\Models\Suppliers::all();
 
         //reponse payload
         $payload = [
             'expense' => $expense,
             'attachments' => $attachments,
+            'suppliers' => $suppliers,
         ];
 
         //show the form
@@ -336,6 +346,9 @@ class Expenses extends Controller {
         //client categories
         $categories = $categoryrepo->get('expense');
 
+        //suppliers
+        $suppliers = \App\Models\Suppliers::all();
+
         //get attachment
         $attachments = \App\Models\Attachment::Where('attachmentresource_id', $id)
             ->Where('attachmentresource_type', 'expense')
@@ -347,6 +360,7 @@ class Expenses extends Controller {
             'expense' => $expense,
             'categories' => $categories,
             'attachments' => $attachments,
+            'suppliers' => $suppliers,
         ];
 
         //response

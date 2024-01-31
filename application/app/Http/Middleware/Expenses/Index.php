@@ -54,6 +54,8 @@ class Index {
             }
         }
 
+        
+
         //permission: does user have permission view expenses
         if (auth()->user()->is_team) {
             if (auth()->user()->role->role_expenses >= 1) {

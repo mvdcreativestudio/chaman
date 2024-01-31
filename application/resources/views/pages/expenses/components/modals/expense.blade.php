@@ -13,6 +13,11 @@
                         <td>{{ cleanLang(__('lang.client')) }}</td>
                         <td>{{ $expense->client_company_name }}</td>
                     </tr>
+                    <!--supplier-->
+                    <tr>
+                        <td>Proveedor</td>
+                        <td>{{ $expense->supplier->nombre }}</td>
+                    </tr>
                     <!--project-->
                     <tr>
                         <td>{{ cleanLang(__('lang.project')) }}</td>

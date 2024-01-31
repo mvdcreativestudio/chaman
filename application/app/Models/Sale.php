@@ -19,6 +19,7 @@ class Sale extends Model
         'pagos',
         'ruc_franquicia',
         'accion',
+        'cliente_id',
     ];
 
     protected $casts = [

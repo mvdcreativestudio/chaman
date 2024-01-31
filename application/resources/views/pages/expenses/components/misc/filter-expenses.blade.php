@@ -33,6 +33,7 @@
                     </div>
                 </div>
                 @endif
+               
 
                 <!--project-->
                 @if(config('visibility.filter_panel_project'))
