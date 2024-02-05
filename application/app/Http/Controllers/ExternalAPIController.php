@@ -23,31 +23,41 @@ class ExternalAPIController extends Controller
         if ($response['error'] == 0 && isset($response['items'])) {
             foreach ($response['items'] as $item) {
                 try {
-                    \App\Models\Client::createOrUpdate(
-                        [
-                            'franchise_ruc' => $item['rucFranquicia'] ?? null,
-                        ],
-                        [
-                            'client_company_name' => $item['nombre'] ?? null,
-                            'client_phone' => $item['celular'] ?? null,
-                            'client_billing_street' => $item['direccion'] ?? null,
-                            'client_billing_city' => $item['ciudad'] ?? null,
-                            'client_billing_state' => $item['departamento'] ?? null,
-                            'client_billing_country' => $item['pais'] ?? null,
-                            'client_creatorid' => auth()->id(),
-                            'client_created' => now(),
-                            'client_updated' => now(),
-                        ]
-                    );
+                    // Definimos las condiciones de búsqueda y los datos para actualizar o crear
+                    $searchConditions = [
+                        'client_id' => $item['cliente_id'] ?? null, // Asume que 'id' es el campo en tu base de datos para el ID del cliente
+                        'franchise_ruc' => $item['rucFranquicia'] ?? null,
+                    ];
+    
+                    $dataToUpdateOrCreate = [
+                        'client_rut' => $item['rut'] ?? null,
+                        'client_cedula' => $item['cedula'] ?? null,
+                        'client_pasaporte' => $item['pasaporte'] ?? null,
+                        'client_documentoExt' => $item['documentoExt'] ?? null,
+                        'client_razon_social' => $item['razon_social'] ?? null,
+                        'client_company_name' => $item['nombre'] ?? null,
+                        'client_phone' => $item['celular'] ?? $item['telefono'] ?? null,
+                        'client_billing_street' => $item['direccion'] ?? null,
+                        'client_billing_city' => $item['ciudad'] ?? null,
+                        'client_billing_state' => $item['departamento'] ?? null,
+                        'client_billing_country' => $item['pais'] ?? null,
+                        'client_creatorid' => auth()->id(),
+                        'client_created' => now(),
+                        'client_updated' => now(),
+                    ];
+    
+                    // Utilizamos updateOrCreate para buscar por condiciones, actualizar si existe, o crear un nuevo registro
+                    \App\Models\Client::updateOrCreate($searchConditions, $dataToUpdateOrCreate);
+                    
                 } catch (\Exception $e) {
-                    \Log::error('Error al procesar el cliente con RUC ' . ($item['rucFranquicia'] ?? 'desconocido') . ': ' . $e->getMessage());
+                    \Log::error('Error al procesar el cliente con RUC ' . ($item['rucFranquicia'] ?? 'desconocido') . ' e ID ' . ($item['cliente_id'] ?? 'desconocido') . ': ' . $e->getMessage());
                 }
-                
             }
         }
     
         return response()->json($response);
-    }    
+    }
+    
 
     public function getProductos() {
         $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/productos?todos=1');
