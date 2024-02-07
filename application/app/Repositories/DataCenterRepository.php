@@ -131,7 +131,9 @@ class DatacenterRepository {
             case 'today':
                 return $this->getTotalSalesCount(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
-                return $this->getTotalSalesCount(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getTotalSalesCount($startDate, $endDate, $rucFranquicia);   
             default:
                 // Manejar otros casos o lanzar una excepción
                 break;
@@ -167,7 +169,9 @@ class DatacenterRepository {
             case 'today':
                 return $this->getTotalSalesPendingCount(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
-                return $this->getTotalSalesPendingCount(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getTotalSalesPendingCount($startDate, $endDate, $rucFranquicia);   
             default:
                 break;
         }
@@ -203,7 +207,9 @@ class DatacenterRepository {
             case 'today':
                 return $this->getTotalSalesPaidCount(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
-                return $this->getTotalSalesPaidCount(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getTotalSalesPaidCount($startDate, $endDate, $rucFranquicia);                
             default:
                 break;
         }
@@ -239,7 +245,9 @@ class DatacenterRepository {
             case 'today':
                 return $this->getTotalSalesCancelledCount(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
-                return $this->getTotalSalesCancelledCount(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getTotalSalesCancelledCount($startDate, $endDate, $rucFranquicia);   
             default:
                 break;
         }
@@ -276,7 +284,9 @@ class DatacenterRepository {
             case 'today':
                 return $this->getTotalSalesPending(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
-                return $this->getTotalSalesPending(now()->subDay()->format('Y-m-d'), now()->subDay()->format('Y-m-d'), $rucFranquicia);
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getTotalSalesPending($startDate, $endDate, $rucFranquicia);   
             default:
                 break;
         }
@@ -335,7 +345,9 @@ class DatacenterRepository {
             case 'today':
                 return $this->getAverageTicket(now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
-                return $this->getAverageTicket(now()->subDay()->format('Y-m-d'), $rucFranquicia);
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getAverageTicket($startDate, $endDate, $rucFranquicia);   
             default:
                 break;
         }
@@ -388,8 +400,9 @@ class DatacenterRepository {
             case 'today':
                 return $this->getGMV(now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
-                $yesterdayDate = now()->subDay()->format('Y-m-d');
-                return $this->getGMV($yesterdayDate, $yesterdayDate, $rucFranquicia);
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getGMV($startDate, $endDate, $rucFranquicia);   
             default:
                 break;
         }

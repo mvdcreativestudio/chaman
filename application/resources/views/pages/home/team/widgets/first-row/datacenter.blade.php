@@ -269,6 +269,7 @@
     </div>
 </div>
 
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
         function updateChart(data) {
@@ -302,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         };
-        console.log("Datos procesados para la gráfica:", chartData); // Agregar esta línea
+        console.log("Datos procesados para la gráfica asedas:", chartData); // Agregar esta línea
 
 
         c3.generate(chartConfig);
@@ -319,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 rucFranquicia: selectedFranchise
             },
             success: function(response) {
-                console.log("Datos recibidos:", response); // Agregar esta línea
+                console.log("Datos recibidos:", response); 
                 if (response && response.data) {
                     updateChart(response.data);
                 } else {
@@ -335,6 +336,8 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#timeframe-selector').on('change', fetchGMVData);
 
     fetchGMVData();
+
+    console.log("Script 1 cargado");
 });
 
 
@@ -345,8 +348,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <script>
 $(document).ready(function() {
-
-    // Función para manejar el cambio en los filtros
     function handleFilterChange() {
         var selectedTimeframe = $('#gmv-timeframe').val();
         var selectedFranchise = $('#franchise-selector').val();
@@ -359,6 +360,22 @@ $(document).ready(function() {
             $('#custom-date-range').show();
             data.startDate = $('#start-date').val();
             data.endDate = $('#end-date').val();
+        } else if (selectedTimeframe === 'yesterday') {
+            $('#custom-date-range').hide();
+            // Ajusta las fechas para incluir la hora completa de "ayer"
+            var yesterdayStart = new Date();
+            yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+            yesterdayStart.setHours(0, 0, 0, 0); // Comienza a las 00:00:00
+            var startDate = yesterdayStart.toISOString().slice(0, 19).replace('T', ' ');
+
+            var yesterdayEnd = new Date();
+            yesterdayEnd.setDate(yesterdayEnd.getDate() - 1);
+            yesterdayEnd.setHours(23, 59, 59, 999); // Termina a las 23:59:59
+            var endDate = yesterdayEnd.toISOString().slice(0, 19).replace('T', ' ');
+
+            data.startDate = startDate;
+            data.endDate = endDate;
+            data.timeframe = selectedTimeframe;
         } else {
             $('#custom-date-range').hide();
             data.timeframe = selectedTimeframe;
@@ -372,18 +389,7 @@ $(document).ready(function() {
             data: data,
             success: function(response) {
                 console.log("Respuesta recibida:", response);
-
-                if(response && response.data) {
-                    $('.gmv').text('$' + response.data.gmv);
-                    $('.averageTicket').text('$' + response.data.averageTicket);
-                    $('#totalSalesCount').text(response.data.totalSalesCount);
-                    $('#totalSalesPendingCount').text(response.data.totalSalesPendingCount);
-                    $('#totalSalesPending').text('$' + response.data.totalSalesPending);
-                    $('#totalSalesPaidCount').text(response.data.totalSalesPaidCount);
-                    $('#totalSalesCancelledCount').text(response.data.totalSalesCancelledCount);
-                } else {
-                    console.error('No data in response', response);
-                }
+                // Actualización de la UI basada en la respuesta
             },
             error: function(error) {
                 console.error('Error al obtener datos de GMV:', error);
@@ -394,14 +400,9 @@ $(document).ready(function() {
     // Evento de cambio para el selector de períodos y franquicias
     $('#gmv-selector-form').on('change', '#gmv-timeframe, #franchise-selector', handleFilterChange);
 
-    // Manejar cambios en las fechas personalizadas
-    $('#custom-date-range input').on('change', handleFilterChange);
-
-    // Establecer el valor por defecto del selector y desencadenar el evento change
-    $('#gmv-timeframe').val('thisYear').change();
+    // Inicializa la UI al cargar
+    handleFilterChange();
 });
-
-
 
 
 </script>

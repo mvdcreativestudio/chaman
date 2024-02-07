@@ -16,11 +16,32 @@
         <div>
             <small class="text-muted">{{ cleanLang(__('lang.client_name')) }}</small>
             <h6>{{ $client->client_company_name }}</h6>
+            <small class="text-muted">ID Global Media</small>
+            <h6>{{ $client->cliente_id }}</h6>
             <small class="text-muted">{{ cleanLang(__('lang.telephone')) }}</small>
             <h6>{{ $client->client_phone }}</h6>
-            <small class="text-muted">{{ cleanLang(__('lang.account_owner')) }}</small>
-            <div class="m-b-10"><img src="{{ getUsersAvatar($owner->avatar_directory, $owner->avatar_filename) }}" alt="user" class="img-circle avatar-xsmall"> {{ $owner->first_name }} {{ $owner->last_name }}</div>
-            <small class="text-muted">{{ cleanLang(__('lang.category')) }}</small>
+            @if($client->client_rut != null)
+            <small class="text-muted">RUT</small>
+            <h6>{{ $client->client_rut }}</h6>
+            @endif
+            @if($client->client_cedula != null)
+            <small class="text-muted">Cédula</small>
+            <h6>{{ $client->client_cedula }}</h6>
+            @endif
+            @if($client->client_pasaporte != null)
+            <small class="text-muted">Pasaporte</small>
+            <h6>{{ $client->client_pasaporte }}</h6>
+            @endif
+            @if($client->client_documentoExt != null)
+            <small class="text-muted">Documento Extranjero</small>
+            <h6>{{ $client->client_documentoExt }}</h6>
+            @endif
+            @if($client->client_razon_social != null)
+            <small class="text-muted">Razón Social</small>
+            <h6>{{ $client->client_razon_social }}</h6>
+            @endif
+            <small class="text-muted">Franquicia Asociada</small>
+            <h6>{{ $client->franchise->name }}</h6>
             <div class="p-b-10">
                 <span class="badge badge-pill badge-primary p-t-4 p-l-12 p-r-12">{{ $client->category_name }}</span>
             </div>

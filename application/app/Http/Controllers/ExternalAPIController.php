@@ -16,20 +16,31 @@ class ExternalAPIController extends Controller
 
         return $response->json();
     }
-
+ 
     public function getClientes() {
-        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/clientes?todos=1');
+        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/clientes');
     
         if ($response['error'] == 0 && isset($response['items'])) {
             foreach ($response['items'] as $item) {
                 try {
-                    // Definimos las condiciones de búsqueda y los datos para actualizar o crear
+                    // Encuentra el ID de la franquicia basado en el RUC
+                    $franchise = \App\Models\Franchise::where('ruc', $item['rucFranquicia'] ?? null)->first();
+    
+                    // Si no se encuentra la franquicia, puedes decidir saltar este cliente, registrar un error, o manejarlo como veas necesario
+                    if (!$franchise) {
+                        \Log::error('Franchise RUC no encontrado: ' . ($item['rucFranquicia'] ?? 'desconocido'));
+                        continue; // Salta a la siguiente iteración del bucle
+                    }
+    
+                    // Ahora que tienes el ID de la franquicia, puedes proceder a crear o actualizar el cliente
                     $searchConditions = [
-                        'client_id' => $item['cliente_id'] ?? null, // Asume que 'id' es el campo en tu base de datos para el ID del cliente
+                        'cliente_id' => $item['cliente_id'] ?? null,
                         'franchise_ruc' => $item['rucFranquicia'] ?? null,
                     ];
     
                     $dataToUpdateOrCreate = [
+                        'cliente_id' => $item['cliente_id'] ?? null,
+                        'franchise_ruc' => $item['rucFranquicia'] ?? null,
                         'client_rut' => $item['rut'] ?? null,
                         'client_cedula' => $item['cedula'] ?? null,
                         'client_pasaporte' => $item['pasaporte'] ?? null,
@@ -42,6 +53,7 @@ class ExternalAPIController extends Controller
                         'client_billing_state' => $item['departamento'] ?? null,
                         'client_billing_country' => $item['pais'] ?? null,
                         'client_creatorid' => auth()->id(),
+                        'franchise_id' => $franchise->id,
                         'client_created' => now(),
                         'client_updated' => now(),
                     ];
@@ -213,5 +225,30 @@ class ExternalAPIController extends Controller
         $sales = \App\Models\Sale::all();
 
         return view('pages.api.sales', compact('sales'));
+    }
+
+    public function test() {
+        
+         // Datos de prueba
+         $client = [
+            "cliente_id" => '15006',
+            "nombre" => 'Martin Santamaria',
+            "razon_social" => 'Sumeria SAS',
+            "rut" => '000111254587589',
+            "cedula" => '46615326',
+            "pasaporte" => 'D13454',
+            "documentoExt" => null,
+            "direccion" => 'Rio Parana M119 S2',
+            "telefono" => '099807750',
+            "celular" => '099807750',
+            "email" => 'msantamaria@mvdstudio.com.uy',
+            "ciudad" => 'Lagomar',
+            "departamento" => 'Canelones',
+            "pais" => 'Uruguay',
+            "rucFranquicia" => '020591650015',
+            "accion" => 'N',
+        ];
+
+        return response()->json($client);
     }
 }

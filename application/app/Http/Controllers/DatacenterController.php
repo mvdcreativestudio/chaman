@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\DatacenterRepository;
 use App\Models\Franchise;
+use Illuminate\Support\Facades\Log;
 
 class DatacenterController extends Controller
 {
@@ -47,6 +48,9 @@ class DatacenterController extends Controller
         $year = now()->year;
         $monthlyGMV = $this->datacenterRepository->getMonthlyGMV($year, $rucFranquicia);
 
+        \Log::error("startDate: $startDate, endDate: $endDate");
+
+
 
 
         if ($period == 'custom') {
@@ -67,7 +71,6 @@ class DatacenterController extends Controller
             $totalSalesCancelledCount = $this->datacenterRepository->getTotalSalesCancelledCountForPeriod($period, $rucFranquicia);
             
         }
-    
         // Preparar los datos para la respuesta
         $data = [
             'gmv' => $gmvData['gmv'],
