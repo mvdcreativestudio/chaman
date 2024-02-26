@@ -12,7 +12,8 @@ namespace App\Repositories;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
-use Log;
+use Illuminate\Support\Facades\Log;
+
 
 class ExpenseRepository {
 
@@ -331,5 +332,24 @@ class ExpenseRepository {
             return false;
         }
     }
+
+    // En ExpenseRepository
+
+    public function getTotalMarketingExpenses($startDate, $endDate, $rucFranquicia = null) {
+        $query = $this->expenses->newQuery(); // Asumiendo que $this->expenses es tu modelo Expense
+    
+        $query->where('expense_categoryid', '71') // Asegúrate de ajustar esta condición según tu lógica de negocio
+            ->whereBetween('expense_date', [$startDate, $endDate]);
+    
+        if (!is_null($rucFranquicia)) {
+            $query->where('franchise_id', $rucFranquicia);
+        }
+    
+        $total = $query->sum('expense_amount');
+    
+        return $total;
+    }
+    
+
 
 }

@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Sale;
+use App\Models\Client;
+use App\Repositories\ExpenseRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -10,12 +12,16 @@ use Illuminate\Support\Facades\Log;
 class DatacenterRepository {
 
     protected $sales;
+    protected $clients;
+    protected $expenses;
 
     /**
      * Inject dependencies
      */
-    public function __construct(Sale $sales) {
+    public function __construct(Sale $sales, Client $clients, ExpenseRepository $expenses) {
         $this->sales = $sales;
+        $this->clients = $clients;
+        $this->expenses = $expenses;
     }
 
     /**
@@ -460,8 +466,6 @@ class DatacenterRepository {
     
         return $results;
     }
-    
-    
 
 
     public function getSalesByVendorForPeriod($period, $rucFranquicia = null) {
@@ -480,5 +484,72 @@ class DatacenterRepository {
                 break;
         }
     }
-  
+
+    // CAC
+
+    public function getCac($startDate = null, $endDate = null, $rucFranquicia = null) {
+        $currentDate = Carbon::now();
+    
+        // Establecer el rango de fechas completo si no se proporcionan
+        if (is_null($startDate) || is_null($endDate)) {
+            $startDate = now()->startOfYear()->format('Y-m-d');
+            $endDate = $currentDate->format('Y-m-d'); // Asegurarse de no ir más allá de la fecha actual
+        }
+    
+        // Ajustar el rango para cubrir el mes completo si se selecciona un solo día
+        if ($startDate == $endDate) {
+            $startOfMonth = Carbon::parse($startDate)->startOfMonth()->format('Y-m-d');
+            $endOfMonth = Carbon::parse($endDate)->endOfMonth()->format('Y-m-d');
+        } else {
+            $startOfMonth = $startDate;
+            $endOfMonth = min($endDate, $currentDate->format('Y-m-d')); // No ir más allá de la fecha actual
+        }
+    
+        // Obtener el gasto total de marketing para el rango de fechas
+        $totalMarketingExpenses = $this->expenses->getTotalMarketingExpenses($startOfMonth, $endOfMonth, $rucFranquicia);
+    
+        // Calcular la cantidad de días en el rango seleccionado hasta la fecha actual
+        $start = Carbon::parse($startDate);
+        $end = Carbon::parse($endOfMonth); // Asegurarse de que no superamos la fecha actual
+        $daysInPeriod = $end->diffInDays($start) + 1; // +1 para incluir ambos extremos
+    
+        // Calcular el gasto diario promedio de marketing basado en el rango completo
+        $dailyMarketingExpense = $daysInPeriod > 0 ? $totalMarketingExpenses / $daysInPeriod : 0;
+    
+        // Obtener el total de clientes nuevos en el período seleccionado
+        $totalNewClients = $this->clients->whereBetween('client_created', [$startDate, $endDate])
+                                          ->when($rucFranquicia, function ($query) use ($rucFranquicia) {
+                                              return $query->where('franchise_id', $rucFranquicia);
+                                          })
+                                          ->count();
+    
+        // Calcular el CAC para el período seleccionado
+        $cac = $totalNewClients > 0 ? ($dailyMarketingExpense * $daysInPeriod) / $totalNewClients : 0;
+    
+        return [
+            'marketingExpenses' => $totalMarketingExpenses,
+            'dailyMarketingExpense' => $dailyMarketingExpense,
+            'cac' => number_format($cac, 2),
+            'totalClients' => $totalNewClients,
+        ];
+    }
+    
+    
+    public function getCACForPeriod($period, $rucFranquicia = null) {
+        switch ($period) {
+            case 'thisYear':
+                return $this->getCac(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getCac(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getCac(now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getCac($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
+
 }

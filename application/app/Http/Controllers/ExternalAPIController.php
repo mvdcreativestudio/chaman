@@ -18,7 +18,7 @@ class ExternalAPIController extends Controller
     }
  
     public function getClientes() {
-        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/clientes');
+        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/clientes?todos=1');
     
         if ($response['error'] == 0 && isset($response['items'])) {
             foreach ($response['items'] as $item) {
@@ -26,7 +26,7 @@ class ExternalAPIController extends Controller
                     // Encuentra el ID de la franquicia basado en el RUC
                     $franchise = \App\Models\Franchise::where('ruc', $item['rucFranquicia'] ?? null)->first();
     
-                    // Si no se encuentra la franquicia, puedes decidir saltar este cliente, registrar un error, o manejarlo como veas necesario
+                    // Si no se encuentra la franquicia
                     if (!$franchise) {
                         \Log::error('Franchise RUC no encontrado: ' . ($item['rucFranquicia'] ?? 'desconocido'));
                         continue; // Salta a la siguiente iteración del bucle

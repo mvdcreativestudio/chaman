@@ -170,6 +170,22 @@
               </div>
         </div>
     </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="general-app-widget cac-card" >
+              {{-- <div class="chart-sparkline" >
+                    <div class="layer" >
+                    </div>
+                    <svg class="layer2" width="62" height="62" viewBox="0 0 62 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M0.599609 30.9996C0.599609 47.7891 14.2102 61.3996 30.9996 61.3996C47.7891 61.3996 61.3996 47.7891 61.3996 30.9996C61.3996 14.2102 47.7891 0.599609 30.9996 0.599609" stroke="#5BE584" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="number-percent-rand" > 98% </div>
+              </div> --}}
+              <div class="text" >
+                    <div class="number-long-rand" id="cac"> ${{ $cac }} </div>
+                    <div class="conversion" >CAC</div>
+              </div>
+        </div>
+    </div>
 
 </div>
 
@@ -185,8 +201,10 @@
             </div>
         </div>
     </div>
+
+    @if(auth()->user()->role->role_id == 1)
     <div class="col-md-5 element-content mt-4">
-        <div class="card">
+        <div class="card  franchises-sales-card">
             <div class="card-body">
                 <div class="d-flex m-b-30 justify-content-between">
                     <h5 class="card-title m-b-0 align-self-center">Venta por franquicia</h5>
@@ -195,6 +213,8 @@
             </div>
         </div>
     </div>
+@endif
+
     
 </div>
 
@@ -270,74 +290,79 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 </script>
+
+
 <script>
-    function updateVendorChart(vendorData) {
-        var ctx = document.getElementById('chart-vendors').getContext('2d');
-        
-        // Ordenar los datos de mayor a menor por porcentaje de ventas
-        vendorData.sort((a, b) => parseFloat(b.percentage) - parseFloat(a.percentage));
-        
-        // Obtener las etiquetas y los datos de porcentajes de ventas por vendedor
-        var labels = vendorData.map(data => data.name);
-        var percentages = vendorData.map(data => parseFloat(data.percentage));
-        
-        // Colores para los segmentos del gráfico
-        var backgroundColors = generateRandomColors(percentages.length);
-        var borderColors = generateRandomColors(percentages.length);
 
-        var vendorChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Porcentaje de venta',
-                    data: percentages,
-                    backgroundColor: backgroundColors,
-                    borderColor: borderColors,
-                    borderWidth: 2
-                }]
+var vendorChart;
+
+function updateVendorChart(vendorData) {
+    var ctx = document.getElementById('chart-vendors').getContext('2d');
+    
+    // Destruir la instancia anterior del gráfico si existe
+    if (vendorChart) {
+        vendorChart.destroy();
+    }
+    
+    // Ordenar los datos de las franquicias de mayor a menor porcentaje
+    var sortedVendorData = vendorData.sort((a, b) => b.percentage - a.percentage);
+
+    // Preparar los datasets para cada franquicia, ahora ordenados
+    var datasets = sortedVendorData.map(data => ({
+        label: data.name, // Nombre de la franquicia
+        data: [data.percentage], // Los datos deben ser un array, incluso si es un solo valor
+        backgroundColor: generateRandomColor(), // Generar un color para cada franquicia
+        borderColor: generateRandomColor(),
+        borderWidth: 0
+    }));
+
+    // Crear el nuevo gráfico con múltiples datasets
+    vendorChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Porcentaje de venta"], // Etiqueta genérica para el eje X
+            datasets: datasets
+        },
+        options: {
+            indexAxis: 'y',
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: '#181818'
+                    }
+                }
             },
-            options: {
-                indexAxis: 'y',
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            var label = data.labels[tooltipItem.index] || '';
-                            var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || '';
-
-                            if (label && value) {
-                                return label + ': ' + value.toLocaleString(undefined, {minimumFractionDigits: 3}) + '%'; // Agrega el símbolo de porcentaje
-                            }
-                            return '';
-                        }
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || '';
+                        return label + ': ' + value.toLocaleString(undefined, {minimumFractionDigits: 3}) + '%'; 
                     }
                 }
             }
-        });
-    }
-
-    // Función para generar colores aleatorios
-    function generateRandomColors(numColors) {
-        var colors = [];
-        for (var i = 0; i < numColors; i++) {
-            var color = 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.2)';
-            colors.push(color);
         }
-        return colors;
-    }
+    });
+}
+
+// Función para generar un solo color aleatorio
+function generateRandomColor() {
+    return 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.7)';
+}
+
 </script>
-
-
-
-
-
-
-    
+ 
 
 <script>
     $(document).ready(function() {
-        // Mostrar/Ocultar campos de fecha personalizada basado en la selección del usuario
-        $('#gmv-timeframe').on('change', function() {
+    // Mostrar/Ocultar campos de fecha personalizada basado en la selección del usuario
+            $('#gmv-timeframe').on('change', function() {
             var selectedTimeframe = $(this).val();
             if (selectedTimeframe === 'custom') {
                 $('#custom-date-range').show();
@@ -378,6 +403,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     $('#totalSalesPending').text('$' + response.data.totalSalesPending);
                     $('#totalSalesPaidCount').text(response.data.totalSalesPaidCount);
                     $('#totalSalesCancelledCount').text(response.data.totalSalesCancelledCount);
+                    $('#cac').text('$' + response.data.cac.cac);
 
     
                     // Actualiza la gráfica de vendedores si los datos están disponibles
@@ -386,6 +412,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         console.log("No se encontraron datos de ventas por vendedor.");
                     }
+
+                    var selectedFranchise = $('#franchise-selector').val();
+                    if(selectedFranchise === "") {
+                        // No hay franquicia específica seleccionada (Todas las franquicias)
+                        $('.cac-card').show();
+                        $('.franchises-sales-card').show();
+                    } else {
+                        // Una franquicia específica está seleccionada
+                        $('.cac-card').hide();
+                        $('.franchises-sales-card').hide();
+                    }
+
+                    
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching data:', error);

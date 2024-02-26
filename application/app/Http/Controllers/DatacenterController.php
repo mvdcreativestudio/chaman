@@ -35,13 +35,15 @@ class DatacenterController extends Controller
         $gmvData = $this->datacenterRepository->getGMV(2023);
         $gmv = $gmvData['gmv'];
         $salesByVendor = $this->datacenterRepository->getSalesByVendorForPeriod('year', null);
+        $cacData = $this->datacenterRepository->getCAC(null, null, null); // Revisar los parámetros
+        $cac = $cacData['cac'];
 
-
-        return view ('pages.datacenter.datacenter', compact ('franchises','dailySales', 'monthlySales', 'yearlySales', 'averageTicket', 'yearlySales2023', 'averageTicket', 'totalSalesCount', 'gmv', 'totalSalesPendingCount', 'totalSalesPending', 'totalSalesPaidCount', 'totalSalesCancelledCount'));
+        return view ('pages.datacenter.datacenter', compact ('franchises','dailySales', 'monthlySales', 'yearlySales', 'averageTicket', 'yearlySales2023', 'averageTicket', 'totalSalesCount', 'gmv', 'totalSalesPendingCount', 'totalSalesPending', 'totalSalesPaidCount', 'totalSalesCancelledCount', 'salesByVendor', 'cac'));
     }
 
     public function getFilteredData(Request $request)
     {
+        $cac = null;
         $period = $request->input('timeframe');
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
@@ -49,7 +51,6 @@ class DatacenterController extends Controller
         $year = now()->year;
         $monthlyGMV = $this->datacenterRepository->getMonthlyGMV($year, $rucFranquicia);
 
-        \Log::error("startDate: $startDate, endDate: $endDate");
 
         if ($period == 'custom') {
             $gmvData = $this->datacenterRepository->getGMV($startDate, $endDate, $rucFranquicia);
@@ -60,6 +61,7 @@ class DatacenterController extends Controller
             $totalSalesPaidCount = $this->datacenterRepository->getTotalSalesPaidCount($startDate, $endDate, $rucFranquicia);
             $totalSalesCancelledCount = $this->datacenterRepository->getTotalSalesCancelledCount($startDate, $endDate, $rucFranquicia);
             $salesByVendor = $this->datacenterRepository->getSalesByVendor($startDate, $endDate, $rucFranquicia);
+            $cac = $this->datacenterRepository->getCAC($startDate, $endDate, $rucFranquicia);
         } else {
             $gmvData = $this->datacenterRepository->getGMVForPeriod($period, $rucFranquicia);
             $averageTicketData = $this->datacenterRepository->getAverageTicketForPeriod($period, $rucFranquicia);
@@ -69,7 +71,7 @@ class DatacenterController extends Controller
             $totalSalesPaidCount = $this->datacenterRepository->getTotalSalesPaidCountForPeriod($period, $rucFranquicia);
             $totalSalesCancelledCount = $this->datacenterRepository->getTotalSalesCancelledCountForPeriod($period, $rucFranquicia);
             $salesByVendor = $this->datacenterRepository->getSalesByVendorForPeriod($period, $rucFranquicia);
-
+            $cac = $this->datacenterRepository->getCACForPeriod($period, $rucFranquicia);
             
         }
         // Preparar los datos para la respuesta
@@ -82,8 +84,8 @@ class DatacenterController extends Controller
             'totalSalesPaidCount' => $totalSalesPaidCount,
             'totalSalesCancelledCount' => $totalSalesCancelledCount,
             'monthlyGMV' => $monthlyGMV,
-            'salesByVendor' => $salesByVendor
-
+            'salesByVendor' => $salesByVendor,
+            'cac' => $cac
         ];
     
         return response()->json(['data' => $data]);

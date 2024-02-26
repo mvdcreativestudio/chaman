@@ -188,6 +188,25 @@
                     </li>
                 @endif
                 <!--products-->
+
+                <!--expenses-->
+
+                @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role')
+                    <li data-modular-id="main_menu_team_expenses"
+                        class="sidenav-menu-item {{ $page['mainmenu_expenses'] ?? '' }} menu-tooltip menu-with-tooltip"
+                        title="{{ cleanLang(__('lang.expenses')) }}">
+                        <a class="waves-effect waves-dark" href="/expenses" aria-expanded="false" target="_self">
+                            <i class="ti-money"></i>
+                            <span class="hide-menu">{{ cleanLang(__('lang.expenses')) }}
+                            </span>
+                        </a>
+                    </li>
+                @endif
+
+                <!--expenses-->
+
+
+                
                 
 
                 <!--sales-->
