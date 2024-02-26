@@ -56,7 +56,7 @@
                 <!--datacenter-->
 
 
-                <!--users[done]-->
+                {{-- <!--users[done]-->
                 @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role' || request()->input('user_role_type') == 'common_role')
                 <li data-modular-id="main_menu_team_clients"
                     class="sidenav-menu-item {{ $page['mainmenu_customers'] ?? '' }}">
@@ -74,7 +74,7 @@
                         @endif
                     </ul>
                 </li>
-                @endif
+                @endif --}}
                 <!--customers-->
 
                 @if(request()->input('user_role_type') == 'admin_role')
@@ -174,8 +174,24 @@
                 @endif
                 <!--leads-->
 
+                <!--products-->
+
+                @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role')
+                    <li data-modular-id="main_menu_team_products"
+                        class="sidenav-menu-item {{ $page['mainmenu_products'] ?? '' }} menu-tooltip menu-with-tooltip"
+                        title="{{ cleanLang(__('lang.products')) }}">
+                        <a class="waves-effect waves-dark" href="/products" aria-expanded="false" target="_self">
+                            <i class="ti-package"></i>
+                            <span class="hide-menu">{{ cleanLang(__('lang.products')) }}
+                            </span>
+                        </a>
+                    </li>
+                @endif
+                <!--products-->
+                
+
                 <!--sales-->
-                @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role' || request()->input('user_role_type') == 'common_role')
+                {{-- @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role' || request()->input('user_role_type') == 'common_role')
                     <li data-modular-id="main_menu_team_billing"
                         class="sidenav-menu-item {{ $page['mainmenu_sales'] ?? '' }}">
                         <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
@@ -192,15 +208,15 @@
                                 <a href="/payments"
                                     class=" {{ $page['submenu_payments'] ?? '' }}">{{ cleanLang(__('lang.payments')) }}</a>
                             </li>
-                            {{-- <li class="sidenav-submenu {{ $page['submenu_estimates'] ?? '' }}" id="submenu_estimates">
+                             <li class="sidenav-submenu {{ $page['submenu_estimates'] ?? '' }}" id="submenu_estimates">
                                 <a href="/estimates"
                                     class=" {{ $page['submenu_estimates'] ?? '' }}">{{ cleanLang(__('lang.estimates')) }}</a>
-                            </li> --}}
-                            {{-- <li class="sidenav-submenu {{ $page['submenu_subscriptions'] ?? '' }}"
+                            </li>
+                            <li class="sidenav-submenu {{ $page['submenu_subscriptions'] ?? '' }}"
                                 id="submenu_subscriptions">
                                 <a href="/subscriptions"
                                     class=" {{ $page['submenu_subscriptions'] ?? '' }}">{{ cleanLang(__('lang.subscriptions')) }}</a>
-                            </li> --}}
+                            </li> 
                             <li class="sidenav-submenu {{ $page['submenu_products'] ?? '' }}" id="submenu_products">
                                 <a href="/products"
                                     class=" {{ $page['submenu_products'] ?? '' }}">{{ cleanLang(__('lang.products')) }}</a>
@@ -211,7 +227,7 @@
                             </li>
                         </ul>
                     </li>
-                @endif
+                @endif --}}
                 <!--billing-->
 
                 {{-- <!--PEDIDOS RRSS HARDCODEAO-->

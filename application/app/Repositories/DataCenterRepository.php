@@ -424,13 +424,61 @@ class DatacenterRepository {
         return $monthlyGMV;
     }
 
+    public function getSalesByVendor($startDate = null, $endDate = null, $rucFranquicia = null) {
+        // Construir la consulta inicial para obtener los totales de ventas por franquicia
+        $query = $this->sales->select('franchises.name as franquicia', $this->sales->raw('SUM(sales.total) as total_ventas_franquicia'))
+                      ->join('franchises', 'sales.ruc_franquicia', '=', 'franchises.ruc')
+                      ->whereBetween('sales.fecha_creacion', [$startDate, $endDate])
+                      ->groupBy('sales.ruc_franquicia', 'franchises.name');
+                      
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        // Ejecutar la consulta y obtener los resultados
+        $rows = $query->get();
+    
+        // Calcular el total de ventas de todas las franquicias
+        $total_ventas = 0;
+    
+        foreach ($rows as $row) {
+            $total_ventas += $row['total_ventas_franquicia'];
+        }
+    
+        // Calcular el porcentaje de ventas para cada franquicia
+        $results = [];
+    
+        foreach ($rows as $row) {
+            $porcentaje_ventas = ($row['total_ventas_franquicia'] / $total_ventas) * 100;
+            // Agregar el nombre de la franquicia y su porcentaje de ventas al array de resultados
+            $results[] = [
+                'name' => $row['franquicia'],
+                'percentage' => $porcentaje_ventas
+            ];
+        }
+    
+        return $results;
+    }
     
     
 
-    
-    
-    
 
-    
-
+    public function getSalesByVendorForPeriod($period, $rucFranquicia = null) {
+        switch ($period) {
+            case 'thisYear':
+                return $this->getSalesByVendor(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getSalesByVendor(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getSalesByVendor(now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getSalesByVendor($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
+  
 }

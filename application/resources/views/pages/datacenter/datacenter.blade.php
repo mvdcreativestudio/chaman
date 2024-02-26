@@ -4,16 +4,19 @@
 
 @section ('content')
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
 {{-- Selector de períodos y franquicias --}}
 <div class="d-flex mt-4">
-    <div class="col-3">
+    <div class="col-6">
         <form id="gmv-selector-form" class="form-inline">
             <div class="form-group mb-2 mr-2">
                 <select id="gmv-timeframe" class="form-control">
                     <option value="thisYear">Este Año</option>
                     <option value="thisMonth">Este Mes</option>
-                    <option value="today">Hoy</option>
                     <option value="yesterday">Ayer</option>
+                    <option value="custom">Personalizado</option>
                 </select>
             </div>
             <div id="custom-date-range" class="form-group mb-2" style="display: none;">
@@ -171,18 +174,31 @@
 </div>
 
 {{-- Second Row --}}
-
-<div class="col-md-7 element-content mt-4">
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex m-b-30 justify-content-between">
-                <h5 class="card-title m-b-0 align-self-center">GMV Mensual - <span id="franchise-name">Todas las franquicias</span></h5>
-
+<div class="row">
+    <div class="col-md-7 element-content mt-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex m-b-30 justify-content-between">
+                    <h5 class="card-title m-b-0 align-self-center">GMV Mensual - <span id="franchise-name">Todas las franquicias</span></h5>
+                </div>
+                <div id="chart-gmv"></div>
             </div>
-            <div id="chart-gmv"></div>
         </div>
     </div>
+    <div class="col-md-5 element-content mt-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex m-b-30 justify-content-between">
+                    <h5 class="card-title m-b-0 align-self-center">Venta por franquicia</h5>
+                </div>
+                <canvas id="chart-vendors" width="300"></canvas>
+            </div>
+        </div>
+    </div>
+    
 </div>
+
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -254,37 +270,107 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 </script>
+<script>
+    function updateVendorChart(vendorData) {
+        var ctx = document.getElementById('chart-vendors').getContext('2d');
+        
+        // Ordenar los datos de mayor a menor por porcentaje de ventas
+        vendorData.sort((a, b) => parseFloat(b.percentage) - parseFloat(a.percentage));
+        
+        // Obtener las etiquetas y los datos de porcentajes de ventas por vendedor
+        var labels = vendorData.map(data => data.name);
+        var percentages = vendorData.map(data => parseFloat(data.percentage));
+        
+        // Colores para los segmentos del gráfico
+        var backgroundColors = generateRandomColors(percentages.length);
+        var borderColors = generateRandomColors(percentages.length);
+
+        var vendorChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Porcentaje de venta',
+                    data: percentages,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index] || '';
+                            var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || '';
+
+                            if (label && value) {
+                                return label + ': ' + value.toLocaleString(undefined, {minimumFractionDigits: 3}) + '%'; // Agrega el símbolo de porcentaje
+                            }
+                            return '';
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Función para generar colores aleatorios
+    function generateRandomColors(numColors) {
+        var colors = [];
+        for (var i = 0; i < numColors; i++) {
+            var color = 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.2)';
+            colors.push(color);
+        }
+        return colors;
+    }
+</script>
 
 
 
+
+
+
+    
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
+        // Mostrar/Ocultar campos de fecha personalizada basado en la selección del usuario
+        $('#gmv-timeframe').on('change', function() {
+            var selectedTimeframe = $(this).val();
+            if (selectedTimeframe === 'custom') {
+                $('#custom-date-range').show();
+            } else {
+                $('#custom-date-range').hide();
+            }
+            handleFilterChange();
+        });
     
-    // Función para manejar el cambio en los filtros
-    function handleFilterChange() {
-        var selectedTimeframe = $('#gmv-timeframe').val();
-        var selectedFranchise = $('#franchise-selector').val();
-
-        var data = {
-            rucFranquicia: selectedFranchise
-        };
-
-        if (selectedTimeframe === 'custom') {
-            $('#custom-date-range').show();
-            data.startDate = $('#start-date').val();
-            data.endDate = $('#end-date').val();
-        } else {
-            $('#custom-date-range').hide();
-            data.timeframe = selectedTimeframe;
-        }
-
-        $.ajax({
-            url: '{{ route('datacenter.filter') }}',
-            type: 'GET',
-            data: data,
-            success: function(response) {
-                if(response && response.data) {
+        // Manejar cambios en las fechas personalizadas y en otros selectores
+        $('#franchise-selector, #start-date, #end-date').on('change', handleFilterChange);
+    
+        // Función para manejar el cambio en los filtros y actualizar los datos
+        function handleFilterChange() {
+            var selectedTimeframe = $('#gmv-timeframe').val();
+            var selectedFranchise = $('#franchise-selector').val();
+            var startDate = $('#start-date').val();
+            var endDate = $('#end-date').val();
+    
+            var data = {
+                rucFranquicia: selectedFranchise,
+                timeframe: selectedTimeframe,
+                startDate: startDate,
+                endDate: endDate
+            };
+    
+            $.ajax({
+                url: '{{ route("datacenter.filter") }}', // Asegúrate de que esta ruta esté definida correctamente en tus rutas de Laravel
+                type: 'GET',
+                data: data,
+                success: function(response) {
+                    console.log("Datos recibidos para actualizar:", response.data);
+                    // Actualizar los datos del dashboard
                     $('.gmv').text('$' + response.data.gmv);
                     $('.averageTicket').text('$' + response.data.averageTicket);
                     $('#totalSalesCount').text(response.data.totalSalesCount);
@@ -292,41 +378,32 @@ $(document).ready(function() {
                     $('#totalSalesPending').text('$' + response.data.totalSalesPending);
                     $('#totalSalesPaidCount').text(response.data.totalSalesPaidCount);
                     $('#totalSalesCancelledCount').text(response.data.totalSalesCancelledCount);
-                } else {
-                    console.error('No data in response', response);
+
+    
+                    // Actualiza la gráfica de vendedores si los datos están disponibles
+                    if (response.data.salesByVendor && response.data.salesByVendor.length > 0) {
+                        updateVendorChart(response.data.salesByVendor);
+                    } else {
+                        console.log("No se encontraron datos de ventas por vendedor.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching data:', error);
                 }
-            }
-        });
-    }
-
-    // Evento de cambio para el selector de períodos y franquicias
-    $('#gmv-selector-form').on('change', '#gmv-timeframe, #franchise-selector', handleFilterChange);
-
-    // Manejar cambios en las fechas personalizadas
-    $('#custom-date-range input').on('change', handleFilterChange);
-
-    // Establecer el valor por defecto del selector y desencadenar el evento change
-    $('#gmv-timeframe').val('thisYear').change();
-
-    // Función para actualizar el título basado en la franquicia seleccionada
-    function updateTitle() {
-        var selectedFranchiseName = $('#franchise-selector option:selected').data('name') || 'Todas las franquicias';
-        $('#franchise-name').text(selectedFranchiseName);
-    }
-
-    // Evento de cambio para el selector de franquicias
-    $('#franchise-selector').on('change', function() {
+            });
+        }
+    
+        // Función para actualizar el título basado en la franquicia seleccionada
+        function updateTitle() {
+            var selectedFranchiseName = $('#franchise-selector option:selected').data('name') || 'Todas las franquicias';
+            $('#franchise-name').text(selectedFranchiseName);
+        }
+    
         updateTitle();
-        handleFilterChange(); // Asumiendo que esta es tu función para manejar el cambio
+        handleFilterChange();
     });
-
-    // Llamada inicial para establecer el título correcto al cargar la página
-    updateTitle();
-});
-
-
-
 </script>
+    
     
 
 

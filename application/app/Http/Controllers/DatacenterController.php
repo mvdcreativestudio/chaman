@@ -34,9 +34,10 @@ class DatacenterController extends Controller
         $totalSalesCancelledCount = $this->datacenterRepository->getTotalSalesCancelledCount();
         $gmvData = $this->datacenterRepository->getGMV(2023);
         $gmv = $gmvData['gmv'];
+        $salesByVendor = $this->datacenterRepository->getSalesByVendorForPeriod('year', null);
+
 
         return view ('pages.datacenter.datacenter', compact ('franchises','dailySales', 'monthlySales', 'yearlySales', 'averageTicket', 'yearlySales2023', 'averageTicket', 'totalSalesCount', 'gmv', 'totalSalesPendingCount', 'totalSalesPending', 'totalSalesPaidCount', 'totalSalesCancelledCount'));
-
     }
 
     public function getFilteredData(Request $request)
@@ -50,9 +51,6 @@ class DatacenterController extends Controller
 
         \Log::error("startDate: $startDate, endDate: $endDate");
 
-
-
-
         if ($period == 'custom') {
             $gmvData = $this->datacenterRepository->getGMV($startDate, $endDate, $rucFranquicia);
             $averageTicketData = $this->datacenterRepository->getAverageTicket($startDate, $endDate, $rucFranquicia);
@@ -61,6 +59,7 @@ class DatacenterController extends Controller
             $totalSalesPending = $this->datacenterRepository->getTotalSalesPending($startDate, $endDate, $rucFranquicia);
             $totalSalesPaidCount = $this->datacenterRepository->getTotalSalesPaidCount($startDate, $endDate, $rucFranquicia);
             $totalSalesCancelledCount = $this->datacenterRepository->getTotalSalesCancelledCount($startDate, $endDate, $rucFranquicia);
+            $salesByVendor = $this->datacenterRepository->getSalesByVendor($startDate, $endDate, $rucFranquicia);
         } else {
             $gmvData = $this->datacenterRepository->getGMVForPeriod($period, $rucFranquicia);
             $averageTicketData = $this->datacenterRepository->getAverageTicketForPeriod($period, $rucFranquicia);
@@ -69,6 +68,8 @@ class DatacenterController extends Controller
             $totalSalesPending = $this->datacenterRepository->getTotalSalesPendingForPeriod($period, $rucFranquicia);
             $totalSalesPaidCount = $this->datacenterRepository->getTotalSalesPaidCountForPeriod($period, $rucFranquicia);
             $totalSalesCancelledCount = $this->datacenterRepository->getTotalSalesCancelledCountForPeriod($period, $rucFranquicia);
+            $salesByVendor = $this->datacenterRepository->getSalesByVendorForPeriod($period, $rucFranquicia);
+
             
         }
         // Preparar los datos para la respuesta
@@ -81,6 +82,7 @@ class DatacenterController extends Controller
             'totalSalesPaidCount' => $totalSalesPaidCount,
             'totalSalesCancelledCount' => $totalSalesCancelledCount,
             'monthlyGMV' => $monthlyGMV,
+            'salesByVendor' => $salesByVendor
 
         ];
     
