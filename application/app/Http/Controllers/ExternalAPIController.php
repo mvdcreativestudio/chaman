@@ -18,7 +18,7 @@ class ExternalAPIController extends Controller
     }
  
     public function getClientes() {
-        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/clientes?todos=1');
+        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/clientes');
     
         if ($response['error'] == 0 && isset($response['items'])) {
             foreach ($response['items'] as $item) {

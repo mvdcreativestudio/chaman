@@ -7,6 +7,8 @@ use App\Models\Client;
 use App\Repositories\ExpenseRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+
 
 
 class DatacenterRepository {
@@ -395,6 +397,66 @@ class DatacenterRepository {
             'endDate' => $endDate
         ];
     }
+
+    public function getARPU($startDate = null, $endDate = null, $rucFranquicia = null) {
+        // Establecer rango de fechas si no se proporcionan
+        if (is_null($startDate) || is_null($endDate)) {
+            $startDate = Carbon::now()->startOfYear()->toDateString();
+            $endDate = Carbon::now()->toDateString();
+        }
+    
+        // Si solo se proporciona la fecha de inicio, usarla como fecha de finalización también
+        if (!is_null($startDate) && is_null($endDate)) {
+            $endDate = $startDate;
+        }
+    
+        // Calcular ingresos totales en el rango de fechas
+        $totalRevenueQuery = Sale::query()
+            ->select(DB::raw('SUM(total) as total_revenue'))
+            ->whereBetween('fecha_creacion', [$startDate, $endDate]);
+    
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $totalRevenueQuery->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        $totalRevenue = $totalRevenueQuery->first()->total_revenue;
+    
+        // Calcular el número total de usuarios únicos en el rango de fechas
+        $uniqueUsersCountQuery = Sale::query()
+            ->select(DB::raw('COUNT(DISTINCT cliente_id) as unique_users'))
+            ->whereBetween('fecha_creacion', [$startDate, $endDate]);
+    
+        if (!is_null($rucFranquicia)) {
+            $uniqueUsersCountQuery->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        $uniqueUsersCount = $uniqueUsersCountQuery->first()->unique_users;
+    
+        // Calcular ARPU: Ingresos Totales / Número de Usuarios Únicos
+        $ARPU = $uniqueUsersCount > 0 ? $totalRevenue / $uniqueUsersCount : 0;
+    
+        return number_format($ARPU, 2, ',', '.');
+
+
+    }
+
+    public function getARPUForPeriod($period, $rucFranquicia = null) {
+        switch ($period) {
+            case 'thisYear':
+                return $this->getARPU(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getARPU(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getARPU(now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getARPU($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
     
     
     public function getGMVForPeriod($period, $rucFranquicia) {
@@ -529,12 +591,12 @@ class DatacenterRepository {
         return [
             'marketingExpenses' => $totalMarketingExpenses,
             'dailyMarketingExpense' => $dailyMarketingExpense,
-            'cac' => number_format($cac, 2),
+            'cac' => number_format($cac, 2, ',', '.'),
             'totalClients' => $totalNewClients,
         ];
     }
     
-    
+
     public function getCACForPeriod($period, $rucFranquicia = null) {
         switch ($period) {
             case 'thisYear':
@@ -552,4 +614,163 @@ class DatacenterRepository {
         }
     }
 
+    public function calculateFrequency($startDate = null, $endDate = null, $rucFranquicia = null) {
+        // Si no se especifican fechas, usar el rango desde el inicio del año hasta la fecha actual
+        if (is_null($startDate) || is_null($endDate)) {
+            $startDate = Carbon::now()->startOfYear()->toDateString();
+            $endDate = Carbon::now()->toDateString();
+        }
+    
+        // Iniciar la consulta para obtener todas las ventas en el rango de fechas
+        $query = Sale::query()
+            ->whereBetween('fecha_creacion', [$startDate, $endDate])
+            ->select('cliente_id', \DB::raw('count(*) as total_ventas'), \DB::raw('MONTH(fecha_creacion) as month'), \DB::raw('YEAR(fecha_creacion) as year'))
+            ->groupBy('cliente_id', 'month', 'year');
+    
+        // Filtrar por franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        // Ejecutar la consulta
+        $ventas = $query->get();
+    
+        // Agrupar las ventas por mes y año
+        $ventasPorMes = $ventas->groupBy(['year', 'month']);
+    
+        // Calcular el promedio de compras por usuario activo por mes
+        $totalCompras = 0;
+        $totalClientesUnicos = 0;
+        foreach ($ventasPorMes as $year => $months) {
+            foreach ($months as $month => $ventas) {
+                // Contar clientes únicos por mes
+                $clientesUnicos = $ventas->unique('cliente_id')->count();
+                $totalClientesUnicos += $clientesUnicos;
+    
+                // Sumar todas las ventas para calcular el promedio después
+                $totalComprasMes = $ventas->sum('total_ventas');
+                $totalCompras += $totalComprasMes;
+            }
+        }
+    
+        // Calcular la frecuencia como el promedio de compras por cliente único
+        $frequency = $totalClientesUnicos > 0 ? $totalCompras / $totalClientesUnicos : 0;
+    
+        return number_format($frequency, 2, ',', '.');
+
+    }
+
+
+
+    public function calculateFrequencyForPeriod($period, $rucFranquicia = null) {
+        switch ($period) {
+            case 'thisYear':
+                return $this->calculateFrequency(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->calculateFrequency(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->calculateFrequency(now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->calculateFrequency($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
+    
+    public function getMAU($startDate = null, $endDate = null, $rucFranquicia = null) {
+        if (is_null($startDate) || is_null($endDate)) {
+            $startDate = Carbon::now()->startOfYear()->toDateString();
+            $endDate = Carbon::now()->toDateString();
+        }
+
+        $query = Sale::query()
+            ->whereBetween('fecha_creacion', [$startDate, $endDate])
+            ->select('cliente_id', \DB::raw('count(*) as total_ventas'), \DB::raw('MONTH(fecha_creacion) as month'), \DB::raw('YEAR(fecha_creacion) as year'))
+            ->groupBy('cliente_id', 'month', 'year');
+        
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+
+        $ventas = $query->get();
+
+        $ventasPorMes = $ventas->groupBy(['year', 'month']);
+
+        $totalClientesUnicos = 0;
+
+        foreach ($ventasPorMes as $year => $months) {
+            foreach ($months as $month => $ventas) {
+                $clientesUnicos = $ventas->unique('cliente_id')->count();
+                $totalClientesUnicos += $clientesUnicos;
+            }
+        }
+
+        return $totalClientesUnicos;
+
+    }
+
+    public function getMAUForPeriod($period, $rucFranquicia = null) {
+        switch ($period) {
+            case 'thisYear':
+                return $this->getMAU(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getMAU(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getMAU(now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getMAU($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
+
+    public function getNewUsers($startDate = null, $endDate = null, $rucFranquicia = null) {
+        // Si no se especifican fechas, usar el rango desde el inicio del año hasta la fecha actual
+        if (is_null($startDate) || is_null($endDate)) {
+            $startDate = Carbon::now()->startOfYear()->toDateString();
+            $endDate = Carbon::now()->toDateString();
+        }
+    
+        // Construir la consulta para contar clientes creados en el rango de fechas
+        // Asumimos que la tabla de clientes se puede acceder a través de un modelo llamado Client
+        $query = Client::whereBetween('client_created', [$startDate, $endDate]);
+    
+        // Aplicar filtro por RUC de franquicia si se proporciona
+        // Esto asume que hay una relación entre los clientes y las franquicias que permite filtrar por RUC
+        // Podría necesitar ajustes dependiendo de cómo estén estructuradas tus tablas y relaciones
+        if (!is_null($rucFranquicia)) {
+            $query->whereHas('franchise', function($q) use ($rucFranquicia) {
+                $q->where('ruc', $rucFranquicia);
+            });
+        }
+    
+        // Contar el número total de clientes que cumplen con los criterios
+        $newUsersCount = $query->count();
+    
+        return $newUsersCount;
+    }
+    
+    public function getNewUsersForPeriod($period, $rucFranquicia = null) {
+        switch ($period) {
+            case 'thisYear':
+                return $this->getNewUsers(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getNewUsers(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getNewUsers(now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getNewUsers($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
+    
+    
 }
+

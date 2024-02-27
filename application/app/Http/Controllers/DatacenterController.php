@@ -37,8 +37,12 @@ class DatacenterController extends Controller
         $salesByVendor = $this->datacenterRepository->getSalesByVendorForPeriod('year', null);
         $cacData = $this->datacenterRepository->getCAC(null, null, null); // Revisar los parámetros
         $cac = $cacData['cac'];
+        $frequency = $this->datacenterRepository->calculateFrequency();
+        $mau = $this->datacenterRepository->getMAU();
+        $newUsers = $this->datacenterRepository->getNewUsers();
+        $arpu = $this->datacenterRepository->getARPU();
 
-        return view ('pages.datacenter.datacenter', compact ('franchises','dailySales', 'monthlySales', 'yearlySales', 'averageTicket', 'yearlySales2023', 'averageTicket', 'totalSalesCount', 'gmv', 'totalSalesPendingCount', 'totalSalesPending', 'totalSalesPaidCount', 'totalSalesCancelledCount', 'salesByVendor', 'cac'));
+        return view ('pages.datacenter.datacenter', compact ('franchises','dailySales', 'monthlySales', 'yearlySales', 'averageTicket', 'yearlySales2023', 'averageTicket', 'totalSalesCount', 'gmv', 'totalSalesPendingCount', 'totalSalesPending', 'totalSalesPaidCount', 'totalSalesCancelledCount', 'salesByVendor', 'cac', 'frequency', 'mau', 'newUsers', 'arpu'));
     }
 
     public function getFilteredData(Request $request)
@@ -62,6 +66,10 @@ class DatacenterController extends Controller
             $totalSalesCancelledCount = $this->datacenterRepository->getTotalSalesCancelledCount($startDate, $endDate, $rucFranquicia);
             $salesByVendor = $this->datacenterRepository->getSalesByVendor($startDate, $endDate, $rucFranquicia);
             $cac = $this->datacenterRepository->getCAC($startDate, $endDate, $rucFranquicia);
+            $frequency = $this->datacenterRepository->calculateFrequency($startDate, $endDate, $rucFranquicia);
+            $mau = $this->datacenterRepository->getMAU($startDate, $endDate, $rucFranquicia);
+            $newUsers = $this->datacenterRepository->getNewUsers($startDate, $endDate, $rucFranquicia);
+            $arpu = $this->datacenterRepository->getARPU($startDate, $endDate, $rucFranquicia);
         } else {
             $gmvData = $this->datacenterRepository->getGMVForPeriod($period, $rucFranquicia);
             $averageTicketData = $this->datacenterRepository->getAverageTicketForPeriod($period, $rucFranquicia);
@@ -72,7 +80,10 @@ class DatacenterController extends Controller
             $totalSalesCancelledCount = $this->datacenterRepository->getTotalSalesCancelledCountForPeriod($period, $rucFranquicia);
             $salesByVendor = $this->datacenterRepository->getSalesByVendorForPeriod($period, $rucFranquicia);
             $cac = $this->datacenterRepository->getCACForPeriod($period, $rucFranquicia);
-            
+            $frequency = $this->datacenterRepository->calculateFrequencyForPeriod($period, $rucFranquicia);
+            $mau = $this->datacenterRepository->getMAUForPeriod($period, $rucFranquicia);
+            $newUsers = $this->datacenterRepository->getNewUsersForPeriod($period, $rucFranquicia);
+            $arpu = $this->datacenterRepository->getARPUForPeriod($period, $rucFranquicia);
         }
         // Preparar los datos para la respuesta
         $data = [
@@ -85,7 +96,11 @@ class DatacenterController extends Controller
             'totalSalesCancelledCount' => $totalSalesCancelledCount,
             'monthlyGMV' => $monthlyGMV,
             'salesByVendor' => $salesByVendor,
-            'cac' => $cac
+            'cac' => $cac,
+            'frequency' => $frequency,
+            'mau' => $mau,
+            'newUsers' => $newUsers,
+            'arpu' => $arpu
         ];
     
         return response()->json(['data' => $data]);
