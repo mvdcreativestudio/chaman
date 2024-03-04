@@ -18,7 +18,7 @@ class ExternalAPIController extends Controller
     }
  
     public function getClientes() {
-        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/clientes');
+        $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/clientes?todos=1');
     
         if ($response['error'] == 0 && isset($response['items'])) {
             foreach ($response['items'] as $item) {
@@ -54,7 +54,7 @@ class ExternalAPIController extends Controller
                         'client_billing_country' => $item['pais'] ?? null,
                         'client_creatorid' => auth()->id(),
                         'franchise_id' => $franchise->id,
-                        'client_created' => now(),
+                        'client_created' => $item['fecha_ingreso'] ?? now(),
                         'client_updated' => now(),
                     ];
     

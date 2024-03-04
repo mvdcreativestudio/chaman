@@ -18,6 +18,8 @@ Route::get('/datacenter', [DatacenterController::class, 'index']);
 Route::get('/sales', [SalesController::class, 'show'])->name('sales.show');
 Route::get('/stock', [StockController::class, 'show'])->name('stock.show');
 Route::get('/datacenter/filter', [DatacenterController::class, 'getFilteredData'])->name('datacenter.filter');
+Route::get('/top-clientes-json', 'TuControlador@getTopClientesJSON')->name('top-clientes.json');
+
 
 
 

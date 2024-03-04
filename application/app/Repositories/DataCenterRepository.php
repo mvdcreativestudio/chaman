@@ -267,6 +267,12 @@ class DatacenterRepository {
     {
         $query = Sale::query();
 
+        // Si no se proporcionan fechas, asume el año actual
+        if (is_null($startDate) && is_null($endDate)) {
+            $startDate = now()->startOfYear()->format('Y-m-d');
+            $endDate = now()->endOfYear()->format('Y-m-d');
+        }
+
         if (!is_null($startDate) && !is_null($endDate)) {
             $query
                 ->whereBetween('fecha_creacion', [$startDate, $endDate])
@@ -286,15 +292,104 @@ class DatacenterRepository {
     {
         switch($period) {
             case 'thisYear':
-                return $this->getTotalSalesPending(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+                return $this->getTotalSalesPending(now()->startOfYear()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
             case 'thisMonth':
-                return $this->getTotalSalesPending(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+                $startOfMonth = now()->startOfMonth();
+                $endOfMonth = now()->endOfMonth();
+                return $this->getTotalSalesPending($startOfMonth->format('Y-m-d'), $endOfMonth->format('Y-m-d'), $rucFranquicia);
             case 'today':
                 return $this->getTotalSalesPending(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
             case 'yesterday':
                 $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
                 $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
                 return $this->getTotalSalesPending($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
+    
+
+    public function getTotalSalesPaid($startDate = null, $endDate = null, $rucFranquicia = null)
+    {
+        $query = Sale::query();
+
+        // Si no se proporcionan fechas, asume el año actual
+        if (is_null($startDate) && is_null($endDate)) {
+            $startDate = now()->startOfYear()->format('Y-m-d');
+            $endDate = now()->endOfYear()->format('Y-m-d');
+        }
+
+        if (!is_null($startDate) && !is_null($endDate)) {
+            $query
+                ->whereBetween('fecha_creacion', [$startDate, $endDate])
+                ->where('estado', 'Pagado');
+        }
+
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+        
+        return number_format($query->sum('total'), 0, '.', '.');
+
+    }
+
+    public function getTotalSalesPaidForPeriod($period, $rucFranquicia = null)
+    {
+        switch($period) {
+            case 'thisYear':
+                return $this->getTotalSalesPaid(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getTotalSalesPaid(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getTotalSalesPaid(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getTotalSalesPaid($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
+
+    public function getTotalSalesParcialPayment($startDate = null, $endDate = null, $rucFranquicia = null)
+    {
+        $query = Sale::query();
+
+        // Si no se proporcionan fechas, asume el año actual
+        if (is_null($startDate) && is_null($endDate)) {
+            $startDate = now()->startOfYear()->format('Y-m-d');
+            $endDate = now()->endOfYear()->format('Y-m-d');
+        }
+
+        if (!is_null($startDate) && !is_null($endDate)) {
+            $query
+                ->whereBetween('fecha_creacion', [$startDate, $endDate])
+                ->where('estado', 'Pago Parcial');
+        }
+
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+            $query->where('ruc_franquicia', $rucFranquicia);
+        }
+        
+        return number_format($query->sum('total'), 0, '.', '.');
+
+    }
+
+    public function getTotalSalesParcialPaymentForPeriod($period, $rucFranquicia = null)
+    {
+        switch($period) {
+            case 'thisYear':
+                return $this->getTotalSalesParcialPayment(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getTotalSalesParcialPayment(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getTotalSalesParcialPayment(now()->format('Y-m-d'), now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getTotalSalesParcialPayment($startDate, $endDate, $rucFranquicia);   
             default:
                 break;
         }
@@ -377,7 +472,9 @@ class DatacenterRepository {
     
         // Construir la consulta
         $query = $this->sales
-            ->whereBetween('fecha_creacion', [$startDate, $endDate]);
+            ->whereBetween('fecha_creacion', [$startDate, $endDate])
+            ->where('estado', '!=', 'Anulada'); 
+
     
         // Filtrar por RUC de franquicia si se proporciona
         if (!is_null($rucFranquicia)) {
@@ -436,7 +533,7 @@ class DatacenterRepository {
         // Calcular ARPU: Ingresos Totales / Número de Usuarios Únicos
         $ARPU = $uniqueUsersCount > 0 ? $totalRevenue / $uniqueUsersCount : 0;
     
-        return number_format($ARPU, 2, ',', '.');
+        return number_format($ARPU, 0, ',', '.');
 
 
     }
@@ -482,7 +579,9 @@ class DatacenterRepository {
             $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth()->format('Y-m-d');
             $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth()->format('Y-m-d');
     
-            $query = $this->sales->whereBetween('fecha_creacion', [$startDate, $endDate]);
+            $query = $this->sales
+                    ->whereBetween('fecha_creacion', [$startDate, $endDate])
+                    ->where('estado', '!=', 'Anulada'); 
             if (!is_null($rucFranquicia)) {
                 $query->where('ruc_franquicia', $rucFranquicia);
             }
@@ -684,32 +783,26 @@ class DatacenterRepository {
             $startDate = Carbon::now()->startOfYear()->toDateString();
             $endDate = Carbon::now()->toDateString();
         }
-
+    
         $query = Sale::query()
-            ->whereBetween('fecha_creacion', [$startDate, $endDate])
-            ->select('cliente_id', \DB::raw('count(*) as total_ventas'), \DB::raw('MONTH(fecha_creacion) as month'), \DB::raw('YEAR(fecha_creacion) as year'))
-            ->groupBy('cliente_id', 'month', 'year');
-        
+            ->whereBetween('fecha_creacion', [$startDate, $endDate]);
+    
         if (!is_null($rucFranquicia)) {
             $query->where('ruc_franquicia', $rucFranquicia);
         }
-
+    
         $ventas = $query->get();
-
-        $ventasPorMes = $ventas->groupBy(['year', 'month']);
-
-        $totalClientesUnicos = 0;
-
-        foreach ($ventasPorMes as $year => $months) {
-            foreach ($months as $month => $ventas) {
-                $clientesUnicos = $ventas->unique('cliente_id')->count();
-                $totalClientesUnicos += $clientesUnicos;
-            }
-        }
-
+    
+        // Obtener los cliente_id únicos de las ventas
+        $clientesUnicos = $ventas->unique('cliente_id')->pluck('cliente_id');
+    
+        // Contar el número de clientes únicos en la tabla clients
+        $totalClientesUnicos = Client::whereIn('cliente_id', $clientesUnicos)
+            ->count();
+    
         return $totalClientesUnicos;
-
     }
+    
 
     public function getMAUForPeriod($period, $rucFranquicia = null) {
         switch ($period) {
@@ -770,7 +863,235 @@ class DatacenterRepository {
                 break;
         }
     }
-    
-    
-}
 
+    public function getCHURN($startDate = null, $endDate = null, $rucFranquicia = null) {
+        if (is_null($startDate) || is_null($endDate)) {
+            $startDate = Carbon::now()->startOfYear()->toDateString();
+            $endDate = Carbon::now()->toDateString();
+        }
+    
+        if (!is_null($startDate) && is_null($endDate)) {
+            $endDate = $startDate;
+        }
+    
+        // Obtener todos los cliente_id que hicieron compras en el período
+        $activeClientsQuery = Sale::select('cliente_id')
+            ->whereBetween('fecha_creacion', [$startDate, $endDate]);
+    
+        if (!is_null($rucFranquicia)) {
+            $activeClientsQuery->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        $activeClients = $activeClientsQuery->distinct()->pluck('cliente_id');
+    
+        // Calcular el total de clientes activos
+        $totalActiveClients = $activeClients->count();
+    
+        // Obtener todos los cliente_id que NO hicieron compras en el período
+        $inactiveClients = Client::whereNotIn('cliente_id', $activeClients)
+            ->count();
+    
+        // Calcular el CHURN
+        $churnRate = $totalActiveClients > 0 ? ($inactiveClients / $totalActiveClients) * 100 : 0;
+    
+        return number_format($churnRate, 0, ',', '.');
+    }
+
+    public function getCHURNForPeriod($period, $rucFranquicia = null) {
+        switch ($period) {
+            case 'thisYear':
+                return $this->getCHURN(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getCHURN(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getCHURN(now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getCHURN($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
+
+    public function getInactiveClients($startDate = null, $endDate = null, $rucFranquicia = null) {
+        if (is_null($startDate) || is_null($endDate)) {
+            $startDate = Carbon::now()->startOfYear()->toDateString();
+            $endDate = Carbon::now()->toDateString();
+        }
+    
+        // Obtener los client_id de clientes que hicieron compras en el período especificado
+        $activeClientIdsQuery = Sale::select('cliente_id')
+            ->whereBetween('fecha_creacion', [$startDate, $endDate]);
+    
+        if (!is_null($rucFranquicia)) {
+            $activeClientIdsQuery->where('ruc_franquicia', $rucFranquicia);
+        }
+    
+        $activeClientIds = $activeClientIdsQuery->distinct()->pluck('cliente_id');
+    
+        // Obtener todos los client_id de clientes
+        $allClientIdsQuery = Client::select('client_id');
+    
+        if (!is_null($rucFranquicia)) {
+            $allClientIdsQuery->where('franchise_ruc', $rucFranquicia);
+        }
+    
+        $allClientIds = $allClientIdsQuery->pluck('client_id');
+    
+        // Obtener los client_id de clientes inactivos
+        $inactiveClientIds = $allClientIds->diff($activeClientIds);
+    
+        // Contar el número de clientes inactivos
+        $inactiveClientCount = $inactiveClientIds->count();
+    
+        return $inactiveClientCount;
+    }
+     
+    
+
+    public function getInactiveClientsForPeriod($period, $rucFranquicia = null) {
+        switch ($period) {
+            case 'thisYear':
+                return $this->getInactiveClients(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getInactiveClients(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getInactiveClients(now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getInactiveClients($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
+    
+    public function getTopSpendingClients($startDate = null, $endDate = null, $rucFranquicia = null) {
+        // Establecer rango de fechas si no se proporcionan (año actual por defecto)
+        if (is_null($startDate) && is_null($endDate)) {
+            $startDate = now()->startOfYear()->format('Y-m-d');
+            $endDate = now()->endOfYear()->format('Y-m-d');
+        }
+    
+        // Si solo se proporciona startDate, asume que endDate es igual a startDate
+        if (!is_null($startDate) && is_null($endDate)) {
+            $endDate = $startDate;
+        }
+    
+        // Construir la consulta inicial
+        $query = Sale::join('clients', 'sales.cliente_id', '=', 'clients.cliente_id')
+        ->select(
+            'clients.cliente_id',
+            'clients.franchise_ruc',
+            'clients.client_company_name', // Incluir el nombre de la compañía del cliente
+            DB::raw('SUM(sales.total) as total_spent') // Suma de total como total_spent
+        )
+        ->whereBetween('sales.fecha_creacion', [$startDate, $endDate])
+        ->groupBy('clients.cliente_id', 'clients.franchise_ruc', 'clients.client_company_name') // Asegurarse de agrupar también por client_company_name
+        ->orderBy('total_spent', 'desc')
+        ->limit(10); // Limitar a los 10 primeros resultados
+
+        // Filtrar por RUC de franquicia si se proporciona
+        if (!is_null($rucFranquicia)) {
+        $query->where('clients.franchise_ruc', $rucFranquicia);
+        }
+
+        // Obtener los resultados
+        $results = $query->get();
+
+        // Formatear los resultados
+        $formattedResults = $results->map(function ($item) {
+        $item->total_spent = number_format($item->total_spent, 0, '', '.'); // Aplicar formato a total_spent
+        return $item;
+        });
+
+        return $formattedResults;
+    }
+    
+    public function getTopSpendingClientsForPeriod($period, $rucFranquicia = null) {
+        switch ($period) {
+            case 'thisYear':
+                return $this->getTopSpendingClients(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getTopSpendingClients(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getTopSpendingClients(now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getTopSpendingClients($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
+
+    public function getROI($startDate = null, $endDate = null, $rucFranquicia = null) {
+        $currentDate = Carbon::now();
+    
+        // Establecer el rango de fechas completo si no se proporcionan
+        if (is_null($startDate) || is_null($endDate)) {
+            $startDate = now()->startOfYear()->format('Y-m-d');
+            $endDate = $currentDate->format('Y-m-d');
+        }
+    
+        // Ajustar el rango para cubrir el mes completo si se selecciona un solo día
+        if ($startDate == $endDate) {
+            $startDate = Carbon::parse($startDate)->startOfMonth()->format('Y-m-d');
+            $endDate = Carbon::parse($endDate)->endOfMonth()->format('Y-m-d');
+        } else {
+            $startDate = Carbon::parse($startDate)->format('Y-m-d'); // Asegura que solo se use la fecha
+            $endDate = Carbon::parse(min($endDate, $currentDate->format('Y-m-d')))->format('Y-m-d'); // Usa solo la fecha y limita al día actual
+        }
+    
+        // Obtener el gasto total para el rango de fechas
+        $totalExpenses = $this->expenses->getTotalExpenses($startDate, $endDate, $rucFranquicia);
+    
+        // Calcular la cantidad de días en el rango seleccionado hasta la fecha actual
+        $start = Carbon::parse($startDate);
+        $end = Carbon::parse($endDate);
+        $daysInPeriod = $end->diffInDays($start) + 1; // +1 para incluir ambos extremos
+    
+        // Calcular el gasto diario promedio basado en el rango completo
+        $dailyExpense = $daysInPeriod > 0 ? $totalExpenses / $daysInPeriod : 0;
+    
+        // Obtener el total de ingresos para el rango de fechas
+        $totalRevenue = $this->sales->whereBetween('fecha_creacion', [$startDate, $endDate])
+            ->when($rucFranquicia, function ($query) use ($rucFranquicia) {
+                return $query->where('ruc_franquicia', $rucFranquicia);
+            })
+            ->sum('total');
+    
+        // Calcular el ROI
+        if ($totalExpenses > 0) {
+            $roi = (($totalRevenue - $totalExpenses) / $totalExpenses) * 100; // Multiplicado por 100 para convertir a porcentaje
+        } else {
+            $roi = 0;
+        }
+    
+        return [
+            'totalExpenses' => $totalExpenses,
+            'dailyExpense' => $dailyExpense,
+            'totalRevenue' => $totalRevenue,
+            'roi' => number_format($roi, 2, '.', '') // Asegúrate de usar el formato decimal correcto según tu localización
+        ];
+    }
+    
+
+    public function getROIForPeriod($period, $rucFranquicia = null) {
+        switch ($period) {
+            case 'thisYear':
+                return $this->getROI(now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d'), $rucFranquicia);
+            case 'thisMonth':
+                return $this->getROI(now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d'), $rucFranquicia);
+            case 'today':
+                return $this->getROI(now()->format('Y-m-d'), $rucFranquicia);
+            case 'yesterday':
+                $startDate = now()->subDay()->startOfDay()->format('Y-m-d H:i:s');
+                $endDate = now()->subDay()->endOfDay()->format('Y-m-d H:i:s');
+                return $this->getROI($startDate, $endDate, $rucFranquicia);   
+            default:
+                break;
+        }
+    }
+}

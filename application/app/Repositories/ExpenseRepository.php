@@ -333,13 +333,26 @@ class ExpenseRepository {
         }
     }
 
-    // En ExpenseRepository
 
     public function getTotalMarketingExpenses($startDate, $endDate, $rucFranquicia = null) {
         $query = $this->expenses->newQuery(); // Asumiendo que $this->expenses es tu modelo Expense
     
         $query->where('expense_categoryid', '71') // Asegúrate de ajustar esta condición según tu lógica de negocio
             ->whereBetween('expense_date', [$startDate, $endDate]);
+    
+        if (!is_null($rucFranquicia)) {
+            $query->where('franchise_id', $rucFranquicia);
+        }
+    
+        $total = $query->sum('expense_amount');
+    
+        return $total;
+    }
+
+    public function getTotalExpenses($startDate, $endDate, $rucFranquicia = null) {
+        $query = $this->expenses->newQuery(); 
+    
+        $query->whereBetween('expense_date', [$startDate, $endDate]);
     
         if (!is_null($rucFranquicia)) {
             $query->where('franchise_id', $rucFranquicia);
