@@ -1,7 +1,7 @@
 @foreach($clients as $client)
 <!--each row-->
 <tr id="client_{{ $client->client_id }}">
-    <td class="clients_col_id" id="clients_col_id_{{ $client->client_id }}">{{ $client->client_id }}</td>
+    <td class="clients_col_id" id="clients_col_id_{{ $client->cliente_id }}">{{ $client->cliente_id }}</td>
     <td class="clients_col_company" id="clients_col_id_{{ $client->client_id }}">
         <a href="/clients/{{ $client->client_id ?? '' }}">{{ str_limit($client->client_company_name, 35) }}</a>
     </td>

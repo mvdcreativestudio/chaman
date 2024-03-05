@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\DatacenterRepository;
 use App\Models\Franchise;
+use Illuminate\Support\Facades\Log;
 
 class DatacenterController extends Controller
 {
@@ -27,26 +28,38 @@ class DatacenterController extends Controller
         $yearlySales2023 = $this->datacenterRepository->getYearlySales(2023);
         $averageTicket = $this->datacenterRepository->getAverageTicket(2023);
         $totalSalesCount = $this->datacenterRepository->getTotalSalesCount();
+        $totalSalesPaid = $this->datacenterRepository->getTotalSalesPaid();
+        $totalSalesParcialPayment = $this->datacenterRepository->getTotalSalesParcialPayment();
         $totalSalesPendingCount = $this->datacenterRepository->getTotalSalesPendingCount();
         $totalSalesPending = $this->datacenterRepository->getTotalSalesPending();
         $totalSalesPaidCount = $this->datacenterRepository->getTotalSalesPaidCount();
         $totalSalesCancelledCount = $this->datacenterRepository->getTotalSalesCancelledCount();
         $gmvData = $this->datacenterRepository->getGMV(2023);
         $gmv = $gmvData['gmv'];
+        $salesByVendor = $this->datacenterRepository->getSalesByVendorForPeriod('year', null);
+        $cacData = $this->datacenterRepository->getCAC(null, null, null); // Revisar los parámetros
+        $cac = $cacData['cac'];
+        $frequency = $this->datacenterRepository->calculateFrequency();
+        $mau = $this->datacenterRepository->getMAU();
+        $newUsers = $this->datacenterRepository->getNewUsers();
+        $arpu = $this->datacenterRepository->getARPU();
+        $churn = $this->datacenterRepository->getCHURN();
+        $inactiveClients = $this->datacenterRepository->getInactiveClients();
+        $topSpendingClients = $this->datacenterRepository->getTopSpendingClients();
+        $roi = $this->datacenterRepository->getROI();
 
-        return view ('pages.datacenter.datacenter', compact ('franchises','dailySales', 'monthlySales', 'yearlySales', 'averageTicket', 'yearlySales2023', 'averageTicket', 'totalSalesCount', 'gmv', 'totalSalesPendingCount', 'totalSalesPending', 'totalSalesPaidCount', 'totalSalesCancelledCount'));
-
+        return view ('pages.datacenter.datacenter', compact ('franchises','dailySales', 'monthlySales', 'yearlySales', 'averageTicket', 'yearlySales2023', 'averageTicket', 'totalSalesCount', 'gmv', 'totalSalesPendingCount', 'totalSalesPending', 'totalSalesPaid', 'totalSalesParcialPayment', 'totalSalesPaidCount', 'totalSalesCancelledCount', 'salesByVendor', 'cac', 'frequency', 'mau', 'newUsers', 'arpu', 'churn', 'inactiveClients', 'topSpendingClients', 'roi'));
     }
 
     public function getFilteredData(Request $request)
     {
+        $cac = null;
         $period = $request->input('timeframe');
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
         $rucFranquicia = $request->input('rucFranquicia');
         $year = now()->year;
         $monthlyGMV = $this->datacenterRepository->getMonthlyGMV($year, $rucFranquicia);
-
 
 
         if ($period == 'custom') {
@@ -57,6 +70,18 @@ class DatacenterController extends Controller
             $totalSalesPending = $this->datacenterRepository->getTotalSalesPending($startDate, $endDate, $rucFranquicia);
             $totalSalesPaidCount = $this->datacenterRepository->getTotalSalesPaidCount($startDate, $endDate, $rucFranquicia);
             $totalSalesCancelledCount = $this->datacenterRepository->getTotalSalesCancelledCount($startDate, $endDate, $rucFranquicia);
+            $salesByVendor = $this->datacenterRepository->getSalesByVendor($startDate, $endDate, $rucFranquicia);
+            $cac = $this->datacenterRepository->getCAC($startDate, $endDate, $rucFranquicia);
+            $frequency = $this->datacenterRepository->calculateFrequency($startDate, $endDate, $rucFranquicia);
+            $mau = $this->datacenterRepository->getMAU($startDate, $endDate, $rucFranquicia);
+            $newUsers = $this->datacenterRepository->getNewUsers($startDate, $endDate, $rucFranquicia);
+            $arpu = $this->datacenterRepository->getARPU($startDate, $endDate, $rucFranquicia);
+            $churn = $this->datacenterRepository->getCHURN($startDate, $endDate, $rucFranquicia);
+            $inactiveClients = $this->datacenterRepository->getInactiveClients($startDate, $endDate, $rucFranquicia);
+            $topSpendingClients = $this->datacenterRepository->getTopSpendingClients($startDate, $endDate, $rucFranquicia);
+            $roi = $this->datacenterRepository->getROI($startDate, $endDate, $rucFranquicia);
+            $totalSalesPaid = $this->datacenterRepository->getTotalSalesPaid($startDate, $endDate, $rucFranquicia);
+            $totalSalesParcialPayment = $this->datacenterRepository->getTotalSalesParcialPayment($startDate, $endDate, $rucFranquicia);
         } else {
             $gmvData = $this->datacenterRepository->getGMVForPeriod($period, $rucFranquicia);
             $averageTicketData = $this->datacenterRepository->getAverageTicketForPeriod($period, $rucFranquicia);
@@ -65,9 +90,19 @@ class DatacenterController extends Controller
             $totalSalesPending = $this->datacenterRepository->getTotalSalesPendingForPeriod($period, $rucFranquicia);
             $totalSalesPaidCount = $this->datacenterRepository->getTotalSalesPaidCountForPeriod($period, $rucFranquicia);
             $totalSalesCancelledCount = $this->datacenterRepository->getTotalSalesCancelledCountForPeriod($period, $rucFranquicia);
-            
+            $salesByVendor = $this->datacenterRepository->getSalesByVendorForPeriod($period, $rucFranquicia);
+            $cac = $this->datacenterRepository->getCACForPeriod($period, $rucFranquicia);
+            $frequency = $this->datacenterRepository->calculateFrequencyForPeriod($period, $rucFranquicia);
+            $mau = $this->datacenterRepository->getMAUForPeriod($period, $rucFranquicia);
+            $newUsers = $this->datacenterRepository->getNewUsersForPeriod($period, $rucFranquicia);
+            $arpu = $this->datacenterRepository->getARPUForPeriod($period, $rucFranquicia);
+            $churn = $this->datacenterRepository->getCHURNForPeriod($period, $rucFranquicia);
+            $inactiveClients = $this->datacenterRepository->getInactiveClientsForPeriod($period, $rucFranquicia);
+            $topSpendingClients = $this->datacenterRepository->getTopSpendingClientsForPeriod($period, $rucFranquicia);
+            $roi = $this->datacenterRepository->getROIForPeriod($period, $rucFranquicia);
+            $totalSalesPaid = $this->datacenterRepository->getTotalSalesPaidForPeriod($period, $rucFranquicia);
+            $totalSalesParcialPayment = $this->datacenterRepository->getTotalSalesParcialPaymentForPeriod($period, $rucFranquicia);
         }
-    
         // Preparar los datos para la respuesta
         $data = [
             'gmv' => $gmvData['gmv'],
@@ -76,13 +111,25 @@ class DatacenterController extends Controller
             'totalSalesPendingCount' => $totalSalesPendingCount,
             'totalSalesPending' => $totalSalesPending,
             'totalSalesPaidCount' => $totalSalesPaidCount,
+            'totalSalesPaid' => $totalSalesPaid,
             'totalSalesCancelledCount' => $totalSalesCancelledCount,
             'monthlyGMV' => $monthlyGMV,
-
-        ];
+            'salesByVendor' => $salesByVendor,
+            'cac' => $cac,
+            'frequency' => $frequency,
+            'mau' => $mau,
+            'newUsers' => $newUsers,
+            'arpu' => $arpu,
+            'churn' => $churn,
+            'inactiveClients' => $inactiveClients,
+            'topSpendingClients' => $topSpendingClients,
+            'roi' => $roi,
+            'totalSalesParcialPayment' => $totalSalesParcialPayment
+            ];
     
         return response()->json(['data' => $data]);
     }
+
     
 
     

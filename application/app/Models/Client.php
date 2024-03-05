@@ -17,6 +17,12 @@ class Client extends Model {
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $guarded = ['client_id'];
     protected $fillable = [
+        'cliente_id',
+        'client_rut',
+        'client_cedula',
+        'client_pasaporte',
+        'client_documentoExt',
+        'client_razon_social',
         'franchise_id',
         'client_company_name',
         'client_creatorid',

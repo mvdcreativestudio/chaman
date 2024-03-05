@@ -17,8 +17,9 @@ use App\Http\Controllers\ApiImportController;
 Route::get('/datacenter', [DatacenterController::class, 'index']);
 Route::get('/sales', [SalesController::class, 'show'])->name('sales.show');
 Route::get('/stock', [StockController::class, 'show'])->name('stock.show');
-Route::get('/datacenternuevo', [DatacenterController::class, 'datacenterNuevo'])->name('datacenter.nuevo');
 Route::get('/datacenter/filter', [DatacenterController::class, 'getFilteredData'])->name('datacenter.filter');
+Route::get('/top-clientes-json', 'TuControlador@getTopClientesJSON')->name('top-clientes.json');
+
 
 
 
@@ -79,6 +80,7 @@ Route::group(['prefix' => 'api-import'], function () {
     Route::get('/productos', 'ExternalAPIController@getProductos');
     Route::get('/proveedores', 'ExternalAPIController@getProveedores');
     Route::get('/ventas', 'ExternalAPIController@getVentas');
+    Route::get('/test', 'ExternalAPIController@test');
 });
 
 // SALES

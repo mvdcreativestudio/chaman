@@ -7,8 +7,8 @@
                 <thead>
                     <tr>
                         <th class="clients_col_id">
-                            <a class="js-ajax-ux-request js-list-sorting" id="sort_client_id" href="javascript:void(0)"
-                                data-url="{{ urlResource('/clients?action=sort&orderby=client_id&sortorder=asc') }}">{{ cleanLang(__('lang.id')) }}<span
+                            <a class="js-ajax-ux-request js-list-sorting" id="sort_cliente_id" href="javascript:void(0)"
+                                data-url="{{ urlResource('/clients?action=sort&orderby=cliente_id&sortorder=asc') }}">{{ cleanLang(__('lang.id')) }}<span
                                     class="sorting-icons"><i class="ti-arrows-vertical"></i></span></a>
                         </th>
                         <th class="clients_col_company">

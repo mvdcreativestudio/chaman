@@ -39,7 +39,7 @@
                         </li>
                         
                         
-                        <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}" id="submenu_contracts">
+                        {{-- <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}" id="submenu_contracts">
                             <a href="/sales"
                                 class="{{ $page['submenu_contracts'] ?? '' }}">Ventas</a>
                         </li>
@@ -48,7 +48,7 @@
                         <li class="sidenav-submenu {{ $page['submenu_contracts'] ?? '' }}" id="submenu_contracts">
                             <a href="/stock"
                                 class="{{ $page['submenu_contracts'] ?? '' }}">Stock</a>
-                        </li>
+                        </li> --}}
                         
                     </ul>
                 </li>
@@ -56,7 +56,7 @@
                 <!--datacenter-->
 
 
-                <!--users[done]-->
+                {{-- <!--users[done]-->
                 @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role' || request()->input('user_role_type') == 'common_role')
                 <li data-modular-id="main_menu_team_clients"
                     class="sidenav-menu-item {{ $page['mainmenu_customers'] ?? '' }}">
@@ -74,7 +74,7 @@
                         @endif
                     </ul>
                 </li>
-                @endif
+                @endif --}}
                 <!--customers-->
 
                 @if(request()->input('user_role_type') == 'admin_role')
@@ -133,11 +133,11 @@
                                     class="{{ $page['submenu_projects'] ?? '' }}">{{ cleanLang(__('lang.projects')) }}</a>
                             </li>
                             @endif
-                            <li class="sidenav-submenu {{ $page['submenu_templates'] ?? '' }}"
+                            {{-- <li class="sidenav-submenu {{ $page['submenu_templates'] ?? '' }}"
                                 id="submenu_project_templates">
                                 <a href="{{ _url('/templates/projects') }}"
                                     class="{{ $page['submenu_templates'] ?? '' }}">{{ cleanLang(__('lang.templates')) }}</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
                 @endif
@@ -174,8 +174,43 @@
                 @endif
                 <!--leads-->
 
+                <!--products-->
+
+                @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role')
+                    <li data-modular-id="main_menu_team_products"
+                        class="sidenav-menu-item {{ $page['mainmenu_products'] ?? '' }} menu-tooltip menu-with-tooltip"
+                        title="{{ cleanLang(__('lang.products')) }}">
+                        <a class="waves-effect waves-dark" href="/products" aria-expanded="false" target="_self">
+                            <i class="ti-package"></i>
+                            <span class="hide-menu">{{ cleanLang(__('lang.products')) }}
+                            </span>
+                        </a>
+                    </li>
+                @endif
+                <!--products-->
+
+                <!--expenses-->
+
+                @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role')
+                    <li data-modular-id="main_menu_team_expenses"
+                        class="sidenav-menu-item {{ $page['mainmenu_expenses'] ?? '' }} menu-tooltip menu-with-tooltip"
+                        title="{{ cleanLang(__('lang.expenses')) }}">
+                        <a class="waves-effect waves-dark" href="/expenses" aria-expanded="false" target="_self">
+                            <i class="ti-money"></i>
+                            <span class="hide-menu">{{ cleanLang(__('lang.expenses')) }}
+                            </span>
+                        </a>
+                    </li>
+                @endif
+
+                <!--expenses-->
+
+
+                
+                
+
                 <!--sales-->
-                @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role' || request()->input('user_role_type') == 'common_role')
+                {{-- @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role' || request()->input('user_role_type') == 'common_role')
                     <li data-modular-id="main_menu_team_billing"
                         class="sidenav-menu-item {{ $page['mainmenu_sales'] ?? '' }}">
                         <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false">
@@ -192,7 +227,7 @@
                                 <a href="/payments"
                                     class=" {{ $page['submenu_payments'] ?? '' }}">{{ cleanLang(__('lang.payments')) }}</a>
                             </li>
-                            <li class="sidenav-submenu {{ $page['submenu_estimates'] ?? '' }}" id="submenu_estimates">
+                             <li class="sidenav-submenu {{ $page['submenu_estimates'] ?? '' }}" id="submenu_estimates">
                                 <a href="/estimates"
                                     class=" {{ $page['submenu_estimates'] ?? '' }}">{{ cleanLang(__('lang.estimates')) }}</a>
                             </li>
@@ -200,7 +235,7 @@
                                 id="submenu_subscriptions">
                                 <a href="/subscriptions"
                                     class=" {{ $page['submenu_subscriptions'] ?? '' }}">{{ cleanLang(__('lang.subscriptions')) }}</a>
-                            </li>
+                            </li> 
                             <li class="sidenav-submenu {{ $page['submenu_products'] ?? '' }}" id="submenu_products">
                                 <a href="/products"
                                     class=" {{ $page['submenu_products'] ?? '' }}">{{ cleanLang(__('lang.products')) }}</a>
@@ -211,10 +246,10 @@
                             </li>
                         </ul>
                     </li>
-                @endif
+                @endif --}}
                 <!--billing-->
 
-                <!--PEDIDOS RRSS HARDCODEAO-->
+                {{-- <!--PEDIDOS RRSS HARDCODEAO-->
                 @if(request()->input('user_role_type') == 'admin_role' || request()->input('user_role_type') == 'franchise_admin_role' || request()->input('user_role_type') == 'common_role')
                 <li data-modular-id="main_menu_team_clients"
                     class="sidenav-menu-item {{ $page['mainmenu_customers'] ?? '' }}">
@@ -249,7 +284,7 @@
                     </ul>
                 </li>
                 @endif
-                <!--PEDIDOS RRSS-->
+                <!--PEDIDOS RRSS--> --}}
 
 
                 <!--proposals [multiple]-->
@@ -463,13 +498,13 @@
                                         class="{{ $page['submenu_timesheets'] ?? '' }}">{{ cleanLang(__('lang.time_sheets')) }}</a>
                                 </li>
                                 @endif
-                                @if(auth()->user()->is_admin)
+                                {{-- @if(auth()->user()->is_admin)
                                 <li class="sidenav-submenu mainmenu_settings {{ $page['submenu_settings'] ?? '' }}"
                                     id="submenu_settings">
                                     <a href="/settings"
                                         class="{{ $page['submenu_settings'] ?? '' }}">{{ cleanLang(__('lang.settings')) }}</a>
                                 </li>
-                                @endif
+                                @endif --}}
                             </ul>
                         </li>
                     @endif

@@ -16,38 +16,60 @@ class ExternalAPIController extends Controller
 
         return $response->json();
     }
-
+ 
     public function getClientes() {
         $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/clientes?todos=1');
     
         if ($response['error'] == 0 && isset($response['items'])) {
             foreach ($response['items'] as $item) {
                 try {
-                    \App\Models\Client::createOrUpdate(
-                        [
-                            'franchise_ruc' => $item['rucFranquicia'] ?? null,
-                        ],
-                        [
-                            'client_company_name' => $item['nombre'] ?? null,
-                            'client_phone' => $item['celular'] ?? null,
-                            'client_billing_street' => $item['direccion'] ?? null,
-                            'client_billing_city' => $item['ciudad'] ?? null,
-                            'client_billing_state' => $item['departamento'] ?? null,
-                            'client_billing_country' => $item['pais'] ?? null,
-                            'client_creatorid' => auth()->id(),
-                            'client_created' => now(),
-                            'client_updated' => now(),
-                        ]
-                    );
+                    // Encuentra el ID de la franquicia basado en el RUC
+                    $franchise = \App\Models\Franchise::where('ruc', $item['rucFranquicia'] ?? null)->first();
+    
+                    // Si no se encuentra la franquicia
+                    if (!$franchise) {
+                        \Log::error('Franchise RUC no encontrado: ' . ($item['rucFranquicia'] ?? 'desconocido'));
+                        continue; // Salta a la siguiente iteración del bucle
+                    }
+    
+                    // Ahora que tienes el ID de la franquicia, puedes proceder a crear o actualizar el cliente
+                    $searchConditions = [
+                        'cliente_id' => $item['cliente_id'] ?? null,
+                        'franchise_ruc' => $item['rucFranquicia'] ?? null,
+                    ];
+    
+                    $dataToUpdateOrCreate = [
+                        'cliente_id' => $item['cliente_id'] ?? null,
+                        'franchise_ruc' => $item['rucFranquicia'] ?? null,
+                        'client_rut' => $item['rut'] ?? null,
+                        'client_cedula' => $item['cedula'] ?? null,
+                        'client_pasaporte' => $item['pasaporte'] ?? null,
+                        'client_documentoExt' => $item['documentoExt'] ?? null,
+                        'client_razon_social' => $item['razon_social'] ?? null,
+                        'client_company_name' => $item['nombre'] ?? null,
+                        'client_phone' => $item['celular'] ?? $item['telefono'] ?? null,
+                        'client_billing_street' => $item['direccion'] ?? null,
+                        'client_billing_city' => $item['ciudad'] ?? null,
+                        'client_billing_state' => $item['departamento'] ?? null,
+                        'client_billing_country' => $item['pais'] ?? null,
+                        'client_creatorid' => auth()->id(),
+                        'franchise_id' => $franchise->id,
+                        'client_created' => $item['fecha_ingreso'] ?? now(),
+                        'client_updated' => now(),
+                    ];
+    
+                    // Utilizamos updateOrCreate para buscar por condiciones, actualizar si existe, o crear un nuevo registro
+                    \App\Models\Client::updateOrCreate($searchConditions, $dataToUpdateOrCreate);
+                    
                 } catch (\Exception $e) {
-                    \Log::error('Error al procesar el cliente con RUC ' . ($item['rucFranquicia'] ?? 'desconocido') . ': ' . $e->getMessage());
+                    \Log::error('Error al procesar el cliente con RUC ' . ($item['rucFranquicia'] ?? 'desconocido') . ' e ID ' . ($item['cliente_id'] ?? 'desconocido') . ': ' . $e->getMessage());
                 }
-                
             }
         }
     
         return response()->json($response);
-    }    
+    }
+    
 
     public function getProductos() {
         $response = $this->apiRequest('RUT218168420010@crmAPI/Consultas/productos?todos=1');
@@ -138,42 +160,64 @@ class ExternalAPIController extends Controller
 
     public function getVentas() {
         $page = 1;
-        $allVentas = [];
-        $continueFetching = true;
+        $importedDataCount = 0;
+        $discardedDataCount = 0;
+        $discardedDataReasons = [];
     
-        while ($continueFetching) {
-            $response = $this->apiRequest("RUT218168420010@crmAPI/Consultas/ventas?todos=1&pagina=$page");
+        while (true) {
+            $response = $this->apiRequest("RUT218168420010@crmAPI/Consultas/ventas?pagina=$page");
     
             if ($response['error'] == 0 && isset($response['items']) && !empty($response['items'])) {
                 foreach ($response['items'] as $item) {
-                    \App\Models\Sale::updateOrCreate(
-                        [
-                            'lineas' => $item['lineas'] ?? null,
-                            'impuestos' => $item['impuestos'] ?? null,
-                            'subtotal' => $item['subtotal'] ?? null,
-                            'total' => $item['total'] ?? null,
-                            'moneda' => $item['moneda'] ?? null,
-                            'moneda_id' => $item['moneda_id'] ?? null,
-                            'estado' => $item['estado'] ?? null,
-                            'fecha_creacion' => $item['fecha_creacion'] ?? null,
-                            'fecha_emision' => $item['fecha_emision'] ?? null,
-                            'pagos' => $item['pagos'] ?? null,
-                            'ruc_franquicia' => $item['rucFranquicia'] ?? null,
-                            'accion' => $item['accion'] ?? null,
-                            'cliente_id' => $item['cliente_id'] ?? null,
-                        ]
-                    );
-                    $allVentas[] = $item; // Agregar el item a la lista total
+                    // Definimos las condiciones para buscar una venta existente
+                    $conditions = [
+                        'fecha_creacion' => $item['fecha_creacion'] ?? null,
+                        'cliente_id' => $item['cliente_id'] ?? null,
+                    ];
+    
+                    // Utilizamos el método firstOrNew para obtener un registro existente o crear uno nuevo basado en las condiciones
+                    $venta = \App\Models\Sale::firstOrNew($conditions);
+    
+                    // Actualizamos los atributos de la venta con los datos del API
+                    $venta->lineas = $item['lineas'] ?? null;
+                    $venta->impuestos = $item['impuestos'] ?? null;
+                    $venta->subtotal = $item['subtotal'] ?? null;
+                    $venta->total = $item['total'] ?? null;
+                    $venta->moneda = $item['moneda'] ?? null;
+                    $venta->moneda_id = $item['moneda_id'] ?? null;
+                    $venta->estado = $item['estado'] ?? null;
+                    $venta->fecha_emision = $item['fecha_emision'] ?? null;
+                    $venta->pagos = $item['pagos'] ?? null;
+                    $venta->ruc_franquicia = $item['rucFranquicia'] ?? null;
+                    $venta->accion = $item['accion'] ?? null;
+                    $venta->cliente_id = $item['cliente_id'] ?? null;
+    
+                    // Guardamos el registro en la base de datos
+                    $venta->save();
+    
+                    if ($venta->wasRecentlyCreated) {
+                        $importedDataCount++;
+                    } else {
+                        $discardedDataCount++;
+                        $discardedDataReasons[] = "Venta descartada: Ya existe una venta con fecha_creacion y cliente_id similares.";
+                    }
                 }
-                $page++; // Incrementar para la siguiente página
+                $page++;
             } else {
-                $continueFetching = false; // No hay más páginas o hay un error
+                break;
             }
         }
     
-        return $allVentas; // Devuelve todas las ventas de todas las páginas
+        $result = [
+            'Datos Importados' => $importedDataCount,
+            'Datos Descartados' => $discardedDataCount,
+            'Motivos del descarte' => $discardedDataReasons,
+        ];
+    
+        return response()->json($result);
     }
-
+    
+    
     
     
 
@@ -181,5 +225,30 @@ class ExternalAPIController extends Controller
         $sales = \App\Models\Sale::all();
 
         return view('pages.api.sales', compact('sales'));
+    }
+
+    public function test() {
+        
+         // Datos de prueba
+         $client = [
+            "cliente_id" => '15006',
+            "nombre" => 'Martin Santamaria',
+            "razon_social" => 'Sumeria SAS',
+            "rut" => '000111254587589',
+            "cedula" => '46615326',
+            "pasaporte" => 'D13454',
+            "documentoExt" => null,
+            "direccion" => 'Rio Parana M119 S2',
+            "telefono" => '099807750',
+            "celular" => '099807750',
+            "email" => 'msantamaria@mvdstudio.com.uy',
+            "ciudad" => 'Lagomar',
+            "departamento" => 'Canelones',
+            "pais" => 'Uruguay',
+            "rucFranquicia" => '020591650015',
+            "accion" => 'N',
+        ];
+
+        return response()->json($client);
     }
 }

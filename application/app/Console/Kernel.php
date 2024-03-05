@@ -91,9 +91,15 @@ class Kernel extends ConsoleKernel {
         $schedule->call(new \App\Cronjobs\Tap\TapPaymentCron)->everyMinute();
 
         // Sync External API Global
-        $schedule->call(new \App\Cronjobs\SyncExternalAPICron)->dailyAt('03:00');
-        // Para testear con schedule:run usar everyMinute() 
-        //$schedule->call(new \App\Cronjobs\SyncExternalAPICron)->everyMinute();
+        $schedule->call(function () {
+            Log::info('Iniciando Sync External API Cron...');
+            try {
+                (new SyncExternalAPICron())();
+                Log::info('Sync External API Cron ejecutado con éxito.');
+            } catch (\Exception $e) {
+                Log::error('Error al ejecutar Sync External API Cron: ' . $e->getMessage());
+            }
+        })->dailyAt('13:00');
     }
 
     /**

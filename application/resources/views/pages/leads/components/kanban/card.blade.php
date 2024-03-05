@@ -121,7 +121,8 @@
         @endif
         
         <span class="wordwrap"><strong>{{ cleanLang(__('lang.created_by')) }}:</strong>
-            {{ $lead->creator->first_name }} {{ $lead->creator->last_name }}</span>
+            {{ $lead->creator ? $lead->creator->first_name . ' ' . $lead->creator->last_name : '-' }}</span>
+        
 
         <!--date created-->
         @if(config('system.settings_leads_kanban_date_created') == 'show')
